@@ -1,0 +1,36 @@
+{
+  "name": "polkadot-snap",
+  "version": "0.0.1",
+  "description": "Metamask snap to interact with Polkadot dapps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NodeFactoryIo/metamask-snap-polkadot.git"
+  },
+  "keywords": [
+    "polkadot",
+    "metamask",
+    "snap",
+    "plugin",
+    "dapp",
+    "wallet"
+  ],
+  "author": "NodeFactory <info@nodefactory.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NodeFactoryIo/metamask-snap-polkadot/issues"
+  },
+  "homepage": "https://github.com/NodeFactoryIo/metamask-snap-polkadot#readme",
+  "web3Wallet": {
+    "bundle": {
+      "local": "dist/bundle.js",
+      "url": "http://localhost:8081/dist/bundle.js"
+    },
+    "initialPermissions": {
+      "alert": {}
+    }
+  }
+}
