@@ -1,12 +1,34 @@
 # Metamask <> Polkadot snap
+![](https://github.com/nodefactoryio/metamask-snap-polkadot/workflows/ci/badge.svg)
+![](https://img.shields.io/github/issues-raw/nodefactoryio/metamask-snap-polkadot)
+![](https://img.shields.io/github/license/nodefactoryio/metamask-snap-polkadot)
+![](https://img.shields.io/badge/yarn-%3E%3D1.17.0-orange.svg?style=flat-square)
+![](https://img.shields.io/badge/Node.js-%3E%3D12.x-orange.svg?style=flat-square)
+![Discord](https://img.shields.io/discord/608204864593461248?color=blue&label=Discord&logo=discord)
 
-TODO: add description
+Metamask snap (plugin) to enable Metamask users interaction with Polkadot dapps.
 
 ### Development
+
+#### Metamask
+- download latest Metamask snaps beta release: https://github.com/MetaMask/metamask-snaps-beta/releases
+- extract downloaded archive
+- go to [chrome://extensions/](chrome://extensions/)
+- enable "Developer mode"
+- click "Load unpacked" and point to extracted archive chrome directory
+
+#### Extension
+- `yarn install`
+- `yarn build`
+- `yarn serve` - will start server on [http://localhost:8081](http://localhost:8081)
+
+Alternatively `yarn watch` will build and start http server while monitoring for file changes.
 
 Snap inspector: https://xops.github.io/inspector-snaps/
 
 ### Usage
+
+TBD
 
 ### License
 Copyright [2020] [Node Factory d.o.o.]
