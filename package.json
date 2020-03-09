@@ -28,7 +28,7 @@
     "wallet"
   ],
   "author": "NodeFactory <info@nodefactory.io>",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/NodeFactoryIo/metamask-snap-polkadot/issues"
   },
