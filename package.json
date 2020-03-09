@@ -2,8 +2,17 @@
   "name": "polkadot-snap",
   "version": "0.0.1",
   "description": "Metamask snap to interact with Polkadot dapps.",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
+    "start": "yarn run build && yarn run serve",
+    "prebuild": "rm -rf build && rm -rf dist",
+    "build": "yarn run build:tsc && yarn run build:snap",
+    "build:tsc": "tsc --build --pretty",
+    "build:snap": "snap build",
+    "watch": "concurrently  --raw --kill-others \"yarn run watch:tsc\" \"yarn run watch:snap\" \"yarn run serve\"",
+    "watch:tsc": "yarn run build:tsc --watch",
+    "watch:snap": "snap watch -s build/index.js",
+    "serve": "snap serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -32,5 +41,10 @@
     "initialPermissions": {
       "alert": {}
     }
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "snaps-cli": "^0.4.1",
+    "typescript": "^3.8.3"
   }
 }
