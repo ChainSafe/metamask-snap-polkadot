@@ -4,6 +4,8 @@ TODO: add description
 
 ### Development
 
+Snap inspector: https://xops.github.io/inspector-snaps/
+
 ### Usage
 
 ### License
