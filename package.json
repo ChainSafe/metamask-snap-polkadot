@@ -42,7 +42,9 @@
       "url": "http://localhost:8081/dist/bundle.js"
     },
     "initialPermissions": {
-      "alert": {}
+      "alert": {},
+      "getPluginState": {},
+      "updatePluginState": {}
     }
   },
   "devDependencies": {
