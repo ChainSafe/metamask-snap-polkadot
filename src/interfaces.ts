@@ -6,4 +6,5 @@ export type FMethodCallback = (
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
   send(options: {method: string; params: unknown[]}): void;
+  getAppKey(): string;
 }
