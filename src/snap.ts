@@ -1,5 +1,5 @@
 import {Wallet} from "./interfaces";
-import {getKeysFromSeed, KeyPair} from "./util";
+import {getKeysFromSeed} from "./util";
 
 declare let wallet: Wallet;
 
