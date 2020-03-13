@@ -42,7 +42,9 @@
       "url": "http://localhost:8081/dist/bundle.js"
     },
     "initialPermissions": {
-      "alert": {}
+      "alert": {},
+      "getPluginState": {},
+      "updatePluginState": {}
     }
   },
   "devDependencies": {
@@ -52,5 +54,8 @@
     "eslint": "^6.8.0",
     "snaps-cli": "^0.4.1",
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "tweetnacl": "^1.0.3"
   }
 }
