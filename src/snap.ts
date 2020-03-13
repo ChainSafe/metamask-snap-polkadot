@@ -19,6 +19,13 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
         ]
       });
       return keypair;
+    case 'getPublicKey':
+      const keyPairState = wallet.getPluginState();
+      if (keyPairState != null && keyPairState.polkadot.account != null) {
+        return keyPairState.polkadot.account.publicKey;
+      } else {
+        return null;
+      }
     default:
       throw new Error('Method not found.');
   }

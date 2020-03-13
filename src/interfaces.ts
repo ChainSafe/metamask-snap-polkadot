@@ -1,7 +1,9 @@
 export type FMethodCallback = (
   originString: string,
-  requestObject: { method: string; params: unknown }
+  requestObject: RequestObject
 ) => Promise<unknown>;
+
+export type RequestObject = { method: string; params: unknown };
 
 export type KeyPairState = { secretKey: Uint8Array; publicKey: Uint8Array };
 export type MetamaskState = {polkadot: {account: KeyPairState}};
