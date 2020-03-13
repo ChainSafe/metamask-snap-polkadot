@@ -8,7 +8,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case 'generateKeys':
       const appKey = await wallet.getAppKey();
       const keypair = generateKeyPairFromSeed(appKey);
-      wallet.updatePluginState(keypair);
+      wallet.updatePluginState({polkadot: {account: keypair}});
       // temp: show keypair is saved
       console.log(wallet.getPluginState());
       wallet.send({
