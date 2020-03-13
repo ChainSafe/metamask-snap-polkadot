@@ -1,23 +1,24 @@
 import {Wallet} from "./interfaces";
-import {getKeysFromSeed} from "./util";
+import {generateKeyPairFromSeed} from "./util";
 
 declare let wallet: Wallet;
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   switch (requestObject.method) {
-    case 'hello':
+    case 'generateKeys':
       const appKey = await wallet.getAppKey();
-      const keypair = getKeysFromSeed(appKey);
+      const keypair = generateKeyPairFromSeed(appKey);
       wallet.updatePluginState(keypair);
-      // to show keypair is saved
+      // temp: show keypair is saved
       console.log(wallet.getPluginState());
-      return wallet.send({
+      wallet.send({
         method: 'alert',
         params: [
           `Hello, ${originString} from NodeFactory1! state:` +
           `Created keyring pair public: ${keypair.publicKey} and private: ${keypair.secretKey} `
         ]
       });
+      return keypair;
     default:
       throw new Error('Method not found.');
   }
