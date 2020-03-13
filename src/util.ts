@@ -9,7 +9,7 @@ function convertStringTo8UintArray(string: string): Uint8Array {
   return u8a;
 }
 
-// Generates nacl public/private keypair from seed
+// Generates ed25519 public/private keypair from seed
 export function generateKeyPairFromSeed(seedString: string): KeyPairState {
   const seed = convertStringTo8UintArray(seedString.substr(0, 32));
   return nacl.sign.keyPair.fromSeed(seed);
