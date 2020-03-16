@@ -1,11 +1,10 @@
 import {KeyPairState, Wallet} from "../interfaces";
 import {fromHexString} from "../util/hex";
 import nacl from "tweetnacl";
-import {InvalidSeedError} from "./error";
 
 // Generates ed25519 public/private keypair from seed
 function generateKeyPairFromSeed(seedString: string): KeyPairState {
-  if (seedString.length < 32) { throw new InvalidSeedError(); }
+  if (seedString.length < 32) { throw new Error("Invalid seed string."); }
   const seed = fromHexString(seedString.substr(0, 32));
   return nacl.sign.keyPair.fromSeed(seed);
 }
