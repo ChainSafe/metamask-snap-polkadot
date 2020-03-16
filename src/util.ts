@@ -1,7 +1,5 @@
-import nacl from "tweetnacl";
-import {KeyPairState} from "./interfaces";
 
-function convertStringTo8UintArray(string: string): Uint8Array {
+export function convertStringTo8UintArray(string: string): Uint8Array {
   const u8a = new Uint8Array(string.length);
   for (let i = 0; i < string.length; i++) {
     u8a[i] = string.charCodeAt(i);
@@ -9,9 +7,20 @@ function convertStringTo8UintArray(string: string): Uint8Array {
   return u8a;
 }
 
-// Generates nacl public/private keypair from seed
-export function generateKeyPairFromSeed(seedString: string): KeyPairState {
-  const seed = convertStringTo8UintArray(seedString.substr(0, 32));
-  return nacl.sign.keyPair.fromSeed(seed);
+// define byte to hex mapping
+const byteToHex: string[] = [];
+for (let n = 0; n <= 0xff; ++n) {
+  const hexOctet = String("00" + n.toString(16)).slice(-2);
+  byteToHex.push(hexOctet);
+}
+
+export function iterableToHexString(arrayBuffer: Iterable<number>): string {
+  const buff = new Uint8Array(arrayBuffer);
+  const hexOctets = new Array(buff.length);
+
+  for (let i = 0; i < buff.length; ++i)
+    hexOctets[i] = byteToHex[buff[i]];
+
+  return hexOctets.join("");
 }
 
