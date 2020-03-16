@@ -22,7 +22,7 @@ describe('rpc handler function: getPublicKey', () => {
     }}} as MetamaskState);
     const result = await getPublicKey(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
-    expect(result).to.be.eq("010203");
+    expect(result).to.be.eq("0x010203");
   });
 
   it('should create new keypair on no pk saved in state', async function () {
