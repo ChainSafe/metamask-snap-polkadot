@@ -1,8 +1,18 @@
 
-export function convertStringTo8UintArray(string: string): Uint8Array {
-  const u8a = new Uint8Array(string.length);
-  for (let i = 0; i < string.length; i++) {
-    u8a[i] = string.charCodeAt(i);
+export function fromHexString(string: string): Uint8Array {
+  let s = string;
+  // clear prefix
+  if (string.startsWith("0x")) {
+    s = string.slice(2);
+  }
+  // check string length
+  if (s.length %2 === 0) {
+    throw new Error("Invalid hex string, length not even number.");
+  }
+  // convert
+  const u8a = new Uint8Array(s.length);
+  for (let i = 0; i < s.length; i++) {
+    u8a[i] = s.charCodeAt(i);
   }
   return u8a;
 }
@@ -14,13 +24,11 @@ for (let n = 0; n <= 0xff; ++n) {
   byteToHex.push(hexOctet);
 }
 
-export function iterableToHexString(arrayBuffer: Iterable<number>): string {
-  const buff = new Uint8Array(arrayBuffer);
+export function toHexString(uint8Array: Uint8Array): string {
+  const buff = new Uint8Array(uint8Array);
   const hexOctets = new Array(buff.length);
-
   for (let i = 0; i < buff.length; ++i)
     hexOctets[i] = byteToHex[buff[i]];
-
-  return hexOctets.join("");
+  return hexOctets.join("0x");
 }
 
