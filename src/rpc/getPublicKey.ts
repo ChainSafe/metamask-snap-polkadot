@@ -1,16 +1,16 @@
 import {Wallet} from "../interfaces";
 import {generateKeys} from "../crypto/keys";
-import {iterableToHexString} from "../util";
+import {toHexString} from "../util/hex";
 
 export async function getPublicKey(wallet: Wallet): Promise<string> {
   const keyPairState = wallet.getPluginState();
-  if (keyPairState != null && keyPairState.polkadot.account != null) {
+  if (keyPairState.polkadot.account) {
     // keypair already saved
     const pk = keyPairState.polkadot.account.publicKey;
-    return iterableToHexString(pk);
+    return toHexString(pk);
   } else {
     // generate new keypair
     const keypair = await generateKeys(wallet);
-    return iterableToHexString(keypair.publicKey);
+    return toHexString(keypair.publicKey);
   }
 }

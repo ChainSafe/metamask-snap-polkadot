@@ -6,7 +6,7 @@ export function fromHexString(string: string): Uint8Array {
     s = string.slice(2);
   }
   // check string length
-  if (s.length %2 === 0) {
+  if (s.length % 2 !== 0) {
     throw new Error("Invalid hex string, length not even number.");
   }
   // convert
