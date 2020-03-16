@@ -15,7 +15,7 @@
     "watch": "concurrently  --raw --kill-others \"yarn run watch:tsc\" \"yarn run watch:snap\" \"yarn run serve\"",
     "watch:tsc": "yarn run build:tsc --watch",
     "watch:snap": "snap watch -s build/index.js",
-    "serve": "snap serve --root ./example",
+    "serve": "snap serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
