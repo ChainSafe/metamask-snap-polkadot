@@ -14,5 +14,9 @@ jobs:
         with:
           node-version: '12.x'
       - run: yarn install --frozen-lockfile
-      - run: yarn run lint
-      - run: yarn run build
+      - name: Run linter
+        run: yarn run lint
+      - name: Build
+        run: yarn run build
+      - name: Run tests
+        run: yarn run test
