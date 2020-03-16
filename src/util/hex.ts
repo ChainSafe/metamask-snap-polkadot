@@ -29,6 +29,6 @@ export function toHexString(uint8Array: Uint8Array): string {
   const hexOctets = new Array(buff.length);
   for (let i = 0; i < buff.length; ++i)
     hexOctets[i] = byteToHex[buff[i]];
-  return hexOctets.join("0x");
+  return "0x" + hexOctets.join("");
 }
 

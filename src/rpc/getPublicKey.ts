@@ -4,7 +4,7 @@ import {toHexString} from "../util/hex";
 
 export async function getPublicKey(wallet: Wallet): Promise<string> {
   const keyPairState = wallet.getPluginState();
-  if (keyPairState.polkadot.account) {
+  if (keyPairState != null) {
     // keypair already saved
     const pk = keyPairState.polkadot.account.publicKey;
     return toHexString(pk);

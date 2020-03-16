@@ -2,7 +2,6 @@ import chai, { expect } from "chai";
 import sinonChai from "sinon-chai";
 import sinon from "sinon";
 import {generateKeys} from "../../../src/crypto/keys";
-import {InvalidSeedError} from "../../../src/crypto/error";
 import {WalletMock} from "./wallet.mock.test";
 import {MetamaskState} from "../../../src/interfaces";
 
@@ -47,7 +46,7 @@ describe('generateKeys', () => {
     try {
       await generateKeys(wallet);
     } catch (e) {
-      expect(e.message).to.be.eq(InvalidSeedError.INVALID_SEED_MESSAGE);
+      expect(e).to.exist;
     }
   });
 });
