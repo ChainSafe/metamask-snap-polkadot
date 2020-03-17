@@ -9,10 +9,13 @@ export function fromHexString(string: string): Uint8Array {
   if (s.length % 2 !== 0) {
     throw new Error("Invalid hex string, length not even number.");
   }
+  if (!s.match(/^[0-9a-f]+$/)) {
+    throw new Error("Invalid characters in hex string.");
+  }
   // convert
-  const u8a = new Uint8Array(s.length);
-  for (let i = 0; i < s.length; i++) {
-    u8a[i] = s.charCodeAt(i);
+  const u8a = new Uint8Array(s.length / 2);
+  for (let i = 0, k = 0; i < s.length; i+=2, k++) {
+    u8a[k] = parseInt(s.substr(i, 2), 16);
   }
   return u8a;
 }

@@ -6,7 +6,7 @@ import {getPublicKey} from "../../../src/rpc/getPublicKey";
 
 chai.use(sinonChai);
 
-describe('rpc handler function: getPublicKey', () => {
+describe('Test rpc handler function: getPublicKey', () => {
 
   const sandbox = sinon.createSandbox();
   const walletStub = {} as Wallet;
@@ -27,7 +27,8 @@ describe('rpc handler function: getPublicKey', () => {
 
   it('should create new keypair on no pk saved in state', async function () {
     walletStub.getPluginState = sandbox.stub().returns(null);
-    walletStub.getAppKey = sandbox.stub().returns("abasddsa12ssavdasfdas2easdfa21sa");
+    walletStub.getAppKey =
+        sandbox.stub().returns("aba2dd1a12eeafda3fda62aa6dfa21caaba2dd1a12eeafda3fda62aa6dfa21ca");
     walletStub.updatePluginState = sandbox.stub();
     const result = await getPublicKey(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;

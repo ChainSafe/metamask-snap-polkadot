@@ -1,4 +1,4 @@
-import chai, { expect } from "chai";
+import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
 import sinon from "sinon";
 import {generateKeys} from "../../../src/crypto/keys";
@@ -7,7 +7,7 @@ import {MetamaskState} from "../../../src/interfaces";
 
 chai.use(sinonChai);
 
-describe('generateKeys', () => {
+describe('Test crypto function: generateKeys', () => {
 
   const sandbox = sinon.createSandbox();
   const wallet = new WalletMock();
@@ -18,23 +18,30 @@ describe('generateKeys', () => {
 
   it('should generate valid keypair from app key', async () => {
     // stubs
-    wallet.getAppKey.returns("abasddsa12ssavdasfdas2easdfa21sa");
+    wallet.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21caaba2dd1a12eeafda3fda62aa6dfa21ca");
     // tested method
     const result = await generateKeys(wallet);
     // assertions
     expect(wallet.getAppKey).to.have.been.calledOnce;
-    expect(wallet.updatePluginState).to.have.been.calledOnceWith({polkadot: {account: {
-      publicKey: new Uint8Array([
-        246, 206, 111, 196, 81, 241, 48, 25, 1, 101, 68, 184, 62, 78, 13, 80,
-        13, 34, 253, 79, 101, 134, 97, 91, 80, 55, 24, 1, 48, 242, 19, 218
-      ]),
-      secretKey: new Uint8Array([
-        97, 98, 97, 115, 100, 100, 115, 97, 49, 50, 115, 115, 97, 118, 100,
-        97, 115, 102, 100, 97, 115, 50, 101, 97, 115, 100, 102, 97, 50, 49,
-        115, 97, 246, 206, 111, 196, 81, 241, 48, 25, 1, 101, 68, 184, 62, 78,
-        13, 80, 13, 34, 253, 79, 101, 134, 97, 91, 80, 55, 24, 1, 48, 242, 19, 218
-      ]),
-    }}} as MetamaskState);
+    expect(wallet.updatePluginState).to.have.been.calledOnceWith({
+      polkadot: {
+        account: {
+          publicKey: new Uint8Array([
+            128, 151, 5, 28, 80, 2, 116, 236, 200, 124, 162,
+            118, 71, 202, 126, 119, 21, 244, 105, 77, 144, 36,
+            121, 161, 158, 227, 112, 40, 234, 240, 188, 104
+          ]),
+          secretKey: new Uint8Array([
+            171, 162, 221, 26, 18, 238, 175, 218, 63, 218, 98,
+            170, 109, 250, 33, 202, 171, 162, 221, 26, 18, 238,
+            175, 218, 63, 218, 98, 170, 109, 250, 33, 202, 128,
+            151, 5, 28, 80, 2, 116, 236, 200, 124, 162, 118, 71,
+            202, 126, 119, 21, 244, 105, 77, 144, 36, 121, 161,
+            158, 227, 112, 40, 234, 240, 188, 104
+          ]),
+        }
+      }
+    } as MetamaskState);
     expect(result.publicKey).to.exist;
     expect(result.secretKey).to.exist;
     expect(result.publicKey.length).to.eq(32);
