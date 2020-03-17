@@ -16,7 +16,8 @@
     "watch:tsc": "yarn run build:tsc --watch",
     "watch:snap": "snap watch -s build/index.js",
     "serve": "snap serve",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "yarn run test:unit",
+    "test:unit": "mocha -r ts-node/register test/unit/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -48,11 +49,20 @@
     }
   },
   "devDependencies": {
+    "@types/chai": "^4.2.10",
+    "@types/mocha": "^7.0.2",
+    "@types/sinon": "^7.5.2",
+    "@types/sinon-chai": "^3.2.3",
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
+    "chai": "^4.2.0",
     "concurrently": "^5.1.0",
     "eslint": "^6.8.0",
+    "mocha": "^7.1.0",
+    "sinon": "^9.0.1",
+    "sinon-chai": "^3.5.0",
     "snaps-cli": "^0.4.1",
+    "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
   },
   "dependencies": {

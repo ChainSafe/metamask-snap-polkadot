@@ -25,20 +25,52 @@
     </details>
     <br/>
 
+    <div class="pk-container" style="margin-bottom: 10px">
+      <label class="">Public key:</label>
+      <div class="pk"></div>
+    </div>
     <button class="connect">Connect</button>
-    <button class="generateKeys">Generate keys</button>
+
   </body>
 
   <script>
 
-    const origin = new URL('package.json', window.location.href).toString()
-    const snapId = `wallet_plugin_${origin}`
+    const origin = new URL('package.json', window.location.href).toString();
+    const snapId = `wallet_plugin_${origin}`;
 
-    const connectButton = document.querySelector('button.connect')
-    const generateKeysButton = document.querySelector('button.generateKeys')
+    const connectButton = document.querySelector('button.connect');
+    const pkLabel = document.querySelector('div.pk');
 
-    connectButton.addEventListener('click', connect)
-    generateKeysButton.addEventListener('click', send)
+    connectButton.addEventListener('click', connect);
+    connectButton.disabled = true; // until keypair is fetched
+
+    fetchPublicKey().then((fetched) => {
+      if (fetched) {
+        // todo
+      } else {
+        pkLabel.innerHTML = "Snap not connected";
+        connectButton.disabled = false;
+      }
+    });
+
+    async function fetchPublicKey() {
+      let response = null;
+      try {
+        response = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'getPublicKey'
+          }]
+        });
+      } catch (e) {
+        console.log("Keys not generated");
+      }
+      if (response != null) {
+        pkLabel.innerHTML = response;
+        return true;
+      }
+      return false;
+    }
 
     async function connect () {
       await ethereum.send({
@@ -46,22 +78,8 @@
         params: [{
           [snapId]: {}
         }]
-      })
-    }
-
-    async function send () {
-      try {
-        const response = await ethereum.send({
-          method: snapId,
-          params: [{
-            method: 'generateKeys'
-          }]
-        })
-        console.log(response)
-      } catch (err) {
-        console.error(err)
-        alert('Problem happened: ' + err.message || err)
-      }
+      });
+      await fetchPublicKey();
     }
 
   </script>
