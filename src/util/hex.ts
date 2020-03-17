@@ -9,7 +9,7 @@ export function fromHexString(string: string): Uint8Array {
   if (s.length % 2 !== 0) {
     throw new Error("Invalid hex string, length not even number.");
   }
-  if (!s.match(/^[0-9a-f]+$/)) {
+  if (!s.match(/^[0-9A-Fa-f]+$/)) {
     throw new Error("Invalid characters in hex string.");
   }
   // convert

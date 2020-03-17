@@ -14,6 +14,10 @@ describe('Test util hex conversion functions:', () => {
       const result = fromHexString("234a");
       expect(result).to.be.deep.eq(new Uint8Array(Array.from([35, 74])));
     });
+    it('should be case insensitive', function () {
+      const result = fromHexString("234A");
+      expect(result).to.be.deep.eq(new Uint8Array(Array.from([35, 74])));
+    });
     it('should throw error on invalid hex string length', function () {
       try {
         fromHexString("0x123");
