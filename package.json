@@ -13,7 +13,7 @@
     "type-check:watch": "npm run type-check -- --watch",
     "build": "yarn run build:types && yarn run build:js && yarn run build:snap",
     "build:types": "tsc",
-    "build:js": "babel src --out-dir build --extensions \".ts,.tsx\" --source-maps inline",
+    "build:js": "babel src node_modules --out-dir build --extensions \".ts,.tsx,.js\" --source-maps inline",
     "build:snap": "snap build",
     "watch": "concurrently  --raw --kill-others \"yarn run watch:tsc\" \"yarn run watch:snap\" \"yarn run serve\"",
     "watch:tsc": "yarn run build:tsc --watch",

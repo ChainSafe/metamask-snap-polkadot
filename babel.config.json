@@ -12,5 +12,6 @@
   ],
   "plugins": [
     "@babel/proposal-class-properties"
-  ]
+  ],
+  "comments": false
 }
