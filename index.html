@@ -30,6 +30,11 @@
       <div class="pk"></div>
     </div>
     <button class="connect">Connect</button>
+    <div class="prk-container" style="margin-bottom: 10px">
+      <label class="">Private key:</label>
+      <div class="prk"></div>
+    </div>
+    <button class="export-pk">Export private key</button>
 
   </body>
 
@@ -39,9 +44,12 @@
     const snapId = `wallet_plugin_${origin}`;
 
     const connectButton = document.querySelector('button.connect');
+    const exportButton = document.querySelector('button.export-pk');
     const pkLabel = document.querySelector('div.pk');
+    const privateKeyLabel = document.querySelector('div.prk');
 
     connectButton.addEventListener('click', connect);
+    exportButton.addEventListener('click', exportPk);
     connectButton.disabled = true; // until keypair is fetched
 
     fetchPublicKey().then((fetched) => {
@@ -52,6 +60,25 @@
         connectButton.disabled = false;
       }
     });
+
+    async function exportPk() {
+      let response = null;
+      try {
+        response = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'exportPrivateKey'
+          }]
+        });
+      } catch (e) {
+        console.log("Keys not generated");
+      }
+      if (response != null) {
+        privateKeyLabel.innerHTML = response;
+        return true;
+      }
+      return false;
+    }
 
     async function fetchPublicKey() {
       let response = null;

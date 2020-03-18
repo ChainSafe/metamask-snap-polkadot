@@ -44,6 +44,7 @@
     },
     "initialPermissions": {
       "alert": {},
+      "confirm": {},
       "getPluginState": {},
       "updatePluginState": {}
     }
