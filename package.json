@@ -9,8 +9,11 @@
     "lint:style": "eslint 'src/**/*.{js,ts,tsx}' --fix",
     "start": "yarn run build && yarn run serve",
     "prebuild": "rm -rf build && rm -rf dist",
-    "build": "yarn run build:tsc && yarn run build:snap",
-    "build:tsc": "tsc --build --pretty",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build": "yarn run build:types && yarn run build:js && yarn run build:snap",
+    "build:types": "tsc",
+    "build:js": "babel src --out-dir build --extensions \".ts,.tsx\" --source-maps inline",
     "build:snap": "snap build",
     "watch": "concurrently  --raw --kill-others \"yarn run watch:tsc\" \"yarn run watch:snap\" \"yarn run serve\"",
     "watch:tsc": "yarn run build:tsc --watch",
@@ -49,6 +52,11 @@
     }
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-typescript": "^7.8.3",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^7.0.2",
     "@types/sinon": "^7.5.2",
@@ -66,6 +74,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@polkadot/api": "^1.7.1",
     "tweetnacl": "^1.0.3"
   }
 }
