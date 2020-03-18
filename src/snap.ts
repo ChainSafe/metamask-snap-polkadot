@@ -9,7 +9,6 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case 'getPublicKey':
       return await getPublicKey(wallet);
     case 'exportPrivateKey':
-      wallet.send({method: 'confirm', params: ['Do you agree?']});
       return await exportPrivateKey(wallet);
     default:
       throw new Error('Method not found.');

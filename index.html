@@ -59,7 +59,7 @@
         pkLabel.innerHTML = "Snap not connected";
         connectButton.disabled = false;
       }
-    });
+    }).catch(reason => console.log(reason));
 
     async function exportPk() {
       let response = null;
