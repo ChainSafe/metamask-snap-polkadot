@@ -14,7 +14,6 @@
     "strictBindCallApply": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
-    "noEmit": true,
     "sourceMap": true,
     "outDir": "build",
     "baseUrl": ".",

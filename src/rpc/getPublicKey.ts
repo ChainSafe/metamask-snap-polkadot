@@ -5,7 +5,8 @@ import {ApiPromise, WsProvider} from "@polkadot/api";
 
 export async function getPublicKey(wallet: Wallet): Promise<string> {
   // Construct
-  const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io/');
+  const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io/', true);
+  console.log(wsProvider);
   const api = await ApiPromise.create({ provider: wsProvider });
 
   // Do something
