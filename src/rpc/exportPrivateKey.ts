@@ -2,7 +2,7 @@ import {Wallet} from "../interfaces";
 import {toHexString} from "../util/hex";
 import {showConfirmationDialog} from "../util/confirmation";
 
-export async function exportPrivateKey(wallet: Wallet): Promise<string> {
+export async function exportPrivateKey(wallet: Wallet): Promise<string|null> {
   const keyPairState = wallet.getPluginState();
   if (keyPairState != null) {
     // ask for confirmation
