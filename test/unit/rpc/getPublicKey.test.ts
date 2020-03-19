@@ -1,22 +1,21 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import sinon from "sinon";
-import {MetamaskState, Wallet} from "../../../src/interfaces";
+import {MetamaskState} from "../../../src/interfaces";
 import {getPublicKey} from "../../../src/rpc/getPublicKey";
+import {WalletMock} from "../crypto/wallet.mock.test";
 
 chai.use(sinonChai);
 
 describe('Test rpc handler function: getPublicKey', () => {
 
-  const sandbox = sinon.createSandbox();
-  const walletStub = {} as Wallet;
+  const walletStub = new WalletMock();
 
   afterEach(function () {
-    sandbox.restore();
+    walletStub.reset();
   });
 
   it('should return pk on saved pk in state', async function () {
-    walletStub.getPluginState = sandbox.stub().returns({polkadot: {account: {
+    walletStub.getPluginState.returns({polkadot: {account: {
       publicKey: Uint8Array.from([1, 2, 3]),
       secretKey: Uint8Array.from([1, 2, 3, 4]),
     }}} as MetamaskState);
@@ -26,10 +25,8 @@ describe('Test rpc handler function: getPublicKey', () => {
   });
 
   it('should create new keypair on no pk saved in state', async function () {
-    walletStub.getPluginState = sandbox.stub().returns(null);
-    walletStub.getAppKey =
-        sandbox.stub().returns("aba2dd1a12eeafda3fda62aa6dfa21caaba2dd1a12eeafda3fda62aa6dfa21ca");
-    walletStub.updatePluginState = sandbox.stub();
+    walletStub.getPluginState.returns(null);
+    walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21caaba2dd1a12eeafda3fda62aa6dfa21ca");
     const result = await getPublicKey(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
     expect(walletStub.getAppKey).to.have.been.calledOnce;
