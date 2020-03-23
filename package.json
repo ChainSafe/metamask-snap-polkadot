@@ -67,6 +67,9 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@material-ui/core": "^4.9.7",
+    "@types/node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "tweetnacl": "^1.0.3"
   }
 }

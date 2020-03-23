@@ -1,0 +1,6 @@
+@import "./variables.scss";
+@import "../containers/Dashboard/dashboard.scss";
+
+body{
+  background-color: $background;
+}
