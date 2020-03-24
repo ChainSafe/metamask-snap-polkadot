@@ -13,7 +13,12 @@ function generateKeyPairFromSeed(seedString: string): KeyPairState {
 export async function generateKeys(wallet: Wallet): Promise<KeyPairState> {
   const appKey = await wallet.getAppKey();
   const keypair = generateKeyPairFromSeed(appKey);
-  wallet.updatePluginState({polkadot: {account: keypair}});
+  try {
+    wallet.updatePluginState({polkadot: {account: keypair, api: null}});
+  } catch (e) {
+    console.log(e);
+  }
+
   return keypair;
 }
 

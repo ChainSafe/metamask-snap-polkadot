@@ -7,11 +7,12 @@
   </head>
 
   <body>
-    <h1>Hello Plugins!</h1>
+    <img src="https://blog.coinfabrik.com/wp-content/uploads/2019/04/polkadot-substrate.png" height="60"/>
+    <h2>Polkadot metamask snap</h2>
     <details>
       <summary>Instructions</summary>
       <ul>
-        <li>First, click "Connect". Then, try out the other buttons!</li>
+        <li>First, click "Connect polkadot plugin". Then, try out the other buttons!</li>
         <li>Please note that:</li>
         <ul>
           <li>
@@ -24,34 +25,58 @@
       </ul>
     </details>
     <br/>
-
-    <div class="pk-container" style="margin-bottom: 10px">
-      <label class="">Public key:</label>
-      <div class="pk"></div>
+    <div style="margin-bottom: 10px">
+      <button class="connect-snap">Connect polkadot snap</button>
     </div>
-    <button class="connect">Connect</button>
+    <div>
+      <label>Public key:</label>
+      <div class="publicKey"></div>
+      <label style="margin-top: 10px">Snap connected:</label>
+      <div class="connected-snap"></div>
+    </div>
+    <br/>
+    <div style="background-color: floralwhite">
+      <h3 style="margin-block-end: 0">Polkadot substrate calls</h3>
+      <div style="margin-top: 10px">
+        <button class="chain-head">Get substrate chain head</button>
+        <span style="margin-left: 10px">Substrate chain head hash:</span>
+        <span class="head" ></span>
+      </div>
+    </div>
+
+
 
   </body>
 
   <script>
-
     const origin = new URL('package.json', window.location.href).toString();
     const snapId = `wallet_plugin_${origin}`;
-
-    const connectButton = document.querySelector('button.connect');
-    const pkLabel = document.querySelector('div.pk');
-
-    connectButton.addEventListener('click', connect);
-    connectButton.disabled = true; // until keypair is fetched
+    // spans for status
+    const FALSE = "<span style='color: darkred'>FALSE</span>";
+    const TRUE = "<span style='color: darkgreen'>TRUE</span>";
+    // snap connection
+    const snapConnectButton = document.querySelector('button.connect-snap');
+    const publicKeyLabel = document.querySelector('div.publicKey');
+    const snapConnectedLabel = document.querySelector('div.connected-snap');
+    snapConnectButton.addEventListener('click', connectSnap);
+    snapConnectButton.disabled = false; // until keypair is fetched
+    snapConnectedLabel.innerHTML = FALSE;
+    // polkadot chain head
+    const polkadotHeadButton = document.querySelector('button.chain-head');
+    const headLabel = document.querySelector('span.head');
+    polkadotHeadButton.addEventListener('click', substrate_getChainHead);
 
     fetchPublicKey().then((fetched) => {
       if (fetched) {
-        // todo
+        snapConnectedLabel.innerHTML = TRUE;
+        // connectButton.disabled = false;
       } else {
-        pkLabel.innerHTML = "Snap not connected";
+        snapConnectedLabel.innerHTML = FALSE;
         connectButton.disabled = false;
       }
     });
+
+    // snap functions
 
     async function fetchPublicKey() {
       let response = null;
@@ -64,22 +89,50 @@
         });
       } catch (e) {
         console.log("Keys not generated");
+        publicKeyLabel.innerHTML = "Error on key generation"
       }
       if (response != null) {
-        pkLabel.innerHTML = response;
+        publicKeyLabel.innerHTML = response;
         return true;
       }
       return false;
     }
 
-    async function connect () {
-      await ethereum.send({
-        method: 'wallet_requestPermissions',
-        params: [{
-          [snapId]: {}
-        }]
-      });
+    async function connectSnap () {
+      console.log(snapId);
+      try {
+        await ethereum.send({
+          method: 'wallet_enable',
+          params: [{
+            [snapId]: {}
+          }]
+        });
+      } catch (e) {
+        console.error(e)
+      }
+      snapConnectedLabel.innerHTML = TRUE;
       await fetchPublicKey();
+    }
+
+    // polkadot/substrate functions
+
+    async function substrate_getChainHead() {
+      let response = null;
+      try {
+        response = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'substrate_getChainHead'
+          }]
+        });
+      } catch (e) {
+        console.log("Unable to fetch substrate chain head");
+      }
+      if (response != null) {
+        headLabel.innerHTML = response;
+        return true;
+      }
+      return false;
     }
 
   </script>
