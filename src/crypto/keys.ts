@@ -16,9 +16,8 @@ export async function generateKeys(wallet: Wallet): Promise<KeyPairState> {
   try {
     wallet.updatePluginState({polkadot: {account: keypair}});
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
-
   return keypair;
 }
 

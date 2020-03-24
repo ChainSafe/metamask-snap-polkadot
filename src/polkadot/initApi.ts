@@ -5,8 +5,9 @@ export async function initApi(): Promise<ApiPromise> {
   const api = new ApiPromise({ initWasm: false, provider: wsProvider });
   try {
     await api.isReady;
+    console.log("Api is ready.");
   } catch (e) {
-    console.log("ready", e);
+    console.log("Api is ready with error:", e);
   }
   return api;
 }
