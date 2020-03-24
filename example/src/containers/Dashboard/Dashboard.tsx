@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {Container, Button, Typography, Grid, Paper, Table, TableContainer, TableCell, TableRow, TableHead, TableBody, Hidden} from '@material-ui/core/';
-
+import {Container, Button, Typography, Grid, Paper, Table, TableContainer, TableCell, TableRow, TableHead, TableBody, Hidden, TextField} from '@material-ui/core/';
+import {Transfer} from "../../components/Transfer";
 export const Dashboard = () => {
-    const [showElements, setShowElemnts]=useState<boolean>(false);
+    const [connected, setConnected]=useState<boolean>(false);
 
     // TEMP
     function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
@@ -26,16 +26,21 @@ export const Dashboard = () => {
                         Metamask - Polkadot Snap
                     </Typography>
                 </Grid>
-                <Hidden xsUp={showElements}>
+                <Hidden xsUp={connected}>
                     <Grid item xs={12}>
-                        <Button onClick={() => setShowElemnts(true)} color="primary">Connect</Button>
+                        <Button onClick={() => setConnected(true)} color="primary">Connect</Button>
                     </Grid>
                 </Hidden>
-                <Hidden xsUp={!showElements}>
+                <Hidden xsUp={!connected}>
                     <Grid container xs={12}>
                         <Grid item xs={6}>
                             <Paper>
-                                <Typography variant="h4">TODO TRANSFER</Typography>
+                                <Typography variant="h4">TRANSFER</Typography>
+                                <Typography variant="h6">TO ADRESS</Typography>
+                                <TextField></TextField>
+                                <Typography variant="h6">AMOUNT</Typography>
+                                <TextField></TextField>
+                                <Button>SEND</Button>
                             </Paper>
                         </Grid>
                         <Grid container direction="column" alignItems="center" item xs={6}>
@@ -43,7 +48,8 @@ export const Dashboard = () => {
                                 <Button color="secondary">Export private key</Button>
                             </Paper>
                             <Paper>
-                                <Typography variant="h4">TODO SIGN</Typography>
+                                <Typography variant="h4">SIGN CUSTOM MESSAGE</Typography>
+                                <TextField></TextField>
                             </Paper>
                         
                         </Grid>
