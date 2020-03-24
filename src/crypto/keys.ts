@@ -14,7 +14,7 @@ export async function generateKeys(wallet: Wallet): Promise<KeyPairState> {
   const appKey = await wallet.getAppKey();
   const keypair = generateKeyPairFromSeed(appKey);
   try {
-    wallet.updatePluginState({polkadot: {account: keypair, api: null}});
+    wallet.updatePluginState({polkadot: {account: keypair}});
   } catch (e) {
     console.log(e);
   }

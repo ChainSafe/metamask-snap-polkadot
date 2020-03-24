@@ -1,4 +1,3 @@
-import ApiPromise from "@polkadot/api/promise";
 
 export type FMethodCallback = (
   originString: string,
@@ -8,7 +7,7 @@ export type FMethodCallback = (
 export type RequestObject = { method: string; params: unknown };
 
 export type KeyPairState = { secretKey: Uint8Array; publicKey: Uint8Array };
-export type MetamaskState = {polkadot: {account: KeyPairState; api: ApiPromise}};
+export type MetamaskState = {polkadot: {account: KeyPairState}};
 
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
