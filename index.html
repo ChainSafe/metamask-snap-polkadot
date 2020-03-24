@@ -43,12 +43,17 @@
         <span class="head" ></span>
       </div>
     </div>
-
-
+    <button class="connect">Connect</button>
+    <div class="prk-container" style="margin-bottom: 10px">
+      <label class="">Private key:</label>
+      <div class="prk"></div>
+    </div>
+    <button class="export-pk">Export private key</button>
 
   </body>
 
   <script>
+
     const origin = new URL('package.json', window.location.href).toString();
     const snapId = `wallet_plugin_${origin}`;
     // spans for status
@@ -61,6 +66,10 @@
     snapConnectButton.addEventListener('click', connectSnap);
     snapConnectButton.disabled = false; // until keypair is fetched
     snapConnectedLabel.innerHTML = FALSE;
+    // export private key
+    const exportButton = document.querySelector('button.export-pk');
+    const privateKeyLabel = document.querySelector('div.prk');
+    exportButton.addEventListener('click', exportPk);
     // polkadot chain head
     const polkadotHeadButton = document.querySelector('button.chain-head');
     const headLabel = document.querySelector('span.head');
@@ -74,7 +83,26 @@
         snapConnectedLabel.innerHTML = FALSE;
         connectButton.disabled = false;
       }
-    });
+    }).catch(reason => console.log(reason));
+
+    async function exportPk() {
+      let response = null;
+      try {
+        response = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'exportPrivateKey'
+          }]
+        });
+      } catch (e) {
+        console.log("Keys not generated");
+      }
+      if (response != null) {
+        privateKeyLabel.innerHTML = response;
+        return true;
+      }
+      return false;
+    }
 
     // snap functions
 
