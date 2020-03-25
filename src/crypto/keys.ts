@@ -1,23 +1,24 @@
-import {KeyPairState, Wallet} from "../interfaces";
-import {fromHexString} from "../util/hex";
-import nacl from "tweetnacl";
-
-// Generates ed25519 public/private keypair from seed
-function generateKeyPairFromSeed(seedString: string): KeyPairState {
-  if (seedString.length < 32) { throw new Error("Invalid seed string."); }
-  const seed = fromHexString(seedString.substr(0, 64));
-  return nacl.sign.keyPair.fromSeed(seed);
-}
+import {AccountState, Wallet} from "../interfaces";
+import { Keyring } from '@polkadot/api';
+import { KeyringPair } from '@polkadot/keyring/types';
+import { cryptoWaitReady } from '@polkadot/util-crypto';
+import { stringToU8a } from '@polkadot/util';
 
 // Generate keypair from metamask wallet interface using app key
-export async function generateKeys(wallet: Wallet): Promise<KeyPairState> {
-  const appKey = await wallet.getAppKey();
-  const keypair = generateKeyPairFromSeed(appKey);
+export async function generateKeys(wallet: Wallet): Promise<KeyringPair> {
+  // const api = await initApi();
+  // wait for api to be ready
+  await cryptoWaitReady();
+  // generate keys
+  const seed = wallet.getAppKey().substr(0, 32);
+  const keyring = new Keyring();
+  const keyringPair = keyring.addFromSeed(stringToU8a(seed));
+  const accountState = {keyring: keyringPair.toJson(), seed} as AccountState;
   try {
-    wallet.updatePluginState({polkadot: {account: keypair}});
+    wallet.updatePluginState({polkadot: {account: accountState}});
   } catch (e) {
-    console.error("Failed to store generated polkadot account", keypair, e);
+    console.error("Failed to store generated polkadot account", keyringPair, e);
   }
-  return keypair;
+  return keyringPair;
 }
 

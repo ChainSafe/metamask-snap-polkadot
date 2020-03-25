@@ -1,7 +1,7 @@
 import {Wallet} from "./interfaces";
 import {getPublicKey} from "./rpc/getPublicKey";
 import {initApi} from "./polkadot/initApi";
-import {exportPrivateKey} from "./rpc/exportPrivateKey";
+import {exportSeed} from "./rpc/exportSeed";
 
 declare let wallet: Wallet;
 
@@ -14,7 +14,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       const head = await api.rpc.chain.getFinalizedHead();
       return head.hash;
     case 'exportPrivateKey':
-      return await exportPrivateKey(wallet);
+      return await exportSeed(wallet);
     default:
       throw new Error('Method not found.');
   }

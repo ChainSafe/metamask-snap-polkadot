@@ -1,16 +1,20 @@
 import {Wallet} from "../interfaces";
 import {generateKeys} from "../crypto/keys";
-import {toHexString} from "../util/hex";
+import { u8aToHex } from '@polkadot/util';
+import { cryptoWaitReady } from '@polkadot/util-crypto';
+import { Keyring } from '@polkadot/api';
 
 export async function getPublicKey(wallet: Wallet): Promise<string> {
   const keyPairState = wallet.getPluginState();
+  let keyringPair;
   if (keyPairState != null) {
     // keypair already saved
-    const pk = keyPairState.polkadot.account.publicKey;
-    return toHexString(pk);
+    await cryptoWaitReady();
+    const keyring = new Keyring();
+    keyringPair = keyring.addFromJson(keyPairState.polkadot.account.keyring);
   } else {
     // generate new keypair
-    const keypair = await generateKeys(wallet);
-    return toHexString(keypair.publicKey);
+    keyringPair = await generateKeys(wallet);
   }
+  return u8aToHex(keyringPair.publicKey);
 }
