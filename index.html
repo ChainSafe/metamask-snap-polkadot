@@ -74,6 +74,9 @@
     const polkadotHeadButton = document.querySelector('button.chain-head');
     const headLabel = document.querySelector('span.head');
     polkadotHeadButton.addEventListener('click', substrate_getChainHead);
+    // polkadot conn
+    const polkadotConnectButton = document.querySelector('button.connect');
+    polkadotConnectButton.addEventListener('click', substrate_connect);
 
     fetchPublicKey().then((fetched) => {
       if (fetched) {
@@ -161,6 +164,19 @@
         return true;
       }
       return false;
+    }
+
+    async function substrate_connect() {
+      try {
+        await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'substrate_connect'
+          }]
+        });
+      } catch (e) {
+        console.log("Unable to substrate connect", e);
+      }
     }
 
   </script>

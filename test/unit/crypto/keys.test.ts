@@ -39,7 +39,8 @@ describe('Test crypto function: generateKeys', () => {
             202, 126, 119, 21, 244, 105, 77, 144, 36, 121, 161,
             158, 227, 112, 40, 234, 240, 188, 104
           ]),
-        }
+        },
+        metadata: ""
       }
     } as MetamaskState);
     expect(result.publicKey).to.exist;
