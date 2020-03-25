@@ -22,7 +22,7 @@ describe('Test rpc handler function: exportPrivateKey', () => {
   });
 
   it('should return private key on positive prompt confirmation', async function () {
-    walletStub.send.returns({result: true});
+    walletStub.send.returns(true);
     const result = await exportPrivateKey(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
     expect(walletStub.send).to.have.been.calledOnce;
@@ -30,7 +30,7 @@ describe('Test rpc handler function: exportPrivateKey', () => {
   });
 
   it('should not return private key on negative prompt confirmation', async function () {
-    walletStub.send.returns({result: false});
+    walletStub.send.returns(false);
     const result = await exportPrivateKey(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
     expect(walletStub.send).to.have.been.calledOnce;
