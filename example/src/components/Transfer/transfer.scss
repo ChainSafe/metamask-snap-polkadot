@@ -1,0 +1,15 @@
+.transfer-container{
+    padding: 1rem;
+}
+.transfer-input{
+width: 70%;
+}
+.transfer-items{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button{
+        height: 3rem;
+        margin: 1rem;
+    }
+}

@@ -1,5 +1,7 @@
 @import "./variables.scss";
 @import "../containers/Dashboard/dashboard.scss";
+@import "../components/Transfer/transfer.scss";
+@import "../components//SignMessage/sign-message.scss";
 
 body{
   background-color: $background;

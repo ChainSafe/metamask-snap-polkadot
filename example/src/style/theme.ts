@@ -1,13 +1,25 @@
 import {createMuiTheme} from "@material-ui/core/styles";
+import {COLORS} from "../constants/colors";
 
-// TODO STYLES
 export const theme = createMuiTheme({
     palette: {
         primary: {
-            main: "#FED766"
+            main: COLORS.primary
         },
         secondary: {
-            main: "#009FB7"
+            main: COLORS.secondary
         },
+    },
+    overrides: {
+        MuiPaper: {
+            root: {
+                backgroundColor: COLORS.regular,
+            }
+        },
+        MuiGrid: {
+            "grid-xs-12": {
+                width: "100%",
+            }
+        }
     }
 });
