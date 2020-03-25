@@ -29,10 +29,19 @@
       <button class="connect-snap">Connect polkadot snap</button>
     </div>
     <div>
-      <label>Public key:</label>
-      <div class="publicKey"></div>
-      <label style="margin-top: 10px">Snap connected:</label>
-      <div class="connected-snap"></div>
+      <div style="display: inline">Public key:</div>
+      <div class="publicKey" style="display: inline; font-weight: bold"></div>
+      <div style="margin-top: 10px" ></div>
+      <div style="display: inline">Snap connected:</div>
+      <div class="connected-snap" style="display: inline"></div>
+    </div>
+    <br/>
+    <div style="margin-bottom: 10px">
+      <button class="export-pk">Export private key</button>
+    </div>
+    <div>
+      <div style="display: inline">Private key:</div>
+      <div class="prk" style="display: inline; font-weight: bold"></div>
     </div>
     <br/>
     <div style="background-color: floralwhite">
@@ -40,16 +49,9 @@
       <div style="margin-top: 10px">
         <button class="chain-head">Get substrate chain head</button>
         <span style="margin-left: 10px">Substrate chain head hash:</span>
-        <span class="head" ></span>
+        <span class="head" style="font-weight: bold"></span>
       </div>
     </div>
-    <button class="connect">Connect</button>
-    <div class="prk-container" style="margin-bottom: 10px">
-      <label class="">Private key:</label>
-      <div class="prk"></div>
-    </div>
-    <button class="export-pk">Export private key</button>
-
   </body>
 
   <script>
@@ -81,7 +83,7 @@
         // connectButton.disabled = false;
       } else {
         snapConnectedLabel.innerHTML = FALSE;
-        connectButton.disabled = false;
+        // connectButton.disabled = false;
       }
     }).catch(reason => console.log(reason));
 
@@ -95,7 +97,7 @@
           }]
         });
       } catch (e) {
-        console.log("Keys not generated");
+        console.log("Keys not generated", e);
       }
       if (response != null) {
         privateKeyLabel.innerHTML = response;
@@ -116,7 +118,7 @@
           }]
         });
       } catch (e) {
-        console.log("Keys not generated");
+        console.log("Keys not generated", e);
         publicKeyLabel.innerHTML = "Error on key generation"
       }
       if (response != null) {
@@ -154,7 +156,7 @@
           }]
         });
       } catch (e) {
-        console.log("Unable to fetch substrate chain head");
+        console.log("Unable to fetch substrate chain head", e);
       }
       if (response != null) {
         headLabel.innerHTML = response;
