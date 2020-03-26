@@ -32,7 +32,7 @@ describe('Test crypto function: generateKeys', () => {
     expect(wallet.updatePluginState).to.have.been.calledOnce;
     expect(wallet.updatePluginState).to.have.been.calledWithMatch({
       polkadot: {
-        account: {keyring: sinon.match.any, seed: appKey.substr(0, 32)}
+        account: {keyring: sinon.match.any}
       }
     });
   });

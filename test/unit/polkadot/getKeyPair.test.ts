@@ -1,15 +1,17 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {MetamaskState} from "../../../../src/interfaces";
-import {WalletMock} from "../../crypto/wallet.mock.test";
-import {getBalance} from "../../../../src/rpc/substrate/getBalance";
+import {MetamaskState} from "../../../src/interfaces";
+import {WalletMock} from "../crypto/wallet.mock.test";
+import {getBalance} from "../../../src/rpc/substrate/getBalance";
 import ApiPromise from "@polkadot/api/promise";
 import { AccountInfo } from "@polkadot/types/interfaces/system";
 import sinon from "sinon";
+import {getKeyPair} from "../../../src/polkadot/getKeyPair";
+import { hexToU8a } from '@polkadot/util';
 
 chai.use(sinonChai);
 
-describe('Test rpc handler function: getBalance', () => {
+describe('Test getKeyPair', () => {
 
   const walletStub = new WalletMock();
 
@@ -17,7 +19,7 @@ describe('Test rpc handler function: getBalance', () => {
     walletStub.reset();
   });
 
-  it('should return balance on saved keyring in state', async function () {
+  it('should return keypair on saved keypair in state', async function () {
     // wallet stub
     walletStub.getPluginState.returns({
       polkadot: {
@@ -32,34 +34,28 @@ describe('Test rpc handler function: getBalance', () => {
               version: "2"
             },
             meta: {}
-          },
-          seed: "aba2dd1a12eeafda3fda62aa6dfa21ca",
+          }
         }
       }
     } as MetamaskState);
-    // api stub
-    const apiStub = {query: {system: {account: sinon.stub()}}};
-    apiStub.query.system.account.returns({data: {free: {toHuman: () => "0"}}} as AccountInfo);
-    const api = apiStub as unknown as ApiPromise;
-    const result = await getBalance(walletStub, api);
-    expect(result).to.be.eq("0");
+    const result = await getKeyPair(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
+    expect(result.address).to.be.eq("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");
     // eslint-disable-next-line max-len
-    expect(apiStub.query.system.account).to.have.been.calledOnceWith("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");
+    expect(result.publicKey).to.be.deep.eq(hexToU8a("0xcf043e13d9228d8a931ce4cc58efbd1ad6c5e2f1932c3174eb150dfaf9165b73"));
   });
 
-  it('should not return balance on empty state', async function () {
+  it('should create new and return keypair on empty state', async function () {
     walletStub.getPluginState.returns(null);
     walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
-    // api stub
-    const apiStub = {query: {system: {account: sinon.stub()}}};
-    apiStub.query.system.account.returns({data: {free: {toHuman: () => "0"}}} as AccountInfo);
-    const api = apiStub as unknown as ApiPromise;
-    const result = await getBalance(walletStub, api);
-    expect(result).to.be.eq("0");
+    walletStub.updatePluginState.returnsArg(0);
+    const result = await getKeyPair(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
+    expect(walletStub.updatePluginState).to.have.been.calledOnce;
+    expect(walletStub.getAppKey).to.have.been.calledOnce;
+    expect(result.address).to.be.eq("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");
     // eslint-disable-next-line max-len
-    expect(apiStub.query.system.account).to.have.been.calledOnceWith("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");
+    expect(result.publicKey).to.be.deep.eq(hexToU8a("0xcf043e13d9228d8a931ce4cc58efbd1ad6c5e2f1932c3174eb150dfaf9165b73"));
   });
 
 });
