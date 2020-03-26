@@ -1,16 +1,21 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {MetamaskState, Wallet} from "../../../src/interfaces";
+import {MetamaskState} from "../../../src/interfaces";
 import {exportSeed} from "../../../src/rpc/exportSeed";
 import {WalletMock} from "../crypto/wallet.mock.test";
+import {getAddress} from "../../../src/rpc/getAddress";
 
 chai.use(sinonChai);
 
-describe('Test rpc handler function: exportPrivateKey', () => {
+describe('Test rpc handler function: getAddress', () => {
 
   const walletStub = new WalletMock();
 
-  beforeEach(function () {
+  afterEach(function () {
+    walletStub.reset();
+  });
+
+  it('should return address on saved keyring in state', async function () {
     walletStub.getPluginState.returns({polkadot: {account: {
       keyring: {
         address: "5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7",
@@ -25,33 +30,15 @@ describe('Test rpc handler function: exportPrivateKey', () => {
       },
       seed: "aba2dd1a12eeafda3fda62aa6dfa21ca",
     }}} as MetamaskState);
-  });
-
-  afterEach(function () {
-    walletStub.reset();
-  });
-
-  it('should return private key on positive prompt confirmation and keyring saved in state', async function () {
-    walletStub.send.returns(true);
-    const result = await exportSeed(walletStub);
+    const result = await getAddress(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
-    expect(walletStub.send).to.have.been.calledOnce;
-    expect(result).to.be.eq("aba2dd1a12eeafda3fda62aa6dfa21ca");
+    expect(result).to.be.eq("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");
   });
 
-  it('should not return private key on negative prompt confirmation', async function () {
-    walletStub.send.returns(false);
-    const result = await exportSeed(walletStub);
-    expect(walletStub.getPluginState).to.have.been.calledOnce;
-    expect(walletStub.send).to.have.been.calledOnce;
-    expect(result).to.be.eq(null);
-  });
-
-  it('should not return private key on empty state', async function () {
+  it('should not return address on empty state', async function () {
     walletStub.getPluginState.returns(null);
     const result = await exportSeed(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
-    expect(walletStub.send).to.not.have.been.called;
     expect(result).to.be.eq(null);
   });
 
