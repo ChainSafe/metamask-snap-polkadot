@@ -47,4 +47,12 @@ describe('Test rpc handler function: exportPrivateKey', () => {
     expect(result).to.be.eq(null);
   });
 
+  it('should not return private key on empty state', async function () {
+    walletStub.getPluginState.returns(null);
+    const result = await exportSeed(walletStub);
+    expect(walletStub.getPluginState).to.have.been.calledOnce;
+    expect(walletStub.send).to.not.have.been.called;
+    expect(result).to.be.eq(null);
+  });
+
 });

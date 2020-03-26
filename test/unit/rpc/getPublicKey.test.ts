@@ -42,5 +42,6 @@ describe('Test rpc handler function: getPublicKey', () => {
     expect(walletStub.getAppKey).to.have.been.calledOnce;
     expect(walletStub.updatePluginState).to.have.been.calledOnce;
     expect(result).not.to.be.null;
+    expect(result).to.be.eq("0xcf043e13d9228d8a931ce4cc58efbd1ad6c5e2f1932c3174eb150dfaf9165b73");
   });
 });
