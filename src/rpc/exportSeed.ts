@@ -11,7 +11,8 @@ export async function exportSeed(wallet: Wallet): Promise<string|null> {
     );
     // return seed if user confirmed action
     if (confirmation) {
-      return state.polkadot.account.seed;
+      const appKey = await wallet.getAppKey();
+      return appKey.substr(0, 32);
     }
   }
   return null;

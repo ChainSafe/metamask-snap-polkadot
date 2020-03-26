@@ -27,8 +27,7 @@ describe('Test rpc handler function: getAddress', () => {
           version: "2"
         },
         meta: {}
-      },
-      seed: "aba2dd1a12eeafda3fda62aa6dfa21ca",
+      }
     }}} as MetamaskState);
     const result = await getAddress(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
