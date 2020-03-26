@@ -6,7 +6,7 @@ import {WalletMock} from "../crypto/wallet.mock.test";
 
 chai.use(sinonChai);
 
-describe('Test rpc handler function: exportPrivateKey', () => {
+describe('Test rpc handler function: exportSeed', () => {
 
   const walletStub = new WalletMock();
 
@@ -31,7 +31,7 @@ describe('Test rpc handler function: exportPrivateKey', () => {
     walletStub.reset();
   });
 
-  it('should return private key on positive prompt confirmation and keyring saved in state', async function () {
+  it('should return seed on positive prompt confirmation and keyring saved in state', async function () {
     walletStub.send.returns(true);
     const result = await exportSeed(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
@@ -39,7 +39,7 @@ describe('Test rpc handler function: exportPrivateKey', () => {
     expect(result).to.be.eq("aba2dd1a12eeafda3fda62aa6dfa21ca");
   });
 
-  it('should not return private key on negative prompt confirmation', async function () {
+  it('should not return seed on negative prompt confirmation', async function () {
     walletStub.send.returns(false);
     const result = await exportSeed(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
@@ -47,7 +47,7 @@ describe('Test rpc handler function: exportPrivateKey', () => {
     expect(result).to.be.eq(null);
   });
 
-  it('should not return private key on empty state', async function () {
+  it('should not return seed on empty state', async function () {
     walletStub.getPluginState.returns(null);
     const result = await exportSeed(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
