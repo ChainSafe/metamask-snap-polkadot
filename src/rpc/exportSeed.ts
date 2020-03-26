@@ -2,8 +2,8 @@ import {Wallet} from "../interfaces";
 import {showConfirmationDialog} from "../util/confirmation";
 
 export async function exportSeed(wallet: Wallet): Promise<string|null> {
-  const keyPairState = wallet.getPluginState();
-  if (keyPairState != null) {
+  const state = wallet.getPluginState();
+  if (state != null) {
     // ask for confirmation
     const confirmation = await showConfirmationDialog(
       wallet,
@@ -11,7 +11,7 @@ export async function exportSeed(wallet: Wallet): Promise<string|null> {
     );
     // return seed if user confirmed action
     if (confirmation) {
-      return keyPairState.polkadot.account.seed;
+      return state.polkadot.account.seed;
     }
   }
   return null;

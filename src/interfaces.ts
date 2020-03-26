@@ -13,7 +13,7 @@ export type MetamaskState = {polkadot: {account: AccountState}};
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
   send(options: {method: string; params: unknown[]}): unknown;
-  getAppKey(): string;
+  getAppKey(): Promise<string>;
   updatePluginState(state: MetamaskState): void;
   getPluginState(): MetamaskState;
 }

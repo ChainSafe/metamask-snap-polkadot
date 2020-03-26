@@ -25,57 +25,84 @@
       </ul>
     </details>
     <br/>
-    <div style="margin-bottom: 10px">
-      <button class="connect-snap">Connect polkadot snap</button>
-    </div>
     <div>
+      <!-- Snap connect button -->
+      <div style="margin-bottom: 10px">
+        <button class="connect-snap">Connect polkadot snap</button>
+      </div>
+      <!-- Public Key -->
       <div style="display: inline">Public key:</div>
       <div class="publicKey" style="display: inline; font-weight: bold"></div>
+      <!-- separator -->
       <div style="margin-top: 10px" ></div>
+      <!-- Address -->
+      <div style="display: inline">Address:</div>
+      <div class="address" style="display: inline; font-weight: bold"></div>
+      <!-- separator -->
+      <div style="margin-top: 10px" ></div>
+      <!-- Snap connection status -->
       <div style="display: inline">Snap connected:</div>
       <div class="connected-snap" style="display: inline"></div>
     </div>
     <br/>
-    <div style="margin-bottom: 10px">
-      <button class="export-pk">Export private key</button>
-    </div>
     <div>
-      <div style="display: inline">Private key:</div>
-      <div class="prk" style="display: inline; font-weight: bold"></div>
+      <!-- Seed export button -->
+      <div style="margin-bottom: 10px">
+        <button class="export-seed">Export seed</button>
+      </div>
+      <!-- Seed -->
+      <div>
+        <div style="display: inline">Seed:</div>
+        <div class="seed" style="display: inline; font-weight: bold"></div>
+      </div>
     </div>
     <br/>
     <div style="background-color: floralwhite">
       <h3 style="margin-block-end: 0">Polkadot substrate calls</h3>
       <div style="margin-top: 10px">
-        <button class="chain-head">Get substrate chain head</button>
+        <button class="head-button">Get substrate chain head</button>
         <span style="margin-left: 10px">Substrate chain head hash:</span>
         <span class="head" style="font-weight: bold"></span>
+      </div>
+      <div style="margin-top: 10px">
+        <button class="balance-button">Get balance</button>
+        <span style="margin-left: 10px">Balance:</span>
+        <span class="balance" style="font-weight: bold"></span>
       </div>
     </div>
   </body>
 
   <script>
-
     const origin = new URL('package.json', window.location.href).toString();
     const snapId = `wallet_plugin_${origin}`;
+
     // spans for status
     const FALSE = "<span style='color: darkred'>FALSE</span>";
     const TRUE = "<span style='color: darkgreen'>TRUE</span>";
+
     // snap connection
     const snapConnectButton = document.querySelector('button.connect-snap');
     const publicKeyLabel = document.querySelector('div.publicKey');
     const snapConnectedLabel = document.querySelector('div.connected-snap');
+    const addressLabel = document.querySelector('div.address');
     snapConnectButton.addEventListener('click', connectSnap);
     snapConnectButton.disabled = false; // until keypair is fetched
     snapConnectedLabel.innerHTML = FALSE;
-    // export private key
-    const exportButton = document.querySelector('button.export-pk');
-    const privateKeyLabel = document.querySelector('div.prk');
-    exportButton.addEventListener('click', exportPk);
-    // polkadot chain head
-    const polkadotHeadButton = document.querySelector('button.chain-head');
+    // export seed
+    const exportButton = document.querySelector('button.export-seed');
+    const seedLabel = document.querySelector('div.seed');
+    exportButton.addEventListener('click', exportSeed);
+
+    // SUBSTRATE CALLS
+
+    // chain head
+    const polkadotHeadButton = document.querySelector('button.head-button');
     const headLabel = document.querySelector('span.head');
     polkadotHeadButton.addEventListener('click', substrate_getChainHead);
+    // balance
+    const polkadotBalanceButton = document.querySelector('button.balance-button');
+    const balanceLabel = document.querySelector('span.balance');
+    polkadotBalanceButton.addEventListener('click', substrate_getBalance);
 
     fetchPublicKey().then((fetched) => {
       if (fetched) {
@@ -87,20 +114,20 @@
       }
     }).catch(reason => console.log(reason));
 
-    async function exportPk() {
+    async function exportSeed() {
       let response = null;
       try {
         response = await ethereum.send({
           method: snapId,
           params: [{
-            method: 'exportPrivateKey'
+            method: 'exportSeed'
           }]
         });
       } catch (e) {
         console.log("Keys not generated", e);
       }
       if (response != null) {
-        privateKeyLabel.innerHTML = response;
+        seedLabel.innerHTML = response;
         return true;
       }
       return false;
@@ -128,6 +155,25 @@
       return false;
     }
 
+    async function fetchAddress() {
+      let response = null;
+      try {
+        response = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'getAddress'
+          }]
+        });
+      } catch (e) {
+        console.log("Keys not generated", e);
+      }
+      if (response != null) {
+        addressLabel.innerHTML = response;
+        return true;
+      }
+      return false;
+    }
+
     async function connectSnap () {
       console.log(snapId);
       try {
@@ -142,6 +188,7 @@
       }
       snapConnectedLabel.innerHTML = TRUE;
       await fetchPublicKey();
+      await fetchAddress();
     }
 
     // polkadot/substrate functions
@@ -160,6 +207,25 @@
       }
       if (response != null) {
         headLabel.innerHTML = response;
+        return true;
+      }
+      return false;
+    }
+
+    async function substrate_getBalance() {
+      let response = null;
+      try {
+        response = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'substrate_getBalance'
+          }]
+        });
+      } catch (e) {
+        console.log("Unable to fetch balance", e);
+      }
+      if (response != null) {
+        balanceLabel.innerHTML = response;
         return true;
       }
       return false;
