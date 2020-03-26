@@ -1,7 +1,6 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
 import {MetamaskState} from "../../../src/interfaces";
-import {exportSeed} from "../../../src/rpc/exportSeed";
 import {WalletMock} from "../crypto/wallet.mock.test";
 import {getAddress} from "../../../src/rpc/getAddress";
 
@@ -34,11 +33,11 @@ describe('Test rpc handler function: getAddress', () => {
     expect(result).to.be.eq("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");
   });
 
-  it('should not return address on empty state', async function () {
+  it('should return address and create new keypair on empty state', async function () {
     walletStub.getPluginState.returns(null);
-    const result = await exportSeed(walletStub);
+    walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
+    const result = await getAddress(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
-    expect(result).to.be.eq(null);
+    expect(result).to.be.eq("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");
   });
-
 });

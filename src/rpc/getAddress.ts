@@ -1,9 +1,7 @@
 import {Wallet} from "../interfaces";
+import {getKeyPair} from "../polkadot/getKeyPair";
 
 export async function getAddress(wallet: Wallet): Promise<string> {
-  const state = wallet.getPluginState();
-  if (state != null) {
-    return state.polkadot.account.keyring.address;
-  }
-  return null;
+  const keyPair = await getKeyPair(wallet);
+  return keyPair.address;
 }

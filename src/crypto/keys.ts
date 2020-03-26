@@ -4,7 +4,10 @@ import { KeyringPair } from '@polkadot/keyring/types';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 import { stringToU8a } from '@polkadot/util';
 
-// Generate keypair from metamask wallet interface using app key
+/**
+ * Generate substrate keypair and saves it to wallet state
+ * @param wallet
+ */
 export async function generateKeys(wallet: Wallet): Promise<KeyringPair> {
   // get app key and wait for api to be ready
   const [appKey] = await Promise.all([wallet.getAppKey(), cryptoWaitReady()]);
