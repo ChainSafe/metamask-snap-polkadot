@@ -1,12 +1,12 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
 import {MetamaskState} from "../../../src/interfaces";
-import {getPublicKey} from "../../../src/rpc/getPublicKey";
 import {WalletMock} from "../crypto/wallet.mock.test";
+import {getAddress} from "../../../src/rpc/getAddress";
 
 chai.use(sinonChai);
 
-describe('Test rpc handler function: getPublicKey', () => {
+describe('Test rpc handler function: getAddress', () => {
 
   const walletStub = new WalletMock();
 
@@ -14,7 +14,7 @@ describe('Test rpc handler function: getPublicKey', () => {
     walletStub.reset();
   });
 
-  it('should return pk on saved pk in state', async function () {
+  it('should return address on saved keyring in state', async function () {
     walletStub.getPluginState.returns({polkadot: {account: {
       keyring: {
         address: "5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7",
@@ -28,19 +28,16 @@ describe('Test rpc handler function: getPublicKey', () => {
         meta: {}
       }
     }}} as MetamaskState);
-    const result = await getPublicKey(walletStub);
+    const result = await getAddress(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
-    expect(result).to.be.eq("0xcf043e13d9228d8a931ce4cc58efbd1ad6c5e2f1932c3174eb150dfaf9165b73");
+    expect(result).to.be.eq("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");
   });
 
-  it('should create new keypair on no pk saved in state', async function () {
+  it('should return address and create new keypair on empty state', async function () {
     walletStub.getPluginState.returns(null);
-    walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21caaba2dd1a12eeafda3fda62aa6dfa21ca");
-    const result = await getPublicKey(walletStub);
+    walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
+    const result = await getAddress(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
-    expect(walletStub.getAppKey).to.have.been.calledOnce;
-    expect(walletStub.updatePluginState).to.have.been.calledOnce;
-    expect(result).not.to.be.null;
-    expect(result).to.be.eq("0xcf043e13d9228d8a931ce4cc58efbd1ad6c5e2f1932c3174eb150dfaf9165b73");
+    expect(result).to.be.eq("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");
   });
 });

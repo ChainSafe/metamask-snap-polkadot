@@ -1,3 +1,5 @@
+import { KeyringPair$Json } from '@polkadot/keyring/types';
+
 export type FMethodCallback = (
   originString: string,
   requestObject: RequestObject
@@ -5,13 +7,13 @@ export type FMethodCallback = (
 
 export type RequestObject = { method: string; params: unknown };
 
-export type KeyPairState = { secretKey: Uint8Array; publicKey: Uint8Array };
-export type MetamaskState = {polkadot: {account: KeyPairState}};
+export type AccountState = { keyring: KeyringPair$Json };
+export type MetamaskState = {polkadot: {account: AccountState}};
 
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
   send(options: {method: string; params: unknown[]}): unknown;
-  getAppKey(): string;
+  getAppKey(): Promise<string>;
   updatePluginState(state: MetamaskState): void;
   getPluginState(): MetamaskState;
 }
