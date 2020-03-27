@@ -70,20 +70,25 @@
         <span class="balance" style="font-weight: bold"></span>
       </div>
       <h4 style="margin-block-end: 0">Block search</h4>
-      <span style="color: darkred">block id input is pre-filled with real block value for easy testing</span>
+      <div>
+        <details>
+          <summary>Supported formats of tag</summary>
+          <ul>
+            <li>block id as string or number: 1629433</li>
+            <li>block hash as hex string: 0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75</li>
+            <li>"latest" (returns latest block)</li>
+          </ul>
+        </details>
+      </div>
       <div style="margin-top: 10px; display: flex">
         <div style="margin-right: 10px">
-          <label for="block-hash">Block hash</label>
-          <input class="block-hash" id="block-hash" type="text"/>
-        </div>
-        <span style="font-weight: bold">OR</span>
-        <div style="margin-left: 10px">
-          <label for="block-id">Block id (number)</label>
-          <input class="block-id" id="block-id" type="text" value="1629433"/>
+          <label for="block-tag">Block tag</label>
+          <input class="block-tag" id="block-tag" type="text" value="1629433"/>
         </div>
         <div style="margin-left: 10px">
           <button class="block-find">Find block</button>
         </div>
+        <span style="color: darkred; margin-left: 10px">block tag is pre-filled with real block value for easy testing</span>
       </div>
       <br/>
       <pre class="block-data" style="background-color: ghostwhite"></pre>
@@ -134,8 +139,7 @@
     transactionsButton.addEventListener('click', getAllTransactions);
 
     // blocks
-    const blockHashInput = document.querySelector('input.block-hash');
-    const blockIdInput = document.querySelector('input.block-id');
+    const blockTagInput = document.querySelector('input.block-tag');
     const blockFindButton = document.querySelector('button.block-find');
     const blockData = document.querySelector('pre.block-data');
     blockFindButton.addEventListener('click', findBlock);
@@ -148,8 +152,7 @@
           params: [{
             method: 'getBlock',
             params: {
-              hash: blockHashInput.value,
-              blockId: blockIdInput.value,
+              blockTag: blockTagInput.value
             }
           }]
         });
