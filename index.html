@@ -121,11 +121,11 @@
     // chain head
     const polkadotHeadButton = document.querySelector('button.head-button');
     const headLabel = document.querySelector('span.head');
-    polkadotHeadButton.addEventListener('click', substrate_getChainHead);
+    polkadotHeadButton.addEventListener('click', getChainHead);
     // balance
     const polkadotBalanceButton = document.querySelector('button.balance-button');
     const balanceLabel = document.querySelector('span.balance');
-    polkadotBalanceButton.addEventListener('click', substrate_getBalance);
+    polkadotBalanceButton.addEventListener('click', getBalance);
 
     // transactions
     const transactionsButton = document.querySelector('button.transactions-button');
@@ -251,13 +251,13 @@
 
     // polkadot/substrate functions
 
-    async function substrate_getChainHead() {
+    async function getChainHead() {
       let response = null;
       try {
         response = await ethereum.send({
           method: snapId,
           params: [{
-            method: 'substrate_getChainHead'
+            method: 'getChainHead'
           }]
         });
       } catch (e) {
@@ -270,13 +270,13 @@
       return false;
     }
 
-    async function substrate_getBalance() {
+    async function getBalance() {
       let response = null;
       try {
         response = await ethereum.send({
           method: snapId,
           params: [{
-            method: 'substrate_getBalance'
+            method: 'getBalance'
           }]
         });
       } catch (e) {

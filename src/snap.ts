@@ -10,15 +10,14 @@ import {getBlock} from "./rpc/substrate/getBlock";
 
 declare let wallet: Wallet;
 
-const apiMethods = ["getBlock", "substrate_getBalance", "substrate_getChainHead"];
+const apiDependentMethods = ["getBlock", "getBalance", "getChainHead"];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
-  // init api if substrate method called
+  // init api if needed
   let api: ApiPromise = null;
-  if (apiMethods.includes(requestObject.method)) {
+  if (apiDependentMethods.includes(requestObject.method)) {
     api = await initApi();
   }
-  console.log(requestObject);
   switch (requestObject.method) {
     case 'getPublicKey':
       return await getPublicKey(wallet);
@@ -30,9 +29,9 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await getTransactions(wallet);
     case 'getBlock':
       return await getBlock(requestObject.params, api);
-    case 'substrate_getBalance':
+    case 'getBalance':
       return await getBalance(wallet, api);
-    case 'substrate_getChainHead':
+    case 'getChainHead':
       // temporary method
       const head = await api.rpc.chain.getFinalizedHead();
       return head.hash;
