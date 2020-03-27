@@ -5,6 +5,7 @@ import {exportSeed} from "./rpc/exportSeed";
 import {getBalance} from "./rpc/substrate/getBalance";
 import {getAddress} from "./rpc/getAddress";
 import ApiPromise from "@polkadot/api/promise";
+import {getTransactions} from "./rpc/substrate/getTransactions";
 
 declare let wallet: Wallet;
 
@@ -21,6 +22,8 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await getAddress(wallet);
     case 'exportSeed':
       return await exportSeed(wallet);
+    case 'getAllTransactions':
+      return await getTransactions(wallet);
     case 'substrate_getBalance':
       return await getBalance(wallet, api);
     case 'substrate_getChainHead':
