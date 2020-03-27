@@ -35,11 +35,11 @@ describe('Test rpc handler function: getTransactions', () => {
   });
 
   it('should return transactions history from api on successful request', async function () {
-    axiosStub.resolves(Promise.resolve({data: "test-data", status: 200}));
+    axiosStub.resolves(Promise.resolve({data: {data: ["test-transaction"]}, status: 200}));
     const transactions = await getTransactions(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledOnce;
     expect(axios.get).to.have.been.calledOnce;
-    expect(transactions).to.be.eq("test-data");
+    expect(transactions).to.be.deep.eq(["test-transaction"]);
   });
 
   it('should return null from api on failed request', async function () {

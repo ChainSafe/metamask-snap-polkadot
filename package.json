@@ -19,7 +19,7 @@
     "watch:snap": "nf-snap watch -s build/index.js",
     "serve": "nf-snap serve",
     "test": "yarn run test:unit",
-    "test:unit": "mocha -r ts-node/register test/unit/**/*.ts"
+    "test:unit": "mocha -r ts-node/register \"test/unit/**/*.test.ts\""
   },
   "repository": {
     "type": "git",

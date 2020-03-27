@@ -69,6 +69,29 @@
         <span style="margin-left: 10px">Balance:</span>
         <span class="balance" style="font-weight: bold"></span>
       </div>
+      <h4 style="margin-block-end: 0">Block search</h4>
+      <div>
+        <details>
+          <summary>Supported formats of tag</summary>
+          <ul>
+            <li>block id as string or number: 1629433</li>
+            <li>block hash as hex string: 0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75</li>
+            <li>"latest" (returns latest block)</li>
+          </ul>
+        </details>
+      </div>
+      <div style="margin-top: 10px; display: flex">
+        <div style="margin-right: 10px">
+          <label for="block-tag">Block tag</label>
+          <input class="block-tag" id="block-tag" type="text" value="1629433"/>
+        </div>
+        <div style="margin-left: 10px">
+          <button class="block-find">Find block</button>
+        </div>
+        <span style="color: darkred; margin-left: 10px">block tag is pre-filled with real block value for easy testing</span>
+      </div>
+      <br/>
+      <pre class="block-data" style="background-color: ghostwhite"></pre>
       <h4>Polkascan api</h4>
       <button class="transactions-button">Get transactions</button>
       <span>Number of transactions:</span>
@@ -103,11 +126,11 @@
     // chain head
     const polkadotHeadButton = document.querySelector('button.head-button');
     const headLabel = document.querySelector('span.head');
-    polkadotHeadButton.addEventListener('click', substrate_getChainHead);
+    polkadotHeadButton.addEventListener('click', getChainHead);
     // balance
     const polkadotBalanceButton = document.querySelector('button.balance-button');
     const balanceLabel = document.querySelector('span.balance');
-    polkadotBalanceButton.addEventListener('click', substrate_getBalance);
+    polkadotBalanceButton.addEventListener('click', getBalance);
 
     // transactions
     const transactionsButton = document.querySelector('button.transactions-button');
@@ -115,7 +138,32 @@
     const numberOfTransactionsSpan = document.querySelector('span.numOfTransactions');
     transactionsButton.addEventListener('click', getAllTransactions);
 
+    // blocks
+    const blockTagInput = document.querySelector('input.block-tag');
+    const blockFindButton = document.querySelector('button.block-find');
+    const blockData = document.querySelector('pre.block-data');
+    blockFindButton.addEventListener('click', findBlock);
 
+    async function findBlock() {
+      let block = null;
+      try {
+        block = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'getBlock',
+            params: {
+              blockTag: blockTagInput.value
+            }
+          }]
+        });
+      } catch (e) {
+        console.log("Unable to fetch substrate chain head", e);
+      }
+      if (block !== null) {
+        console.log(block);
+        blockData.innerHTML = JSON.stringify(block.block, null, 2);
+      }
+    }
 
     fetchPublicKey().then((fetched) => {
       if (fetched) {
@@ -206,13 +254,13 @@
 
     // polkadot/substrate functions
 
-    async function substrate_getChainHead() {
+    async function getChainHead() {
       let response = null;
       try {
         response = await ethereum.send({
           method: snapId,
           params: [{
-            method: 'substrate_getChainHead'
+            method: 'getChainHead'
           }]
         });
       } catch (e) {
@@ -225,13 +273,13 @@
       return false;
     }
 
-    async function substrate_getBalance() {
+    async function getBalance() {
       let response = null;
       try {
         response = await ethereum.send({
           method: snapId,
           params: [{
-            method: 'substrate_getBalance'
+            method: 'getBalance'
           }]
         });
       } catch (e) {
