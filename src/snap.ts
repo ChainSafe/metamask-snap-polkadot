@@ -6,15 +6,19 @@ import {getBalance} from "./rpc/substrate/getBalance";
 import {getAddress} from "./rpc/getAddress";
 import ApiPromise from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
+import {getBlock} from "./rpc/substrate/getBlock";
 
 declare let wallet: Wallet;
+
+const apiMethods = ["getBlock", "substrate_getBalance", "substrate_getChainHead"];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   // init api if substrate method called
   let api: ApiPromise = null;
-  if (requestObject.method.startsWith("substrate")) {
+  if (apiMethods.includes(requestObject.method)) {
     api = await initApi();
   }
+  console.log(requestObject);
   switch (requestObject.method) {
     case 'getPublicKey':
       return await getPublicKey(wallet);
@@ -24,6 +28,8 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await exportSeed(wallet);
     case 'getAllTransactions':
       return await getTransactions(wallet);
+    case 'getBlock':
+      return await getBlock(requestObject.params, api);
     case 'substrate_getBalance':
       return await getBalance(wallet, api);
     case 'substrate_getChainHead':
