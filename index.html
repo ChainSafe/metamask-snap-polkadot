@@ -69,6 +69,24 @@
         <span style="margin-left: 10px">Balance:</span>
         <span class="balance" style="font-weight: bold"></span>
       </div>
+      <h4 style="margin-block-end: 0">Block search</h4>
+      <span style="color: darkred">block id input is pre-filled with real block value for easy testing</span>
+      <div style="margin-top: 10px; display: flex">
+        <div style="margin-right: 10px">
+          <label for="block-hash">Block hash</label>
+          <input class="block-hash" id="block-hash" type="text"/>
+        </div>
+        <span style="font-weight: bold">OR</span>
+        <div style="margin-left: 10px">
+          <label for="block-id">Block id (number)</label>
+          <input class="block-id" id="block-id" type="text" value="1629433"/>
+        </div>
+        <div style="margin-left: 10px">
+          <button class="block-find">Find block</button>
+        </div>
+      </div>
+      <br/>
+      <pre class="block-data" style="background-color: ghostwhite"></pre>
       <h4>Polkascan api</h4>
       <button class="transactions-button">Get transactions</button>
       <span>Number of transactions:</span>
@@ -115,7 +133,34 @@
     const numberOfTransactionsSpan = document.querySelector('span.numOfTransactions');
     transactionsButton.addEventListener('click', getAllTransactions);
 
+    // blocks
+    const blockHashInput = document.querySelector('input.block-hash');
+    const blockIdInput = document.querySelector('input.block-id');
+    const blockFindButton = document.querySelector('button.block-find');
+    const blockData = document.querySelector('pre.block-data');
+    blockFindButton.addEventListener('click', findBlock);
 
+    async function findBlock() {
+      let block = null;
+      try {
+        block = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'getBlock',
+            params: {
+              hash: blockHashInput.value,
+              blockId: blockIdInput.value,
+            }
+          }]
+        });
+      } catch (e) {
+        console.log("Unable to fetch substrate chain head", e);
+      }
+      if (block !== null) {
+        console.log(block);
+        blockData.innerHTML = JSON.stringify(block.block, null, 2);
+      }
+    }
 
     fetchPublicKey().then((fetched) => {
       if (fetched) {
