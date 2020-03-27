@@ -1,14 +1,20 @@
 import React from "react";
-import {Button, Typography, Paper, TextField} from '@material-ui/core/';
+import {Button, TextField, Card, CardContent, CardHeader, Grid} from '@material-ui/core/';
 
 export const SignMessage = () => {
     return (
-        <Paper className="sign-message-container">
-            <Typography variant="h4">SIGN CUSTOM MESSAGE</Typography>
-            <div className="sign-message-input">
-                <TextField fullWidth></TextField>
-                <Button color="secondary" >SIGN</Button>
-            </div>
-        </Paper>
+        <Card>
+            <CardContent>
+            <CardHeader title="Sign custom message"/>
+                <Grid container>
+                    <Grid item xs={10}>
+                        <TextField fullWidth></TextField>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Button color="secondary" >SIGN</Button>
+                    </Grid> 
+                </Grid>
+            </CardContent>
+        </Card>
     );
 }

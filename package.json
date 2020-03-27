@@ -9,13 +9,15 @@
     "lint:style": "eslint 'src/**/*.{js,ts,tsx}' --fix",
     "start": "yarn run build && yarn run serve",
     "prebuild": "rm -rf build && rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
     "build": "yarn run build:tsc && yarn run build:snap",
     "build:tsc": "tsc --build --pretty",
-    "build:snap": "snap build",
+    "build:snap": "nf-snap build --stripComments",
     "watch": "concurrently  --raw --kill-others \"yarn run watch:tsc\" \"yarn run watch:snap\" \"yarn run serve\"",
     "watch:tsc": "yarn run build:tsc --watch",
-    "watch:snap": "snap watch -s build/index.js",
-    "serve": "snap serve",
+    "watch:snap": "nf-snap watch -s build/index.js",
+    "serve": "nf-snap serve",
     "test": "yarn run test:unit",
     "test:unit": "mocha -r ts-node/register test/unit/**/*.ts"
   },
@@ -50,6 +52,7 @@
     }
   },
   "devDependencies": {
+    "@nodefactory/snaps-cli": "^1.0.0",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^7.0.2",
     "@types/sinon": "^7.5.2",
@@ -62,14 +65,12 @@
     "mocha": "^7.1.0",
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
-    "snaps-cli": "^0.4.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.7",
-    "@types/node-sass": "^4.11.0",
-    "node-sass": "^4.13.1",
+    "@polkadot/wasm-crypto": "file:./wasm-crypto-stub",
+    "@polkadot/api": "^1.8.0-beta.10",
     "tweetnacl": "^1.0.3"
   }
 }

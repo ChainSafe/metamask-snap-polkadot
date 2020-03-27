@@ -14,7 +14,7 @@ describe('Test showConfirmationDialog', () => {
   });
 
   it('should return true on positive confirmation', async function () {
-    walletStub.send.returns({result: true});
+    walletStub.send.returns(true);
     const result = await showConfirmationDialog(walletStub, "confirmation");
     expect(walletStub.send).to.have.been.calledOnceWith(
       { method: 'confirm', params: ["confirmation"] }
@@ -23,7 +23,7 @@ describe('Test showConfirmationDialog', () => {
   });
 
   it('should return false on negative confirmation', async function () {
-    walletStub.send.returns({result: false});
+    walletStub.send.returns(false);
     const result = await showConfirmationDialog(walletStub, "confirmation");
     expect(walletStub.send).to.have.been.calledOnceWith(
       { method: 'confirm', params: ["confirmation"] }
