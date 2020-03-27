@@ -14,7 +14,15 @@ export async function getTransactions(wallet: Wallet): Promise<any> {
   const response = await axios.get(`${API_PATH}?&filter[address]=${keyPair.address}`);
   // if request is successful
   if (response.status >= 200 && response.status < 300) {
-    return response.data;
+    const polResponse: PolkascanResponse = response.data;
+    return polResponse.data;
   }
   return null;
+}
+
+interface PolkascanResponse {
+  meta: unknown;
+  errors: [];
+  data: [];
+  links: unknown;
 }

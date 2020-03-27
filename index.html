@@ -69,6 +69,11 @@
         <span style="margin-left: 10px">Balance:</span>
         <span class="balance" style="font-weight: bold"></span>
       </div>
+      <h4>Polkascan api</h4>
+      <button class="transactions-button">Get transactions</button>
+      <span>Number of transactions:</span>
+      <span class="numOfTransactions" style="font-weight: bold"></span>
+      <div class="transactions"></div>
     </div>
   </body>
 
@@ -103,6 +108,14 @@
     const polkadotBalanceButton = document.querySelector('button.balance-button');
     const balanceLabel = document.querySelector('span.balance');
     polkadotBalanceButton.addEventListener('click', substrate_getBalance);
+
+    // transactions
+    const transactionsButton = document.querySelector('button.transactions-button');
+    const transactionDiv = document.querySelector('div.transactions');
+    const numberOfTransactionsSpan = document.querySelector('span.numOfTransactions');
+    transactionsButton.addEventListener('click', getAllTransactions);
+
+
 
     fetchPublicKey().then((fetched) => {
       if (fetched) {
@@ -226,6 +239,26 @@
       }
       if (response != null) {
         balanceLabel.innerHTML = response;
+        return true;
+      }
+      return false;
+    }
+
+    async function getAllTransactions() {
+      let response = null;
+      try {
+        response = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'getAllTransactions'
+          }]
+        });
+      } catch (e) {
+        console.log("Unable to fetch transactions", e);
+      }
+      if (response != null) {
+        numberOfTransactionsSpan.innerHTML = response.length.toString();
+        transactionDiv.innerHTML = response;
         return true;
       }
       return false;
