@@ -1,5 +1,15 @@
 import React from "react";
-import {Button, Typography, TextField, Card, CardContent, CardHeader, Grid} from '@material-ui/core/';
+import {
+    Button,
+    Typography,
+    TextField,
+    Card,
+    CardContent,
+    CardHeader,
+    Grid,
+    InputLabel,
+    FormControl, Input, FormGroup, Divider, Box
+} from '@material-ui/core/';
 
 export const Transfer = () => {
     return (
@@ -7,15 +17,15 @@ export const Transfer = () => {
             <CardContent>
                 <CardHeader title="Transfer"/>
                 <Grid container alignItems="center" justify="space-between">
-                    <Grid item xs={9}>
-                        <Typography variant="h6">TO ADRESS</Typography>
-                        <TextField fullWidth></TextField>
-                        <Typography variant="h6">AMOUNT</Typography>
-                        <TextField fullWidth></TextField>
+                    <Grid item xs={12}>
+                        <TextField size="medium" fullWidth id="recipient" label="Recipient" variant="outlined" />
+                        <Box m="0.5rem"/>
+                        <TextField size="medium" fullWidth id="recipient" label="Amount" variant="outlined" />
                     </Grid>
-                    <Grid item xs={2}>
-                        <Button color="secondary" size="large">SEND</Button>
-                    </Grid>
+                </Grid>
+                <Box m="0.5rem"/>
+                <Grid container item xs={12} justify="flex-end">
+                    <Button color="secondary" variant="contained" size="large">SEND</Button>
                 </Grid>
             </CardContent>
         </Card>

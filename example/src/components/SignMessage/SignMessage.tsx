@@ -1,18 +1,17 @@
 import React from "react";
-import {Button, TextField, Card, CardContent, CardHeader, Grid} from '@material-ui/core/';
+import {Button, TextField, Card, CardContent, CardHeader, Grid, Box} from '@material-ui/core/';
 
 export const SignMessage = () => {
     return (
-        <Card>
-            <CardContent>
+        <Card style={{height: "100%"}}>
             <CardHeader title="Sign custom message"/>
+            <CardContent>
                 <Grid container>
-                    <Grid item xs={10}>
-                        <TextField fullWidth></TextField>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Button color="secondary" >SIGN</Button>
-                    </Grid> 
+                    <TextField size="medium" fullWidth id="recipient" label="Message" variant="outlined" />
+                </Grid>
+                <Box m="0.5rem" />
+                <Grid container justify="flex-end">
+                    <Button color="secondary" variant="contained" size="large">Sign</Button>
                 </Grid>
             </CardContent>
         </Card>
