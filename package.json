@@ -4,7 +4,7 @@
   "description": "Metamask snap to interact with Polkadot dapps.",
   "main": "build/index.js",
   "scripts": {
-    "demo": "yarn run build && cd example && yarn run start",
+    "demo": "yarn run build && concurrently  --raw --kill-others \"yarn run serve\" \"cd example && yarn run start\"",
     "lint": "yarn run lint:types && yarn run lint:style",
     "lint:types": "tsc --noEmit --pretty",
     "lint:style": "eslint 'src/**/*.{js,ts,tsx}' --fix",
