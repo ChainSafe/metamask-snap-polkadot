@@ -32,7 +32,6 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case 'getBlock':
       return await getBlock(requestObject.params, api);
     case 'getBalance':
-      await createPolkadotAsset(wallet, api, "update"); // just for showcase
       return await getBalance(wallet, api);
     case 'getChainHead':
       // temporary method
