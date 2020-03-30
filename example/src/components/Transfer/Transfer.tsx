@@ -1,15 +1,5 @@
 import React from "react";
-import {
-    Button,
-    Typography,
-    TextField,
-    Card,
-    CardContent,
-    CardHeader,
-    Grid,
-    InputLabel,
-    FormControl, Input, FormGroup, Divider, Box
-} from '@material-ui/core/';
+import {Box, Button, Card, CardContent, CardHeader, Grid, TextField} from '@material-ui/core/';
 
 export const Transfer = () => {
     return (
