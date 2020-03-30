@@ -248,6 +248,8 @@
         console.error(e)
       }
       snapConnectedLabel.innerHTML = TRUE;
+      publicKeyLabel.innerHTML = "In progress...";
+      addressLabel.innerHTML = "In progress...";
       await fetchPublicKey();
       await fetchAddress();
     }
