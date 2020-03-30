@@ -29,7 +29,9 @@
       <!-- Snap connect button -->
       <div style="margin-bottom: 10px">
         <button class="connect-snap">Connect polkadot snap</button>
+        <button class="create-asset">Create dot asset</button>
       </div>
+
       <!-- Public Key -->
       <div style="display: inline">Public key:</div>
       <div class="publicKey" style="display: inline; font-weight: bold"></div>
@@ -116,6 +118,9 @@
     snapConnectButton.addEventListener('click', connectSnap);
     snapConnectButton.disabled = false; // until keypair is fetched
     snapConnectedLabel.innerHTML = FALSE;
+    // create asset
+    const createAssetButton = document.querySelector('button.create-asset');
+    createAssetButton.addEventListener('click', createAsset);
     // export seed
     const exportButton = document.querySelector('button.export-seed');
     const seedLabel = document.querySelector('div.seed');
@@ -143,6 +148,19 @@
     const blockFindButton = document.querySelector('button.block-find');
     const blockData = document.querySelector('pre.block-data');
     blockFindButton.addEventListener('click', findBlock);
+
+    async function createAsset() {
+      try {
+        await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'createDotAsset'
+          }]
+        });
+      } catch (e) {
+        console.log("Keys not generated", e);
+      }
+    }
 
     async function findBlock() {
       let block = null;
