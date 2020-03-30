@@ -10,17 +10,11 @@ export const Account = () => {
 
     useEffect(() => {
         // fetch public key
-        (async function getPublicKeyWrapper() {
-            setPublicKey(await getPublicKey());
-        })();
+        (async () => setPublicKey(await getPublicKey()))();
         // fetch address
-        (async function getAddressWrapper() {
-            setAddress(await getAddress())
-        })();
+        (async () => setAddress(await getAddress()))();
         // fetch balance
-        (async function getBalanceWrapper() {
-            setBalance(await getBalance());
-        })();
+        (async () => setBalance(await getBalance()))();
     });
 
     return (
