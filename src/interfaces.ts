@@ -17,3 +17,12 @@ export interface Wallet {
   updatePluginState(state: MetamaskState): void;
   getPluginState(): MetamaskState;
 }
+
+export interface Asset {
+  balance: string;
+  customViewUrl: string;
+  decimals: number;
+  identifier: string;
+  image: string;
+  symbol: string;
+}

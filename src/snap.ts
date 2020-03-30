@@ -7,10 +7,11 @@ import {getAddress} from "./rpc/getAddress";
 import ApiPromise from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
+import {manageUnitAsset} from "./asset/unit";
 
 declare let wallet: Wallet;
 
-const apiDependentMethods = ["getBlock", "getBalance", "getChainHead"];
+const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "getPublicKey"];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   // init api if needed
@@ -20,6 +21,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   }
   switch (requestObject.method) {
     case 'getPublicKey':
+      await manageUnitAsset(wallet, api, "add");
       return await getPublicKey(wallet);
     case 'getAddress':
       return await getAddress(wallet);
@@ -30,6 +32,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case 'getBlock':
       return await getBlock(requestObject.params, api);
     case 'getBalance':
+      await manageUnitAsset(wallet, api, "update"); // just for showcase
       return await getBalance(wallet, api);
     case 'getChainHead':
       // temporary method

@@ -48,7 +48,8 @@
       "alert": {},
       "confirm": {},
       "getPluginState": {},
-      "updatePluginState": {}
+      "updatePluginState": {},
+      "wallet_manageAssets": {}
     }
   },
   "devDependencies": {
