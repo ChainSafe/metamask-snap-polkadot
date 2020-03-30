@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button, Typography, Card, CardContent, CardHeader, Grid, Divider, Box} from '@material-ui/core/';
-import {getAddress, getBalance, getPublicKey} from "../../services/snap";
+import {getAddress, getBalance, getPublicKey} from "../../services/account";
 
 export const Account = () => {
 
