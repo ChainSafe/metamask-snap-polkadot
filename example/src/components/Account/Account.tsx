@@ -8,15 +8,25 @@ export const Account = () => {
     let [address, setAddress] = useState("");
     let [publicKey, setPublicKey] = useState("");
 
+    // @ts-ignore
+    let [balanceInterval, setBalanceInterval] = useState<NodeJS.Timeout>(null);
+
     useEffect(() => {
         // fetch public key
         (async () => setPublicKey(await getPublicKey()))();
         // fetch address
         (async () => setAddress(await getAddress()))();
-        // fetch balance every 3 second
-        const timer = setInterval(async () => setBalance(await getBalance()), 3000);
-        return () => clearInterval(timer);
     });
+
+    useEffect(() => {
+        // fetch balance every 3 second
+        setBalanceInterval(setInterval(async () => setBalance(await getBalance()), 3000));
+        return () => {
+            if (balanceInterval) {
+                clearInterval(balanceInterval)
+            }
+        };
+    }, [balance]);
 
     return (
         <Card>
