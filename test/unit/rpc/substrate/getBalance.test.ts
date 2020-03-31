@@ -39,7 +39,7 @@ describe('Test rpc handler function: getBalance', () => {
     } as MetamaskState);
     // api stub
     const apiStub = {query: {system: {account: sinon.stub()}}};
-    apiStub.query.system.account.returns({data: {free: {toHuman: () => "0"}}} as AccountInfo);
+    apiStub.query.system.account.returns({data: {free: '0'}} as unknown as AccountInfo);
     const api = apiStub as unknown as ApiPromise;
     const result = await getBalance(walletStub, api);
     expect(result).to.be.eq("0");
@@ -53,7 +53,7 @@ describe('Test rpc handler function: getBalance', () => {
     walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
     // api stub
     const apiStub = {query: {system: {account: sinon.stub()}}};
-    apiStub.query.system.account.returns({data: {free: {toHuman: () => "0"}}} as AccountInfo);
+    apiStub.query.system.account.returns({data: {free: "0"}} as unknown as AccountInfo);
     const api = apiStub as unknown as ApiPromise;
     const result = await getBalance(walletStub, api);
     expect(result).to.be.eq("0");

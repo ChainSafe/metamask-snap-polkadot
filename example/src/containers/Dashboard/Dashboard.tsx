@@ -24,6 +24,12 @@ export const Dashboard = () => {
                     <MetaMaskConnector/>
                 </Hidden>
                 <Hidden xsUp={!state.isPolkadotSnapInstalled}>
+                    <Grid container spacing={3} alignItems={"stretch"}>
+                        <Grid item xs={12}>
+                            <LatestBlock/>
+                        </Grid>
+                    </Grid>
+                    <Box m="1rem"/>
                     <Grid container spacing={3} alignItems="stretch">
                         <Grid item xs={12}>
                             <Account/>
@@ -49,13 +55,8 @@ export const Dashboard = () => {
                             </Card>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={3} alignItems={"stretch"}>
-                        <Grid item xs={12}>
-                            <LatestBlock/>
-                        </Grid>
-                    </Grid>
                 </Hidden>
             </Grid>
         </Container>
     );
-}
+};
