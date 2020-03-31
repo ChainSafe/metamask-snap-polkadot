@@ -36,10 +36,8 @@ export async function getBlock(requestParams: GetBlockParams, api: ApiPromise): 
       return await _getBlockById(requestParams.blockTag, api);
     case "string":
       if (requestParams.blockTag === "latest") {
-        console.log("latest")
         // get latest block
         const h = await api.rpc.chain.getHeader();
-        console.log(h.hash);
         return await _getBlock(h.hash, api);
       } else if (requestParams.blockTag.startsWith("0x")) {
         // get block by hash
