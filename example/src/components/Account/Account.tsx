@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Typography, Card, CardContent, CardHeader, Grid, Divider, Box} from '@material-ui/core/';
 import {getAddress, getBalance, getPublicKey} from "../../services/account";
+import formatBalance from "@polkadot/util/format/formatBalance"
 
 export const Account = () => {
 
@@ -41,7 +42,9 @@ export const Account = () => {
                         <Divider light/>
                         <Box m={"0.5rem"}/>
                         <Typography variant="h6">ACCOUNT BALANCE:</Typography>
-                        <Typography variant="subtitle2">{balance}</Typography>
+                        <Typography variant="subtitle2">
+                            {formatBalance(balance, {decimals: 12, withSi: true, withUnit: "KSM"})}
+                        </Typography>
                     </Grid>
                 </Grid>
                 <Grid container item xs={12} justify="flex-end">

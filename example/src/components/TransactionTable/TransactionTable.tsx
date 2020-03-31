@@ -3,6 +3,7 @@ import {Paper, Table, TableContainer, TableCell,
     TableRow, TableHead, TableBody} from '@material-ui/core/';
 import {getAllTransactions} from "../../services/transactions";
 import {shortAddress} from "../../services/format";
+import {formatBalance} from "@polkadot/util";
 
 interface Transaction {
     type: string;
@@ -31,7 +32,7 @@ export const TransactionTable = () => {
 
     useEffect(()=>{
         (async () => {
-            setTransactions(await getAllTransactions("Dc6ouAsLFYLF7kCfAbW6j6kVN1FvoKcyAuTr1NCKmU2c8mk"));
+            setTransactions(await getAllTransactions());
         })();
     }, []);
 
@@ -60,8 +61,8 @@ export const TransactionTable = () => {
                     </TableCell>
                     <TableCell align="center">{shortAddress(tx.attributes.sender.attributes.address)}</TableCell>
                     <TableCell align="center">{shortAddress(tx.attributes.destination.attributes.address)}</TableCell>
-                    <TableCell align="center">{tx.attributes.value} KSM</TableCell>
-                    <TableCell align="center">{tx.attributes.fee} KSM</TableCell>
+                    <TableCell align="center">{formatBalance(tx.attributes.value, {decimals: 12, withSi: true, withUnit: "KSM"})}</TableCell>
+                    <TableCell align="center">{formatBalance(tx.attributes.fee, {decimals: 12, withSi: true, withUnit: "KSM"})}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
