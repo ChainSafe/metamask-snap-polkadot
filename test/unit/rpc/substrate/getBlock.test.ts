@@ -24,10 +24,13 @@ describe('Test rpc handler function: getBlock', () => {
     apiStub.rpc.chain.getBlockHash.returns(
       hexToU8a("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75") as BlockHash
     );
-    apiStub.rpc.chain.getBlock.returns({});
+    // eslint-disable-next-line max-len
+    apiStub.rpc.chain.getBlock.returns({block:{hash: {toHex: (): string => "0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75"}, header: {number: 10}}});
     const api = apiStub as unknown as ApiPromise;
     const result = await getBlock({blockTag: 1}, api);
     expect(result).not.to.be.null;
+    expect(result.hash).to.be.eq("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75");
+    expect(result.number).to.be.eq("10");
     expect(apiStub.rpc.chain.getBlockHash).to.have.been.calledOnceWith(1);
     // eslint-disable-next-line max-len
     expect(apiStub.rpc.chain.getBlock).to.have.been.calledOnceWith(hexToU8a("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75") as BlockHash);
@@ -39,10 +42,13 @@ describe('Test rpc handler function: getBlock', () => {
     apiStub.rpc.chain.getBlockHash.returns(
       hexToU8a("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75") as BlockHash
     );
-    apiStub.rpc.chain.getBlock.returns({});
+    // eslint-disable-next-line max-len
+    apiStub.rpc.chain.getBlock.returns({block:{hash: {toHex: (): string => "0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75"}, header: {number: 10}}});
     const api = apiStub as unknown as ApiPromise;
     const result = await getBlock({blockTag: "1"}, api);
     expect(result).not.to.be.null;
+    expect(result.hash).to.be.eq("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75");
+    expect(result.number).to.be.eq("10");
     expect(apiStub.rpc.chain.getBlockHash).to.have.been.calledOnceWith(1);
     // eslint-disable-next-line max-len
     expect(apiStub.rpc.chain.getBlock).to.have.been.calledOnceWith(hexToU8a("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75") as BlockHash);
@@ -52,10 +58,14 @@ describe('Test rpc handler function: getBlock', () => {
     // api stub
     const apiStub = {rpc: {chain: {getBlock: sinon.stub()}}};
     apiStub.rpc.chain.getBlock.returns({});
+    // eslint-disable-next-line max-len
+    apiStub.rpc.chain.getBlock.returns({block:{hash: {toHex: (): string => "0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75"}, header: {number: 10}}});
     const api = apiStub as unknown as ApiPromise;
     // eslint-disable-next-line max-len
     const result = await getBlock({blockTag: "0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75"}, api);
     expect(result).not.to.be.null;
+    expect(result.hash).to.be.eq("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75");
+    expect(result.number).to.be.eq("10");
     // eslint-disable-next-line max-len
     expect(apiStub.rpc.chain.getBlock).to.have.been.calledOnceWith("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75");
   });
@@ -65,10 +75,14 @@ describe('Test rpc handler function: getBlock', () => {
     const apiStub = {rpc: {chain: {getBlock: sinon.stub(), getHeader: sinon.stub()}}};
     apiStub.rpc.chain.getBlock.returns({});
     // eslint-disable-next-line max-len
+    apiStub.rpc.chain.getBlock.returns({block:{hash: {toHex: (): string => "0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75"}, header: {number: 10}}});
+    // eslint-disable-next-line max-len
     apiStub.rpc.chain.getHeader.returns({hash: hexToU8a("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75") as H256});
     const api = apiStub as unknown as ApiPromise;
     const result = await getBlock({blockTag: "latest"}, api);
     expect(result).not.to.be.null;
+    expect(result.hash).to.be.eq("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75");
+    expect(result.number).to.be.eq("10");
     expect(apiStub.rpc.chain.getHeader).to.have.been.calledOnce;
     // eslint-disable-next-line max-len
     expect(apiStub.rpc.chain.getBlock).to.have.been.calledOnceWith(hexToU8a("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75") as BlockHash);

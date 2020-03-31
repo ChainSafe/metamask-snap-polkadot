@@ -1,3 +1,5 @@
+import {BlockInfo} from "../../../src/rpc/substrate/getBlock";
+
 declare global {
     interface Window {
         ethereum: {
