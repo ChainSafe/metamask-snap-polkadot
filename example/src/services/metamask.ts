@@ -39,9 +39,6 @@ export async function isPolkadotSnapInstalled(): Promise<boolean> {
         const result = await window.ethereum.send({
             method: 'wallet_getPlugins',
         });
-        console.log(result);
-        console.log(origin);
-        console.log(result[origin]);
         return !!result[origin];
     } catch (e) {
         console.log(e);
