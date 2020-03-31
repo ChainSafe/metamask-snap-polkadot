@@ -4,7 +4,7 @@ import {getAddress, getBalance, getPublicKey} from "../../services/account";
 
 export const Account = () => {
 
-    let [balance, setBalance] = useState("");
+    let [balance, setBalance] = useState(0);
     let [address, setAddress] = useState("");
     let [publicKey, setPublicKey] = useState("");
 
