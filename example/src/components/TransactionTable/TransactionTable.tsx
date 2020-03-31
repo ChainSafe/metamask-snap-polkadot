@@ -33,7 +33,7 @@ export const TransactionTable = () => {
         (async () => {
             setTransactions(await getAllTransactions("Dc6ouAsLFYLF7kCfAbW6j6kVN1FvoKcyAuTr1NCKmU2c8mk"));
         })();
-    });
+    }, []);
 
     return (
         <TableContainer className="transtaction-table" component={Paper}>

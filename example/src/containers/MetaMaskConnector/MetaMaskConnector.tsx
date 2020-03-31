@@ -15,7 +15,7 @@ export const MetaMaskConnector = () => {
                 dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
             }
         })();
-    });
+    }, []);
 
     const installSnap = useCallback(async () => {
        const isInitiated = await installPolkadotSnap();

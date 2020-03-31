@@ -10,16 +10,9 @@ export const Account = () => {
 
     useEffect(() => {
         (async () => setPublicKey(await getPublicKey()))();
-    });
-
-    useEffect(() => {
-        // fetch address
         (async () => setAddress(await getAddress()))();
-    });
-
-    useEffect(() => {
         (async () => setBalance(await getBalance()))();
-    });
+    }, []);
 
     // useEffect(() => {
     //     // fetch balance every 3 second
