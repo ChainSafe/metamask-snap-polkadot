@@ -2,31 +2,40 @@ import React, {useEffect, useState} from "react";
 import {Paper, Table, TableContainer, TableCell,
     TableRow, TableHead, TableBody} from '@material-ui/core/';
 import {getAllTransactions} from "../../services/transactions";
+import {shortAddress} from "../../services/format";
+
+interface Transaction {
+    type: string;
+    id: string;
+    attributes: {
+        "block_id": number;
+        value: number,
+        fee: number,
+        sender: {
+            type: string;
+            attributes: {
+                address: string;
+            }
+        };
+        destination: {
+            attributes: {
+                address: string;
+            }
+        }
+    }
+}
 
 export const TransactionTable = () => {
 
-    const [transactions, setTransactions] = useState();
-
-    function createData(id: string, from: string, to: string, amount: number, token: string) {
-        return { id, from, to, amount, token };
-      }
-    const rows = [
-        createData('21341', "0XDC25EF3F5B8A...", "0XDC25EF3F5B8A...", 0.34, "ETH"),
-        createData('67893', "0XDC25EF3F5B8A...", "0XDC25EF3F5B8A...", 0.11, "ETH"),
-        createData('34673', "0XDC25EF3F5B8A...", "0XDC25EF3F5B8A...", 0.09, "ETH"),
-        createData('08763', "0XDC25EF3F5B8A...", "0XDC25EF3F5B8A...", 0.46, "ETH"),
-        createData('12309', "0XDC25EF3F5B8A...", "0XDC25EF3F5B8A...", 1.39, "ETH"),
-      ];
-    
-    
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
 
     useEffect(()=>{
         
         (async () => {
-            setTransactions(await getAllTransactions());
+            setTransactions(await getAllTransactions("Dc6ouAsLFYLF7kCfAbW6j6kVN1FvoKcyAuTr1NCKmU2c8mk"));
             console.log(transactions);
         })();
-    },[])
+    });
 
     return (
         <TableContainer className="transtaction-table" component={Paper}>
@@ -35,22 +44,26 @@ export const TransactionTable = () => {
                 <TableHead>
                 <TableRow>
                     <TableCell>Transaction id</TableCell>
-                    <TableCell align="right">from adress</TableCell>
-                    <TableCell align="right">to adress</TableCell>
-                    <TableCell align="right">amount</TableCell>
-                    <TableCell align="right">token</TableCell>
+                    <TableCell align="center">Block</TableCell>
+                    <TableCell align="center">Sender</TableCell>
+                    <TableCell align="center">Destination</TableCell>
+                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Fee</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {rows.map(row => (
-                    <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
-                        {row.id}
+                {transactions.map(tx => (
+                    <TableRow key={tx.id}>
+                    <TableCell  align="left" component="th" scope="row">
+                        {tx.id}
                     </TableCell>
-                    <TableCell align="right">{row.from}</TableCell>
-                    <TableCell align="right">{row.to}</TableCell>
-                    <TableCell align="right">{row.amount}</TableCell>
-                    <TableCell align="right">{row.token}</TableCell>
+                    <TableCell  align="center" component="th" scope="row">
+                        {tx.attributes.block_id}
+                    </TableCell>
+                    <TableCell align="center">{shortAddress(tx.attributes.sender.attributes.address)}</TableCell>
+                    <TableCell align="center">{shortAddress(tx.attributes.destination.attributes.address)}</TableCell>
+                    <TableCell align="center">{tx.attributes.value} KSM</TableCell>
+                    <TableCell align="center">{tx.attributes.fee} KSM</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>

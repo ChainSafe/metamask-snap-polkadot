@@ -334,7 +334,10 @@
         response = await ethereum.send({
           method: snapId,
           params: [{
-            method: 'getAllTransactions'
+            method: 'getAllTransactions',
+            params: {
+              address: "Dc6ouAsLFYLF7kCfAbW6j6kVN1FvoKcyAuTr1NCKmU2c8mk"
+            }
           }]
         });
       } catch (e) {

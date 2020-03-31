@@ -1,11 +1,14 @@
 import {pluginOrigin} from "./metamask";
 
-export async function getAllTransactions(): Promise<any> {
+export async function getAllTransactions(address?: string): Promise<any> {
     try {
       return await window.ethereum.send({
         method: pluginOrigin,
         params: [{
-          method: 'getAllTransactions'
+          method: 'getAllTransactions',
+            params: {
+              address
+            }
         }]
       });
     } catch (e) {

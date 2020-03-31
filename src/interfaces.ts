@@ -5,7 +5,7 @@ export type FMethodCallback = (
   requestObject: RequestObject
 ) => Promise<unknown>;
 
-export type RequestObject = { method: string; params: unknown };
+export type RequestObject = { method: string; params: Record<string, unknown> };
 
 export type AccountState = { keyring: KeyringPair$Json };
 export type MetamaskState = {
