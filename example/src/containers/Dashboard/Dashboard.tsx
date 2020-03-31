@@ -48,6 +48,16 @@ export const Dashboard = () => {
                             </Card>
                         </Grid>
                     </Grid>
+                    <Grid container spacing={3} alignItems={"stretch"}>
+                        <Grid item xs={12}>
+                            <Card>
+                                <CardHeader title={"Latest block"}/>
+                                <CardContent>
+                                    <pre></pre>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    </Grid>
                 </Hidden>
             </Grid>
         </Container>
