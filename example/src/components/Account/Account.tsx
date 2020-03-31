@@ -21,17 +21,17 @@ export const Account = () => {
         (async () => setBalance(await getBalance()))();
     });
 
-    useEffect(() => {
-        // fetch balance every 3 second
-        const interval = setInterval(async () => {
-            setBalance(await getBalance())
-        }, 3000);
-        return function cleanup() {
-            if (interval) {
-                clearInterval(interval)
-            }
-        };
-    }, []);
+    // useEffect(() => {
+    //     // fetch balance every 3 second
+    //     const interval = setInterval(async () => {
+    //         setBalance(await getBalance())
+    //     }, 3000);
+    //     return function cleanup() {
+    //         if (interval) {
+    //             clearInterval(interval)
+    //         }
+    //     };
+    // }, []);
 
     return (
         <Card>
