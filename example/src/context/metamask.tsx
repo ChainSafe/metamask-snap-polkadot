@@ -1,27 +1,30 @@
 import {hasMetaMask} from "../services/metamask";
 import React, {createContext, Dispatch, PropsWithChildren, Reducer, useReducer} from "react";
 
+interface IIsPolkadotSnapInstalled {
+    isInstalled: boolean
+    message: string
+}
+
 export interface MetamaskState {
-    isPolkadotSnapInstalled: boolean,
+    isPolkadotSnapInstalled: IIsPolkadotSnapInstalled,
     hasMetaMask: boolean,
-    hasPolkadotInstallFailed: boolean
 }
 
 const initialState: MetamaskState = {
-    isPolkadotSnapInstalled: false,
-    hasMetaMask: hasMetaMask(),
-    hasPolkadotInstallFailed: false
+    isPolkadotSnapInstalled: {
+        isInstalled: false,
+        message: ""
+    },
+    hasMetaMask: hasMetaMask()
 };
 type MetamaskDispatch = {type: MetamaskActions, payload: any};
 
 export const MetaMaskContext = createContext<[MetamaskState, Dispatch<MetamaskDispatch>]>([initialState, () => {}]);
 
 export enum MetamaskActions {
-    SET_INSTALLED_STATUS,
-    HAS_INSTALL_FAILED
+    SET_INSTALLED_STATUS
 }
-
-
 
 const reducer: Reducer<MetamaskState, MetamaskDispatch> = (state, action) => {
 
@@ -30,12 +33,6 @@ const reducer: Reducer<MetamaskState, MetamaskDispatch> = (state, action) => {
             return {
                 ...state,
                 isPolkadotSnapInstalled: action.payload
-            }
-        }
-        case MetamaskActions.HAS_INSTALL_FAILED: {
-            return {
-                ...state,
-                hasPolkadotInstallFailed: action.payload
             }
         }
         default: {

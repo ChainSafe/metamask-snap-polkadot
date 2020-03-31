@@ -19,10 +19,10 @@ export const Dashboard = () => {
                         Polkadot snap demo
                     </Typography>
                 </Box>
-                <Hidden xsUp={state.isPolkadotSnapInstalled}>
+                <Hidden xsUp={state.isPolkadotSnapInstalled.isInstalled}>
                     <MetaMaskConnector/>
                 </Hidden>
-                <Hidden xsUp={!state.isPolkadotSnapInstalled}>
+                <Hidden xsUp={!state.isPolkadotSnapInstalled.isInstalled}>
                     <Grid container spacing={3} alignItems="stretch">
                         <Grid item xs={12}>
                             <Account/>

@@ -12,14 +12,19 @@ export const MetaMaskConnector = () => {
     const installSnap = useCallback(async () => {
        const isInitiated = await installPolkadotSnap();
        if(!isInitiated) {
-          dispatch({type: MetamaskActions.HAS_INSTALL_FAILED, payload: true})
+          dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Please accept snap installation prompt"}})
        } else {
-           dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
+          dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: true}});
 
-           let account: any[] = window.ethereum.on('accountsChanged', function (accounts: any) {
-          });
-          console.log(account);
-          console.log(account[0]);
+          window.ethereum.on('accountsChanged', function (accounts: string[]) {
+          console.log(accounts[0]);
+        })
+        
+        // let account = window.ethereum.on('accountsChanged', function (accounts: string[]) {
+        //   console.log(accounts[0]);
+        // })
+        // console.log(account);
+        // // console.log(account[0]);
 
        }
     }, [dispatch]);
@@ -28,8 +33,13 @@ export const MetaMaskConnector = () => {
         if (reason === 'clickaway') {
           return;
         }
-        dispatch({type: MetamaskActions.HAS_INSTALL_FAILED, payload: false})
+        dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: false})
       };
+    
+    const handleSnackbar = (): boolean => {
+      if (!state.isPolkadotSnapInstalled.isInstalled && state.isPolkadotSnapInstalled.message) return true;
+      else return false;
+    }
 
     return(
         <div>
@@ -38,10 +48,10 @@ export const MetaMaskConnector = () => {
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
-                open={state.hasPolkadotInstallFailed}
+                open={handleSnackbar()}
                 autoHideDuration={6000}
                 onClose={handleClose}
-                message="Failed to install snap"
+                message={state.isPolkadotSnapInstalled.message}
                 action={
                     <React.Fragment>
                       <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
