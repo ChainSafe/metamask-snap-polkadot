@@ -16,9 +16,10 @@ export function hasMetaMask(): boolean {
 
 }
 
+export const origin = new URL('package.json', 'http://localhost:8081').toString();
+export const pluginOrigin = `wallet_plugin_${origin}`;
+
 export async function installPolkadotSnap(): Promise<boolean> {
-    const origin = new URL('package.json', 'http://localhost:8081').toString();
-    const pluginOrigin = `wallet_plugin_${origin}`;
     try {
         await window.ethereum.send({
             method: 'wallet_enable',

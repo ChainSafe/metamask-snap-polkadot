@@ -4,6 +4,7 @@ import React, {useCallback, useContext} from "react";
 import Alert from "@material-ui/lab/Alert";
 import {MetamaskActions, MetaMaskContext} from "../../context/metamask";
 import {installPolkadotSnap} from "../../services/metamask";
+import {addDotAsset} from "../../services/asset";
 
 export const MetaMaskConnector = () => {
 
@@ -16,9 +17,9 @@ export const MetaMaskConnector = () => {
        } else {
           dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: true}});
 
-          window.ethereum.on('accountsChanged', function (accounts: string[]) {
-          console.log(accounts[0]);
-        })
+        //   window.ethereum.on('accountsChanged', function (accounts: string[]) {
+        //   console.log(accounts[0]);
+        // })
         
         // let account = window.ethereum.on('accountsChanged', function (accounts: string[]) {
         //   console.log(accounts[0]);
@@ -26,6 +27,11 @@ export const MetaMaskConnector = () => {
         // console.log(account);
         // // console.log(account[0]);
 
+           const dotAssetAdded = await addDotAsset();
+           if (!dotAssetAdded) {
+               alert("Failed to add dot asset to metamask");
+           }
+           dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
        }
     }, [dispatch]);
 
