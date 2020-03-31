@@ -1,6 +1,6 @@
 import {Wallet} from "../../interfaces";
 import axios from "axios";
-import {getKeyPair} from "../../polkadot/getKeyPair";
+import {getKeyPair} from "../../polkadot/account";
 
 const API_PATH = "https://api-01.polkascan.io/kusama/api/v1/balances/transfer";
 
