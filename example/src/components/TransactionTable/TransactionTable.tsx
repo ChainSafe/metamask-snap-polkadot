@@ -30,10 +30,8 @@ export const TransactionTable = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
 
     useEffect(()=>{
-        
         (async () => {
             setTransactions(await getAllTransactions("Dc6ouAsLFYLF7kCfAbW6j6kVN1FvoKcyAuTr1NCKmU2c8mk"));
-            console.log(transactions);
         })();
     });
 
