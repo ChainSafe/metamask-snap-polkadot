@@ -1,13 +1,21 @@
 import {Box, Button, Hidden} from "@material-ui/core";
-import React, {useCallback, useContext} from "react";
+import React, {useCallback, useContext, useEffect} from "react";
 import Alert from "@material-ui/lab/Alert";
 import {MetamaskActions, MetaMaskContext} from "../../context/metamask";
-import {installPolkadotSnap} from "../../services/metamask";
+import {installPolkadotSnap, isPolkadotSnapInstalled} from "../../services/metamask";
 import {addDotAsset} from "../../services/asset";
 
 export const MetaMaskConnector = () => {
 
     const [state, dispatch] = useContext(MetaMaskContext);
+
+    useEffect( () => {
+        (async () => {
+            if(await isPolkadotSnapInstalled()) {
+                dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
+            }
+        })();
+    }, [dispatch]);
 
     const installSnap = useCallback(async () => {
        const isInitiated = await installPolkadotSnap();

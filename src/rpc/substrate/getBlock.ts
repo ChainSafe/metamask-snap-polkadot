@@ -1,12 +1,15 @@
 import ApiPromise from "@polkadot/api/promise";
-import {SignedBlock} from '@polkadot/types/interfaces/runtime';
 import { BlockHash } from '@polkadot/types/interfaces/rpc';
 
-async function _getBlock(blockHash: BlockHash|string, api: ApiPromise): Promise<SignedBlock> {
-  return api.rpc.chain.getBlock(blockHash);
+async function _getBlock(blockHash: BlockHash|string, api: ApiPromise): Promise<BlockInfo> {
+  const signedBlock = await api.rpc.chain.getBlock(blockHash);
+  return {
+    hash: signedBlock.block.hash.toHex(),
+    number: signedBlock.block.header.number.toString()
+  };
 }
 
-async function _getBlockById(blockId: number, api: ApiPromise): Promise<SignedBlock> {
+async function _getBlockById(blockId: number, api: ApiPromise): Promise<BlockInfo> {
   const blockHash = await api.rpc.chain.getBlockHash(blockId);
   if (!blockHash.isEmpty) {
     return await _getBlock(blockHash, api);
@@ -14,7 +17,12 @@ async function _getBlockById(blockId: number, api: ApiPromise): Promise<SignedBl
   return null;
 }
 
-interface GetBlockParams {
+export interface BlockInfo {
+  hash: string;
+  number: string;
+}
+
+export interface GetBlockParams {
   blockTag?: number|string|"latest";
 }
 
@@ -29,7 +37,7 @@ interface GetBlockParams {
  * @param requestParams
  * @param api
  */
-export async function getBlock(requestParams: GetBlockParams, api: ApiPromise): Promise<SignedBlock> {
+export async function getBlock(requestParams: GetBlockParams, api: ApiPromise): Promise<BlockInfo> {
   switch (typeof requestParams.blockTag) {
     case "number":
       // get block by id sent as number

@@ -1,6 +1,6 @@
 import {Wallet} from "../../interfaces";
 import axios from "axios";
-import {getKeyPair} from "../../polkadot/account";
+import {getAddress} from "../getAddress";
 
 const API_PATH = "https://api-01.polkascan.io/kusama/api/v1/balances/transfer";
 
@@ -11,7 +11,7 @@ const API_PATH = "https://api-01.polkascan.io/kusama/api/v1/balances/transfer";
  */
 export async function getTransactions(wallet: Wallet, address?: string): Promise<unknown> {
   if(!address) {
-    address = (await getKeyPair(wallet)).address;
+    address = await getAddress(wallet);
   }
   const response = await axios.get(`${API_PATH}?&filter[address]=${address}`);
   // if request is successful
