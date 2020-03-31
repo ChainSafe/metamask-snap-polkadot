@@ -11,7 +11,7 @@ import {createPolkadotAsset} from "./asset/unit";
 
 declare let wallet: Wallet;
 
-const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "getPublicKey"];
+const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addDotAsset"];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   // init api if needed
@@ -21,7 +21,6 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   }
   switch (requestObject.method) {
     case 'getPublicKey':
-      await createPolkadotAsset(wallet, api, "add");
       return await getPublicKey(wallet);
     case 'getAddress':
       return await getAddress(wallet);
@@ -33,6 +32,8 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await getBlock(requestObject.params, api);
     case 'getBalance':
       return await getBalance(wallet, api);
+    case 'addDotAsset':
+      return await createPolkadotAsset(wallet, api, "add");
     case 'getChainHead':
       // temporary method
       const head = await api.rpc.chain.getFinalizedHead();
