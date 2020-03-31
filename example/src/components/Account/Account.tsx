@@ -26,7 +26,7 @@ export const Account = () => {
                 clearInterval(balanceInterval)
             }
         };
-    }, [balance]);
+    });
 
     return (
         <Card>
