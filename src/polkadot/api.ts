@@ -1,16 +1,25 @@
-import {ApiPromise, WsProvider} from "@polkadot/api";
+import ApiPromise from "@polkadot/api/promise";
+import {WsProvider} from "@polkadot/api";
+
+let api: ApiPromise;
 
 /**
  * Initialize substrate api and awaits for it to be ready
  */
-export async function initApi(): Promise<ApiPromise> {
+async function initApi(): Promise<ApiPromise> {
   const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io/');
   const api = new ApiPromise({ initWasm: false, provider: wsProvider });
   try {
     await api.isReady;
-    console.log("Api is ready.");
   } catch (e) {
     console.log("Api is ready with error:", e);
   }
   return api;
 }
+
+export const getApi = async () => {
+  if (!api) {
+    api = await initApi();
+  }
+  return api;
+};
