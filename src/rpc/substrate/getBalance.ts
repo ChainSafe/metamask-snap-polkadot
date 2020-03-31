@@ -1,6 +1,7 @@
 import {Wallet} from "../../interfaces";
 import ApiPromise from "@polkadot/api/promise";
 import {getKeyPair} from "../../polkadot/account";
+import {Balance} from "@polkadot/types/interfaces";
 
 /**
  * Returns balance as BN
@@ -8,7 +9,7 @@ import {getKeyPair} from "../../polkadot/account";
  * @param api
  * @param address
  */
-export async function getBalance(wallet: Wallet, api: ApiPromise, address?: string): Promise<any> {
+export async function getBalance(wallet: Wallet, api: ApiPromise, address?: string): Promise<Balance> {
   if(!address) {
     address = (await getKeyPair(wallet)).address;
   }
