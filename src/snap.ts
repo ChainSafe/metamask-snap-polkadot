@@ -1,6 +1,5 @@
 import {Wallet} from "./interfaces";
 import {getPublicKey} from "./rpc/getPublicKey";
-import {initApi} from "./polkadot/initApi";
 import {exportSeed} from "./rpc/exportSeed";
 import {getBalance} from "./rpc/substrate/getBalance";
 import {getAddress} from "./rpc/getAddress";
@@ -8,6 +7,7 @@ import ApiPromise from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {createPolkadotAsset} from "./asset/unit";
+import {getApi} from "./polkadot/api";
 
 declare let wallet: Wallet;
 
@@ -17,8 +17,9 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   // init api if needed
   let api: ApiPromise = null;
   if (apiDependentMethods.includes(requestObject.method)) {
-    api = await initApi();
+    api = await getApi();
   }
+  console.log(requestObject);
   switch (requestObject.method) {
     case 'getPublicKey':
       return await getPublicKey(wallet);
