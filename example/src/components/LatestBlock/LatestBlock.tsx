@@ -7,7 +7,7 @@ export const LatestBlock = () => {
 
     useEffect(() => {
         (async () => setLatestBlock(await getLatestBlock()))();
-    });
+    }, []);
 
     // useEffect(() => {
     //     // fetch balance every 3 second
