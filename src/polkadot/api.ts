@@ -17,7 +17,7 @@ async function initApi(): Promise<ApiPromise> {
   return api;
 }
 
-export const getApi = async () => {
+export const getApi = async (): Promise<ApiPromise> => {
   if (!api) {
     api = await initApi();
   }
