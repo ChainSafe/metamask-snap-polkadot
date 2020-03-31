@@ -3,6 +3,7 @@ import React, {useCallback, useContext} from "react";
 import Alert from "@material-ui/lab/Alert";
 import {MetamaskActions, MetaMaskContext} from "../../context/metamask";
 import {installPolkadotSnap} from "../../services/metamask";
+import {addDotAsset} from "../../services/asset";
 
 export const MetaMaskConnector = () => {
 
@@ -13,6 +14,10 @@ export const MetaMaskConnector = () => {
        if(!isInitiated) {
            alert("Failed to install snap");
        } else {
+           const dotAssetAdded = await addDotAsset();
+           if (!dotAssetAdded) {
+               alert("Failed to add dot asset to metamask");
+           }
            dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
        }
     }, [dispatch]);
