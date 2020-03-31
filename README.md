@@ -8,10 +8,10 @@
 
 Metamask snap (plugin) to enable Metamask users interaction with Polkadot dapps.
 
-### Development
+### Testing
 
 #### Metamask
-- download latest Metamask snaps beta release: https://github.com/MetaMask/metamask-snaps-beta/releases
+- [download latest Metamask snaps beta release](https://github.com/NodeFactoryIo/metamask-snaps-beta/releases) (chrome recommended)
 - extract downloaded archive
 - go to [chrome://extensions/](chrome://extensions/)
 - enable "Developer mode"
@@ -19,16 +19,12 @@ Metamask snap (plugin) to enable Metamask users interaction with Polkadot dapps.
 
 #### Extension
 - `yarn install`
-- `yarn build`
-- `yarn serve` - will start server on [http://localhost:8081](http://localhost:8081)
+- `yarn run demo`
 
 Alternatively `yarn watch` will build and start http server while monitoring for file changes.
 
 Snap inspector: https://xops.github.io/inspector-snaps/
 
-### Usage
-
-TBD
 
 ### License
 Copyright [2020] [Node Factory d.o.o.]
