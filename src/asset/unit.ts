@@ -21,7 +21,7 @@ export async function createPolkadotAsset(wallet: Wallet, api: ApiPromise, metho
   const asset = getPolkadotAssetDescription(balance, address);
   // remove asset if already created
   if (method === "add") {
-    await executeAssetOperation(asset, wallet, "remove");
+    await executeAssetOperation({identifier: 'ksm-asset'} as Asset, wallet, "remove");
   }
   return await executeAssetOperation(asset, wallet, method);
 }

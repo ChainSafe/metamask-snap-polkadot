@@ -4,7 +4,7 @@ import {getAddress, getBalance, getPublicKey} from "../../services/account";
 
 export const Account = () => {
 
-    let [balance, setBalance] = useState(0);
+    let [balance, setBalance] = useState("");
     let [address, setAddress] = useState("");
     let [publicKey, setPublicKey] = useState("");
 
@@ -13,8 +13,9 @@ export const Account = () => {
         (async () => setPublicKey(await getPublicKey()))();
         // fetch address
         (async () => setAddress(await getAddress()))();
-        // fetch balance
-        (async () => setBalance(await getBalance()))();
+        // fetch balance every 3 second
+        const timer = setInterval(async () => setBalance(await getBalance()), 3000);
+        return () => clearInterval(timer);
     });
 
     return (
