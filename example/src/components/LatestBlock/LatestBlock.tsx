@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {getLatestBlock} from "../../services/block";
-import { Card, CardContent, CardHeader, Grid} from "@material-ui/core";
+import {Box, Card, CardContent, CardHeader, Divider, Grid, Typography} from "@material-ui/core";
+import {BlockInfo} from "../../../../src/rpc/substrate/getBlock";
 
 export const LatestBlock = () => {
-    let [latestBlock, setLatestBlock] = useState("");
+
+    let [latestBlock, setLatestBlock] = useState<BlockInfo>({hash: "", number: ""});
 
     useEffect(() => {
         (async () => setLatestBlock(await getLatestBlock()))();
@@ -27,7 +29,12 @@ export const LatestBlock = () => {
             <CardContent>
                 <Grid container alignItems="center">
                     <Grid item md={6} xs={12}>
-                        <pre>{latestBlock}</pre>
+                        <Typography variant="h6">Block number:</Typography>
+                        <Typography variant="subtitle2">{latestBlock.number}</Typography>
+                        <Divider light/>
+                        <Box m={"0.5rem"}/>
+                        <Typography variant="h6">Hash:</Typography>
+                        <Typography variant="subtitle2">{latestBlock.hash}</Typography>
                     </Grid>
                 </Grid>
             </CardContent>

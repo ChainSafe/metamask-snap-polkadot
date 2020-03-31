@@ -1,9 +1,9 @@
 import {pluginOrigin} from "./metamask";
+import {BlockInfo} from "../../../src/rpc/substrate/getBlock";
 
-export async function getLatestBlock(): Promise<string> {
-    let blockResponse;
+export async function getLatestBlock(): Promise<BlockInfo> {
     try {
-        blockResponse = await window.ethereum.send({
+        return await window.ethereum.send({
             method: pluginOrigin,
             params: [{
                 method: "getBlock",
@@ -12,9 +12,8 @@ export async function getLatestBlock(): Promise<string> {
                 }
             }]
         });
-        return JSON.stringify(blockResponse.block, null, 2);
     } catch (e) {
         console.log("Unable to fetch latest block", e);
-        return "";
+        return {number: "", hash: ""};
     }
 }
