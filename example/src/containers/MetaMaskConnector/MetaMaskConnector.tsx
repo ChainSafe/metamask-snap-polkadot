@@ -14,10 +14,7 @@ export const MetaMaskConnector = () => {
        if(!isInitiated) {
            alert("Failed to install snap");
        } else {
-           const dotAssetAdded = await addDotAsset();
-           if (!dotAssetAdded) {
-               alert("Failed to add dot asset to metamask");
-           }
+           addDotAsset().catch(() => alert("Failed to add dot asset"));
            dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
        }
     }, [dispatch]);

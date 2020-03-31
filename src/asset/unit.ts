@@ -10,7 +10,7 @@ export function getPolkadotAssetDescription(balance: string, address: string): A
     customViewUrl: `https://polkascan.io/pre/kusama/account/${address}`,
     decimals: 0,
     identifier: 'ksm-asset',
-    image: 'https://cdn.coinranking.com/Zc3bdkHBn/kusama.svg',
+    image: 'https://img.techpowerup.org/200330/kusama.png',
     symbol: 'KSM',
   };
 }
@@ -20,6 +20,8 @@ export async function createPolkadotAsset(wallet: Wallet, api: ApiPromise, metho
   const address = await getAddress(wallet);
   const asset = getPolkadotAssetDescription(balance, address);
   // remove asset if already created
-  await executeAssetOperation(asset, wallet, "remove");
+  if (method === "add") {
+    await executeAssetOperation({identifier: 'ksm-asset'} as Asset, wallet, "remove");
+  }
   return await executeAssetOperation(asset, wallet, method);
 }
