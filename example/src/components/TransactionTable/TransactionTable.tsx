@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Paper, Table, TableContainer, TableCell,
     TableRow, TableHead, TableBody} from '@material-ui/core/';
+import {getAllTransactions} from "../../services/transactions";
 
 export const TransactionTable = () => {
+
+    const [transactions, setTransactions] = useState();
 
     function createData(id: string, from: string, to: string, amount: number, token: string) {
         return { id, from, to, amount, token };
@@ -14,6 +17,16 @@ export const TransactionTable = () => {
         createData('08763', "0XDC25EF3F5B8A...", "0XDC25EF3F5B8A...", 0.46, "ETH"),
         createData('12309', "0XDC25EF3F5B8A...", "0XDC25EF3F5B8A...", 1.39, "ETH"),
       ];
+    
+    
+
+    useEffect(()=>{
+        
+        (async () => {
+            setTransactions(await getAllTransactions());
+            console.log(transactions);
+        })();
+    },[])
 
     return (
         <TableContainer className="transtaction-table" component={Paper}>
