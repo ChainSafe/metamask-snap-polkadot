@@ -30,6 +30,7 @@
       <div style="margin-bottom: 10px">
         <button class="connect-snap">Connect polkadot snap</button>
         <button class="create-asset">Create dot asset</button>
+        <button class="update-asset">Update dot asset</button>
       </div>
 
       <!-- Public Key -->
@@ -121,6 +122,8 @@
     // create asset
     const createAssetButton = document.querySelector('button.create-asset');
     createAssetButton.addEventListener('click', createAsset);
+    const updateAssetButton = document.querySelector('button.update-asset');
+    updateAssetButton.addEventListener('click', updateAsset);
     // export seed
     const exportButton = document.querySelector('button.export-seed');
     const seedLabel = document.querySelector('div.seed');
@@ -149,12 +152,25 @@
     const blockData = document.querySelector('pre.block-data');
     blockFindButton.addEventListener('click', findBlock);
 
+    async function updateAsset() {
+      try {
+        await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'updateDotAsset'
+          }]
+        });
+      } catch (e) {
+        console.log("Keys not generated", e);
+      }
+    }
+
     async function createAsset() {
       try {
         await ethereum.send({
           method: snapId,
           params: [{
-            method: 'createDotAsset'
+            method: 'addDotAsset'
           }]
         });
       } catch (e) {
@@ -318,7 +334,10 @@
         response = await ethereum.send({
           method: snapId,
           params: [{
-            method: 'getAllTransactions'
+            method: 'getAllTransactions',
+            params: {
+              address: "Dc6ouAsLFYLF7kCfAbW6j6kVN1FvoKcyAuTr1NCKmU2c8mk"
+            }
           }]
         });
       } catch (e) {

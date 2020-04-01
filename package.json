@@ -4,6 +4,7 @@
   "description": "Metamask snap to interact with Polkadot dapps.",
   "main": "build/index.js",
   "scripts": {
+    "postinstall": "cd example && yarn install",
     "demo": "yarn run build && concurrently  --raw --kill-others \"yarn run serve\" \"cd example && yarn run start\"",
     "lint": "yarn run lint:types && yarn run lint:style",
     "lint:types": "tsc --noEmit --pretty",
@@ -14,10 +15,10 @@
     "type-check:watch": "npm run type-check -- --watch",
     "build": "yarn run build:tsc && yarn run build:snap",
     "build:tsc": "tsc --build --pretty",
-    "build:snap": "nf-snap build --stripComments",
+    "build:snap": "nf-snap build --stripComments --debug",
     "watch": "concurrently  --raw --kill-others \"yarn run watch:tsc\" \"yarn run watch:snap\" \"yarn run serve\"",
     "watch:tsc": "yarn run build:tsc --watch",
-    "watch:snap": "nf-snap watch -s build/index.js",
+    "watch:snap": "nf-snap watch --debug -s build/index.js",
     "serve": "nf-snap serve",
     "test": "yarn run test:unit",
     "test:unit": "mocha -r ts-node/register \"test/unit/**/*.test.ts\""
@@ -73,6 +74,7 @@
   },
   "dependencies": {
     "@polkadot/api": "^1.8.0-beta.10",
+    "@polkadot/util": "2.7.1",
     "@polkadot/wasm-crypto": "file:./wasm-crypto-stub",
     "axios": "^0.19.2",
     "tweetnacl": "^1.0.3"

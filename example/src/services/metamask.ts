@@ -34,3 +34,15 @@ export async function installPolkadotSnap(): Promise<boolean> {
         return false;
     }
 }
+
+export async function isPolkadotSnapInstalled(): Promise<boolean> {
+    try {
+        const result: any = await window.ethereum.send({
+            method: 'wallet_getPlugins',
+        });
+        return !!result[origin];
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
+}

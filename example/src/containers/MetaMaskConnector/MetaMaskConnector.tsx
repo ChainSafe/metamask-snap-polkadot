@@ -1,14 +1,22 @@
 import {Box, Button, Hidden, Snackbar, IconButton} from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
-import React, {useCallback, useContext} from "react";
+import React, {useCallback, useContext, useEffect} from "react";
 import Alert from "@material-ui/lab/Alert";
 import {MetamaskActions, MetaMaskContext} from "../../context/metamask";
-import {installPolkadotSnap} from "../../services/metamask";
+import {installPolkadotSnap, isPolkadotSnapInstalled} from "../../services/metamask";
 import {addDotAsset} from "../../services/asset";
 
 export const MetaMaskConnector = () => {
 
     const [state, dispatch] = useContext(MetaMaskContext);
+
+    useEffect( () => {
+        (async () => {
+            if(await isPolkadotSnapInstalled()) {
+                dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
+            }
+        })();
+    }, [dispatch]);
 
     const installSnap = useCallback(async () => {
        const isInitiated = await installPolkadotSnap();
@@ -17,20 +25,11 @@ export const MetaMaskConnector = () => {
        } else {
           dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: true}});
 
-        //   window.ethereum.on('accountsChanged', function (accounts: string[]) {
-        //   console.log(accounts[0]);
-        // })
-        
-        // let account = window.ethereum.on('accountsChanged', function (accounts: string[]) {
-        //   console.log(accounts[0]);
-        // })
-        // console.log(account);
-        // // console.log(account[0]);
-
            const dotAssetAdded = await addDotAsset();
            if (!dotAssetAdded) {
-               alert("Failed to add dot asset to metamask");
+               dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Failed to add dot asset to metamask"}})
            }
+           addDotAsset().catch(() => alert("Failed to add dot asset"));
            dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
        }
     }, [dispatch]);

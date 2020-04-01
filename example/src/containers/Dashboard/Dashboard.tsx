@@ -6,6 +6,7 @@ import {TransactionTable} from "../../components/TransactionTable/TransactionTab
 import {Account} from "../../components/Account/Account";
 import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
+import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
 
 export const Dashboard = () => {
 
@@ -23,6 +24,12 @@ export const Dashboard = () => {
                     <MetaMaskConnector/>
                 </Hidden>
                 <Hidden xsUp={!state.isPolkadotSnapInstalled.isInstalled}>
+                    <Grid container spacing={3} alignItems={"stretch"}>
+                        <Grid item xs={12}>
+                            <LatestBlock/>
+                        </Grid>
+                    </Grid>
+                    <Box m="1rem"/>
                     <Grid container spacing={3} alignItems="stretch">
                         <Grid item xs={12}>
                             <Account/>
@@ -52,4 +59,4 @@ export const Dashboard = () => {
             </Grid>
         </Container>
     );
-}
+};

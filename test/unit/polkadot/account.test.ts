@@ -2,16 +2,12 @@ import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
 import {MetamaskState} from "../../../src/interfaces";
 import {WalletMock} from "../crypto/wallet.mock.test";
-import {getBalance} from "../../../src/rpc/substrate/getBalance";
-import ApiPromise from "@polkadot/api/promise";
-import { AccountInfo } from "@polkadot/types/interfaces/system";
-import sinon from "sinon";
-import {getKeyPair} from "../../../src/polkadot/getKeyPair";
-import { hexToU8a } from '@polkadot/util';
+import {getKeyPair} from "../../../src/polkadot/account";
+import {hexToU8a} from '@polkadot/util';
 
 chai.use(sinonChai);
 
-describe('Test getKeyPair', () => {
+describe('Test account', () => {
 
   const walletStub = new WalletMock();
 
