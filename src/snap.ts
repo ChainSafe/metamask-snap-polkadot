@@ -8,7 +8,7 @@ import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {createPolkadotAsset} from "./asset/unit";
 import {getApi} from "./polkadot/api";
-import {Configuration, setConfiguration} from "./configuration/setConfiguration";
+import {Configuration, setConfiguration} from "./configuration/configuration";
 
 declare let wallet: Wallet;
 

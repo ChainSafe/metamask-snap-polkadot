@@ -1,7 +1,7 @@
 import {Wallet} from "../../interfaces";
 import axios from "axios";
 import {getAddress} from "../getAddress";
-import {getConfiguration} from "../../configuration/setConfiguration";
+import {getConfiguration} from "../../configuration/configuration";
 
 /**
  * Query polkascan.io api for historic data about transactions for address.

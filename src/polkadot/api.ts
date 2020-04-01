@@ -1,7 +1,7 @@
 import ApiPromise from "@polkadot/api/promise";
 import {WsProvider} from "@polkadot/api";
 import {Wallet} from "../interfaces";
-import {Configuration, getConfiguration} from "../configuration/setConfiguration";
+import {Configuration, getConfiguration} from "../configuration/configuration";
 
 let api: ApiPromise;
 

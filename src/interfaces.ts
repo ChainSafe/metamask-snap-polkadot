@@ -1,5 +1,5 @@
 import { KeyringPair$Json } from '@polkadot/keyring/types';
-import {Configuration} from "./configuration/setConfiguration";
+import {Configuration} from "./configuration/configuration";
 
 export type FMethodCallback = (
   originString: string,

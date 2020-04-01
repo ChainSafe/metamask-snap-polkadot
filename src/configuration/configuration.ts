@@ -6,6 +6,8 @@ export interface Configuration {
   unit: {
     symbol: string;
     decimals: number;
+    image?: string;
+    customViewUrl?: string;
   };
   addressPrefix: number;
 }
@@ -15,8 +17,10 @@ const defaultConfiguration: Configuration = {
   explorerUrl: "https://api-01.polkascan.io/kusama/api/v1/balances/transfer",
   rpcUrl: "wss://kusama-rpc.polkadot.io/",
   unit: {
+    customViewUrl: "https://polkascan.io/pre/kusama/account/${address}",
     decimals: 0,
-    symbol: "KSM"
+    image: 'https://img.techpowerup.org/200330/kusama.png',
+    symbol: "KSM",
   }
 };
 
