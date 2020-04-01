@@ -34,10 +34,10 @@ describe('Test rpc handler function: getPublicKey', () => {
   });
 
   it('should create new keypair on no pk saved in state', async function () {
-    walletStub.getPluginState.returns(null);
+    walletStub.getPluginState.returns({polkadot: {account: null}});
     walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21caaba2dd1a12eeafda3fda62aa6dfa21ca");
     const result = await getPublicKey(walletStub);
-    expect(walletStub.getPluginState).to.have.been.calledOnce;
+    expect(walletStub.getPluginState).to.have.been.calledTwice;
     expect(walletStub.getAppKey).to.have.been.calledOnce;
     expect(walletStub.updatePluginState).to.have.been.calledOnce;
     expect(result).not.to.be.null;

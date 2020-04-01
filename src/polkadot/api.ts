@@ -1,13 +1,15 @@
 import ApiPromise from "@polkadot/api/promise";
 import {WsProvider} from "@polkadot/api";
+import {Wallet} from "../interfaces";
+import {Configuration, getConfiguration} from "../configuration/setConfiguration";
 
 let api: ApiPromise;
 
 /**
  * Initialize substrate api and awaits for it to be ready
  */
-async function initApi(): Promise<ApiPromise> {
-  const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io/');
+async function initApi(configuration: Configuration): Promise<ApiPromise> {
+  const wsProvider = new WsProvider(configuration.rpcUrl);
   const api = new ApiPromise({ initWasm: false, provider: wsProvider });
   try {
     await api.isReady;
@@ -17,9 +19,10 @@ async function initApi(): Promise<ApiPromise> {
   return api;
 }
 
-export const getApi = async (): Promise<ApiPromise> => {
+export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
   if (!api) {
-    api = await initApi();
+    const configuration = getConfiguration(wallet);
+    api = await initApi(configuration);
   }
   return api;
 };

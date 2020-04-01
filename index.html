@@ -31,6 +31,7 @@
         <button class="connect-snap">Connect polkadot snap</button>
         <button class="create-asset">Create dot asset</button>
         <button class="update-asset">Update dot asset</button>
+        <button class="load-config">Load preset configuration</button>
       </div>
 
       <!-- Public Key -->
@@ -124,6 +125,9 @@
     createAssetButton.addEventListener('click', createAsset);
     const updateAssetButton = document.querySelector('button.update-asset');
     updateAssetButton.addEventListener('click', updateAsset);
+    // configuration
+    const loadConfigurationButton = document.querySelector('button.load-config');
+    loadConfigurationButton.addEventListener('click', loadConfiguration);
     // export seed
     const exportButton = document.querySelector('button.export-seed');
     const seedLabel = document.querySelector('div.seed');
@@ -151,6 +155,30 @@
     const blockFindButton = document.querySelector('button.block-find');
     const blockData = document.querySelector('pre.block-data');
     blockFindButton.addEventListener('click', findBlock);
+
+    async function loadConfiguration() {
+      try {
+        await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'configure',
+            params: {
+              configuration: {
+                addressPrefix: 1,
+                explorerUrl: "https://api-01.polkascan.io/kusama/api/v1/balances/transfer",
+                rpcUrl: "wss://kusama-rpc.polkadot.io/",
+                unit: {
+                  decimals: 0,
+                  symbol: "KSM"
+                }
+              }
+            }
+          }]
+        });
+      } catch (e) {
+        console.log("Keys not generated", e);
+      }
+    }
 
     async function updateAsset() {
       try {
@@ -194,8 +222,7 @@
         console.log("Unable to fetch substrate chain head", e);
       }
       if (block !== null) {
-        console.log(block);
-        blockData.innerHTML = JSON.stringify(block.block, null, 2);
+        blockData.innerHTML = JSON.stringify(block, null, 2);
       }
     }
 

@@ -4,6 +4,7 @@ import sinon from "sinon";
 import {generateKeys} from "../../../src/crypto/keys";
 import {WalletMock} from "./wallet.mock.test";
 import { hexToU8a } from '@polkadot/util';
+import {MetamaskState} from "../../../src/interfaces";
 
 chai.use(sinonChai);
 
@@ -22,6 +23,7 @@ describe('Test crypto function: generateKeys', () => {
     const expectedAddress = "5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7";
     const expectedPublicKey = "0xcf043e13d9228d8a931ce4cc58efbd1ad6c5e2f1932c3174eb150dfaf9165b73";
     wallet.getAppKey.returns(appKey);
+    wallet.getPluginState.returns({polkadot: {account: null}});
     // tested method
     const result = await generateKeys(wallet);
     // assertions
@@ -29,6 +31,7 @@ describe('Test crypto function: generateKeys', () => {
     expect(result).to.not.be.null;
     expect(result.address).to.be.eq(expectedAddress);
     expect(result.publicKey).to.deep.eq(hexToU8a(expectedPublicKey));
+    expect(wallet.getPluginState).to.have.been.calledOnce;
     expect(wallet.updatePluginState).to.have.been.calledOnce;
     expect(wallet.updatePluginState).to.have.been.calledWithMatch({
       polkadot: {

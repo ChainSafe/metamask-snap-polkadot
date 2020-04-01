@@ -32,8 +32,7 @@ describe('Test rpc handler function: getBalance', () => {
               version: "2"
             },
             meta: {}
-          },
-          seed: "aba2dd1a12eeafda3fda62aa6dfa21ca",
+          }
         }
       }
     } as MetamaskState);
@@ -49,7 +48,7 @@ describe('Test rpc handler function: getBalance', () => {
   });
 
   it('should not return balance on empty state', async function () {
-    walletStub.getPluginState.returns(null);
+    walletStub.getPluginState.returns({polkadot: {account: null}});
     walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
     // api stub
     const apiStub = {query: {system: {account: sinon.stub()}}};
@@ -57,7 +56,8 @@ describe('Test rpc handler function: getBalance', () => {
     const api = apiStub as unknown as ApiPromise;
     const result = await getBalance(walletStub, api);
     expect(result).to.be.eq("0");
-    expect(walletStub.getPluginState).to.have.been.calledOnce;
+    expect(walletStub.getPluginState).to.have.been.calledTwice;
+    expect(walletStub.updatePluginState).to.have.been.calledOnce;
     // eslint-disable-next-line max-len
     expect(apiStub.query.system.account).to.have.been.calledOnceWith("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");
   });

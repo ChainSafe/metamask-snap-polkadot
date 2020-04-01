@@ -42,11 +42,11 @@ describe('Test account', () => {
   });
 
   it('should create new and return keypair on empty state', async function () {
-    walletStub.getPluginState.returns(null);
+    walletStub.getPluginState.returns({polkadot: {account: null}});
     walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
     walletStub.updatePluginState.returnsArg(0);
     const result = await getKeyPair(walletStub);
-    expect(walletStub.getPluginState).to.have.been.calledOnce;
+    expect(walletStub.getPluginState).to.have.been.calledTwice;
     expect(walletStub.updatePluginState).to.have.been.calledOnce;
     expect(walletStub.getAppKey).to.have.been.calledOnce;
     expect(result.address).to.be.eq("5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7");

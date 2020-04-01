@@ -1,4 +1,5 @@
 import { KeyringPair$Json } from '@polkadot/keyring/types';
+import {Configuration} from "./configuration/setConfiguration";
 
 export type FMethodCallback = (
   originString: string,
@@ -11,7 +12,15 @@ export type AccountState = { keyring: KeyringPair$Json };
 export type MetamaskState = {
   polkadot: {
     account: AccountState;
+    configuration: Configuration;
   };
+};
+
+export const emptyMetamaskState: MetamaskState = {
+  polkadot: {
+    account: null,
+    configuration: null
+  }
 };
 
 export interface Wallet {

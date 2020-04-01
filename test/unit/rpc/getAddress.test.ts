@@ -34,10 +34,10 @@ describe('Test rpc handler function: getAddress', () => {
   });
 
   it('should return address and create new keypair on empty state', async function () {
-    walletStub.getPluginState.returns(null);
+    walletStub.getPluginState.returns({polkadot: {account: null}});
     walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
     const result = await getAddress(walletStub);
-    expect(walletStub.getPluginState).to.have.been.calledOnce;
+    expect(walletStub.getPluginState).to.have.been.calledTwice;
     expect(result).to.be.eq("HFkgz6P1qh2526tS5x6NZkFrXZ9f1xbmYADUgVdai34wTgd");
   });
 });
