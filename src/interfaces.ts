@@ -25,6 +25,7 @@ export const emptyMetamaskState: MetamaskState = {
 
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
+  registerApiRequestHandler: (origin: unknown) => unknown;
   send(options: {method: string; params: unknown[]}): unknown;
   getAppKey(): Promise<string>;
   updatePluginState(state: MetamaskState): void;
