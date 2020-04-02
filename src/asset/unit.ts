@@ -16,7 +16,7 @@ export function getPolkadotAssetDescription(
   const customViewUrl = configuration.unit.customViewUrl ? configuration.unit.customViewUrl.replace("${address}", address) : "";
   const image = configuration.unit.image ? configuration.unit.image : "";
   return {
-    balance: formatBalance(balance, {decimals: 12, withSi: true, withUnit: false}),
+    balance: formatBalance(balance, {decimals: configuration.unit.decimals, withSi: true, withUnit: false}),
     customViewUrl: customViewUrl,
     decimals: configuration.unit.decimals,
     identifier: 'ksm-asset',

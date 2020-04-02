@@ -12,7 +12,7 @@ export interface Configuration {
   addressPrefix: number;
 }
 
-const defaultConfiguration: Configuration = {
+export const defaultConfiguration: Configuration = {
   addressPrefix: 1,
   explorerUrl: "https://api-01.polkascan.io/kusama/api/v1/balances/transfer",
   rpcUrl: "wss://kusama-rpc.polkadot.io/",
