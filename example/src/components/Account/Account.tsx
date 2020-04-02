@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button, Typography, Card, CardContent, CardHeader, Grid, Divider, Box} from '@material-ui/core/';
-import {getAddress, getBalance, getPublicKey} from "../../services/account";
+import {getAddress, getBalance, getPublicKey, exportSeed} from "../../services/account";
 import formatBalance from "@polkadot/util/format/formatBalance"
 
 export const Account = () => {
@@ -48,7 +48,7 @@ export const Account = () => {
                     </Grid>
                 </Grid>
                 <Grid container item xs={12} justify="flex-end">
-                    <Button color="secondary" variant={"contained"} onClick={getBalance}>Export private key</Button>
+                    <Button color="secondary" variant={"contained"} onClick={exportSeed}>Export private key</Button>
                 </Grid>
             </CardContent>
         </Card>
