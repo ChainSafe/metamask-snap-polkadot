@@ -21,15 +21,9 @@ export const MetaMaskConnector = () => {
     const installSnap = useCallback(async () => {
        const isInitiated = await installPolkadotSnap();
        if(!isInitiated) {
-          dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Please accept snap installation prompt"}})
+        dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Please accept snap installation prompt"}})
        } else {
-          dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: true}});
-
-           const dotAssetAdded = await addDotAsset();
-           if (!dotAssetAdded) {
-               dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Failed to add dot asset to metamask"}})
-           }
-           addDotAsset().catch(() => alert("Failed to add dot asset"));
+           addDotAsset().catch(() => dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Failed to add dot asset to metamask"}}));
            dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
        }
     }, [dispatch]);
@@ -41,7 +35,7 @@ export const MetaMaskConnector = () => {
         dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: false})
       };
     
-    const handleSnackbar = (): boolean => {
+    const shouldDisplaySnackbar = (): boolean => {
       if (!state.isPolkadotSnapInstalled.isInstalled && state.isPolkadotSnapInstalled.message) return true;
       else return false;
     }
@@ -53,7 +47,7 @@ export const MetaMaskConnector = () => {
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
-                open={handleSnackbar()}
+                open={shouldDisplaySnackbar()}
                 autoHideDuration={6000}
                 onClose={handleClose}
                 message={state.isPolkadotSnapInstalled.message}
