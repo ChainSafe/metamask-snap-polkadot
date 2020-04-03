@@ -4,7 +4,6 @@ import React, {useCallback, useContext, useEffect} from "react";
 import Alert from "@material-ui/lab/Alert";
 import {MetamaskActions, MetaMaskContext} from "../../context/metamask";
 import {installPolkadotSnap, isPolkadotSnapInstalled} from "../../services/metamask";
-import {addDotAsset} from "../../services/asset";
 
 export const MetaMaskConnector = () => {
 
@@ -35,7 +34,7 @@ export const MetaMaskConnector = () => {
       };
     
     const shouldDisplaySnackbar = (): boolean => {
-      if (!state.isPolkadotSnapInstalled.isInstalled && state.isPolkadotSnapInstalled.message) return true;
+      if (!state.polkadotSnap.isInstalled && state.polkadotSnap.message) return true;
       else return false;
     }
 
@@ -49,7 +48,7 @@ export const MetaMaskConnector = () => {
                 open={shouldDisplaySnackbar()}
                 autoHideDuration={6000}
                 onClose={handleClose}
-                message={state.isPolkadotSnapInstalled.message}
+                message={state.polkadotSnap.message}
                 action={
                     <React.Fragment>
                       <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>

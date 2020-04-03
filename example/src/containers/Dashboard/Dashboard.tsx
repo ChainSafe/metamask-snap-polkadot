@@ -20,10 +20,10 @@ export const Dashboard = () => {
                         Polkadot snap demo
                     </Typography>
                 </Box>
-                <Hidden xsUp={state.isPolkadotSnapInstalled.isInstalled}>
+                <Hidden xsUp={state.polkadotSnap.isInstalled}>
                     <MetaMaskConnector/>
                 </Hidden>
-                <Hidden xsUp={!state.isPolkadotSnapInstalled.isInstalled}>
+                <Hidden xsUp={!state.polkadotSnap.isInstalled}>
                     <Grid container spacing={3} alignItems={"stretch"}>
                         <Grid item xs={12}>
                             <LatestBlock/>
