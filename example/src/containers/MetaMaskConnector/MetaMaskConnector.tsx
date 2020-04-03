@@ -23,7 +23,6 @@ export const MetaMaskConnector = () => {
        if(!isInitiated) {
         dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Please accept snap installation prompt"}})
        } else {
-           addDotAsset().catch(() => dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Failed to add dot asset to metamask"}}));
            dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
        }
     }, [dispatch]);
