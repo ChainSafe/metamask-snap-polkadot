@@ -27,6 +27,11 @@ export const Account = () => {
     //     };
     // }, []);
 
+    const handleExport = async () => {
+        const privateKey = await exportSeed();
+        alert(privateKey);
+    }
+
     return (
         <Card>
             <CardHeader title="Account details"/>
@@ -48,7 +53,7 @@ export const Account = () => {
                     </Grid>
                 </Grid>
                 <Grid container item xs={12} justify="flex-end">
-                    <Button color="secondary" variant={"contained"} onClick={exportSeed}>Export private key</Button>
+                    <Button color="secondary" variant={"contained"} onClick={handleExport}>Export private key</Button>
                 </Grid>
             </CardContent>
         </Card>
