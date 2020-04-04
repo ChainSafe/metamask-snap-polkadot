@@ -6,15 +6,16 @@ export type FMethodCallback = (
   requestObject: RequestObject
 ) => Promise<unknown>;
 
-export type RequestObject = { method: string; params: Record<string, unknown> };
+export interface RequestObject { method: string; params: Record<string, unknown> };
 
-export type AccountState = { keyring: KeyringPair$Json };
-export type MetamaskState = {
+export interface AccountState { keyring: KeyringPair$Json };
+
+export interface MetamaskState {
   polkadot: {
     account: AccountState;
     configuration: Configuration;
   };
-};
+}
 
 export const emptyMetamaskState: MetamaskState = {
   polkadot: {
@@ -25,7 +26,7 @@ export const emptyMetamaskState: MetamaskState = {
 
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
-  registerApiRequestHandler: (origin: unknown) => unknown;
+  registerApiRequestHandler: (handler: (origin: string) => unknown) => unknown;
   send(options: {method: string; params: unknown[]}): unknown;
   getAppKey(): Promise<string>;
   updatePluginState(state: MetamaskState): void;

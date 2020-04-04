@@ -111,10 +111,10 @@
     async function test() {
       index = await ethereum.requestIndex();
       pluginApi = await index.getPluginApi(origin);
-
+      console.log(pluginApi);
       const pK = await pluginApi.getPublicKey();
-      console.log(Date.now())
-      console.log("API: getPublicKey => " + pK);
+      console.log("API: getPublicKey => ", pK);
+      console.log("random ", pluginApi.getPublicKey());
 
     }
 
