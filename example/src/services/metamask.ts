@@ -2,7 +2,8 @@ declare global {
     interface Window {
         ethereum: {
             isMetaMask: boolean;
-            send: (params: any)=> Promise<any>
+            send: (params: any)=> Promise<any>;
+            on: (eventName: any, callback: any) => any;
         }
     }
 }
@@ -36,7 +37,7 @@ export async function installPolkadotSnap(): Promise<boolean> {
 
 export async function isPolkadotSnapInstalled(): Promise<boolean> {
     try {
-        const result = await window.ethereum.send({
+        const result: any = await window.ethereum.send({
             method: 'wallet_getPlugins',
         });
         return !!result[origin];
