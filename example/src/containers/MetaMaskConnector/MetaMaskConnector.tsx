@@ -12,7 +12,7 @@ export const MetaMaskConnector = () => {
     useEffect( () => {
         (async () => {
             if(await isPolkadotSnapInstalled()) {
-                dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
+                dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: true}});
             }
         })();
     }, [dispatch]);
@@ -20,9 +20,9 @@ export const MetaMaskConnector = () => {
     const installSnap = useCallback(async () => {
        const isInitiated = await installPolkadotSnap();
        if(!isInitiated) {
-        dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Please accept snap installation prompt"}})
+           dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Please accept snap installation prompt"}})
        } else {
-           dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
+           dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: true}});
        }
     }, [dispatch]);
 

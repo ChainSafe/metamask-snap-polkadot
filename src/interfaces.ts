@@ -23,7 +23,7 @@ export interface Wallet {
 }
 
 export interface Asset {
-  balance: string;
+  balance: string|number;
   customViewUrl: string;
   decimals: number;
   identifier: string;
