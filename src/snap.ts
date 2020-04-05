@@ -6,12 +6,12 @@ import {getAddress} from "./rpc/getAddress";
 import ApiPromise from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
-import {createPolkadotAsset} from "./asset/unit";
+import {removeAsset, updateAsset} from "./asset";
 import {getApi} from "./polkadot/api";
 
 declare let wallet: Wallet;
 
-const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addDotAsset", "updateDotAsset"];
+const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset", "updateDotAsset"];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   // init api if needed
@@ -30,12 +30,15 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await getTransactions(wallet, requestObject.params["address"] as string);
     case 'getBlock':
       return await getBlock(requestObject.params, api);
-    case 'getBalance':
-      return await getBalance(wallet, api);
-    case 'addDotAsset':
-      return await createPolkadotAsset(wallet, api, "add");
-    case 'updateDotAsset':
-      return await createPolkadotAsset(wallet, api, "update");
+    case 'getBalance': {
+      const balance = await getBalance(wallet, api);
+      await updateAsset(wallet, originString, "ksm-token", balance);
+      return balance;
+    }
+    case 'addKusamaAsset':
+      return await updateAsset(wallet, originString, "ksm-token", 0);
+    case 'removeKusamaAsset':
+      return await removeAsset(wallet, originString, "ksm-token");
     case 'getChainHead':
       // temporary method
       const head = await api.rpc.chain.getFinalizedHead();

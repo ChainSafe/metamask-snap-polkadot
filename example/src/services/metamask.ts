@@ -1,5 +1,3 @@
-import {addDotAsset} from "./asset";
-
 declare global {
     interface Window {
         ethereum: {
@@ -30,7 +28,6 @@ export async function installPolkadotSnap(): Promise<boolean> {
             }]
         });
         console.log("Snap installed!!");
-        await addDotAsset();
         return true;
     } catch (e) {
         console.log(e);

@@ -1,10 +1,10 @@
 import {pluginOrigin} from "./metamask";
 
-export function addDotAsset() {
-    return window.ethereum.send({
+export async function addKusamaAsset(): Promise<void> {
+    return await window.ethereum.send({
         method: pluginOrigin,
         params: [{
-            method: 'addDotAsset'
+            method: 'addKusamaAsset'
         }]
     });
 }
