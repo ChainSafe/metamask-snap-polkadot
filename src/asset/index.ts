@@ -6,6 +6,11 @@ import {Balance} from "@polkadot/types/interfaces";
 
 const assets: Map<string, Asset> = new Map<string, Asset>();
 
+
+function getIdentifier(origin: string, id: string): string {
+  return `${origin}_${id}`;
+}
+
 export function getKusamaAsset(assetId: string, balance: number|string|Balance, address: string): Asset {
   return {
     balance: formatBalance(balance, {decimals: 12, withSi: true, withUnit: false}),
@@ -17,7 +22,16 @@ export function getKusamaAsset(assetId: string, balance: number|string|Balance, 
   };
 }
 
-export async function updateAsset(wallet: Wallet, origin: string, assetId: string, balance: number|string|Balance): Promise<boolean> {
+
+export async function removeAsset(wallet: Wallet, origin: string, assetId: string): Promise<boolean> {
+  await executeAssetOperation({identifier: assetId}, wallet, "remove");
+  assets.delete(getIdentifier(origin, assetId));
+  return true;
+}
+
+export async function updateAsset(
+  wallet: Wallet, origin: string, assetId: string, balance: number|string|Balance
+): Promise<boolean> {
   console.log("Updating asset", origin, assetId);
   if(assets.has(getIdentifier(origin, assetId))) {
     const asset = assets.get(getIdentifier(origin, assetId));
@@ -30,14 +44,4 @@ export async function updateAsset(wallet: Wallet, origin: string, assetId: strin
     assets.set(getIdentifier(origin, assetId), asset);
   }
   return true;
-}
-
-export async function removeAsset(wallet: Wallet, origin: string, assetId: string): Promise<boolean> {
-  await executeAssetOperation({identifier: assetId}, wallet, "remove");
-  assets.delete(getIdentifier(origin, assetId));
-  return true;
-}
-
-function getIdentifier(origin: string, id: string): string {
-  return `${origin}_id`;
 }
