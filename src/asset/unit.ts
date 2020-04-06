@@ -5,20 +5,23 @@ import {getAddress} from "../rpc/getAddress";
 import {executeAssetOperation} from "./executeAssetOperation";
 import formatBalance from "@polkadot/util/format/formatBalance";
 import {Balance} from "@polkadot/types/interfaces";
-import {Configuration} from "../configuration/configuration";
+import {NetworkConfiguration} from "../network/network";
 
 export function getPolkadotAssetDescription(
   balance: number|string|Balance,
   address: string,
-  configuration: Configuration): Asset
+  configuration: NetworkConfiguration): Asset
 {
-  // eslint-disable-next-line max-len
-  const customViewUrl = configuration.unit.customViewUrl ? configuration.unit.customViewUrl.replace("${address}", address) : "";
+  // get custom view url
+  const configurationUrl = configuration.unit.customViewUrl;
+  const customViewUrl = typeof configurationUrl === "string" ? configurationUrl : configurationUrl(address);
+  // get image url
   const image = configuration.unit.image ? configuration.unit.image : "";
+  // return asset description
   return {
-    balance: formatBalance(balance, {decimals: configuration.unit.decimals, withSi: true, withUnit: false}),
+    balance: formatBalance(balance, {decimals: 0, withSi: true, withUnit: false}),
     customViewUrl: customViewUrl,
-    decimals: configuration.unit.decimals,
+    decimals: 0,
     identifier: 'ksm-asset',
     image: image,
     symbol: configuration.unit.symbol,

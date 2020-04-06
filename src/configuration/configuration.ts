@@ -1,37 +1,19 @@
 import {Wallet} from "../interfaces";
+import {defaultConfiguration} from "../network/configurations";
+import {getNetworkConfiguration, Network, NetworkConfiguration} from "../network/network";
 
 export interface Configuration {
-  rpcUrl: string;
-  explorerUrl?: string;
-  unit: {
-    symbol: string;
-    decimals: number;
-    image?: string;
-    customViewUrl?: string;
-  };
-  addressPrefix: number;
+  network: Network | NetworkConfiguration;
 }
 
-export const defaultConfiguration: Configuration = {
-  addressPrefix: 1,
-  explorerUrl: "https://api-01.polkascan.io/kusama/api/v1/balances/transfer",
-  rpcUrl: "wss://kusama-rpc.polkadot.io/",
-  unit: {
-    customViewUrl: "https://polkascan.io/pre/kusama/account/${address}",
-    decimals: 0,
-    image: 'https://img.techpowerup.org/200330/kusama.png',
-    symbol: "KSM",
-  }
-};
-
-export async function setConfiguration(wallet: Wallet, configuration: Configuration) {
-  // Save configuration to metamask state
+export async function setConfiguration(wallet: Wallet, configuration: Configuration): Promise<NetworkConfiguration> {
   const state = wallet.getPluginState();
-  state.polkadot.configuration = configuration;
+  state.polkadot.configuration = getNetworkConfiguration(configuration);
   wallet.updatePluginState(state);
+  return state.polkadot.configuration;
 }
 
-export function getConfiguration(wallet: Wallet): Configuration {
+export function getConfiguration(wallet: Wallet): NetworkConfiguration {
   const state = wallet.getPluginState();
   // set default configuration if conf. not set
   if (!state.polkadot.configuration) {

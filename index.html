@@ -164,12 +164,14 @@
             method: 'configure',
             params: {
               configuration: {
-                addressPrefix: 1,
-                explorerUrl: "https://api-01.polkascan.io/kusama/api/v1/balances/transfer",
-                rpcUrl: "wss://kusama-rpc.polkadot.io/",
-                unit: {
-                  decimals: 0,
-                  symbol: "KSM"
+                network: {
+                  wsRpcUrl: "wss://kusama-rpc.polkadot.io/",
+                  unit: {
+                    image: "",
+                    symbol: "KSM",
+                    customViewUrl: (address) => {return "https://polkascan.io/pre/kusama/account/" + address},
+                  },
+                  addressPrefix: 1
                 }
               }
             }
