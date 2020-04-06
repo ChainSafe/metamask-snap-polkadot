@@ -2,7 +2,7 @@ import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
 import {WalletMock} from "../crypto/wallet.mock.test";
 import {Asset} from "../../../src/interfaces";
-import {executeAssetOperation} from "../../../src/asset/executeAssetOperation";
+import {executeAssetOperation} from "../../../src/asset/action";
 
 chai.use(sinonChai);
 

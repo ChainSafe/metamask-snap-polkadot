@@ -1,9 +1,9 @@
-import {Box, Button, Hidden} from "@material-ui/core";
+import {Box, Button, Hidden, Snackbar, IconButton} from "@material-ui/core";
+import CloseIcon from '@material-ui/icons/Close';
 import React, {useCallback, useContext, useEffect} from "react";
 import Alert from "@material-ui/lab/Alert";
 import {MetamaskActions, MetaMaskContext} from "../../context/metamask";
 import {installPolkadotSnap, isPolkadotSnapInstalled} from "../../services/metamask";
-import {addDotAsset} from "../../services/asset";
 
 export const MetaMaskConnector = () => {
 
@@ -12,7 +12,7 @@ export const MetaMaskConnector = () => {
     useEffect( () => {
         (async () => {
             if(await isPolkadotSnapInstalled()) {
-                dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
+                dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: true}});
             }
         })();
     }, [dispatch]);
@@ -20,15 +20,43 @@ export const MetaMaskConnector = () => {
     const installSnap = useCallback(async () => {
        const isInitiated = await installPolkadotSnap();
        if(!isInitiated) {
-           alert("Failed to install snap");
+           dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Please accept snap installation prompt"}})
        } else {
-           addDotAsset().catch(() => alert("Failed to add dot asset"));
-           dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: true});
+           dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: true}});
        }
     }, [dispatch]);
 
+    const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: false})
+      };
+    
+    const shouldDisplaySnackbar = (): boolean => {
+      if (!state.polkadotSnap.isInstalled && state.polkadotSnap.message) return true;
+      else return false;
+    }
+
     return(
         <div>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                open={shouldDisplaySnackbar()}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                message={state.polkadotSnap.message}
+                action={
+                    <React.Fragment>
+                      <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                        <CloseIcon fontSize="small" />
+                      </IconButton>
+                    </React.Fragment>
+                  }
+            />
             <Hidden xsUp={state.hasMetaMask}>
                 <Alert severity="warning">Ensure that MetaMask is installed!</Alert>
                 <Box mt={"1rem"} />

@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Box, Card, CardContent, CardHeader, Container, Grid, Hidden, Typography} from '@material-ui/core/';
 import {Transfer} from "../../components/Transfer/Transfer";
 import {SignMessage} from "../../components/SignMessage/SignMessage";
@@ -7,10 +7,31 @@ import {Account} from "../../components/Account/Account";
 import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
 import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
+import {getAddress, getBalance, getPublicKey} from "../../services/account";
+import {BlockInfo} from "../../../../src/rpc/substrate/getBlock";
+import {getLatestBlock} from "../../services/block";
+import {addKusamaAsset} from "../../services/asset";
 
 export const Dashboard = () => {
 
     const [state] = useContext(MetaMaskContext);
+
+    let [balance, setBalance] = useState("0");
+    let [address, setAddress] = useState("");
+    let [publicKey, setPublicKey] = useState("");
+    let [latestBlock, setLatestBlock] = useState<BlockInfo>({hash: "", number: ""});
+
+    useEffect(() => {
+        (async () => {
+            if(state.polkadotSnap.isInstalled) {
+                await addKusamaAsset();
+                setPublicKey(await getPublicKey());
+                setAddress(await getAddress());
+                setBalance(await getBalance());
+                setLatestBlock(await getLatestBlock());
+            }
+        })();
+    }, [state.polkadotSnap.isInstalled]);
 
     return (
         <Container maxWidth="lg" >
@@ -20,19 +41,19 @@ export const Dashboard = () => {
                         Polkadot snap demo
                     </Typography>
                 </Box>
-                <Hidden xsUp={state.isPolkadotSnapInstalled}>
+                <Hidden xsUp={state.polkadotSnap.isInstalled}>
                     <MetaMaskConnector/>
                 </Hidden>
-                <Hidden xsUp={!state.isPolkadotSnapInstalled}>
+                <Hidden xsUp={!state.polkadotSnap.isInstalled}>
                     <Grid container spacing={3} alignItems={"stretch"}>
                         <Grid item xs={12}>
-                            <LatestBlock/>
+                            <LatestBlock block={latestBlock}  />
                         </Grid>
                     </Grid>
                     <Box m="1rem"/>
                     <Grid container spacing={3} alignItems="stretch">
                         <Grid item xs={12}>
-                            <Account/>
+                            <Account address={address} balance={balance} publicKey={publicKey}/>
                         </Grid>
                     </Grid>
                     <Box m="1rem"/>

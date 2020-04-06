@@ -32,10 +32,10 @@ export interface Wallet {
 }
 
 export interface Asset {
-  balance: string;
-  customViewUrl: string;
-  decimals: number;
+  balance: string|number;
+  customViewUrl?: string;
+  decimals?: number;
   identifier: string;
-  image: string;
+  image?: string;
   symbol: string;
 }
