@@ -6,7 +6,7 @@ import {
   getConfiguration, setConfiguration
 } from "../../../src/configuration/configuration";
 import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "../../../src/network/configurations";
-import {NetworkConfiguration} from "../../../src/network/network";
+import {NetworkConfiguration} from "../../../src/network/interfaces";
 
 chai.use(sinonChai);
 
@@ -16,8 +16,8 @@ describe('Test configuration methods', () => {
 
   const testConfiguration: NetworkConfiguration = {
     addressPrefix: 2,
+    unit: {customViewUrl: "view-test-url",  image:"test-image", symbol: "TEST"},
     wsRpcUrl: "rpc-test-url",
-    unit: {customViewUrl: "view-test-url",  image:"test-image", symbol: "TEST"}
   };
 
   beforeEach(function () {

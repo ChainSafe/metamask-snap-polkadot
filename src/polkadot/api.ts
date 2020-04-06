@@ -2,7 +2,7 @@ import ApiPromise from "@polkadot/api/promise";
 import {WsProvider} from "@polkadot/api";
 import {Wallet} from "../interfaces";
 import {getConfiguration} from "../configuration/configuration";
-import {NetworkConfiguration} from "../network/network";
+import {NetworkConfiguration} from "../network/interfaces";
 
 let api: ApiPromise;
 let provider: WsProvider;

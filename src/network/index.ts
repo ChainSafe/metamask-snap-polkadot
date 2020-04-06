@@ -1,19 +1,6 @@
 import {Configuration} from "../configuration/configuration";
 import {kusamaConfiguration, westendConfiguration} from "./configurations";
-
-export type Network = "kusama" | "westend";
-
-export interface NetworkConfiguration {
-  wsRpcUrl: string;
-  unit: {
-    symbol: string;
-    image?: string;
-    customViewUrl?: string | CustomViewUrlCallBack ;
-  };
-  addressPrefix: number;
-}
-
-export type CustomViewUrlCallBack = (address: string) => string;
+import {NetworkConfiguration} from "./interfaces";
 
 export function getNetworkConfiguration(configuration: Configuration): NetworkConfiguration {
   switch (configuration.network) {

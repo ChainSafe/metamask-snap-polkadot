@@ -1,4 +1,4 @@
-import {NetworkConfiguration} from "./network";
+import {NetworkConfiguration} from "./interfaces";
 
 export const defaultConfiguration: NetworkConfiguration = {
   addressPrefix: 1,

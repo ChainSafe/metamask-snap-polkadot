@@ -1,5 +1,5 @@
 import { KeyringPair$Json } from '@polkadot/keyring/types';
-import {NetworkConfiguration} from "./network/network";
+import {NetworkConfiguration} from "./network/interfaces";
 
 export type FMethodCallback = (
   originString: string,

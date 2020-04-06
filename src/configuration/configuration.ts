@@ -1,6 +1,7 @@
 import {Wallet} from "../interfaces";
 import {defaultConfiguration} from "../network/configurations";
-import {getNetworkConfiguration, Network, NetworkConfiguration} from "../network/network";
+import {getNetworkConfiguration} from "../network";
+import {Network, NetworkConfiguration} from "../network/interfaces";
 
 export interface Configuration {
   network: Network | NetworkConfiguration;
