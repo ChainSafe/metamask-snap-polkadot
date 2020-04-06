@@ -1,0 +1,10 @@
+{
+  "name": "polkadot-adapter",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "author": "NodeFactory",
+  "license": "MIT",
+  "dependencies": {
+    "@polkadot/extension-inject": "^0.23.1"
+  }
+}
