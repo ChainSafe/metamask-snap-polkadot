@@ -3,7 +3,8 @@ import {getAddress} from "../rpc/getAddress";
 import {executeAssetOperation} from "./action";
 import formatBalance from "@polkadot/util/format/formatBalance";
 import {Balance} from "@polkadot/types/interfaces";
-import {NetworkConfiguration} from "../network/interfaces";
+import {UnitConfiguration} from "../configuration/interfaces";
+import merge from "deepmerge";
 
 const assets: Map<string, Asset> = new Map<string, Asset>();
 
@@ -12,20 +13,18 @@ function getIdentifier(origin: string, id: string): string {
 }
 
 // eslint-disable-next-line max-len
-export function getKusamaAsset(assetId: string, balance: number|string|Balance, address: string, configuration: NetworkConfiguration): Asset {
-  const image = configuration.unit.image ? configuration.unit.image : "";
-  const customViewUrl = configuration.unit.customViewUrl ?
-    configuration.unit.customViewUrl : `https://polkascan.io/pre/kusama/account/${address}`;
-  return {
+export function getKusamaAsset(
+  assetId: string, balance: number|string|Balance, address: string, configuration: UnitConfiguration
+): Asset {
+  return merge(configuration, {
     balance: formatBalance(balance, {decimals: 12, withSi: true, withUnit: false}),
-    customViewUrl: customViewUrl,
+    customViewUrl: `https://polkascan.io/pre/kusama/account/${address}`,
     decimals: 0,
     identifier: assetId,
-    image: image,
-    symbol: configuration.unit.symbol,
-  };
+    image: "",
+    symbol: "KSM",
+  });
 }
-
 
 export async function removeAsset(wallet: Wallet, origin: string, assetId: string): Promise<boolean> {
   await executeAssetOperation({identifier: assetId}, wallet, "remove");
@@ -43,7 +42,7 @@ export async function updateAsset(
     await executeAssetOperation(asset, wallet, "update");
   } else {
     const state = wallet.getPluginState();
-    const asset = getKusamaAsset(assetId, 0, await getAddress(wallet), state.polkadot.network);
+    const asset = getKusamaAsset(assetId, 0, await getAddress(wallet), state.polkadot.config.unit);
     await removeAsset(wallet, origin, assetId);
     await executeAssetOperation(asset, wallet, "add");
     assets.set(getIdentifier(origin, assetId), asset);

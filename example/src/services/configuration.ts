@@ -1,8 +1,8 @@
 import {pluginOrigin} from "./metamask";
-import {Configuration} from "../../../src/configuration";
+import {SnapConfig} from "../../../src/configuration/interfaces";
 
 
-export async function setConfiguration(configuration: Configuration): Promise<void> {
+export async function setConfiguration(configuration: SnapConfig): Promise<void> {
     return await window.ethereum.send({
         method: pluginOrigin,
         params: [{

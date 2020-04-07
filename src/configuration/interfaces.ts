@@ -8,6 +8,10 @@ export interface UnitConfiguration {
 
 export interface NetworkConfiguration {
   wsRpcUrl: string;
-  unit: UnitConfiguration;
   addressPrefix: number;
+}
+
+export interface SnapConfig {
+  network: Network | NetworkConfiguration;
+  unit?: UnitConfiguration;
 }

@@ -8,7 +8,8 @@ import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
 import {getApi} from "./polkadot/api";
-import {Configuration, setConfiguration} from "./configuration";
+import {setConfiguration} from "./configuration";
+import {SnapConfig} from "./configuration/interfaces";
 
 declare let wallet: Wallet;
 
@@ -43,8 +44,8 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return balance;
     }
     case 'configure': {
-      const configuration = requestObject.params["configuration"] as Configuration;
-      return await setConfiguration(wallet, configuration);
+      const configuration = requestObject.params["configuration"] as SnapConfig;
+      return setConfiguration(wallet, configuration);
     }
     case 'addKusamaAsset':
       return await updateAsset(wallet, originString, "ksm-token", 0);

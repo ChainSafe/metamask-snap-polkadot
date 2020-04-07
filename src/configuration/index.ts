@@ -1,24 +1,34 @@
-import {Network, NetworkConfiguration} from "../network/interfaces";
-import {Wallet} from "../interfaces";
-import {defaultConfiguration, getNetworkConfiguration} from "../network";
+import {SnapConfig} from "./interfaces";
+import {SnapConfigState, Wallet} from "../interfaces";
+import {kusamaConfiguration, westendConfiguration} from "./predefined";
 
-export interface Configuration {
-  network: Network | NetworkConfiguration;
-}
-
-export async function setConfiguration(wallet: Wallet, configuration: Configuration): Promise<NetworkConfiguration> {
-  const state = wallet.getPluginState();
-  state.polkadot.network = getNetworkConfiguration(configuration);
-  wallet.updatePluginState(state);
-  return state.polkadot.network;
-}
-
-export function getConfiguration(wallet: Wallet): NetworkConfiguration {
-  const state = wallet.getPluginState();
-  // set default configuration if conf. not set
-  if (!state.polkadot.network) {
-    state.polkadot.network = defaultConfiguration;
-    wallet.updatePluginState(state);
+function getSnapConfigState(configuration: SnapConfig): SnapConfigState {
+  switch (configuration.network) {
+    case "kusama":
+      console.log("Kusama configuration selected");
+      return kusamaConfiguration;
+    case "westend":
+      console.log("Westend configuration selected");
+      return westendConfiguration;
+    default:
+      // custom configuration
+      if (configuration.unit) {
+        console.log("Custom configuration selected");
+        return {network: configuration.network, unit: configuration.unit};
+      } else {
+        throw new Error(""); // todo invalid config
+      }
   }
-  return state.polkadot.network;
+}
+
+export function setConfiguration(wallet: Wallet, configuration: SnapConfig): SnapConfigState {
+  const state = wallet.getPluginState();
+  state.polkadot.config = getSnapConfigState(configuration);
+  wallet.updatePluginState(state);
+  return state.polkadot.config;
+}
+
+export function getConfiguration(wallet: Wallet): SnapConfigState | null {
+  const state = wallet.getPluginState();
+  return state.polkadot.config;
 }
