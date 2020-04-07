@@ -9,13 +9,13 @@ import { KeyringPair } from '@polkadot/keyring/types';
  * @param wallet
  */
 export async function getKeyPair(wallet: Wallet): Promise<KeyringPair> {
-  const keyPairState = wallet.getPluginState();
+  const state = wallet.getPluginState();
   let keyringPair: KeyringPair;
-  if (!!keyPairState) {
+  if (!!state.polkadot.account) {
     // keypair already saved
     await cryptoWaitReady();
     const keyring = new Keyring();
-    keyringPair = keyring.addFromJson(keyPairState.polkadot.account.keyring);
+    keyringPair = keyring.addFromJson(state.polkadot.account.keyring);
   } else {
     // generate new keypair
     keyringPair = await generateKeys(wallet);
