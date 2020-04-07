@@ -18,6 +18,7 @@ describe('Test setting configuration', function() {
   it('should set predefined kusama configuration', async function() {
     // stubs
     walletStub.getPluginState.returns(EmptyMetamaskState);
+    walletStub.updatePluginState.returnsArg(0);
     // tested method
     const result = setConfiguration(walletStub, {network: "kusama"});
     // assertions
@@ -28,11 +29,13 @@ describe('Test setting configuration', function() {
         config: kusamaConfiguration
       }
     });
+    expect(walletStub.updatePluginState).to.have.been.calledOnce;
   });
 
   it('should set predefined westend configuration', async function() {
     // stubs
     walletStub.getPluginState.returns(EmptyMetamaskState);
+    walletStub.updatePluginState.returnsArg(0);
     // tested method
     const result = setConfiguration(walletStub, {network: "westend"});
     // assertions
@@ -43,11 +46,13 @@ describe('Test setting configuration', function() {
         config: westendConfiguration
       }
     });
+    expect(walletStub.updatePluginState).to.have.been.calledOnce;
   });
 
   it('should set custom configuration', async function() {
     // stubs
     walletStub.getPluginState.returns(EmptyMetamaskState);
+    walletStub.updatePluginState.returnsArg(0);
     const customConfiguration: SnapConfig = {
       network: {addressPrefix: 1, wsRpcUrl: "ws-rpc-url"},
       unit: {customViewUrl: "custom-view-url", image: "image", symbol: "TST" }
@@ -62,5 +67,6 @@ describe('Test setting configuration', function() {
         config: customConfiguration
       }
     });
+    expect(walletStub.updatePluginState).to.have.been.calledOnce;
   });
 });
