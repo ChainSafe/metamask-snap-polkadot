@@ -6,7 +6,7 @@ import {executeAssetOperation} from "../../../src/asset/action";
 
 chai.use(sinonChai);
 
-describe('Test asset function: executeAssetOperation', () => {
+describe('Test asset function: executeAssetOperation', function() {
   const walletStub = new WalletMock();
   const testAsset: Asset = {
     balance: "100",

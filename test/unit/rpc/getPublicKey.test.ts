@@ -6,7 +6,7 @@ import {WalletMock} from "../crypto/wallet.mock.test";
 
 chai.use(sinonChai);
 
-describe('Test rpc handler function: getPublicKey', () => {
+describe('Test rpc handler function: getPublicKey', function() {
 
   const walletStub = new WalletMock();
 

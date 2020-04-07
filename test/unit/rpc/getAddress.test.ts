@@ -6,7 +6,7 @@ import {getAddress} from "../../../src/rpc/getAddress";
 
 chai.use(sinonChai);
 
-describe('Test rpc handler function: getAddress', () => {
+describe('Test rpc handler function: getAddress', function() {
 
   const walletStub = new WalletMock();
 

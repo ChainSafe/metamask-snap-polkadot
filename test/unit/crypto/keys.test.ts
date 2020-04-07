@@ -8,7 +8,7 @@ import {EmptyMetamaskState} from "../../../src/interfaces";
 
 chai.use(sinonChai);
 
-describe('Test crypto function: generateKeys', () => {
+describe('Test crypto function: generateKeys', function() {
 
   const walletStub = new WalletMock();
 

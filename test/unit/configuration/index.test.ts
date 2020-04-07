@@ -8,14 +8,14 @@ import {SnapConfig} from "../../../src/configuration/interfaces";
 
 chai.use(sinonChai);
 
-describe('Test setting configuration', () => {
+describe('Test setting configuration', function() {
   const walletStub = new WalletMock();
 
   afterEach(function() {
     walletStub.reset();
   });
 
-  it('should set predefined kusama configuration', async () => {
+  it('should set predefined kusama configuration', async function() {
     // stubs
     walletStub.getPluginState.returns(EmptyMetamaskState);
     // tested method
@@ -30,7 +30,7 @@ describe('Test setting configuration', () => {
     });
   });
 
-  it('should set predefined westend configuration', async () => {
+  it('should set predefined westend configuration', async function() {
     // stubs
     walletStub.getPluginState.returns(EmptyMetamaskState);
     // tested method
@@ -45,7 +45,7 @@ describe('Test setting configuration', () => {
     });
   });
 
-  it('should set custom configuration', async () => {
+  it('should set custom configuration', async function() {
     // stubs
     walletStub.getPluginState.returns(EmptyMetamaskState);
     const customConfiguration: SnapConfig = {

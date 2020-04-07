@@ -5,7 +5,7 @@ import {showConfirmationDialog} from "../../../src/util/confirmation";
 
 chai.use(sinonChai);
 
-describe('Test showConfirmationDialog', () => {
+describe('Test showConfirmationDialog', function() {
 
   const walletStub = new WalletMock();
 

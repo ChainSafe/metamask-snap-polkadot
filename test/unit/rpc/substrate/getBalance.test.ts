@@ -9,7 +9,7 @@ import sinon from "sinon";
 
 chai.use(sinonChai);
 
-describe('Test rpc handler function: getBalance', () => {
+describe('Test rpc handler function: getBalance', function() {
 
   const walletStub = new WalletMock();
 
