@@ -8,6 +8,7 @@ import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
 import {getApi} from "./polkadot/api";
+import {setConfiguration} from "./configuration/configuration";
 
 declare let wallet: Wallet;
 
@@ -39,6 +40,10 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       const balance = await getBalance(wallet, api);
       await updateAsset(wallet, originString, "ksm-token", balance);
       return balance;
+    }
+    case 'configure': {
+      const c = await setConfiguration(wallet, {network: "kusama"});
+      return "configure";
     }
     case 'addKusamaAsset':
       return await updateAsset(wallet, originString, "ksm-token", 0);

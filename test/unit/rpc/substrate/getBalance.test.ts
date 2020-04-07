@@ -13,7 +13,7 @@ describe('Test rpc handler function: getBalance', () => {
 
   const walletStub = new WalletMock();
 
-  afterEach(function () {
+  afterEach(() => {
     walletStub.reset();
   });
 

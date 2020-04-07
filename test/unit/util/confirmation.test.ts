@@ -9,7 +9,7 @@ describe('Test showConfirmationDialog', () => {
 
   const walletStub = new WalletMock();
 
-  afterEach(function () {
+  afterEach(() => {
     walletStub.reset();
   });
 
