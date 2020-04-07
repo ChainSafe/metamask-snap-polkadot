@@ -12,7 +12,6 @@ function getIdentifier(origin: string, id: string): string {
   return `${origin}_${id}`;
 }
 
-// eslint-disable-next-line max-len
 export function getKusamaAsset(
   assetId: string, balance: number|string|Balance, address: string, configuration: UnitConfiguration
 ): Asset {

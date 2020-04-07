@@ -17,9 +17,9 @@ const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusam
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   // console.log("RPC METHOD CALLED: " + requestObject.method);
-  // initialize state if empty
   const state = wallet.getPluginState();
   if (!state) {
+    // initialize state if empty and set default config
     wallet.updatePluginState(EmptyMetamaskState);
   }
   // fetch api promise

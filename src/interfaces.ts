@@ -1,5 +1,6 @@
 import { KeyringPair$Json } from '@polkadot/keyring/types';
 import {NetworkConfiguration, UnitConfiguration} from "./configuration/interfaces";
+import {defaultConfiguration} from "./configuration/predefined";
 
 export type FMethodCallback = (
   originString: string,
@@ -17,7 +18,7 @@ export type MetamaskState = {
   };
 };
 
-export const EmptyMetamaskState: MetamaskState = {polkadot: {account: null, config: null}};
+export const EmptyMetamaskState: MetamaskState = {polkadot: {account: null, config: defaultConfiguration}};
 
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;

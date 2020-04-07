@@ -20,3 +20,5 @@ export const westendConfiguration: SnapConfigState = {
     symbol: "KSM",
   },
 };
+
+export const defaultConfiguration: SnapConfigState = kusamaConfiguration;
