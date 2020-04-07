@@ -25,7 +25,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   // fetch api promise
   let api: ApiPromise = null;
   if (apiDependentMethods.includes(requestObject.method)) {
-    api = await getApi();
+    api = await getApi(wallet);
   }
   switch (requestObject.method) {
     case 'getPublicKey':
