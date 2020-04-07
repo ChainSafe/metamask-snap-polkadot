@@ -8,12 +8,11 @@ export class WalletMock implements Wallet {
   public send = sinon.stub();
   public updatePluginState = sinon.stub();
 
-  public reset(): Wallet {
+  public reset(): void {
     this.registerRpcMessageHandler.reset();
     this.getAppKey.reset();
     this.getPluginState.reset();
     this.send.reset();
     this.updatePluginState.reset();
-    return this;
   }
 }
