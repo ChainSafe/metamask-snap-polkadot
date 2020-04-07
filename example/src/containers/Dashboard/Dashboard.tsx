@@ -25,7 +25,7 @@ export const Dashboard = () => {
     useEffect(() => {
         (async () => {
             if(state.polkadotSnap.isInstalled) {
-                await setConfiguration();
+                await setConfiguration({network: "kusama"});
                 await addKusamaAsset();
                 setPublicKey(await getPublicKey());
                 setAddress(await getAddress());
