@@ -14,7 +14,7 @@ describe('Test rpc handler function: getBlock', () => {
 
   const walletStub = new WalletMock();
 
-  afterEach(() => {
+  afterEach(function() {
     walletStub.reset();
   });
 

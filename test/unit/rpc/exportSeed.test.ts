@@ -9,7 +9,7 @@ describe('Test rpc handler function: exportSeed', () => {
 
   const walletStub = new WalletMock();
 
-  afterEach(() => {
+  afterEach(function() {
     walletStub.reset();
   });
 

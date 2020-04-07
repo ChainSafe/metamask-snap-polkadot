@@ -12,7 +12,7 @@ describe('Test crypto function: generateKeys', () => {
 
   const walletStub = new WalletMock();
 
-  afterEach(() => {
+  afterEach(function() {
     walletStub.reset();
   });
 

@@ -11,7 +11,7 @@ describe('Test account function: getKeyPair', function() {
 
   const walletStub = new WalletMock();
 
-  afterEach(() => {
+  afterEach(function() {
     walletStub.reset();
   });
 

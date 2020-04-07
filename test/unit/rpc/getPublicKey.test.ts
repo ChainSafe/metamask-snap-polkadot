@@ -10,7 +10,7 @@ describe('Test rpc handler function: getPublicKey', () => {
 
   const walletStub = new WalletMock();
 
-  afterEach(() => {
+  afterEach(function () {
     walletStub.reset();
   });
 

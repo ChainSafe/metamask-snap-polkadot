@@ -17,7 +17,7 @@ describe('Test asset function: executeAssetOperation', () => {
     symbol: 'TST',
   };
 
-  afterEach(() => {
+  afterEach(function() {
     walletStub.reset();
   });
 

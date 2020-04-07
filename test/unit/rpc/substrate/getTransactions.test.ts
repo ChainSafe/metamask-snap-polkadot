@@ -29,7 +29,7 @@ describe('Test rpc handler function: getTransactions', () => {
     }}} as MetamaskState);
   });
 
-  afterEach(() => {
+  afterEach(function() {
     walletStub.reset();
     axiosStub.reset();
   });
