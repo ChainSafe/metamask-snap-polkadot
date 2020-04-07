@@ -1,10 +1,9 @@
 export type Network = "kusama" | "westend";
 
-export type CustomViewUrlCallBack = (address: string) => string;
 export interface UnitConfiguration {
   symbol: string;
   image?: string;
-  customViewUrl?: string | CustomViewUrlCallBack;
+  customViewUrl?: string;
 }
 
 export interface NetworkConfiguration {

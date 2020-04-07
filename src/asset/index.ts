@@ -3,22 +3,26 @@ import {getAddress} from "../rpc/getAddress";
 import {executeAssetOperation} from "./action";
 import formatBalance from "@polkadot/util/format/formatBalance";
 import {Balance} from "@polkadot/types/interfaces";
+import {NetworkConfiguration} from "../network/interfaces";
 
 const assets: Map<string, Asset> = new Map<string, Asset>();
-
 
 function getIdentifier(origin: string, id: string): string {
   return `${origin}_${id}`;
 }
 
-export function getKusamaAsset(assetId: string, balance: number|string|Balance, address: string): Asset {
+// eslint-disable-next-line max-len
+export function getKusamaAsset(assetId: string, balance: number|string|Balance, address: string, configuration: NetworkConfiguration): Asset {
+  const image = configuration.unit.image ? configuration.unit.image : "";
+  const customViewUrl = configuration.unit.customViewUrl ?
+    configuration.unit.customViewUrl : `https://polkascan.io/pre/kusama/account/${address}`;
   return {
     balance: formatBalance(balance, {decimals: 12, withSi: true, withUnit: false}),
-    customViewUrl: `https://polkascan.io/pre/kusama/account/${address}`,
+    customViewUrl: customViewUrl,
     decimals: 0,
     identifier: assetId,
-    image: 'https://img.techpowerup.org/200330/kusama.png',
-    symbol: 'KSM',
+    image: image,
+    symbol: configuration.unit.symbol,
   };
 }
 
@@ -38,7 +42,8 @@ export async function updateAsset(
     asset.balance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
     await executeAssetOperation(asset, wallet, "update");
   } else {
-    const asset = getKusamaAsset(assetId, 0, await getAddress(wallet));
+    const state = wallet.getPluginState();
+    const asset = getKusamaAsset(assetId, 0, await getAddress(wallet), state.polkadot.network);
     await removeAsset(wallet, origin, assetId);
     await executeAssetOperation(asset, wallet, "add");
     assets.set(getIdentifier(origin, assetId), asset);
