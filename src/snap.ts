@@ -8,11 +8,11 @@ import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
 import {getApi} from "./polkadot/api";
-import {setConfiguration} from "./configuration/configuration";
+import {Configuration, setConfiguration} from "./configuration/configuration";
 
 declare let wallet: Wallet;
 
-const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset", "updateDotAsset"];
+const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   // initialize state if empty
@@ -42,8 +42,8 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return balance;
     }
     case 'configure': {
-      const c = await setConfiguration(wallet, {network: "kusama"});
-      return "configure";
+      const configuration = requestObject.params["configuration"] as Configuration;
+      return await setConfiguration(wallet, configuration);
     }
     case 'addKusamaAsset':
       return await updateAsset(wallet, originString, "ksm-token", 0);

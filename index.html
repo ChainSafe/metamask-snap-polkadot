@@ -29,6 +29,7 @@
       <!-- Snap connect button -->
       <div style="margin-bottom: 10px">
         <button class="connect-snap">Connect polkadot snap</button>
+        <button class="configure">Set configuration</button>
         <button class="create-asset">Create dot asset</button>
         <button class="update-asset">Update dot asset</button>
       </div>
@@ -119,6 +120,9 @@
     snapConnectButton.addEventListener('click', connectSnap);
     snapConnectButton.disabled = false; // until keypair is fetched
     snapConnectedLabel.innerHTML = FALSE;
+    // configuration
+    const configureButton = document.querySelector('button.configure');
+    configureButton.addEventListener('click', loadConfiguration);
     // create asset
     const createAssetButton = document.querySelector('button.create-asset');
     createAssetButton.addEventListener('click', createAsset);
@@ -151,6 +155,33 @@
     const blockFindButton = document.querySelector('button.block-find');
     const blockData = document.querySelector('pre.block-data');
     blockFindButton.addEventListener('click', findBlock);
+
+    async function loadConfiguration() {
+      try {
+        const c = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'configure',
+            params: {
+              configuration: {
+                network: {
+                  wsRpcUrl: "wss://kusama-rpc.polkadot.io/",
+                  unit: {
+                    image: "",
+                    symbol: "KSM",
+                    customViewUrl: (address) => {return "https://polkascan.io/pre/kusama/account/" + address},
+                  },
+                  addressPrefix: 1
+                }
+              }
+            }
+          }]
+        });
+        console.log(c);
+      } catch (e) {
+        console.log("Keys not generated", e);
+      }
+    }
 
     async function updateAsset() {
       try {
