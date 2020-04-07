@@ -1,14 +1,6 @@
 import {NetworkConfiguration} from "./interfaces";
 import {Configuration} from "../configuration/configuration";
 
-export const defaultConfiguration: NetworkConfiguration = {
-  addressPrefix: 1,
-  unit: {
-    symbol: "KSM",
-  },
-  wsRpcUrl: "wss://kusama-rpc.polkadot.io/",
-};
-
 export const kusamaConfiguration: NetworkConfiguration = {
   addressPrefix: 1,
   unit: {
@@ -26,6 +18,8 @@ export const westendConfiguration: NetworkConfiguration = {
   },
   wsRpcUrl: "wss://kusama-rpc.polkadot.io/",
 };
+
+export const defaultConfiguration: NetworkConfiguration = kusamaConfiguration;
 
 export function getNetworkConfiguration(configuration: Configuration): NetworkConfiguration {
   switch (configuration.network) {
