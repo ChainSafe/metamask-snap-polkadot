@@ -2,7 +2,7 @@ import {SnapConfigState} from "../interfaces";
 
 export const kusamaConfiguration: SnapConfigState = {
   network: {
-    addressPrefix: 1,
+    addressPrefix: 2,
     wsRpcUrl: "wss://kusama-rpc.polkadot.io/",
   },
   unit: {
@@ -12,12 +12,12 @@ export const kusamaConfiguration: SnapConfigState = {
 };
 export const westendConfiguration: SnapConfigState = {
   network: {
-    addressPrefix: 1,
-    wsRpcUrl: "wss://kusama-rpc.polkadot.io/",
+    addressPrefix: 48,
+    wsRpcUrl: "wss://westend-rpc.polkadot.io/",
   },
   unit: {
     image: "https://svgur.com/i/Jiy.svg",
-    symbol: "KSM",
+    symbol: "WST",
   },
 };
 
