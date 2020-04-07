@@ -15,6 +15,7 @@ declare let wallet: Wallet;
 const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
+  // console.log("RPC METHOD CALLED: " + requestObject.method);
   // initialize state if empty
   const state = wallet.getPluginState();
   if (!state) {
