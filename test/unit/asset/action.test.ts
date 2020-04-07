@@ -48,4 +48,17 @@ describe('Test asset function: executeAssetOperation', () => {
       params: ["update", testAsset]
     });
   });
+
+  it('should call remove method with provided asset', async () => {
+    // stubs
+    walletStub.send.returns(null);
+    // tested method
+    const result = await executeAssetOperation(testAsset, walletStub, "remove");
+    // assertions
+    expect(result).to.be.null;
+    expect(walletStub.send).to.have.been.calledOnceWithExactly({
+      method: 'wallet_manageAssets',
+      params: ["remove", testAsset]
+    });
+  });
 });
