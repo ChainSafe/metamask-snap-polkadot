@@ -31,7 +31,7 @@
         <button class="connect-snap">Connect polkadot snap</button>
         <button class="configure">Set configuration</button>
         <button class="create-asset">Create dot asset</button>
-        <button class="update-asset">Update dot asset</button>
+        <button class="remove-asset">Remove dot asset</button>
       </div>
 
       <!-- Public Key -->
@@ -126,8 +126,8 @@
     // create asset
     const createAssetButton = document.querySelector('button.create-asset');
     createAssetButton.addEventListener('click', createAsset);
-    const updateAssetButton = document.querySelector('button.update-asset');
-    updateAssetButton.addEventListener('click', updateAsset);
+    const removeAssetButton = document.querySelector('button.remove-asset');
+    removeAssetButton.addEventListener('click', removeAsset);
     // export seed
     const exportButton = document.querySelector('button.export-seed');
     const seedLabel = document.querySelector('div.seed');
@@ -169,7 +169,6 @@
                   unit: {
                     image: "",
                     symbol: "KSM",
-                    customViewUrl: (address) => {return "https://polkascan.io/pre/kusama/account/" + address},
                   },
                   addressPrefix: 1
                 }
@@ -183,12 +182,12 @@
       }
     }
 
-    async function updateAsset() {
+    async function removeAsset() {
       try {
         await ethereum.send({
           method: snapId,
           params: [{
-            method: 'updateDotAsset'
+            method: 'removeKusamaAsset'
           }]
         });
       } catch (e) {
@@ -201,7 +200,7 @@
         await ethereum.send({
           method: snapId,
           params: [{
-            method: 'addDotAsset'
+            method: 'addKusamaAsset'
           }]
         });
       } catch (e) {
