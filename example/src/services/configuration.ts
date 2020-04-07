@@ -1,5 +1,5 @@
 import {pluginOrigin} from "./metamask";
-import {Configuration} from "../../../src/configuration/configuration";
+import {Configuration} from "../../../src/configuration";
 
 
 export async function setConfiguration(configuration: Configuration): Promise<void> {

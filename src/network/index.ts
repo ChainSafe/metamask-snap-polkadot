@@ -1,5 +1,5 @@
 import {NetworkConfiguration} from "./interfaces";
-import {Configuration} from "../configuration/configuration";
+import {Configuration} from "../configuration";
 
 export const kusamaConfiguration: NetworkConfiguration = {
   addressPrefix: 1,
