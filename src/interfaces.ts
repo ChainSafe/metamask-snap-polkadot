@@ -1,5 +1,5 @@
 import { KeyringPair$Json } from '@polkadot/keyring/types';
-import {NetworkConfiguration, UnitConfiguration} from "./configuration/interfaces";
+import {SnapConfig} from "./configuration/interfaces";
 import {defaultConfiguration} from "./configuration/predefined";
 
 export type FMethodCallback = (
@@ -10,10 +10,9 @@ export type FMethodCallback = (
 export type RequestObject = { method: string; params: Record<string, unknown> };
 
 export type AccountState = { keyring: KeyringPair$Json };
-export type SnapConfigState = {network: NetworkConfiguration; unit: UnitConfiguration};
 export type MetamaskState = {
   polkadot: {
-    config: SnapConfigState;
+    config: SnapConfig;
     account: AccountState;
   };
 };

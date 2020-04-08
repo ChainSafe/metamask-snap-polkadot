@@ -1,9 +1,9 @@
 import {SnapConfig} from "./interfaces";
-import {SnapConfigState, Wallet} from "../interfaces";
-import {kusamaConfiguration, westendConfiguration} from "./predefined";
+import {Wallet} from "../interfaces";
+import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "./predefined";
 
-function getSnapConfigState(configuration: SnapConfig): SnapConfigState {
-  switch (configuration.network) {
+export function getDefaultConfiguration(networkName: string): SnapConfig {
+  switch (networkName) {
     case "kusama":
       console.log("Kusama configuration selected");
       return kusamaConfiguration;
@@ -11,24 +11,11 @@ function getSnapConfigState(configuration: SnapConfig): SnapConfigState {
       console.log("Westend configuration selected");
       return westendConfiguration;
     default:
-      // custom configuration
-      if (configuration.unit) {
-        console.log("Custom configuration selected");
-        return {network: configuration.network, unit: configuration.unit};
-      } else {
-        throw new Error(""); // todo invalid config
-      }
+      return defaultConfiguration;
   }
 }
 
-export function setConfiguration(wallet: Wallet, configuration: SnapConfig): SnapConfigState {
-  const state = wallet.getPluginState();
-  state.polkadot.config = getSnapConfigState(configuration);
-  wallet.updatePluginState(state);
-  return state.polkadot.config;
-}
-
-export function getConfiguration(wallet: Wallet): SnapConfigState | null {
+export function getConfiguration(wallet: Wallet): SnapConfig | null {
   const state = wallet.getPluginState();
   return state.polkadot.config;
 }

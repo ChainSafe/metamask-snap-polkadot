@@ -8,8 +8,8 @@ import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
 import {getApi} from "./polkadot/api";
-import {setConfiguration} from "./configuration";
 import {SnapConfig} from "./configuration/interfaces";
+import {configure} from "./rpc/configure";
 
 declare let wallet: Wallet;
 
@@ -40,17 +40,17 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await getBlock(requestObject.params, api);
     case 'getBalance': {
       const balance = await getBalance(wallet, api);
-      await updateAsset(wallet, originString, "ksm-token", balance);
+      await updateAsset(wallet, originString, balance);
       return balance;
     }
     case 'configure': {
       const configuration = requestObject.params["configuration"] as SnapConfig;
-      return setConfiguration(wallet, configuration);
+      return configure(wallet, configuration.networkName, configuration);
     }
     case 'addKusamaAsset':
-      return await updateAsset(wallet, originString, "ksm-token", 0);
+      return await updateAsset(wallet, originString, 0);
     case 'removeKusamaAsset':
-      return await removeAsset(wallet, originString, "ksm-token");
+      return await removeAsset(wallet, originString);
     case 'getChainHead':
       // temporary method
       const head = await api.rpc.chain.getFinalizedHead();
