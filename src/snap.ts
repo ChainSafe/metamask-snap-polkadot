@@ -47,9 +47,9 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       const configuration = requestObject.params["configuration"] as SnapConfig;
       return configure(wallet, configuration.networkName, configuration);
     }
-    case 'addKusamaAsset':
+    case 'addPolkadotAsset':
       return await updateAsset(wallet, originString, 0);
-    case 'removeKusamaAsset':
+    case 'removePolkadotAsset':
       return await removeAsset(wallet, originString);
     case 'getChainHead':
       // temporary method
