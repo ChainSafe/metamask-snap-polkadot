@@ -1,37 +1,47 @@
 import { injectExtension } from '@polkadot/extension-inject';
+import {Injected, InjectedAccounts} from "@polkadot/extension-inject/types";
+import { Signer as InjectedSigner } from '@polkadot/api/types';
+import {installPolkadotSnap, isPolkadotSnapInstalled} from "../example/src/services/metamask";
+import {pluginOrigin} from "../example/src/services/metamask";
 
-interface Injected {
-    // the interface for Accounts, as detailed below
-    readonly accounts: Accounts;
-    // the standard Signer interface for the API, as detailed below
-    readonly signer: Signer;
-    // not injected as of yet, subscribable provider for polkadot-js API injection,
-    // this can be passed to the API itself upon construction in the dapp
-    // readonly provider?: Provider
+interface NetworkConfig {
+    explorerUrl: string;
+    rpcUrl: string;
+    unitName: string;
 }
 
-interface Account {
-    // ss-58 encoded address
-    readonly address: string;
-    // the genesisHash for this account (empty if applicable to all)
-    readonly genesisHash?: string;
-    // (optional) name for display
-    readonly name?: string;
-};
+class MetamaskPolkadotSnap implements Injected {
+    //TODO
+    public accounts: InjectedAccounts = {
+        get: ()=>{},
+        subscribe: ()=>{}
+    }
+    public signer: InjectedSigner;
+    
+    //TODO
+    constructor(network: string, config: NetworkConfig) {
 
-interface Accounts {
-    // retrieves the list of accounts for right now
-    get: () => Promise<Account[]>;
-    // (optional) subscribe to all accounts, updating as they change
-    subscribe?: (cb: (accounts: Account[]) => any) => () => void
+    };
+
+
+    public enableSnap = async (origin: string): Promise<Injected> => {
+        if(isPolkadotSnapInstalled) {
+            await window.ethereum.send({
+                method: "wallet_enable",
+                params: [{
+                    [pluginOrigin]: {}
+                }]
+            });
+            //TODO
+            await addAsset();
+        }
+        return this;
+    }
 }
 
-function enableFn (originName: string): Promise<Injected> {
-
-}
-
-injectExtension(enableFn, { name: 'myExtension', version: '1.0.1' });
-
-
-//export function injectMetamaskPolkadotProvider(network: "kusama"|"polkadot") {} 
-//export function injectMetamaskPolkadotProvider(config: {explorerUrl, rpcUrl, unitName}) {}
+export function injectMetamaskPolkadotSnapProvider(network: "kusama"|"polkadot", config: NetworkConfig): void {
+    const PolkadotSnap = new MetamaskPolkadotSnap(network, config);
+    if(isPolkadotSnapInstalled && installPolkadotSnap) {
+    injectExtension(PolkadotSnap.enableSnap(network), { name: 'metmask-polkadot-snap', version: '1.0.0' });
+    }   
+ }
