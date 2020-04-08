@@ -21,7 +21,7 @@ export function getPolkadotAssetDescription(
         `https://polkascan.io/pre/${configuration.networkName}/account/${address}`,
     decimals: 0,
     identifier: configuration.unit.assetId,
-    image: configuration.unit.image || "https://svgur.com/i/Jiy.svg",
+    image: configuration.unit.image || "",
     symbol: configuration.unit.symbol,
   };
 }

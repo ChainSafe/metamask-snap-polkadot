@@ -1,7 +1,9 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {getDefaultConfiguration} from "../../../src/configuration";
+import {getConfiguration, getDefaultConfiguration} from "../../../src/configuration";
 import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "../../../src/configuration/predefined";
+import {WalletMock} from "../crypto/wallet.mock.test";
+import {SnapConfig} from "../../../src/configuration/interfaces";
 
 chai.use(sinonChai);
 
@@ -25,6 +27,27 @@ describe('Test configuration functions', function() {
 
     it('should return default configuration on non network name string', function () {
       const configuration = getDefaultConfiguration("test");
+      expect(configuration).to.be.deep.eq(defaultConfiguration);
+    });
+  });
+
+  describe('getConfiguration', function () {
+    const walletStub = new WalletMock();
+
+    afterEach(function() {
+      walletStub.reset();
+    });
+
+    it('should return configuration saved in state"', function () {
+      const customConfiguration: SnapConfig = {addressPrefix: 5, networkName: "test-network", wsRpcUrl: "url"};
+      walletStub.getPluginState.returns({polkadot: {account: null, config: customConfiguration}});
+      const configuration = getConfiguration(walletStub);
+      expect(configuration).to.be.deep.eq(customConfiguration);
+    });
+
+    it('should return default configuration on empty state"', function () {
+      walletStub.getPluginState.returns({polkadot: {account: null, config: null}});
+      const configuration = getConfiguration(walletStub);
       expect(configuration).to.be.deep.eq(defaultConfiguration);
     });
   });

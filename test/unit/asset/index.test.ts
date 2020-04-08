@@ -58,7 +58,7 @@ describe('Test asset functions ', function() {
         customViewUrl: "https://polkascan.io/pre/test-network/account/test-address",
         decimals: 0,
         identifier: "test-id",
-        image: "https://svgur.com/i/Jiy.svg",
+        image: "",
         symbol: "TST"
       } as Asset);
     });
