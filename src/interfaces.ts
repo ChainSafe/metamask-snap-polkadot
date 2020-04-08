@@ -1,4 +1,5 @@
 import { KeyringPair$Json } from '@polkadot/keyring/types';
+import {SnapConfig} from "./configuration/interfaces";
 
 export type FMethodCallback = (
   originString: string,
@@ -10,9 +11,12 @@ export type RequestObject = { method: string; params: Record<string, unknown> };
 export type AccountState = { keyring: KeyringPair$Json };
 export type MetamaskState = {
   polkadot: {
+    config: SnapConfig;
     account: AccountState;
   };
 };
+
+export const EmptyMetamaskState: () => MetamaskState = () => ({polkadot: {account: null, config: null}});
 
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;

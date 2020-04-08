@@ -10,7 +10,8 @@ import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
 import {getAddress, getBalance, getPublicKey} from "../../services/account";
 import {BlockInfo} from "../../../../src/rpc/substrate/getBlock";
 import {getLatestBlock} from "../../services/block";
-import {addKusamaAsset} from "../../services/asset";
+import {addPolkadotAsset} from "../../services/asset";
+import {setConfiguration} from "../../services/configuration";
 
 export const Dashboard = () => {
 
@@ -24,7 +25,8 @@ export const Dashboard = () => {
     useEffect(() => {
         (async () => {
             if(state.polkadotSnap.isInstalled) {
-                await addKusamaAsset();
+                await setConfiguration({networkName: "kusama"});
+                await addPolkadotAsset();
                 setPublicKey(await getPublicKey());
                 setAddress(await getAddress());
                 setBalance(await getBalance());

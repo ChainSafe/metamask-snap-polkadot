@@ -29,8 +29,9 @@
       <!-- Snap connect button -->
       <div style="margin-bottom: 10px">
         <button class="connect-snap">Connect polkadot snap</button>
+        <button class="configure">Set configuration</button>
         <button class="create-asset">Create dot asset</button>
-        <button class="update-asset">Update dot asset</button>
+        <button class="remove-asset">Remove dot asset</button>
       </div>
 
       <!-- Public Key -->
@@ -119,11 +120,14 @@
     snapConnectButton.addEventListener('click', connectSnap);
     snapConnectButton.disabled = false; // until keypair is fetched
     snapConnectedLabel.innerHTML = FALSE;
+    // configuration
+    const configureButton = document.querySelector('button.configure');
+    configureButton.addEventListener('click', loadConfiguration);
     // create asset
     const createAssetButton = document.querySelector('button.create-asset');
     createAssetButton.addEventListener('click', createAsset);
-    const updateAssetButton = document.querySelector('button.update-asset');
-    updateAssetButton.addEventListener('click', updateAsset);
+    const removeAssetButton = document.querySelector('button.remove-asset');
+    removeAssetButton.addEventListener('click', removeAsset);
     // export seed
     const exportButton = document.querySelector('button.export-seed');
     const seedLabel = document.querySelector('div.seed');
@@ -152,12 +156,38 @@
     const blockData = document.querySelector('pre.block-data');
     blockFindButton.addEventListener('click', findBlock);
 
-    async function updateAsset() {
+    async function loadConfiguration() {
+      try {
+        const c = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'configure',
+            params: {
+              configuration: {
+                network: {
+                  wsRpcUrl: "wss://kusama-rpc.polkadot.io/",
+                  unit: {
+                    image: "",
+                    symbol: "KSM",
+                  },
+                  addressPrefix: 1
+                }
+              }
+            }
+          }]
+        });
+        console.log(c);
+      } catch (e) {
+        console.log("Keys not generated", e);
+      }
+    }
+
+    async function removeAsset() {
       try {
         await ethereum.send({
           method: snapId,
           params: [{
-            method: 'updateDotAsset'
+            method: 'removeKusamaAsset'
           }]
         });
       } catch (e) {
@@ -170,7 +200,7 @@
         await ethereum.send({
           method: snapId,
           params: [{
-            method: 'addDotAsset'
+            method: 'addKusamaAsset'
           }]
         });
       } catch (e) {

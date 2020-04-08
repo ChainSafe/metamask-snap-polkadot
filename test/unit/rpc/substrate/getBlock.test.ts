@@ -10,11 +10,11 @@ import { hexToU8a } from '@polkadot/util';
 
 chai.use(sinonChai);
 
-describe('Test rpc handler function: getBlock', () => {
+describe('Test rpc handler function: getBlock', function() {
 
   const walletStub = new WalletMock();
 
-  afterEach(function () {
+  afterEach(function() {
     walletStub.reset();
   });
 

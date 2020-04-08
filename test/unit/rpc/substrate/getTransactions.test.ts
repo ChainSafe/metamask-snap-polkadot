@@ -8,7 +8,7 @@ import {getTransactions} from "../../../../src/rpc/substrate/getTransactions";
 
 chai.use(sinonChai);
 
-describe('Test rpc handler function: getTransactions', () => {
+describe('Test rpc handler function: getTransactions', function() {
 
   const walletStub = new WalletMock();
   const axiosStub = sinon.stub(axios, "get");
@@ -29,7 +29,7 @@ describe('Test rpc handler function: getTransactions', () => {
     }}} as MetamaskState);
   });
 
-  afterEach(function () {
+  afterEach(function() {
     walletStub.reset();
     axiosStub.reset();
   });

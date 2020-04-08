@@ -16,8 +16,10 @@ export async function generateKeys(wallet: Wallet): Promise<KeyringPair> {
   const keyring = new Keyring();
   const keyringPair = keyring.addFromSeed(stringToU8a(seed));
   const accountState: AccountState = {keyring: keyringPair.toJson()};
+  const state = wallet.getPluginState();
+  state.polkadot.account = accountState;
   try {
-    wallet.updatePluginState({polkadot: {account: accountState}});
+    wallet.updatePluginState(state);
   } catch (e) {
     console.error("Failed to store generated polkadot account", keyringPair, e);
   }

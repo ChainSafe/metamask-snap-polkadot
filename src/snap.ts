@@ -1,4 +1,4 @@
-import {Wallet} from "./interfaces";
+import {EmptyMetamaskState, Wallet} from "./interfaces";
 import {getPublicKey} from "./rpc/getPublicKey";
 import {exportSeed} from "./rpc/exportSeed";
 import {getBalance} from "./rpc/substrate/getBalance";
@@ -8,16 +8,24 @@ import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
 import {getApi} from "./polkadot/api";
+import {SnapConfig} from "./configuration/interfaces";
+import {configure} from "./rpc/configure";
 
 declare let wallet: Wallet;
 
-const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset", "updateDotAsset"];
+const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
-  // init api if needed
+  // console.log("RPC METHOD CALLED: " + requestObject.method);
+  const state = wallet.getPluginState();
+  if (!state) {
+    // initialize state if empty and set default config
+    wallet.updatePluginState(EmptyMetamaskState());
+  }
+  // fetch api promise
   let api: ApiPromise = null;
   if (apiDependentMethods.includes(requestObject.method)) {
-    api = await getApi();
+    api = await getApi(wallet);
   }
   switch (requestObject.method) {
     case 'getPublicKey':
@@ -32,13 +40,17 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await getBlock(requestObject.params, api);
     case 'getBalance': {
       const balance = await getBalance(wallet, api);
-      await updateAsset(wallet, originString, "ksm-token", balance);
+      await updateAsset(wallet, originString, balance);
       return balance;
     }
-    case 'addKusamaAsset':
-      return await updateAsset(wallet, originString, "ksm-token", 0);
-    case 'removeKusamaAsset':
-      return await removeAsset(wallet, originString, "ksm-token");
+    case 'configure': {
+      const configuration = requestObject.params["configuration"] as SnapConfig;
+      return configure(wallet, configuration.networkName, configuration);
+    }
+    case 'addPolkadotAsset':
+      return await updateAsset(wallet, originString, 0);
+    case 'removePolkadotAsset':
+      return await removeAsset(wallet, originString);
     case 'getChainHead':
       // temporary method
       const head = await api.rpc.chain.getFinalizedHead();

@@ -5,11 +5,11 @@ import {WalletMock} from "../crypto/wallet.mock.test";
 
 chai.use(sinonChai);
 
-describe('Test rpc handler function: exportSeed', () => {
+describe('Test rpc handler function: exportSeed', function() {
 
   const walletStub = new WalletMock();
 
-  afterEach(function () {
+  afterEach(function() {
     walletStub.reset();
   });
 
