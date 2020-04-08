@@ -17,7 +17,7 @@ describe('Test rpc handler function: configure', function() {
 
   it('should set predefined kusama configuration', async function() {
     // stubs
-    walletStub.getPluginState.returns(EmptyMetamaskState);
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.updatePluginState.returnsArg(0);
     // tested method
     const result = configure(walletStub, "kusama", {});
@@ -34,7 +34,7 @@ describe('Test rpc handler function: configure', function() {
 
   it('should set predefined westend configuration', async function() {
     // stubs
-    walletStub.getPluginState.returns(EmptyMetamaskState);
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.updatePluginState.returnsArg(0);
     // tested method
     const result = configure(walletStub, "westend", {});
@@ -51,7 +51,7 @@ describe('Test rpc handler function: configure', function() {
 
   it('should set custom configuration', async function() {
     // stubs
-    walletStub.getPluginState.returns(EmptyMetamaskState);
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.updatePluginState.returnsArg(0);
     const customConfiguration: SnapConfig = {
       addressPrefix: 1,
@@ -75,7 +75,7 @@ describe('Test rpc handler function: configure', function() {
 
   it('should set predefined kusama configuration with additional property override', function () {
     // stubs
-    walletStub.getPluginState.returns(EmptyMetamaskState);
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.updatePluginState.returnsArg(0);
     // tested method
     const customConfiguration = kusamaConfiguration;

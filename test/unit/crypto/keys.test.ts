@@ -22,7 +22,7 @@ describe('Test crypto function: generateKeys', function() {
     const expectedAddress = "5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7";
     const expectedPublicKey = "0xcf043e13d9228d8a931ce4cc58efbd1ad6c5e2f1932c3174eb150dfaf9165b73";
     walletStub.getAppKey.returns(appKey);
-    walletStub.getPluginState.returns(EmptyMetamaskState);
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     // tested method
     const result = await generateKeys(walletStub);
     // assertions

@@ -42,7 +42,7 @@ describe('Test account function: getKeyPair', function() {
   });
 
   it('should create new and return keypair on empty state', async function() {
-    walletStub.getPluginState.returns(EmptyMetamaskState);
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
     walletStub.updatePluginState.returnsArg(0);
     const result = await getKeyPair(walletStub);

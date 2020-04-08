@@ -17,7 +17,7 @@ export type MetamaskState = {
   };
 };
 
-export const EmptyMetamaskState: MetamaskState = {polkadot: {account: null, config: defaultConfiguration}};
+export const EmptyMetamaskState: () => MetamaskState = () => ({polkadot: {account: null, config: defaultConfiguration}});
 
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
