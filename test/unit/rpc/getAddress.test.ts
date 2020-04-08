@@ -1,6 +1,6 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {EmptyMetamaskState, MetamaskState} from "../../../src/interfaces";
+import {MetamaskState} from "../../../src/interfaces";
 import {WalletMock} from "../crypto/wallet.mock.test";
 import {getAddress} from "../../../src/rpc/getAddress";
 
@@ -34,7 +34,7 @@ describe('Test rpc handler function: getAddress', function() {
   });
 
   it('should return address and create new keypair on empty state', async function () {
-    walletStub.getPluginState.returns(EmptyMetamaskState);
+    walletStub.getPluginState.returns({polkadot: {account: null, config: null}});
     walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
     const result = await getAddress(walletStub);
     expect(walletStub.getPluginState).to.have.been.calledTwice;
