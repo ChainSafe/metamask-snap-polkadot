@@ -4,7 +4,7 @@ import {executeAssetOperation} from "./action";
 import formatBalance from "@polkadot/util/format/formatBalance";
 import {Balance} from "@polkadot/types/interfaces";
 import {SnapConfig} from "../configuration/interfaces";
-import deepmerge from "deepmerge";
+import {getConfiguration} from "../configuration";
 
 const assets: Map<string, Asset> = new Map<string, Asset>();
 
@@ -27,8 +27,8 @@ export function getPolkadotAssetDescription(
 }
 
 export async function removeAsset(wallet: Wallet, origin: string): Promise<boolean> {
-  const state = wallet.getPluginState();
-  const assetId = state.polkadot.config.unit.assetId;
+  const configuration = getConfiguration(wallet);
+  const assetId = configuration.unit.assetId;
   await executeAssetOperation({identifier: assetId}, wallet, "remove");
   assets.delete(getIdentifier(origin, assetId));
   return true;
@@ -37,15 +37,15 @@ export async function removeAsset(wallet: Wallet, origin: string): Promise<boole
 export async function updateAsset(
   wallet: Wallet, origin: string, balance: number|string|Balance
 ): Promise<boolean> {
-  const state = wallet.getPluginState();
-  const assetId = state.polkadot.config.unit.assetId;
+  const configuration = getConfiguration(wallet);
+  const assetId = configuration.unit.assetId;
   console.log("Updating asset", origin, assetId);
   if(assets.has(getIdentifier(origin, assetId))) {
     const asset = assets.get(getIdentifier(origin, assetId));
     asset.balance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
     await executeAssetOperation(asset, wallet, "update");
   } else {
-    const asset = getPolkadotAssetDescription(0, await getAddress(wallet), state.polkadot.config);
+    const asset = getPolkadotAssetDescription(0, await getAddress(wallet), configuration);
     await removeAsset(wallet, origin);
     await executeAssetOperation(asset, wallet, "add");
     assets.set(getIdentifier(origin, assetId), asset);
