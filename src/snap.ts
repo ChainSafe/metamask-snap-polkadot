@@ -1,4 +1,4 @@
-import {Wallet} from "./interfaces";
+import {EmptyMetamaskState, Wallet} from "./interfaces";
 import {getPublicKey} from "./rpc/getPublicKey";
 import {exportSeed} from "./rpc/exportSeed";
 import {getBalance} from "./rpc/substrate/getBalance";
@@ -20,7 +20,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   const state = wallet.getPluginState();
   if (!state) {
     // initialize state if empty and set default config
-    wallet.updatePluginState({polkadot: {account: null, config: null}});
+    wallet.updatePluginState(EmptyMetamaskState());
   }
   // fetch api promise
   let api: ApiPromise = null;

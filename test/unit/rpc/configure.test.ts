@@ -4,6 +4,7 @@ import {WalletMock} from "../crypto/wallet.mock.test";
 import {kusamaConfiguration, westendConfiguration} from "../../../src/configuration/predefined";
 import {SnapConfig} from "../../../src/configuration/interfaces";
 import {configure} from "../../../src/rpc/configure";
+import {EmptyMetamaskState} from "../../../src/interfaces";
 
 chai.use(sinonChai);
 
@@ -16,7 +17,7 @@ describe('Test rpc handler function: configure', function() {
 
   it('should set predefined kusama configuration', async function() {
     // stubs
-    walletStub.getPluginState.returns({polkadot: {account: null, config: null}});
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.updatePluginState.returnsArg(0);
     // tested method
     const result = configure(walletStub, "kusama", {});
@@ -33,7 +34,7 @@ describe('Test rpc handler function: configure', function() {
 
   it('should set predefined westend configuration', async function() {
     // stubs
-    walletStub.getPluginState.returns({polkadot: {account: null, config: null}});
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.updatePluginState.returnsArg(0);
     // tested method
     const result = configure(walletStub, "westend", {});
@@ -50,7 +51,7 @@ describe('Test rpc handler function: configure', function() {
 
   it('should set custom configuration', async function() {
     // stubs
-    walletStub.getPluginState.returns({polkadot: {account: null, config: null}});
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.updatePluginState.returnsArg(0);
     const customConfiguration: SnapConfig = {
       addressPrefix: 1,
@@ -74,7 +75,7 @@ describe('Test rpc handler function: configure', function() {
 
   it('should set predefined kusama configuration with additional property override', function () {
     // stubs
-    walletStub.getPluginState.returns({polkadot: {account: null, config: null}});
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.updatePluginState.returnsArg(0);
     // tested method
     const customConfiguration = kusamaConfiguration;

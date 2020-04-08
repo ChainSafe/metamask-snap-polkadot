@@ -4,6 +4,7 @@ import {getConfiguration, getDefaultConfiguration} from "../../../src/configurat
 import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "../../../src/configuration/predefined";
 import {WalletMock} from "../crypto/wallet.mock.test";
 import {SnapConfig} from "../../../src/configuration/interfaces";
+import {EmptyMetamaskState} from "../../../src/interfaces";
 
 chai.use(sinonChai);
 
@@ -46,7 +47,7 @@ describe('Test configuration functions', function() {
     });
 
     it('should return default configuration on empty state"', function () {
-      walletStub.getPluginState.returns({polkadot: {account: null, config: null}});
+      walletStub.getPluginState.returns(EmptyMetamaskState());
       const configuration = getConfiguration(walletStub);
       expect(configuration).to.be.deep.eq(defaultConfiguration);
     });

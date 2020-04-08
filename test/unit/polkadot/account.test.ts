@@ -1,6 +1,6 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {MetamaskState} from "../../../src/interfaces";
+import {EmptyMetamaskState, MetamaskState} from "../../../src/interfaces";
 import {WalletMock} from "../crypto/wallet.mock.test";
 import {getKeyPair} from "../../../src/polkadot/account";
 import {hexToU8a} from '@polkadot/util';
@@ -42,7 +42,7 @@ describe('Test account function: getKeyPair', function() {
   });
 
   it('should create new and return keypair on empty state', async function() {
-    walletStub.getPluginState.returns({polkadot: {account: null, config: null}});
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
     walletStub.updatePluginState.returnsArg(0);
     const result = await getKeyPair(walletStub);

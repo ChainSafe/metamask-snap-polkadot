@@ -1,6 +1,6 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {MetamaskState} from "../../../../src/interfaces";
+import {EmptyMetamaskState, MetamaskState} from "../../../../src/interfaces";
 import {WalletMock} from "../../crypto/wallet.mock.test";
 import {getBalance} from "../../../../src/rpc/substrate/getBalance";
 import ApiPromise from "@polkadot/api/promise";
@@ -48,7 +48,7 @@ describe('Test rpc handler function: getBalance', function() {
   });
 
   it('should not return balance on empty state', async function () {
-    walletStub.getPluginState.returns({polkadot: {account: null, config: null}});
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.getAppKey.returns("aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca");
     // api stub
     const apiStub = {query: {system: {account: sinon.stub()}}};
