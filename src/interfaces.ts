@@ -1,6 +1,5 @@
 import { KeyringPair$Json } from '@polkadot/keyring/types';
 import {SnapConfig} from "./configuration/interfaces";
-import {defaultConfiguration} from "./configuration/predefined";
 
 export type FMethodCallback = (
   originString: string,
