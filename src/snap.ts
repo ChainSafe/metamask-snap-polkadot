@@ -11,6 +11,8 @@ import {Configuration, setConfiguration} from "./configuration/configuration";
 import {createPolkadotAsset} from "./asset/unit";
 
 declare let wallet: Wallet;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const pingListeners: any[] = [];
 
 const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addDotAsset", "updateDotAsset"];
 
@@ -20,8 +22,18 @@ wallet.registerApiRequestHandler(async function (fromOrigin: unknown) {
     wallet.updatePluginState(emptyMetamaskState);
   }
   return {
-    getPublicKey: async () => {
-      pk: await getPublicKey(wallet);
+    getPublicKey: () => {
+      pingListeners.forEach(callback => callback("argument pk"));
+      return "pk";
+    },
+    on: (eventName: string, callback: unknown): boolean => {
+      switch (eventName) {
+        case 'pk':
+          pingListeners.push(callback);
+          return true;
+        default:
+          throw new Error("");
+      }
     }
   };
 });

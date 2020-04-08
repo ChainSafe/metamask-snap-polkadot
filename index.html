@@ -112,8 +112,9 @@
       index = await ethereum.requestIndex();
       pluginApi = await index.getPluginApi(origin);
 
+      pluginApi.on("pk", (arg) => {console.log("On callback:" + arg)});
+      console.log(Date.now());
       const pK = await pluginApi.getPublicKey();
-      console.log(Date.now())
       console.log("API: getPublicKey => " + pK);
 
     }
