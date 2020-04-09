@@ -16,6 +16,7 @@ declare let wallet: Wallet;
 
 const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 wallet.registerApiRequestHandler(async function (fromOrigin: unknown) {
   const state = wallet.getPluginState();
   if (!state) {
