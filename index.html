@@ -108,6 +108,13 @@
     const origin = new URL('package.json', window.location.href).toString();
     const snapId = `wallet_plugin_${origin}`;
 
+    async function test() {
+      index = await ethereum.requestIndex();
+      pluginApi = await index.getPluginApi(origin);
+
+      pluginApi.on("onBalanceChange", (arg) => {console.log("On callback:" + arg)});
+    }
+
     // spans for status
     const FALSE = "<span style='color: darkred'>FALSE</span>";
     const TRUE = "<span style='color: darkgreen'>TRUE</span>";
@@ -316,6 +323,7 @@
       addressLabel.innerHTML = "In progress...";
       await fetchPublicKey();
       await fetchAddress();
+      await test();
     }
 
     // polkadot/substrate functions
