@@ -5,6 +5,33 @@
   "author": "NodeFactory",
   "license": "MIT",
   "dependencies": {
-    "@polkadot/extension-inject": "^0.23.1"
+    "@polkadot/extension-inject": "^0.23.1",
+    "@types/bn.js": "^4.11.6",
+    "bcrypto": "5.1.0",
+    "bn.js": "^5.0.0",
+    "buffer": "^5.4.3",
+    "debug": "^4.1.1",
+    "it-buffer": "^0.1.1",
+    "it-length-prefixed": "^3.0.0",
+    "it-pair": "^1.0.0",
+    "it-pb-rpc": "^0.1.8",
+    "it-pipe": "^1.1.0",
+    "libp2p-crypto": "^0.17.1",
+    "peer-id": "^0.13.5",
+    "protobufjs": "6.8.8"
+  },
+  "scripts": {
+    "prebuild": "rm -rf lib && rm -rf dist",
+    "build": "yarn run build:node && yarn run build:web && yarn run build:types",
+    "build:node": "babel --no-babelrc --config-file ./babel.config.json src --copy-files -x .ts -d dist --source-maps",
+    "build:web": "babel --no-babelrc --config-file ./babel.web.config.json src --copy-files -x .ts -d lib --source-maps",
+    "build:types": "tsc --declaration --outDir dist --emitDeclarationOnly",
+    "proto:gen": "pbjs -t static-module -o ./src/proto/payload.js ./src/proto/payload.proto && pbts -o ./src/proto/payload.d.ts ./src/proto/payload.js && yarn run lint --fix",
+    "check-types": "tsc --incremental --noEmit",
+    "lint": "eslint --ext .ts src/",
+    "pretest": "yarn check-types",
+    "test": "yarn run test:node && yarn run test:web",
+    "test:node": "mocha -r ./babel-register.js \"test/**/*.test.ts\"",
+    "test:web": "karma start"
   }
 }
