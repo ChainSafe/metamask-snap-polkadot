@@ -9,10 +9,31 @@ import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
 import {getApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
+import {EventCallback, PolkadotEvent, polkadotEventEmitter} from "./polkadot/events";
+import {registerOnBalanceChange} from "./polkadot/events/balance";
 
 declare let wallet: Wallet;
 
 const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
+
+wallet.registerApiRequestHandler(async function (fromOrigin: unknown) {
+  const state = wallet.getPluginState();
+  if (!state) {
+    wallet.updatePluginState(EmptyMetamaskState());
+  }
+  return {
+    on: (eventName: PolkadotEvent, callback: EventCallback): boolean => {
+      switch (eventName) {
+        case PolkadotEvent.OnBalanceChange:
+          polkadotEventEmitter.addListener(PolkadotEvent.OnBalanceChange, callback);
+          registerOnBalanceChange(wallet); // todo failing on this function call
+          return true;
+        default:
+          throw new Error("");
+      }
+    }
+  };
+});
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   // console.log("RPC METHOD CALLED: " + requestObject.method);
@@ -51,6 +72,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await removeAsset(wallet, originString);
     case 'getChainHead':
       // temporary method
+      polkadotEventEmitter.emit(PolkadotEvent.OnBalanceChange, "100 KSM");
       const head = await api.rpc.chain.getFinalizedHead();
       return head.hash;
     default:
