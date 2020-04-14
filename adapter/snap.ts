@@ -1,6 +1,6 @@
 import {Injected, InjectedAccounts, InjectedAccount} from "@polkadot/extension-inject/types";
 import { Signer as InjectedSigner } from '@polkadot/api/types';
-import {getAccountAddress, isPolkadotSnapInstalled, addKusamaAsset} from "./index"
+import {getAccountAddress, isPolkadotSnapInstalled, addKusamaAsset} from "./methods"
 
 export interface NetworkConfig {
     explorerUrl: string;
