@@ -27,6 +27,10 @@ export interface Wallet {
   getPluginState(): MetamaskState;
 }
 
+export interface PolkadotApi {
+  on(eventName: PolkadotEvent, callback: EventCallback): boolean;
+}
+
 export interface Asset {
   balance: string|number;
   customViewUrl?: string;

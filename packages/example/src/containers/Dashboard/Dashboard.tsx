@@ -12,6 +12,8 @@ import {BlockInfo} from "../../../../src/rpc/substrate/getBlock";
 import {getLatestBlock} from "../../services/block";
 import {addPolkadotAsset} from "../../services/asset";
 import {setConfiguration} from "../../services/configuration";
+import {getPolkadotApi} from "../../services/polkadot";
+import {PolkadotEvent} from "../../interfaces";
 
 export const Dashboard = () => {
 
@@ -38,6 +40,13 @@ export const Dashboard = () => {
                 setAddress(await getAddress());
                 setBalance(await getBalance());
                 setLatestBlock(await getLatestBlock());
+
+                let api = await getPolkadotApi();
+                if (api) {
+                    api.on(PolkadotEvent.OnBalanceChange, args => {
+                        setBalance(args[0]);
+                    })
+                }
             }
         })();
     }, [state.polkadotSnap.isInstalled, network]);

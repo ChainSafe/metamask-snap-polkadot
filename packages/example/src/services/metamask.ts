@@ -4,6 +4,7 @@ declare global {
             isMetaMask: boolean;
             send: (params: any)=> Promise<any>;
             on: (eventName: any, callback: any) => any;
+            requestIndex: () => Promise<any>;
         }
     }
 }

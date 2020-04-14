@@ -1,4 +1,4 @@
-import {EmptyMetamaskState, Wallet} from "./interfaces";
+import {EmptyMetamaskState, PolkadotApi, Wallet} from "./interfaces";
 import {getPublicKey} from "./rpc/getPublicKey";
 import {exportSeed} from "./rpc/exportSeed";
 import {getBalance} from "./rpc/substrate/getBalance";
@@ -16,21 +16,16 @@ declare let wallet: Wallet;
 
 const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-wallet.registerApiRequestHandler(async function (fromOrigin: unknown) {
-  const state = wallet.getPluginState();
-  if (!state) {
-    wallet.updatePluginState(EmptyMetamaskState());
-  }
+wallet.registerApiRequestHandler(async function (): Promise<PolkadotApi> {
   return {
     on: (eventName: PolkadotEvent, callback: EventCallback): boolean => {
       switch (eventName) {
         case PolkadotEvent.OnBalanceChange:
           polkadotEventEmitter.addListener(PolkadotEvent.OnBalanceChange, callback);
-          registerOnBalanceChange(wallet); // todo failing on this function call
+          registerOnBalanceChange(wallet);
           return true;
         default:
-          throw new Error("");
+          throw new Error(`Unsupported event: ${eventName}`);
       }
     }
   };
