@@ -1,5 +1,6 @@
 import {KeyringPair$Json} from '@polkadot/keyring/types';
 import {SnapConfig} from "./configuration/interfaces";
+import {EventCallback, PolkadotEvent} from "./polkadot/events";
 
 export type FMethodCallback = (
   originString: string,
@@ -25,6 +26,10 @@ export interface Wallet {
   getAppKey(): Promise<string>;
   updatePluginState(state: MetamaskState): void;
   getPluginState(): MetamaskState;
+}
+
+export interface PolkadotApi {
+  on(eventName: PolkadotEvent, callback: EventCallback): boolean;
 }
 
 export interface Asset {
