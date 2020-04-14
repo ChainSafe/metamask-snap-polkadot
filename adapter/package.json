@@ -1,0 +1,16 @@
+{
+  "name": "polkadot-adapter",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "author": "NodeFactory",
+  "license": "MIT",
+  "dependencies": {
+    "@polkadot/extension-inject": "^0.23.1"
+  },
+  "scripts": {
+    "prebuild": "rm -rf lib && rm -rf dist",
+    "build": "yarn run build:web && yarn run build:types",
+    "check-types": "tsc --incremental --noEmit",
+    "test:web": "karma start"
+  }
+}
