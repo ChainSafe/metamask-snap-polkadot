@@ -1,10 +1,12 @@
+import {PolkadotApi} from "../interfaces";
+
 declare global {
     interface Window {
         ethereum: {
             isMetaMask: boolean;
             send: (params: any)=> Promise<any>;
             on: (eventName: any, callback: any) => any;
-            requestIndex: () => Promise<any>;
+            requestIndex: () => Promise<{getPluginApi: () => Promise<PolkadotApi>}>;
         }
     }
 }

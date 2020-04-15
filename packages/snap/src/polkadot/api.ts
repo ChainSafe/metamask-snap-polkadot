@@ -28,15 +28,13 @@ export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
     api = await initApi(config.wsRpcUrl);
     isConnecting = false;
   } else {
+    while (isConnecting) {
+      await new Promise(r => setTimeout(r, 100));
+    }
     if (!provider.isConnected()) {
-      if (!isConnecting) {
-        isConnecting = true;
-        await provider.connect();
-        isConnecting = false;
-      } else {
-        // TODO THIS WILL STUCK HERE
-        // while (!provider.isConnected()) {}
-      }
+      isConnecting = true;
+      await provider.connect();
+      isConnecting = false;
     }
   }
   return api;

@@ -13,7 +13,7 @@ import {getLatestBlock} from "../../services/block";
 import {addPolkadotAsset} from "../../services/asset";
 import {setConfiguration} from "../../services/configuration";
 import {getPolkadotApi} from "../../services/polkadot";
-import {PolkadotEvent} from "../../interfaces";
+import {PolkadotApi, PolkadotEvent} from "../../interfaces";
 
 export const Dashboard = () => {
 
@@ -31,6 +31,25 @@ export const Dashboard = () => {
         setNetwork(networkName);
       };
 
+    let [api, setApi] = useState<PolkadotApi>(null);
+
+    const balanceCallback = (...args: unknown[]) => {
+        setBalance(args[0])
+    };
+
+    useEffect(() => {
+        (async () => {
+            let api = await getPolkadotApi();
+            if (api) {
+                api.on(PolkadotEvent.OnBalanceChange, balanceCallback)
+            }
+            setApi(api);
+        })();
+        return function cleanup() {
+            api.removeListener(PolkadotEvent.OnBalanceChange, balanceCallback)
+        }
+    }, []);
+
     useEffect(() => {
         (async () => {
             if(state.polkadotSnap.isInstalled) {
@@ -40,13 +59,6 @@ export const Dashboard = () => {
                 setAddress(await getAddress());
                 setBalance(await getBalance());
                 setLatestBlock(await getLatestBlock());
-
-                let api = await getPolkadotApi();
-                if (api) {
-                    api.on(PolkadotEvent.OnBalanceChange, args => {
-                        setBalance(args[0]);
-                    })
-                }
             }
         })();
     }, [state.polkadotSnap.isInstalled, network]);

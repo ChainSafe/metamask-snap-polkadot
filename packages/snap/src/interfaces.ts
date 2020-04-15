@@ -29,6 +29,7 @@ export interface Wallet {
 
 export interface PolkadotApi {
   on(eventName: PolkadotEvent, callback: EventCallback): boolean;
+  removeListener(eventName: PolkadotEvent, callback: EventCallback): boolean;
 }
 
 export interface Asset {
