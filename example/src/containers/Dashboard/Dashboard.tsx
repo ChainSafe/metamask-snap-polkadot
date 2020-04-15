@@ -25,7 +25,8 @@ export const Dashboard = () => {
     const [network, setNetwork] = useState<"kusama" | "westend">("kusama");
 
     const handleNetworkChange = (event: React.ChangeEvent<{ value: any }>) => {
-        setNetwork(event.target.value);
+        const networkName = event.target.value as "kusama" | "westend";
+        setNetwork(networkName);
       };
 
     useEffect(() => {
