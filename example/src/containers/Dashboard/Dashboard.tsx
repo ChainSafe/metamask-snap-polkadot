@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Box, Card, CardContent, CardHeader, Container, Grid, Hidden, Typography} from '@material-ui/core/';
+import {Box, Card, CardContent, CardHeader, Container, Grid, Hidden, Typography, Select, MenuItem, InputLabel} from '@material-ui/core/';
 import {Transfer} from "../../components/Transfer/Transfer";
 import {SignMessage} from "../../components/SignMessage/SignMessage";
 import {TransactionTable} from "../../components/TransactionTable/TransactionTable";
@@ -22,10 +22,17 @@ export const Dashboard = () => {
     let [publicKey, setPublicKey] = useState("");
     let [latestBlock, setLatestBlock] = useState<BlockInfo>({hash: "", number: ""});
 
+    const [network, setNetwork] = useState<"kusama" | "westend">("kusama");
+
+    const handleNetworkChange = (event: React.ChangeEvent<{ value: any }>) => {
+        const networkName = event.target.value as "kusama" | "westend";
+        setNetwork(networkName);
+      };
+
     useEffect(() => {
         (async () => {
             if(state.polkadotSnap.isInstalled) {
-                await setConfiguration({networkName: "kusama"});
+                await setConfiguration({networkName: network});
                 await addPolkadotAsset();
                 setPublicKey(await getPublicKey());
                 setAddress(await getAddress());
@@ -33,7 +40,7 @@ export const Dashboard = () => {
                 setLatestBlock(await getLatestBlock());
             }
         })();
-    }, [state.polkadotSnap.isInstalled]);
+    }, [state.polkadotSnap.isInstalled, network]);
 
     return (
         <Container maxWidth="lg" >
@@ -47,6 +54,16 @@ export const Dashboard = () => {
                     <MetaMaskConnector/>
                 </Hidden>
                 <Hidden xsUp={!state.polkadotSnap.isInstalled}>
+                    <Box m="1rem" alignSelf="baseline">
+                        <InputLabel>Network</InputLabel>
+                        <Select
+                            defaultValue={"kusama"}
+                            onChange={handleNetworkChange}
+                        >
+                            <MenuItem value={"kusama"}>Kusama</MenuItem>
+                            <MenuItem value={"westend"}>Westend</MenuItem>
+                        </Select>
+                    </Box>
                     <Grid container spacing={3} alignItems={"stretch"}>
                         <Grid item xs={12}>
                             <LatestBlock block={latestBlock}  />
