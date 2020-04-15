@@ -21,7 +21,11 @@ class EventEmitterPolkadotImplementation implements EventEmitter<PolkadotEvent> 
   }
 
   addListener(event: PolkadotEvent, listener: (...args: unknown[]) => void): this {
+    console.log("BEFORE ADD");
+    console.log(this.listeners);
     this.listeners[event].push(listener);
+    console.log("AFTER ADD");
+    console.log(this.listeners);
     return this;
   }
 
@@ -31,7 +35,11 @@ class EventEmitterPolkadotImplementation implements EventEmitter<PolkadotEvent> 
   }
 
   removeListener(event: PolkadotEvent, listener: (...args: unknown[]) => void): this {
+    console.log("BEFORE REMOVE");
+    console.log(this.listeners);
     this.listeners[event] = this.listeners[event].filter(l => l != listener);
+    console.log("AFTER REMOVE");
+    console.log(this.listeners);
     return this;
   }
 }

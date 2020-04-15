@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {Box, Card, CardContent, CardHeader, Container, Grid, Hidden, Typography} from '@material-ui/core/';
 import {Transfer} from "../../components/Transfer/Transfer";
 import {SignMessage} from "../../components/SignMessage/SignMessage";
@@ -13,7 +13,7 @@ import {getLatestBlock} from "../../services/block";
 import {addPolkadotAsset} from "../../services/asset";
 import {setConfiguration} from "../../services/configuration";
 import {getPolkadotApi} from "../../services/polkadot";
-import {PolkadotApi, PolkadotEvent} from "../../interfaces";
+import {PolkadotEvent} from "../../interfaces";
 
 export const Dashboard = () => {
 
@@ -24,23 +24,8 @@ export const Dashboard = () => {
     let [publicKey, setPublicKey] = useState("");
     let [latestBlock, setLatestBlock] = useState<BlockInfo>({hash: "", number: ""});
 
-    let [api, setApi] = useState<PolkadotApi>(null);
-
-    const balanceCallback = (...args: unknown[]) => {
+    const balanceCallback = useCallback((...args: unknown[]) => {
         setBalance(args[0])
-    };
-
-    useEffect(() => {
-        (async () => {
-            let api = await getPolkadotApi();
-            if (api) {
-                api.on(PolkadotEvent.OnBalanceChange, balanceCallback)
-            }
-            setApi(api);
-        })();
-        return function cleanup() {
-            api.removeListener(PolkadotEvent.OnBalanceChange, balanceCallback)
-        }
     }, []);
 
     useEffect(() => {
@@ -52,9 +37,20 @@ export const Dashboard = () => {
                 setAddress(await getAddress());
                 setBalance(await getBalance());
                 setLatestBlock(await getLatestBlock());
+
+                let api = await getPolkadotApi();
+                if (api) {
+                    api.on(PolkadotEvent.OnBalanceChange, balanceCallback)
+                }
             }
         })();
-    }, [state.polkadotSnap.isInstalled]);
+        return async function cleanup() {
+            if (state.polkadotSnap.isInstalled) {
+                let api = await getPolkadotApi();
+                api.removeListener(PolkadotEvent.OnBalanceChange, balanceCallback)
+            }
+        }
+    }, [state.polkadotSnap.isInstalled, balanceCallback]);
 
     return (
         <Container maxWidth="lg" >
