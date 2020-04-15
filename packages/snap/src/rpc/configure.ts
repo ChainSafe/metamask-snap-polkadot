@@ -1,7 +1,7 @@
 import {Wallet} from "../interfaces";
-import {SnapConfig} from "../configuration/interfaces";
 import deepmerge from "deepmerge";
 import {getDefaultConfiguration} from "../configuration";
+import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
 export function configure(wallet: Wallet, networkName: string, overrides: unknown): SnapConfig {
   const defaultConfig = getDefaultConfiguration(networkName);

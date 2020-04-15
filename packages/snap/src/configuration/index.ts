@@ -1,6 +1,6 @@
-import {SnapConfig} from "./interfaces";
 import {Wallet} from "../interfaces";
 import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "./predefined";
+import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
 export function getDefaultConfiguration(networkName: string): SnapConfig {
   switch (networkName) {

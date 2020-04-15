@@ -1,4 +1,4 @@
-import {SnapConfig} from "./interfaces";
+import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
 export const kusamaConfiguration: SnapConfig = {
   addressPrefix: 2,

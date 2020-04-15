@@ -3,8 +3,8 @@ import {getAddress} from "../rpc/getAddress";
 import {executeAssetOperation} from "./action";
 import formatBalance from "@polkadot/util/format/formatBalance";
 import {Balance} from "@polkadot/types/interfaces";
-import {SnapConfig} from "../configuration/interfaces";
 import {getConfiguration} from "../configuration";
+import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
 const assets: Map<string, Asset> = new Map<string, Asset>();
 

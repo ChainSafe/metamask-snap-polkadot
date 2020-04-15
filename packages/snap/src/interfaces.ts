@@ -1,12 +1,10 @@
 import { KeyringPair$Json } from '@polkadot/keyring/types';
-import {SnapConfig} from "./configuration/interfaces";
+import {MetamaskPolkadotRpcRequest, SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
 export type FMethodCallback = (
   originString: string,
-  requestObject: RequestObject
+  requestObject: MetamaskPolkadotRpcRequest
 ) => Promise<unknown>;
-
-export type RequestObject = { method: string; params: Record<string, unknown> };
 
 export type AccountState = { keyring: KeyringPair$Json };
 export type MetamaskState = {

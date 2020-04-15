@@ -8,7 +8,6 @@ import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
 import {getApi} from "./polkadot/api";
-import {SnapConfig} from "./configuration/interfaces";
 import {configure} from "./rpc/configure";
 
 declare let wallet: Wallet;
@@ -35,17 +34,16 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case 'exportSeed':
       return await exportSeed(wallet);
     case 'getAllTransactions':
-      return await getTransactions(wallet, requestObject.params["address"] as string);
+      return await getTransactions(wallet, requestObject.params.address);
     case 'getBlock':
-      return await getBlock(requestObject.params, api);
+      return await getBlock(requestObject.params.blockTag, api);
     case 'getBalance': {
       const balance = await getBalance(wallet, api);
       await updateAsset(wallet, originString, balance);
       return balance;
     }
     case 'configure': {
-      const configuration = requestObject.params["configuration"] as SnapConfig;
-      return configure(wallet, configuration.networkName, configuration);
+      return configure(wallet, requestObject.params.configuration.networkName, requestObject.params.configuration);
     }
     case 'addPolkadotAsset':
       return await updateAsset(wallet, originString, 0);
