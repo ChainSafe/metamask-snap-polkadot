@@ -1,5 +1,5 @@
 import {pluginOrigin} from "./metamask";
-import {BlockInfo} from "../../../src/rpc/substrate/getBlock";
+import {BlockInfo} from "polkadot-snap/src/rpc/substrate/getBlock";
 
 export async function getLatestBlock(): Promise<BlockInfo> {
     try {
