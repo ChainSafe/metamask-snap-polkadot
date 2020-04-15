@@ -1,11 +1,21 @@
 export const origin = new URL('package.json', 'http://localhost:8081').toString();
 export const pluginOrigin = `wallet_plugin_${origin}`;
+import {BlockInfo} from "../src/rpc/substrate/getBlock";
+import {SnapConfig} from "../src/configuration/interfaces";
 
 export async function getAccountAddress(): Promise<string> {
     const result: any = await window.ethereum.send({
         method: 'getAddress',
     });
     return result;
+}
+
+export function hasMetaMask(): boolean {
+    if (!window.ethereum) {
+        return false
+    }
+    return window.ethereum.isMetaMask;
+
 }
 
 export async function installPolkadotSnap(): Promise<boolean> {
@@ -87,3 +97,47 @@ export async function exportSeed(): Promise<string> {
     const response = await sendSnapMethod("exportSeed");
     return (response != null) ? response : "Unable to fetch seed";
 }
+
+
+export async function getLatestBlock(): Promise<BlockInfo> {
+    try {
+        return await window.ethereum.send({
+            method: pluginOrigin,
+            params: [{
+                method: "getBlock",
+                params: {
+                    blockTag: "latest"
+                }
+            }]
+        });
+    } catch (e) {
+        console.log("Unable to fetch latest block", e);
+        return {number: "", hash: ""};
+    }
+}
+
+export async function setConfiguration(configuration: SnapConfig): Promise<void> {
+    return await window.ethereum.send({
+        method: pluginOrigin,
+        params: [{
+            method: 'configure',
+            params: {configuration: configuration}
+        }]
+    });
+}
+
+export async function getAllTransactions(address?: string): Promise<any> {
+    try {
+      return await window.ethereum.send({
+        method: pluginOrigin,
+        params: [{
+          method: 'getAllTransactions',
+            params: {
+              address
+            }
+        }]
+      });
+    } catch (e) {
+      console.log("Unable to fetch transactions", e);
+    }
+  }

@@ -1,7 +1,10 @@
 import {Injected, InjectedAccounts, InjectedAccount} from "@polkadot/extension-inject/types";
 import { Signer as InjectedSigner } from '@polkadot/api/types';
 import {getAccountAddress, isPolkadotSnapInstalled, addKusamaAsset, 
-    addPolkadotAsset, getBalance, getAddress, getPublicKey, exportSeed, installPolkadotSnap} from "./methods";
+    addPolkadotAsset, getBalance, getAddress, getPublicKey, exportSeed, installPolkadotSnap, 
+    hasMetaMask, getLatestBlock, setConfiguration, getAllTransactions} from "./methods";
+import {BlockInfo} from "../src/rpc/substrate/getBlock";
+import {SnapConfig} from "../src/configuration/interfaces";
 
 export interface NetworkConfig {
     explorerUrl: string;
@@ -19,6 +22,10 @@ export interface MetamaskSnapApi {
     getAddress(): Promise<string>;
     getPublicKey(): Promise<string>;
     exportSeed(): Promise<string>;
+    hasMetaMask(): boolean;
+    getLatestBlock(): Promise<BlockInfo>;
+    setConfiguration(configuration: SnapConfig): Promise<void>;
+    getAllTransactions(): Promise<any>;
 }
 
 export class MetamaskPolkadotSnap implements Injected {
@@ -60,7 +67,7 @@ export class MetamaskPolkadotSnap implements Injected {
         return this;
     }
 
-    public getMetamaskSnapApi = async (type: string): Promise<MetamaskSnapApi> => {
+    public getMetamaskSnapApi = async (): Promise<MetamaskSnapApi> => {
         return {
             getAccountAddress,
             installPolkadotSnap,
@@ -70,7 +77,11 @@ export class MetamaskPolkadotSnap implements Injected {
             getBalance,
             getAddress,
             getPublicKey,
-            exportSeed
+            exportSeed,
+            hasMetaMask,
+            getLatestBlock,
+            setConfiguration,
+            getAllTransactions
         }
     }
 }
