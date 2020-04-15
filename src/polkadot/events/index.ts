@@ -22,7 +22,6 @@ class EventEmitterPolkadotImplementation implements EventEmitter<PolkadotEvent> 
 
   addListener(event: PolkadotEvent, listener: (...args: unknown[]) => void): this {
     this.listeners[event].push(listener);
-    console.log(this.listeners);
     return this;
   }
 
