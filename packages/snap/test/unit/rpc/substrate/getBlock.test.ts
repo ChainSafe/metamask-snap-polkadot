@@ -4,7 +4,7 @@ import {WalletMock} from "../../crypto/wallet.mock.test";
 import ApiPromise from "@polkadot/api/promise";
 import sinon from "sinon";
 import {getBlock} from "../../../../src/rpc/substrate/getBlock";
-import { BlockHash } from '@polkadot/types/interfaces/rpc';
+import { BlockHash } from '@polkadot/types/interfaces';
 import { H256 } from '@polkadot/types/interfaces/runtime';
 import { hexToU8a } from '@polkadot/util';
 
@@ -27,7 +27,7 @@ describe('Test rpc handler function: getBlock', function() {
     // eslint-disable-next-line max-len
     apiStub.rpc.chain.getBlock.returns({block:{hash: {toHex: (): string => "0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75"}, header: {number: 10}}});
     const api = apiStub as unknown as ApiPromise;
-    const result = await getBlock({blockTag: 1}, api);
+    const result = await getBlock(1, api);
     expect(result).not.to.be.null;
     expect(result.hash).to.be.eq("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75");
     expect(result.number).to.be.eq("10");
@@ -45,7 +45,7 @@ describe('Test rpc handler function: getBlock', function() {
     // eslint-disable-next-line max-len
     apiStub.rpc.chain.getBlock.returns({block:{hash: {toHex: (): string => "0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75"}, header: {number: 10}}});
     const api = apiStub as unknown as ApiPromise;
-    const result = await getBlock({blockTag: "1"}, api);
+    const result = await getBlock("1", api);
     expect(result).not.to.be.null;
     expect(result.hash).to.be.eq("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75");
     expect(result.number).to.be.eq("10");
@@ -62,7 +62,7 @@ describe('Test rpc handler function: getBlock', function() {
     apiStub.rpc.chain.getBlock.returns({block:{hash: {toHex: (): string => "0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75"}, header: {number: 10}}});
     const api = apiStub as unknown as ApiPromise;
     // eslint-disable-next-line max-len
-    const result = await getBlock({blockTag: "0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75"}, api);
+    const result = await getBlock("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75", api);
     expect(result).not.to.be.null;
     expect(result.hash).to.be.eq("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75");
     expect(result.number).to.be.eq("10");
@@ -79,7 +79,7 @@ describe('Test rpc handler function: getBlock', function() {
     // eslint-disable-next-line max-len
     apiStub.rpc.chain.getHeader.returns({hash: hexToU8a("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75") as H256});
     const api = apiStub as unknown as ApiPromise;
-    const result = await getBlock({blockTag: "latest"}, api);
+    const result = await getBlock("latest", api);
     expect(result).not.to.be.null;
     expect(result.hash).to.be.eq("0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75");
     expect(result.number).to.be.eq("10");
@@ -90,13 +90,13 @@ describe('Test rpc handler function: getBlock', function() {
 
   it('should return null on invalid string as parameter', async function () {
     const api = {} as unknown as ApiPromise;
-    const result = await getBlock({blockTag: "zz"}, api);
+    const result = await getBlock("zz", api);
     expect(result).to.be.null;
   });
 
   it('should return null on empty parameters object', async function () {
     const api = {} as unknown as ApiPromise;
-    const result = await getBlock({}, api);
+    const result = await getBlock(null, api);
     expect(result).to.be.null;
   });
 
