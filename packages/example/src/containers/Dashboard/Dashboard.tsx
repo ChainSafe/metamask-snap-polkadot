@@ -14,7 +14,6 @@ import {addPolkadotAsset} from "../../services/asset";
 import {setConfiguration} from "../../services/configuration";
 import {getPolkadotApi} from "../../services/polkadot";
 import {PolkadotEvent} from "../../interfaces";
-import {ApiPromise} from "@polkadot/api";
 
 export const Dashboard = () => {
 
@@ -25,8 +24,6 @@ export const Dashboard = () => {
     let [publicKey, setPublicKey] = useState("");
     let [latestBlock, setLatestBlock] = useState<BlockInfo>({hash: "", number: ""});
 
-    let [api, setApi] = useState<ApiPromise>(null);
-
     const [network, setNetwork] = useState<"kusama" | "westend">("kusama");
 
     const handleNetworkChange = (event: React.ChangeEvent<{ value: any }>) => {
@@ -34,52 +31,42 @@ export const Dashboard = () => {
         setNetwork(networkName);
       };
 
-    const balanceCallback = (...args: unknown[]) => {
-    const balanceCallback = useCallback((...args: unknown[]) => {
-        console.log(`Callback called: ${args}`);
-        setBalance(args[0])
-    }, [setBalance]);
-
     useEffect(() => {
         (async () => {
-            console.log("USE EFFECT CALLED: SETUP");
             if(state.polkadotSnap.isInstalled) {
                 await setConfiguration({networkName: network});
                 await addPolkadotAsset();
                 setPublicKey(await getPublicKey());
                 setAddress(await getAddress());
-                const b = await getBalance();
-                console.log(`Balance: ${b}`);
-                setBalance(b);
+                setBalance(await getBalance());
                 setLatestBlock(await getLatestBlock());
-
-                const a = await getPolkadotApi();
-                console.log(`Api: ${a}`);
-                setApi(a);
             }
         })();
     }, [state.polkadotSnap.isInstalled]);
 
     useEffect(() => {
-        console.log("USE EFFECT CALLED: POLKADOT");
-        if (api) {
-            console.log("Calling API to register listener");
-            console.log(balanceCallback);
-            api.on(PolkadotEvent.OnBalanceChange, balanceCallback)
+        function handleBalanceChange(...args: unknown[]) {
+            setBalance(args[0])
         }
 
-        return function cleanup() {
-            console.log("CLEANUP CALLED: POLKADOT");
-            console.log(api);
-            console.log(balance);
-            console.log(address);
-            if (api) {
-                console.log("Calling API to remove listener");
-                console.log(balanceCallback);
-                api.removeListener(PolkadotEvent.OnBalanceChange, balanceCallback)
-            }
+        if (state.polkadotSnap.isInstalled) {
+            (async () => {
+                const api = await getPolkadotApi();
+                if (api) {
+                    api.on(PolkadotEvent.OnBalanceChange, handleBalanceChange)
+                }
+            })();
         }
-    }, [state.polkadotSnap.isInstalled, balanceCallback, network]);
+
+        return function() {
+            (async () => {
+                const api = await getPolkadotApi();
+                if (api) {
+                    api.removeAllListeners(PolkadotEvent.OnBalanceChange)
+                }
+            })();
+        }
+    }, [state.polkadotSnap.isInstalled, network]);
 
     return (
         <Container maxWidth="lg" >
