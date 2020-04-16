@@ -15,15 +15,9 @@
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "sourceMap": true,
-    "outDir": "build",
-    "baseUrl": ".",
-    "paths": {
-      "*": [
-        "node_modules/*"
-      ]
-    }
-  },
-  "include": [
-    "src/**/*"
-  ]
+    "outDir": "./build",
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
+  }
 }
