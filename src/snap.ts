@@ -17,27 +17,30 @@ declare let wallet: Wallet;
 
 const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
 
-wallet.registerApiRequestHandler(async function (): Promise<PolkadotApi> {
-  await registerOnBalanceChange(wallet);
+wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
+  await registerOnBalanceChange(wallet, origin);
   return {
     on: (eventName: PolkadotEvent, callback: EventCallback): boolean => {
       switch (eventName) {
         case PolkadotEvent.OnBalanceChange:
-          polkadotEventEmitter.addListener(PolkadotEvent.OnBalanceChange, callback);
+          polkadotEventEmitter.addListener(PolkadotEvent.OnBalanceChange, origin, callback);
           return true;
         default:
           throw new Error(`Unsupported event: ${eventName}`);
       }
     },
+    removeAllListeners: (eventName: PolkadotEvent): boolean => {
+      polkadotEventEmitter.removeAllListeners(eventName, origin);
+      return true;
+    },
     removeListener: (eventName: PolkadotEvent, callback: EventCallback): boolean => {
-      polkadotEventEmitter.removeListener(eventName, callback);
+      polkadotEventEmitter.removeListener(eventName, origin, callback);
       return true;
     }
   };
 });
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
-  // console.log("RPC METHOD CALLED: " + requestObject.method);
   const state = wallet.getPluginState();
   if (!state) {
     // initialize state if empty and set default config
