@@ -36,7 +36,7 @@ class EventEmitterPolkadotImplementation implements EventEmitter<PolkadotEvent> 
   }
 
   emit(event: PolkadotEvent, origin: string, ...args: unknown[]): boolean {
-    if (this.isDefined(event, origin)) {
+    if (this.hasAttachedListeners(event, origin)) {
       this.listeners[origin][event].forEach(callback => callback(args));
       return this.listeners[origin][event].length != 0;
     }
@@ -44,20 +44,20 @@ class EventEmitterPolkadotImplementation implements EventEmitter<PolkadotEvent> 
   }
 
   removeListener(event: PolkadotEvent, origin: string, listener: (...args: unknown[]) => void): this {
-    if (this.isDefined(event, origin)) {
+    if (this.hasAttachedListeners(event, origin)) {
       this.listeners[origin][event] = this.listeners[origin][event].filter(l => l != listener);
     }
     return this;
   }
 
   removeAllListeners(event: PolkadotEvent, origin: string): this {
-    if (this.isDefined(event, origin)) {
+    if (this.hasAttachedListeners(event, origin)) {
       this.listeners[origin][event] = [];
     }
     return this;
   }
 
-  private isDefined = (event: PolkadotEvent, origin: string): boolean =>
+  private hasAttachedListeners = (event: PolkadotEvent, origin: string): boolean =>
     !!(this.listeners && this.listeners[origin] && this.listeners[origin][event]);
 }
 
