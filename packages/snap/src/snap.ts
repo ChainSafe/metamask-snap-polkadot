@@ -18,13 +18,12 @@ declare let wallet: Wallet;
 const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
 
 wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
-
+  registerOnBalanceChange(wallet, origin);
   return {
     on: (eventName: PolkadotEvent, callback: EventCallback): boolean => {
       switch (eventName) {
         case "onBalanceChange":
           polkadotEventEmitter.addListener("onBalanceChange", origin, callback);
-          registerOnBalanceChange(wallet, origin);
           return true;
         default:
           throw new Error(`Unsupported event: ${eventName}`);
