@@ -11,6 +11,9 @@
     "start:snap": "lerna run serve --scope polkadot-snap",
     "start:example": "lerna run start --scope example",
     "predemo": "yarn run build:snap",
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "lint": "lerna run lint",
     "demo": "concurrently  --raw --kill-others \"yarn run start:snap\" \"yarn run start:example\""
   },
   "devDependencies": {
