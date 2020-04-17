@@ -3,8 +3,8 @@ import sinonChai from "sinon-chai";
 import {getConfiguration, getDefaultConfiguration} from "../../../src/configuration";
 import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "../../../src/configuration/predefined";
 import {WalletMock} from "../crypto/wallet.mock.test";
-import {SnapConfig} from "../../../src/configuration/interfaces";
 import {EmptyMetamaskState} from "../../../src/interfaces";
+import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
 chai.use(sinonChai);
 

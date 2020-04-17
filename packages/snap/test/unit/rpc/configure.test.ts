@@ -2,9 +2,9 @@ import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
 import {WalletMock} from "../crypto/wallet.mock.test";
 import {kusamaConfiguration, westendConfiguration} from "../../../src/configuration/predefined";
-import {SnapConfig} from "../../../src/configuration/interfaces";
 import {configure} from "../../../src/rpc/configure";
 import {EmptyMetamaskState} from "../../../src/interfaces";
+import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
 chai.use(sinonChai);
 

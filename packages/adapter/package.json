@@ -14,7 +14,7 @@
     "prebuild": "rm -rf build",
     "build": "yarn run build:lib && yarn run build:types",
     "build:lib": "tsc --build tsconfig.json",
-    "build:types": "tsc --emitOnly",
+    "build:types": "tsc --emitDeclarationOnly",
     "lint": "yarn run lint:style && yarn run lint:types",
     "lint:types": "tsc --noEmit --pretty",
     "lint:style": "eslint --color 'src/**/*.{js,ts,tsx}'",
