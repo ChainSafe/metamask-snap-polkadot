@@ -1,4 +1,4 @@
-import {EmptyMetamaskState, PolkadotApi, Wallet} from "./interfaces";
+import {EmptyMetamaskState, Wallet} from "./interfaces";
 import {getPublicKey} from "./rpc/getPublicKey";
 import {exportSeed} from "./rpc/exportSeed";
 import {getBalance} from "./rpc/substrate/getBalance";
@@ -9,8 +9,9 @@ import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
 import {getApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
-import {EventCallback, PolkadotEvent, polkadotEventEmitter} from "./polkadot/events";
+import {polkadotEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange} from "./polkadot/events/balance";
+import {EventCallback, PolkadotApi, PolkadotEvent} from "@nodefactory/metamask-polkadot-types";
 
 declare let wallet: Wallet;
 

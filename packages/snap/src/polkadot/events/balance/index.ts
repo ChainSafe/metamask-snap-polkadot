@@ -1,6 +1,7 @@
 import {Wallet} from "../../../interfaces";
-import {PolkadotEvent, polkadotEventEmitter} from "../index";
+import {polkadotEventEmitter} from "../index";
 import {getApi} from "../../api";
+import {PolkadotEvent} from "@nodefactory/metamask-polkadot-types";
 
 export async function registerOnBalanceChange(wallet: Wallet, origin: string): Promise<void> {
   const api = await getApi(wallet);

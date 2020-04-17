@@ -1,6 +1,4 @@
-export enum PolkadotEvent {
-  OnBalanceChange = "onBalanceChange"
-}
+import {EventCallback, PolkadotEvent} from "@nodefactory/metamask-polkadot-types";
 
 export interface EventEmitter<K = keyof PolkadotEvent>  {
   addListener(event: K, origin: string, listener: EventCallback): this;
@@ -8,8 +6,6 @@ export interface EventEmitter<K = keyof PolkadotEvent>  {
   removeAllListeners(event: K, origin: string): this;
   emit(event: K, origin: string, ...args: unknown[]): boolean;
 }
-
-export type EventCallback = (...args: unknown[]) => void;
 
 class EventEmitterPolkadotImplementation implements EventEmitter<PolkadotEvent> {
 

@@ -8,12 +8,13 @@ import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
 import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
 import {getAddress, getBalance, getPublicKey} from "../../services/account";
-import {BlockInfo} from "../../../../src/rpc/substrate/getBlock";
 import {getLatestBlock} from "../../services/block";
 import {addPolkadotAsset} from "../../services/asset";
 import {setConfiguration} from "../../services/configuration";
 import {getPolkadotApi} from "../../services/polkadot";
-import {PolkadotEvent} from "../../interfaces";
+import {BlockInfo} from "../../../../snap/src/rpc/substrate/getBlock";
+import {PolkadotEvent} from "../../../../snap/src/polkadot/events";
+
 
 export const Dashboard = () => {
 
@@ -46,7 +47,7 @@ export const Dashboard = () => {
 
     useEffect(() => {
         function handleBalanceChange(...args: unknown[]) {
-            setBalance(args[0])
+            setBalance(String(args[0]))
         }
 
         if (state.polkadotSnap.isInstalled) {

@@ -3,7 +3,7 @@ import sinonChai from "sinon-chai";
 import sinon from "sinon";
 import {generateKeys} from "../../../src/crypto/keys";
 import {WalletMock} from "./wallet.mock.test";
-import { hexToU8a } from '@polkadot/util';
+import {hexToU8a} from '@polkadot/util';
 import {EmptyMetamaskState} from "../../../src/interfaces";
 
 chai.use(sinonChai);

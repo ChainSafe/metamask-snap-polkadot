@@ -1,4 +1,4 @@
-import { u8aToHex } from '@polkadot/util';
+import {u8aToHex} from '@polkadot/util';
 import {getKeyPair} from "../polkadot/account";
 import {Wallet} from "../interfaces";
 

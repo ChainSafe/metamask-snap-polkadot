@@ -1,6 +1,6 @@
 import {Wallet} from "../interfaces";
 import {getKeyPair} from "../polkadot/account";
-import { encodeAddress } from "@polkadot/keyring";
+import {encodeAddress} from "@polkadot/keyring";
 
 export async function getAddress(wallet: Wallet): Promise<string> {
   const keyPair = await getKeyPair(wallet);
