@@ -17,7 +17,8 @@
     "build:types": "tsc --emitDeclarationOnly",
     "lint": "yarn run lint:style && yarn run lint:types",
     "lint:types": "tsc --noEmit --pretty",
-    "lint:style": "eslint --color 'src/**/*.{js,ts,tsx}'",
+    "lint:style": "eslint --color 'src/**/*.{js,ts,tsx}' --fix",
+    "lint:fix": "yarn run lint --fix",
     "lint:style:fix": "yarn run lint:style --fix",
     "test": "exit 0"
   },

@@ -58,20 +58,20 @@ export class MetamaskPolkadotSnap implements Injected {
   };
 
   public getMetamaskSnapApi = async (): Promise<MetamaskSnapApi> => {
-      return {
-          getAccountAddress,
-          installPolkadotSnap,
-          isPolkadotSnapInstalled,
-          addKusamaAsset,
-          addPolkadotAsset,
-          getBalance,
-          getAddress,
-          getPublicKey,
-          exportSeed,
-          hasMetaMask,
-          getLatestBlock,
-          setConfiguration,
-          getAllTransactions
-      }
+    return {
+      addKusamaAsset,
+      addPolkadotAsset,
+      exportSeed,
+      getAccountAddress,
+      getAddress,
+      getAllTransactions,
+      getBalance,
+      getLatestBlock,
+      getPublicKey,
+      hasMetaMask,
+      installPolkadotSnap,
+      isPolkadotSnapInstalled,
+      setConfiguration
+    };
   };
 }

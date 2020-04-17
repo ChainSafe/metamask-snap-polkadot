@@ -12,7 +12,7 @@ export async function getAccountAddress(pluginOrigin: string): Promise<string> {
 
 export function hasMetaMask(): boolean {
   if (!window.ethereum) {
-      return false
+    return false;
   }
   return window.ethereum.isMetaMask;
 
@@ -47,54 +47,51 @@ export async function isPolkadotSnapInstalled(pluginOrigin: string): Promise<boo
 
 export async function addKusamaAsset(pluginOrigin: string): Promise<void> {
   await window.ethereum.send({
-      method: pluginOrigin,
-      params: [{
-          method: 'addKusamaAsset'
-      }]
+    method: pluginOrigin,
+    params: [{
+      method: 'addKusamaAsset'
+    }]
   });
 }
 
 export async function addPolkadotAsset(pluginOrigin: string): Promise<void> {
   await window.ethereum.send({
-      method: pluginOrigin,
-      params: [{
-          method: 'addPolkadotAsset'
-      }]
+    method: pluginOrigin,
+    params: [{
+      method: 'addPolkadotAsset'
+    }]
   });
 }
 
-async function sendSnapMethod(method: 'getBalance' | 'getAddress' | 'getPublicKey' | 'exportSeed', pluginOrigin: string): Promise<string|null> {
-  try {
-      await window.ethereum.send({
-          method: pluginOrigin,
-          params: [{
-              method: method
-          }]
-      });
-  } catch (e) {
-      console.log("Keys not generated", e);
-  }
-  return null;
+async function sendSnapMethod(method: 'getBalance' | 'getAddress' | 'getPublicKey' | 'exportSeed', 
+  pluginOrigin: string): Promise<string> {
+  const response = await window.ethereum.send({
+    method: pluginOrigin,
+    params: [{
+      method: method
+    }]
+  });
+  return response as string;
 }
 
 export async function getBalance(pluginOrigin: string): Promise<string> {
   const response = await sendSnapMethod("getBalance", pluginOrigin);
-  return (response != null) ? response : "Unable to fetch balance";
+  return response;
 }
 
 export async function getAddress(pluginOrigin: string): Promise<string> {
   const response = await sendSnapMethod("getAddress", pluginOrigin);
-  return (response != null) ? response : "Unable to fetch address";
+  return response;
 }
 
 export async function getPublicKey(pluginOrigin: string): Promise<string> {
   const response = await sendSnapMethod("getPublicKey", pluginOrigin);
-  return (response != null) ? response : "Unable to fetch public key";
+  return response;
 }
 
 export async function exportSeed(pluginOrigin: string): Promise<string> {
   const response = await sendSnapMethod("exportSeed", pluginOrigin);
-  return (response != null) ? response : "Unable to fetch seed";
+  return response;
 }
 
 export async function configure(pluginOrigin: string, config: SnapConfig): Promise<void> {
@@ -111,44 +108,40 @@ export async function configure(pluginOrigin: string, config: SnapConfig): Promi
 
 export async function getLatestBlock(pluginOrigin: string): Promise<BlockInfo> {
   try {
-      const blockResponse = await window.ethereum.send({
-          method: pluginOrigin,
-          params: [{
-              method: "getBlock",
-              params: {
-                  blockTag: "latest"
-              }
-          }]
-      });
-      return blockResponse as BlockInfo;
+    const blockResponse = await window.ethereum.send({
+      method: pluginOrigin,
+      params: [{
+        method: "getBlock",
+        params: {
+          blockTag: "latest"
+        }
+      }]
+    });
+    return blockResponse as BlockInfo;
   } catch (e) {
-      console.log("Unable to fetch latest block", e);
-      return {number: "", hash: ""};
+    console.log("Unable to fetch latest block", e);
+    return {hash: "", number: ""};
   }
 }
 
 export async function setConfiguration(configuration: SnapConfig, pluginOrigin: string): Promise<void> {
   await window.ethereum.send({
-      method: pluginOrigin,
-      params: [{
-          method: 'configure',
-          params: {configuration: configuration}
-      }]
+    method: pluginOrigin,
+    params: [{
+      method: 'configure',
+      params: {configuration: configuration}
+    }]
   });
 }
 
-export async function getAllTransactions(pluginOrigin: string, address?: string): Promise<any> {
-  try {
-    return await window.ethereum.send({
-      method: pluginOrigin,
-      params: [{
-        method: 'getAllTransactions',
-          params: {
-            address
-          }
-      }]
-    });
-  } catch (e) {
-    console.log("Unable to fetch transactions", e);
-  }
+export async function getAllTransactions(pluginOrigin: string, address?: string): Promise<unknown> {
+  return await window.ethereum.send({
+    method: pluginOrigin,
+    params: [{
+      method: 'getAllTransactions',
+      params: {
+        address
+      }
+    }]
+  });
 }

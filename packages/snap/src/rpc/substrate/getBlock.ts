@@ -10,7 +10,7 @@ async function _getBlock(blockHash: BlockHash|string, api: ApiPromise): Promise<
   };
 }
 
-async function _getBlockById(blockId: number, api: ApiPromise): Promise<BlockInfo> {
+async function _getBlockById(blockId: number, api: ApiPromise): Promise<BlockInfo | null> {
   const blockHash = await api.rpc.chain.getBlockHash(blockId);
   if (!blockHash.isEmpty) {
     return await _getBlock(blockHash, api);
@@ -34,7 +34,7 @@ export interface BlockInfo {
  * @param blockTag
  * @param api
  */
-export async function getBlock(blockTag: BlockId, api: ApiPromise): Promise<BlockInfo> {
+export async function getBlock(blockTag: BlockId, api: ApiPromise): Promise<BlockInfo | null> {
   switch (typeof blockTag) {
     case "number":
       // get block by id sent as number

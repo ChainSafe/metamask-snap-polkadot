@@ -15,7 +15,7 @@ export interface MetamaskSnapApi {
   hasMetaMask(pluginOrigin: string): boolean;
   getLatestBlock(pluginOrigin: string): Promise<BlockInfo>;
   setConfiguration(configuration: SnapConfig, pluginOrigin: string): Promise<void>;
-  getAllTransactions(pluginOrigin: string, address?: string): Promise<any>;
+  getAllTransactions(pluginOrigin: string, address?: string): Promise<unknown>;
 }
 
 declare global {

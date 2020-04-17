@@ -32,13 +32,15 @@ export const Dashboard = () => {
     useEffect(() => {
         (async () => {
             if(state.polkadotSnap.isInstalled) {
-                await setConfiguration({networkName: network});
+                const x = await setConfiguration({networkName: network});
+                console.log(x);
                 await addPolkadotAsset();
                 setPublicKey(await getPublicKey());
                 setAddress(await getAddress());
                 setBalance(await getBalance());
                 setLatestBlock(await getLatestBlock());
             }
+            console.log(address);
         })();
     }, [state.polkadotSnap.isInstalled, network]);
 
