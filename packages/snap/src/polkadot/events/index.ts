@@ -9,7 +9,7 @@ export interface EventEmitter<K = keyof PolkadotEvent>  {
 
 class EventEmitterPolkadotImplementation implements EventEmitter<PolkadotEvent> {
 
-  private listeners: Record<string, Record<PolkadotEvent, EventCallback[]>>;
+  private listeners: Record<string, Record<string, EventCallback[]>>;
 
   addListener(event: PolkadotEvent, origin: string, listener: (...args: unknown[]) => void): this {
     // create listeners structure if first call

@@ -1,6 +1,6 @@
 import ApiPromise from "@polkadot/api/promise";
 import {BlockHash} from '@polkadot/types/interfaces/chain';
-import {BlockId} from "@nodefactory/metamask-polkadot-types";
+import {BlockId, BlockInfo} from "@nodefactory/metamask-polkadot-types";
 
 async function _getBlock(blockHash: BlockHash|string, api: ApiPromise): Promise<BlockInfo> {
   const signedBlock = await api.rpc.chain.getBlock(blockHash);
@@ -16,11 +16,6 @@ async function _getBlockById(blockId: number, api: ApiPromise): Promise<BlockInf
     return await _getBlock(blockHash, api);
   }
   return null;
-}
-
-export interface BlockInfo {
-  hash: string;
-  number: string;
 }
 
 /**

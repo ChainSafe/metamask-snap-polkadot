@@ -12,8 +12,7 @@ import {getLatestBlock} from "../../services/block";
 import {addPolkadotAsset} from "../../services/asset";
 import {setConfiguration} from "../../services/configuration";
 import {getPolkadotApi} from "../../services/polkadot";
-import {BlockInfo} from "../../../../snap/src/rpc/substrate/getBlock";
-import {PolkadotEvent} from "../../../../snap/src/polkadot/events";
+import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
 
 
 export const Dashboard = () => {
@@ -43,7 +42,7 @@ export const Dashboard = () => {
                 setLatestBlock(await getLatestBlock());
             }
         })();
-    }, [state.polkadotSnap.isInstalled]);
+    }, [state.polkadotSnap.isInstalled, network]);
 
     useEffect(() => {
         function handleBalanceChange(...args: unknown[]) {
@@ -54,7 +53,7 @@ export const Dashboard = () => {
             (async () => {
                 const api = await getPolkadotApi();
                 if (api) {
-                    api.on(PolkadotEvent.OnBalanceChange, handleBalanceChange)
+                    api.on("onBalanceChange", handleBalanceChange)
                 }
             })();
         }
@@ -63,7 +62,7 @@ export const Dashboard = () => {
             (async () => {
                 const api = await getPolkadotApi();
                 if (api) {
-                    api.removeAllListeners(PolkadotEvent.OnBalanceChange)
+                    api.removeAllListeners("onBalanceChange")
                 }
             })();
         }

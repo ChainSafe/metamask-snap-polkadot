@@ -1,5 +1,5 @@
 import {origin} from "./metamask";
-import {PolkadotApi} from "../../../snap/src/interfaces";
+import {PolkadotApi} from "@nodefactory/metamask-polkadot-types";
 
 let api: PolkadotApi;
 

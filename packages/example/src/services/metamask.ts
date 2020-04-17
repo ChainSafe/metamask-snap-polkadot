@@ -1,4 +1,4 @@
-import {PolkadotApi} from "../interfaces";
+import {PolkadotApi} from "@nodefactory/metamask-polkadot-types";
 
 declare global {
     interface Window {

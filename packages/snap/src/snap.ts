@@ -18,12 +18,13 @@ declare let wallet: Wallet;
 const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
 
 wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
-  await registerOnBalanceChange(wallet, origin);
+
   return {
     on: (eventName: PolkadotEvent, callback: EventCallback): boolean => {
       switch (eventName) {
-        case PolkadotEvent.OnBalanceChange:
-          polkadotEventEmitter.addListener(PolkadotEvent.OnBalanceChange, origin, callback);
+        case "onBalanceChange":
+          polkadotEventEmitter.addListener("onBalanceChange", origin, callback);
+          registerOnBalanceChange(wallet, origin);
           return true;
         default:
           throw new Error(`Unsupported event: ${eventName}`);
@@ -76,7 +77,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await removeAsset(wallet, originString);
     case 'getChainHead':
       // temporary method
-      polkadotEventEmitter.emit(PolkadotEvent.OnBalanceChange, "100 KSM");
+      polkadotEventEmitter.emit("onBalanceChange", "100 KSM");
       const head = await api.rpc.chain.getFinalizedHead();
       return head.hash;
     default:

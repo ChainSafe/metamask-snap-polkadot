@@ -65,6 +65,11 @@ type Method = MetamaskPolkadotRpcRequest["method"];
 
 export type BlockId = number|string|"latest";
 
+export interface BlockInfo {
+  hash: string;
+  number: string;
+}
+
 export interface UnitConfiguration {
   symbol: string;
   decimals: number;
@@ -82,11 +87,9 @@ export interface SnapConfig {
 
 // Polkadot types
 
-type EventCallback = (...args: unknown[]) => void;
+export type EventCallback = (...args: unknown[]) => void;
 
-export enum PolkadotEvent {
-  OnBalanceChange = "onBalanceChange"
-}
+export type PolkadotEvent = "onBalanceChange"|"onTransactionStatus";
 
 export interface PolkadotApi {
   on(eventName: PolkadotEvent, callback: EventCallback): boolean;
