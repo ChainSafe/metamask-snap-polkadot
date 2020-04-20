@@ -1,7 +1,10 @@
 import {Injected, InjectedAccount, InjectedAccounts} from "@polkadot/extension-inject/types";
 import {Signer as InjectedSigner} from '@polkadot/api/types';
-import {addAsset, configure, getAccountAddress, isPolkadotSnapInstalled} from "./methods";
+import {configure, getAccountAddress, isPolkadotSnapInstalled, 
+  addPolkadotAsset, getBalance, getAddress, exportSeed, 
+  getLatestBlock, setConfiguration, getAllTransactions} from "./methods";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
+import {MetamaskSnapApi} from "./types";
 
 export class MetamaskPolkadotSnap implements Injected {
 
@@ -49,8 +52,21 @@ export class MetamaskPolkadotSnap implements Injected {
         }]
       });
       await configure(this.pluginOrigin, this.config);
-      await addAsset(this.pluginOrigin);
+      await addPolkadotAsset(this.pluginOrigin);
     }
     return this;
+  };
+
+  public getMetamaskSnapApi = async (): Promise<MetamaskSnapApi> => {
+    return {
+      addPolkadotAsset,
+      exportSeed,
+      getAccountAddress,
+      getAddress,
+      getAllTransactions,
+      getBalance,
+      getLatestBlock,
+      setConfiguration
+    };
   };
 }

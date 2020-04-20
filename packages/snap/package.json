@@ -8,6 +8,7 @@
     "lint": "yarn run lint:types && yarn run lint:style",
     "lint:types": "tsc --noEmit --pretty",
     "lint:style": "eslint 'src/**/*.{js,ts,tsx}' --fix",
+    "lint:fix": "yarn run lint --fix",
     "start": "yarn run build && yarn run serve",
     "prebuild": "rm -rf build && rm -rf dist",
     "type-check": "tsc --noEmit",
