@@ -1,52 +1,52 @@
 
 export interface GetPublicKeyRequest{
-    method: "getPublicKey";
+  method: "getPublicKey";
 }
 
 export interface GetAddressRequest {
-    method: "getAddress";
+  method: "getAddress";
 }
 
 export interface ExportSeedRequest {
-    method: "exportSeed";
+  method: "exportSeed";
 }
 
 export interface GetTransactionsRequest {
-    method: "getAllTransactions";
-    params: {
-        address?: string
-    }
+  method: "getAllTransactions";
+  params: {
+    address?: string;
+  };
 }
 
 export interface GetBlockRequest {
-    method: "getBlock";
-    params: {
-        blockTag?: BlockId;
-    }
+  method: "getBlock";
+  params: {
+    blockTag?: BlockId;
+  };
 }
 
 export interface GetBalanceRequest {
-    method: "getBalance";
+  method: "getBalance";
 }
 
 
 export interface ConfigureSnapRequest {
-    method: "configure";
-    params: {
-        configuration: SnapConfig
-    }
+  method: "configure";
+  params: {
+    configuration: SnapConfig;
+  };
 }
 
 export interface AddPolkadotAssetRequest {
-    method: "addPolkadotAsset";
+  method: "addPolkadotAsset";
 }
 
 export interface RemovePolkadotAssetRequest {
-    method: "removePolkadotAsset";
+  method: "removePolkadotAsset";
 }
 
 export interface GetChainHeadRequest {
-    method: "getChainHead";
+  method: "getChainHead";
 }
 
 export type MetamaskPolkadotRpcRequest =
@@ -65,17 +65,34 @@ type Method = MetamaskPolkadotRpcRequest["method"];
 
 export type BlockId = number|string|"latest";
 
+export interface BlockInfo {
+  hash: string;
+  number: string;
+}
+
 export interface UnitConfiguration {
-    symbol: string;
-    decimals: number;
-    assetId: string;
-    image?: string;
-    customViewUrl?: string;
+  symbol: string;
+  decimals: number;
+  assetId: string;
+  image?: string;
+  customViewUrl?: string;
 }
 
 export interface SnapConfig {
-    networkName: string;
-    wsRpcUrl?: string;
-    addressPrefix?: number;
-    unit?: UnitConfiguration;
+  networkName: string;
+  wsRpcUrl?: string;
+  addressPrefix?: number;
+  unit?: UnitConfiguration;
+}
+
+// Polkadot types
+
+export type EventCallback = (...args: unknown[]) => void;
+
+export type PolkadotEvent = "onBalanceChange"|"onTransactionStatus";
+
+export interface PolkadotApi {
+  on(eventName: PolkadotEvent, callback: EventCallback): void;
+  removeListener(eventName: PolkadotEvent, callback: EventCallback): boolean;
+  removeAllListeners(eventName: PolkadotEvent): boolean;
 }

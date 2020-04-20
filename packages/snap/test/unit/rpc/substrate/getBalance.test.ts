@@ -4,7 +4,7 @@ import {EmptyMetamaskState, MetamaskState} from "../../../../src/interfaces";
 import {WalletMock} from "../../crypto/wallet.mock.test";
 import {getBalance} from "../../../../src/rpc/substrate/getBalance";
 import ApiPromise from "@polkadot/api/promise";
-import { AccountInfo } from "@polkadot/types/interfaces/system";
+import {AccountInfo} from "@polkadot/types/interfaces/system";
 import sinon from "sinon";
 
 chai.use(sinonChai);

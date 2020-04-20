@@ -8,10 +8,12 @@ import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
 import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
 import {getAddress, getBalance, getPublicKey} from "../../services/account";
-import {BlockInfo} from "../../../../snap/src/rpc/substrate/getBlock";
 import {getLatestBlock} from "../../services/block";
 import {addPolkadotAsset} from "../../services/asset";
 import {setConfiguration} from "../../services/configuration";
+import {getPolkadotApi} from "../../services/polkadot";
+import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
+
 
 export const Dashboard = () => {
 
@@ -41,6 +43,30 @@ export const Dashboard = () => {
             }
             console.log(address);
         })();
+    }, [state.polkadotSnap.isInstalled, network]);
+
+    useEffect(() => {
+        function handleBalanceChange(...args: unknown[]) {
+            setBalance(String(args[0]))
+        }
+
+        if (state.polkadotSnap.isInstalled) {
+            (async () => {
+                const api = await getPolkadotApi();
+                if (api) {
+                    api.on("onBalanceChange", handleBalanceChange)
+                }
+            })();
+        }
+
+        return function() {
+            (async () => {
+                const api = await getPolkadotApi();
+                if (api) {
+                    api.removeAllListeners("onBalanceChange")
+                }
+            })();
+        }
     }, [state.polkadotSnap.isInstalled, network]);
 
     return (

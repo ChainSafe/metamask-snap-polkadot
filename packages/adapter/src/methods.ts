@@ -1,5 +1,5 @@
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
-import {BlockInfo} from "../../../packages/snap/src/rpc/substrate/getBlock";
+import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskPolkadotRpcRequest} from "@nodefactory/metamask-polkadot-types";
 
 export async function getAccountAddress(pluginOrigin: string): Promise<string> {

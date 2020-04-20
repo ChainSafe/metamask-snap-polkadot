@@ -1,6 +1,6 @@
 import {MetamaskPolkadotRpcRequest} from "@nodefactory/metamask-polkadot-types";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
-import {BlockInfo} from "../../../packages/snap/src/rpc/substrate/getBlock";
+import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
 
 export interface MetamaskSnapApi {
   getAccountAddress(pluginOrigin: string): Promise<string>;

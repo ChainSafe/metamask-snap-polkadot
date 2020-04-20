@@ -1,9 +1,12 @@
+import {PolkadotApi} from "@nodefactory/metamask-polkadot-types";
+
 declare global {
     interface Window {
         ethereum: {
             isMetaMask: boolean;
             send: (params: any)=> Promise<any>;
             on: (eventName: any, callback: any) => any;
+            requestIndex: () => Promise<{getPluginApi: (origin: string) => Promise<PolkadotApi>}>;
         }
     }
 }
