@@ -4,17 +4,12 @@ import {BlockInfo} from "../../../packages/snap/src/rpc/substrate/getBlock";
 
 export interface MetamaskSnapApi {
   getAccountAddress(pluginOrigin: string): Promise<string>;
-  installPolkadotSnap(pluginOrigin: string): Promise<boolean>;
-  isPolkadotSnapInstalled(pluginOrigin: string): Promise<boolean>;
-  addKusamaAsset(pluginOrigin: string): Promise<void>;
   addPolkadotAsset(pluginOrigin: string): Promise<void>;
-  getBalance(pluginOrigin: string): Promise<string>;
-  getAddress(pluginOrigin: string): Promise<string>;
-  getPublicKey(pluginOrigin: string): Promise<string>;
-  exportSeed(pluginOrigin: string): Promise<string>;
-  hasMetaMask(pluginOrigin: string): boolean;
+  getBalance(pluginOrigin: string): Promise<unknown>;
+  getAddress(pluginOrigin: string): Promise<unknown>;
+  exportSeed(pluginOrigin: string): Promise<unknown>;
   getLatestBlock(pluginOrigin: string): Promise<BlockInfo>;
-  setConfiguration(configuration: SnapConfig, pluginOrigin: string): Promise<void>;
+  setConfiguration(pluginOrigin: string, configuration: SnapConfig): Promise<void>;
   getAllTransactions(pluginOrigin: string, address?: string): Promise<unknown>;
 }
 

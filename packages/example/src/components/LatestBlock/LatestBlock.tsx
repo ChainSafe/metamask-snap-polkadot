@@ -1,6 +1,6 @@
 import React from "react";
 import {Box, Card, CardContent, CardHeader, Divider, Grid, Typography} from "@material-ui/core";
-import {BlockInfo} from "../../../../src/rpc/substrate/getBlock";
+import {BlockInfo} from "../../../../snap/src/rpc/substrate/getBlock";
 
 export const LatestBlock = (props: {block: BlockInfo}) => {
 

@@ -41,10 +41,6 @@ export interface AddPolkadotAssetRequest {
     method: "addPolkadotAsset";
 }
 
-export interface AddKusamaAsset {
-    method: "addKusamaAsset";
-}
-
 export interface RemovePolkadotAssetRequest {
     method: "removePolkadotAsset";
 }
@@ -62,7 +58,6 @@ export type MetamaskPolkadotRpcRequest =
     | GetBalanceRequest
     | ConfigureSnapRequest
     | AddPolkadotAssetRequest
-    | AddKusamaAsset
     | RemovePolkadotAssetRequest
     | GetChainHeadRequest;
 

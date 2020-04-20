@@ -45,15 +45,6 @@ export async function isPolkadotSnapInstalled(pluginOrigin: string): Promise<boo
   }
 }
 
-export async function addKusamaAsset(pluginOrigin: string): Promise<void> {
-  await window.ethereum.send({
-    method: pluginOrigin,
-    params: [{
-      method: 'addKusamaAsset'
-    }]
-  });
-}
-
 export async function addPolkadotAsset(pluginOrigin: string): Promise<void> {
   await window.ethereum.send({
     method: pluginOrigin,
@@ -64,32 +55,32 @@ export async function addPolkadotAsset(pluginOrigin: string): Promise<void> {
 }
 
 async function sendSnapMethod(method: 'getBalance' | 'getAddress' | 'getPublicKey' | 'exportSeed', 
-  pluginOrigin: string): Promise<string> {
+  pluginOrigin: string): Promise<unknown> {
   const response = await window.ethereum.send({
     method: pluginOrigin,
     params: [{
       method: method
     }]
   });
-  return response as string;
+  return response;
 }
 
-export async function getBalance(pluginOrigin: string): Promise<string> {
+export async function getBalance(pluginOrigin: string): Promise<unknown> {
   const response = await sendSnapMethod("getBalance", pluginOrigin);
   return response;
 }
 
-export async function getAddress(pluginOrigin: string): Promise<string> {
+export async function getAddress(pluginOrigin: string): Promise<unknown> {
   const response = await sendSnapMethod("getAddress", pluginOrigin);
   return response;
 }
 
-export async function getPublicKey(pluginOrigin: string): Promise<string> {
+export async function getPublicKey(pluginOrigin: string): Promise<unknown> {
   const response = await sendSnapMethod("getPublicKey", pluginOrigin);
   return response;
 }
 
-export async function exportSeed(pluginOrigin: string): Promise<string> {
+export async function exportSeed(pluginOrigin: string): Promise<unknown> {
   const response = await sendSnapMethod("exportSeed", pluginOrigin);
   return response;
 }
@@ -124,7 +115,7 @@ export async function getLatestBlock(pluginOrigin: string): Promise<BlockInfo> {
   }
 }
 
-export async function setConfiguration(configuration: SnapConfig, pluginOrigin: string): Promise<void> {
+export async function setConfiguration(pluginOrigin: string, configuration: SnapConfig): Promise<void> {
   await window.ethereum.send({
     method: pluginOrigin,
     params: [{

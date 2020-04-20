@@ -8,7 +8,7 @@ import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
 import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
 import {getAddress, getBalance, getPublicKey} from "../../services/account";
-import {BlockInfo} from "../../../../src/rpc/substrate/getBlock";
+import {BlockInfo} from "../../../../snap/src/rpc/substrate/getBlock";
 import {getLatestBlock} from "../../services/block";
 import {addPolkadotAsset} from "../../services/asset";
 import {setConfiguration} from "../../services/configuration";
@@ -32,8 +32,7 @@ export const Dashboard = () => {
     useEffect(() => {
         (async () => {
             if(state.polkadotSnap.isInstalled) {
-                const x = await setConfiguration({networkName: network});
-                console.log(x);
+                await setConfiguration({networkName: network});
                 await addPolkadotAsset();
                 setPublicKey(await getPublicKey());
                 setAddress(await getAddress());
