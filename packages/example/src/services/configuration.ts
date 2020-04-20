@@ -1,5 +1,5 @@
 import {pluginOrigin} from "./metamask";
-import {SnapConfig} from "../../../src/configuration/interfaces";
+import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
 
 export async function setConfiguration(configuration: SnapConfig): Promise<void> {
