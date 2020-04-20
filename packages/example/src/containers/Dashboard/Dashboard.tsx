@@ -41,7 +41,6 @@ export const Dashboard = () => {
                 setBalance(await getBalance());
                 setLatestBlock(await getLatestBlock());
             }
-            console.log(address);
         })();
     }, [state.polkadotSnap.isInstalled, network]);
 
