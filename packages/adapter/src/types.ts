@@ -5,9 +5,9 @@ import {BlockInfo} from "../../../packages/snap/src/rpc/substrate/getBlock";
 export interface MetamaskSnapApi {
   getAccountAddress(pluginOrigin: string): Promise<string>;
   addPolkadotAsset(pluginOrigin: string): Promise<void>;
-  getBalance(pluginOrigin: string): Promise<unknown>;
-  getAddress(pluginOrigin: string): Promise<unknown>;
-  exportSeed(pluginOrigin: string): Promise<unknown>;
+  getBalance(pluginOrigin: string): Promise<string>;
+  getAddress(pluginOrigin: string): Promise<string>;
+  exportSeed(pluginOrigin: string): Promise<string>;
   getLatestBlock(pluginOrigin: string): Promise<BlockInfo>;
   setConfiguration(pluginOrigin: string, configuration: SnapConfig): Promise<void>;
   getAllTransactions(pluginOrigin: string, address?: string): Promise<unknown>;

@@ -1,5 +1,6 @@
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {BlockInfo} from "../../../packages/snap/src/rpc/substrate/getBlock";
+import {MetamaskPolkadotRpcRequest} from "@nodefactory/metamask-polkadot-types";
 
 export async function getAccountAddress(pluginOrigin: string): Promise<string> {
   return await window.ethereum.send({
@@ -54,35 +55,33 @@ export async function addPolkadotAsset(pluginOrigin: string): Promise<void> {
   });
 }
 
-async function sendSnapMethod(method: 'getBalance' | 'getAddress' | 'getPublicKey' | 'exportSeed', 
+async function sendSnapMethod(method: MetamaskPolkadotRpcRequest, 
   pluginOrigin: string): Promise<unknown> {
   const response = await window.ethereum.send({
     method: pluginOrigin,
-    params: [{
-      method: method
-    }]
+    params: [method]
   });
   return response;
 }
 
-export async function getBalance(pluginOrigin: string): Promise<unknown> {
-  const response = await sendSnapMethod("getBalance", pluginOrigin);
-  return response;
+export async function getBalance(pluginOrigin: string): Promise<string> {
+  const response = await sendSnapMethod({method: "getBalance"}, pluginOrigin);
+  return response as string;
 }
 
-export async function getAddress(pluginOrigin: string): Promise<unknown> {
-  const response = await sendSnapMethod("getAddress", pluginOrigin);
-  return response;
+export async function getAddress(pluginOrigin: string): Promise<string> {
+  const response = await sendSnapMethod({method: "getAddress"}, pluginOrigin);
+  return response as string;
 }
 
-export async function getPublicKey(pluginOrigin: string): Promise<unknown> {
-  const response = await sendSnapMethod("getPublicKey", pluginOrigin);
-  return response;
+export async function getPublicKey(pluginOrigin: string): Promise<string> {
+  const response = await sendSnapMethod({method: "getPublicKey"}, pluginOrigin);
+  return response as string;
 }
 
-export async function exportSeed(pluginOrigin: string): Promise<unknown> {
-  const response = await sendSnapMethod("exportSeed", pluginOrigin);
-  return response;
+export async function exportSeed(pluginOrigin: string): Promise<string> {
+  const response = await sendSnapMethod({method: "exportSeed"}, pluginOrigin);
+  return response as string;
 }
 
 export async function configure(pluginOrigin: string, config: SnapConfig): Promise<void> {
