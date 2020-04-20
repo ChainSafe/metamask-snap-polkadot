@@ -17,7 +17,7 @@ declare global {
   interface Window {
     ethereum: {
       isMetaMask: boolean;
-      send: (request: MetamaskRpcRequest) => Promise<unknown>;
+      send: (request: SnapRpcMethodRequest) => Promise<unknown>;
       on: (eventName: unknown, callback: unknown) => unknown;
     };
   }

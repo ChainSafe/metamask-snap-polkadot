@@ -55,32 +55,34 @@ export async function addPolkadotAsset(pluginOrigin: string): Promise<void> {
   });
 }
 
-async function sendSnapMethod(method: MetamaskPolkadotRpcRequest, 
+async function sendSnapMethod(method: MetamaskPolkadotRpcRequest["method"], 
   pluginOrigin: string): Promise<unknown> {
   const response = await window.ethereum.send({
     method: pluginOrigin,
-    params: [method]
+    params: [
+      {method: method}
+    ]
   });
   return response;
 }
 
 export async function getBalance(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "getBalance"}, pluginOrigin);
+  const response = await sendSnapMethod("getBalance", pluginOrigin);
   return response as string;
 }
 
 export async function getAddress(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "getAddress"}, pluginOrigin);
+  const response = await sendSnapMethod("getAddress", pluginOrigin);
   return response as string;
 }
 
 export async function getPublicKey(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "getPublicKey"}, pluginOrigin);
+  const response = await sendSnapMethod("getPublicKey", pluginOrigin);
   return response as string;
 }
 
 export async function exportSeed(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "exportSeed"}, pluginOrigin);
+  const response = await sendSnapMethod("exportSeed", pluginOrigin);
   return response as string;
 }
 
