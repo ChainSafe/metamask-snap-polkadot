@@ -17,7 +17,8 @@ declare global {
   interface Window {
     ethereum: {
       isMetaMask: boolean;
-      send: (request: SnapRpcMethodRequest | {method: string, params?: any}) => Promise<unknown>;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      send: (request: SnapRpcMethodRequest | {method: string; params?: any[]}) => Promise<unknown>;
       on: (eventName: unknown, callback: unknown) => unknown;
     };
   }
