@@ -15,6 +15,8 @@ export interface MetamaskSnapApi {
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     ethereum: {
       isMetaMask: boolean;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
