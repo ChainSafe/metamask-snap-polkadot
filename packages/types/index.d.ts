@@ -49,6 +49,14 @@ export interface GetChainHeadRequest {
   method: "getChainHead";
 }
 
+export interface SendUnitRequest {
+  method: "sendUnit";
+  params: {
+    amount: string|number;
+    to: string;
+  };
+}
+
 export type MetamaskPolkadotRpcRequest =
     GetPublicKeyRequest
     | GetAddressRequest
@@ -59,7 +67,8 @@ export type MetamaskPolkadotRpcRequest =
     | ConfigureSnapRequest
     | AddPolkadotAssetRequest
     | RemovePolkadotAssetRequest
-    | GetChainHeadRequest;
+    | GetChainHeadRequest
+    | SendUnitRequest;
 
 type Method = MetamaskPolkadotRpcRequest["method"];
 

@@ -12,6 +12,7 @@ import {configure} from "./rpc/configure";
 import {polkadotEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange} from "./polkadot/events/balance";
 import {EventCallback, PolkadotApi, PolkadotEvent} from "@nodefactory/metamask-polkadot-types";
+import {sendUnit} from "./rpc/substrate/sendUnit";
 
 declare let wallet: Wallet;
 
@@ -74,6 +75,8 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await updateAsset(wallet, originString, 0);
     case 'removePolkadotAsset':
       return await removeAsset(wallet, originString);
+    case "sendUnit":
+      return await sendUnit(wallet, api, requestObject.params.amount, requestObject.params.to);
     case 'getChainHead':
       // temporary method
       polkadotEventEmitter.emit("onBalanceChange", "100 KSM");
