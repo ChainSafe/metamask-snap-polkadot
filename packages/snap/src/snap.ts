@@ -16,7 +16,7 @@ import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 
 declare let wallet: Wallet;
 
-const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset", "sign"];
+const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset", "signPayload"];
 
 wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
   registerOnBalanceChange(wallet, origin);
