@@ -16,7 +16,9 @@ import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 
 declare let wallet: Wallet;
 
-const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset", "signPayload"];
+const apiDependentMethods = [
+  "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw"
+];
 
 wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
   registerOnBalanceChange(wallet, origin);
@@ -53,14 +55,10 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     api = await getApi(wallet);
   }
   switch (requestObject.method) {
-    case "signPayload":
-      if (requestObject.params.payloadJSON) {
-        return await signPayloadJSON(wallet, api, requestObject.params.payloadJSON);
-      } else if (requestObject.params.payloadRaw) {
-        return await signPayloadRaw(wallet, api, requestObject.params.payloadRaw);
-      } else {
-        throw new Error("Payload not provided");
-      }
+    case "signPayloadJSON":
+      return await signPayloadJSON(wallet, api, requestObject.params.payload);
+    case "signPayloadRaw":
+      return await signPayloadRaw(wallet, api, requestObject.params.payload);
     case 'getPublicKey':
       return await getPublicKey(wallet);
     case 'getAddress':

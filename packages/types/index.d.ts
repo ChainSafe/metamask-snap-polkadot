@@ -50,11 +50,17 @@ export interface GetChainHeadRequest {
   method: "getChainHead";
 }
 
-export interface SignPayloadRequest {
-  method: "signPayload";
+export interface SignPayloadJSONRequest {
+  method: "signPayloadJSON";
   params: {
-    payloadJSON?: SignerPayloadJSON;
-    payloadRaw?: SignerPayloadRaw;
+    payload: SignerPayloadJSON;
+  };
+}
+
+export interface SignPayloadRawRequest {
+  method: "signPayloadRaw";
+  params: {
+    payload: SignerPayloadRaw;
   };
 }
 
@@ -69,7 +75,8 @@ export type MetamaskPolkadotRpcRequest =
     | AddPolkadotAssetRequest
     | RemovePolkadotAssetRequest
     | GetChainHeadRequest
-    | SignPayloadRequest;
+    | SignPayloadJSONRequest
+    | SignPayloadRawRequest;
 
 type Method = MetamaskPolkadotRpcRequest["method"];
 

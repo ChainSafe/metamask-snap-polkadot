@@ -2,7 +2,6 @@ import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskPolkadotRpcRequest} from "@nodefactory/metamask-polkadot-types";
 import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import {SignerResult} from '@polkadot/api/types';
 import {pluginOrigin} from "example/src/services/metamask";
 
 export async function getAccountAddress(pluginOrigin: string): Promise<string> {
@@ -14,24 +13,27 @@ export async function getAccountAddress(pluginOrigin: string): Promise<string> {
   }) as string;
 }
 
-async function _sign(payload: SignerPayloadJSON|SignerPayloadRaw, paramKey: "payloadJSON"|"payloadRaw") {
+async function sign(
+  method: "signPayloadJSON"|"signPayloadRaw",
+  payload: SignerPayloadJSON|SignerPayloadRaw
+): Promise<string> {
   return await window.ethereum.send({
     method: pluginOrigin,
     params: [{
-      method: 'signPayload',
+      method: method,
       params: {
-        [paramKey]: payload
+        payload
       }
     }]
   });
 }
 
-export async function signPayloadJSON(payload: SignerPayloadJSON): Promise<SignerResult> {
-  return await _sign(payload, "payloadJSON");
+export async function signPayloadJSON(payload: SignerPayloadJSON): Promise<string> {
+  return await sign("signPayloadJSON", payload);
 }
 
-export async function signPayloadRaw(payload: SignerPayloadRaw): Promise<SignerResult> {
-  return await _sign(payload, "payloadRaw");
+export async function signPayloadRaw(payload: SignerPayloadRaw): Promise<string> {
+  return await sign("signPayloadRaw", payload);
 }
 
 export function hasMetaMask(): boolean {
@@ -78,7 +80,7 @@ export async function addPolkadotAsset(pluginOrigin: string): Promise<void> {
   });
 }
 
-async function _sendSnapMethod(request: MetamaskPolkadotRpcRequest,
+async function sendSnapMethod(request: MetamaskPolkadotRpcRequest,
   pluginOrigin: string): Promise<unknown> {
   const response = await window.ethereum.send({
     method: pluginOrigin,
@@ -90,22 +92,22 @@ async function _sendSnapMethod(request: MetamaskPolkadotRpcRequest,
 }
 
 export async function getBalance(pluginOrigin: string): Promise<string> {
-  const response = await _sendSnapMethod({method: "getBalance"}, pluginOrigin);
+  const response = await sendSnapMethod({method: "getBalance"}, pluginOrigin);
   return response as string;
 }
 
 export async function getAddress(pluginOrigin: string): Promise<string> {
-  const response = await _sendSnapMethod({method: "getAddress"}, pluginOrigin);
+  const response = await sendSnapMethod({method: "getAddress"}, pluginOrigin);
   return response as string;
 }
 
 export async function getPublicKey(pluginOrigin: string): Promise<string> {
-  const response = await _sendSnapMethod({method: "getPublicKey"}, pluginOrigin);
+  const response = await sendSnapMethod({method: "getPublicKey"}, pluginOrigin);
   return response as string;
 }
 
 export async function exportSeed(pluginOrigin: string): Promise<string> {
-  const response = await _sendSnapMethod({method: "exportSeed"}, pluginOrigin);
+  const response = await sendSnapMethod({method: "exportSeed"}, pluginOrigin);
   return response as string;
 }
 

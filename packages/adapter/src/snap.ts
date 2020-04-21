@@ -38,13 +38,21 @@ export class MetamaskPolkadotSnap implements Injected {
 
   public signer: InjectedSigner = {
     signPayload: async (payload: SignerPayloadJSON): Promise<SignerResult> => {
-      return await signPayloadJSON(payload);
+      const signature = await signPayloadJSON(payload);
+      const id = this.requestCounter;
+      this.requestCounter += 1;
+      return {id, signature};
     },
     signRaw: async (raw: SignerPayloadRaw): Promise<SignerResult> => {
-      return await signPayloadRaw(raw);
+      const signature = await signPayloadRaw(raw);
+      const id = this.requestCounter;
+      this.requestCounter += 1;
+      return {id, signature};
     },
     update: () => null
   };
+
+  private requestCounter: number;
 
   private readonly config: SnapConfig;
   private readonly pluginOrigin: string;
@@ -52,6 +60,7 @@ export class MetamaskPolkadotSnap implements Injected {
   public constructor(pluginOrigin: string, config: SnapConfig) {
     this.pluginOrigin = pluginOrigin;
     this.config = config || {networkName: "westend"};
+    this.requestCounter = 0;
   }
 
   public enableSnap = async (): Promise<Injected> => {
