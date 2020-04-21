@@ -4,7 +4,6 @@ import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import {getKeyPair} from "../../polkadot/account";
 import {hexToU8a, u8aToHex} from "@polkadot/util";
 
-// eslint-disable-next-line max-len
 export async function signPayloadJSON(
   wallet: Wallet, api: ApiPromise, payload: SignerPayloadJSON
 ): Promise<{ signature: string }> {
@@ -13,7 +12,6 @@ export async function signPayloadJSON(
   return extrinsic.sign(keyPair);
 }
 
-// eslint-disable-next-line max-len
 export async function signPayloadRaw(
   wallet: Wallet, api: ApiPromise, payload: SignerPayloadRaw
 ): Promise<{ signature: string }> {
