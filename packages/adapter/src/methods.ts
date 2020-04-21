@@ -1,6 +1,9 @@
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskPolkadotRpcRequest} from "@nodefactory/metamask-polkadot-types";
+import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import {SignerResult} from '@polkadot/api/types';
+import {pluginOrigin} from "example/src/services/metamask";
 
 export async function getAccountAddress(pluginOrigin: string): Promise<string> {
   return await window.ethereum.send({
@@ -9,6 +12,26 @@ export async function getAccountAddress(pluginOrigin: string): Promise<string> {
       method: 'getAddress'
     }]
   }) as string;
+}
+
+async function _sign(payload: SignerPayloadJSON|SignerPayloadRaw, paramKey: "payloadJSON"|"payloadRaw") {
+  return await window.ethereum.send({
+    method: pluginOrigin,
+    params: [{
+      method: 'signPayload',
+      params: {
+        [paramKey]: payload
+      }
+    }]
+  });
+}
+
+export async function signPayloadJSON(payload: SignerPayloadJSON): Promise<SignerResult> {
+  return await _sign(payload, "payloadJSON");
+}
+
+export async function signPayloadRaw(payload: SignerPayloadRaw): Promise<SignerResult> {
+  return await _sign(payload, "payloadRaw");
 }
 
 export function hasMetaMask(): boolean {
@@ -55,7 +78,7 @@ export async function addPolkadotAsset(pluginOrigin: string): Promise<void> {
   });
 }
 
-async function sendSnapMethod(request: MetamaskPolkadotRpcRequest,
+async function _sendSnapMethod(request: MetamaskPolkadotRpcRequest,
   pluginOrigin: string): Promise<unknown> {
   const response = await window.ethereum.send({
     method: pluginOrigin,
@@ -67,22 +90,22 @@ async function sendSnapMethod(request: MetamaskPolkadotRpcRequest,
 }
 
 export async function getBalance(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "getBalance"}, pluginOrigin);
+  const response = await _sendSnapMethod({method: "getBalance"}, pluginOrigin);
   return response as string;
 }
 
 export async function getAddress(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "getAddress"}, pluginOrigin);
+  const response = await _sendSnapMethod({method: "getAddress"}, pluginOrigin);
   return response as string;
 }
 
 export async function getPublicKey(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "getPublicKey"}, pluginOrigin);
+  const response = await _sendSnapMethod({method: "getPublicKey"}, pluginOrigin);
   return response as string;
 }
 
 export async function exportSeed(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "exportSeed"}, pluginOrigin);
+  const response = await _sendSnapMethod({method: "exportSeed"}, pluginOrigin);
   return response as string;
 }
 

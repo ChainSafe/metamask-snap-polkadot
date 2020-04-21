@@ -1,3 +1,4 @@
+import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 
 export interface GetPublicKeyRequest{
   method: "getPublicKey";
@@ -49,6 +50,14 @@ export interface GetChainHeadRequest {
   method: "getChainHead";
 }
 
+export interface SignPayloadRequest {
+  method: "signPayload";
+  params: {
+    payloadJSON?: SignerPayloadJSON;
+    payloadRaw?: SignerPayloadRaw;
+  };
+}
+
 export type MetamaskPolkadotRpcRequest =
     GetPublicKeyRequest
     | GetAddressRequest
@@ -59,7 +68,8 @@ export type MetamaskPolkadotRpcRequest =
     | ConfigureSnapRequest
     | AddPolkadotAssetRequest
     | RemovePolkadotAssetRequest
-    | GetChainHeadRequest;
+    | GetChainHeadRequest
+    | SignPayloadRequest;
 
 type Method = MetamaskPolkadotRpcRequest["method"];
 

@@ -12,10 +12,11 @@ import {configure} from "./rpc/configure";
 import {polkadotEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange} from "./polkadot/events/balance";
 import {EventCallback, PolkadotApi, PolkadotEvent} from "@nodefactory/metamask-polkadot-types";
+import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 
 declare let wallet: Wallet;
 
-const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
+const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset", "sign"];
 
 wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
   registerOnBalanceChange(wallet, origin);
@@ -52,6 +53,14 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     api = await getApi(wallet);
   }
   switch (requestObject.method) {
+    case "signPayload":
+      if (requestObject.params.payloadJSON) {
+        return await signPayloadJSON(wallet, api, requestObject.params.payloadJSON);
+      } else if (requestObject.params.payloadRaw) {
+        return await signPayloadRaw(wallet, api, requestObject.params.payloadRaw);
+      } else {
+        throw new Error("Payload not provided");
+      }
     case 'getPublicKey':
       return await getPublicKey(wallet);
     case 'getAddress':
