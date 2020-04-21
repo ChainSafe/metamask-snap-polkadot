@@ -13,13 +13,6 @@ export async function getBalance(wallet: Wallet, api: ApiPromise, address?: stri
   if(!address) {
     address = (await getKeyPair(wallet)).address;
   }
-  const encAddress = encodeAddress(
-    (await getKeyPair(wallet)).publicKey,
-    wallet.getPluginState().polkadot.config.addressPrefix
-  );
-  console.log(address);
-  console.log(encAddress);
-  const account = await api.query.system.account(encAddress);
-  console.log(account);
+  const account = await api.query.system.account(address);
   return account.data.free.toString();
 }
