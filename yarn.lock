@@ -2255,6 +2255,21 @@
     eventemitter3 "^4.0.0"
     rxjs "^6.5.5"
 
+"@polkadot/extension-dapp@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/extension-dapp/-/extension-dapp-0.24.1.tgz#a980ebdfc25fc0c0297deff6d5a13e186bb01c0d"
+  integrity sha512-Df0GYMOVSmHP2r86YOIMUkSXPJ7Lg4BNdaHBkxA0bxVZrQwlEhn/Kr8EDk8KIJAEBd+Wehil6mQcgBj/FW+9/w==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
+    "@polkadot/extension-inject" "0.24.1"
+
+"@polkadot/extension-inject@0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/extension-inject/-/extension-inject-0.24.1.tgz#1e194f050630107398ecf387786205230dc95080"
+  integrity sha512-HG8gqZNM8NT6wPw+CmTlH6q4pQbo/fsGzvUtShhFQOntw67cvayV0gouOjgIMVb2sLR9EWIvjan+l76VTYiNaQ==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
+
 "@polkadot/extension-inject@^0.23.1":
   version "0.23.1"
   resolved "https://registry.yarnpkg.com/@polkadot/extension-inject/-/extension-inject-0.23.1.tgz#6d222cda8f142986d7a3d456c78ba1cea711a8e0"

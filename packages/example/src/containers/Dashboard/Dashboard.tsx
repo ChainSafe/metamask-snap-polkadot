@@ -7,12 +7,23 @@ import {Account} from "../../components/Account/Account";
 import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
 import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
-import {getAddress, getBalance, getPublicKey} from "../../services/account";
-import {getLatestBlock} from "../../services/block";
-import {addPolkadotAsset} from "../../services/asset";
-import {setConfiguration} from "../../services/configuration";
+// import {getAddress, getBalance, getPublicKey} from "../../services/account";
+// import {getLatestBlock} from "../../services/block";
+// import {addPolkadotAsset} from "../../services/asset";
+// import {setConfiguration} from "../../services/configuration";
 import {getPolkadotApi} from "../../services/polkadot";
 import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
+import {web3Enable, web3Accounts, web3ListRpcProviders, web3FromAddress} from "@polkadot/extension-dapp";
+import {InjectedExtension} from "@polkadot/extension-inject/types"
+import {injectMetamaskPolkadotSnapProvider} from "@nodefactory/metamask-polkadot-adapter/";
+import {MetamaskSnapApi} from "@nodefactory/metamask-polkadot-adapter/src/types";
+
+export interface IPolkadotAdapter extends InjectedExtension {
+    getMetamaskSnapApi: () => Promise<MetamaskSnapApi>;
+    enableSnap: () => void;
+    pluginOrigin: string;
+    config: {"networkname" : string};
+}
 
 
 export const Dashboard = () => {
@@ -31,17 +42,51 @@ export const Dashboard = () => {
         setNetwork(networkName);
       };
 
+
+    const testFunc = async (): Promise<IPolkadotAdapter | void> => {
+        const allInjected = await web3Enable('my cool dapp');
+        let MetamaskPolkadotSnap: IPolkadotAdapter;
+
+        allInjected.forEach(extension => {
+            console.log(extension.name);
+            if(extension.name==="metamask-polkadot-snap") {
+                console.log("ddaad")
+                MetamaskPolkadotSnap = extension as IPolkadotAdapter;
+                return MetamaskPolkadotSnap;
+            } else console.log( "no polkadot adapter");
+        });
+        // const MetamaskPolkadotSnap = allInjected as unknown as IPolkadotAdapter;
+        // MetamaskPolkadotSnap.getMetamaskSnapApi
+
+        
+        // return allInjected as unknown as IPolkadotAdapter;
+    }
+
+    injectMetamaskPolkadotSnapProvider(
+        "kusama"
+        );
     useEffect(() => {
         (async () => {
+            const allInjected = await web3Enable('my cool dapp');
+            console.log(allInjected);
+            const test = await testFunc();
+            console.log(test);
+            // console.log(allInjected[0].g);
+            // allInjected["metamask-js"].getMetamaskApi().configure()
+            // const allAccounts = await web3Accounts();
+            // console.log(allAccounts);
+            // const injector = await web3FromAddress('EHkbSaapJPXsL1F83jpw6dWcN8Ar8PD1JDyKoTZVKCDF4J7');
+            // console.log(injector);
+            // const allProviders = web3ListRpcProviders('metamask-polkadot-snap');
+            // console.log(allProviders);
             if(state.polkadotSnap.isInstalled) {
-                await setConfiguration({networkName: network});
-                await addPolkadotAsset();
-                setPublicKey(await getPublicKey());
-                setAddress(await getAddress());
-                setBalance(await getBalance());
-                setLatestBlock(await getLatestBlock());
+                // await setConfiguration({networkName: network});
+                // await addPolkadotAsset();
+                // setPublicKey(await getPublicKey());
+                // setAddress(await getAddress());
+                // setBalance(await getBalance());
+                // setLatestBlock(await getLatestBlock());
             }
-            console.log(address);
         })();
     }, [state.polkadotSnap.isInstalled, network]);
 
