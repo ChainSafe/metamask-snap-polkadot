@@ -1,4 +1,4 @@
-import {MetamaskPolkadotRpcRequest} from "@nodefactory/metamask-polkadot-types";
+import {MetamaskPolkadotRpcRequest, PolkadotApi} from "@nodefactory/metamask-polkadot-types";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
 
@@ -15,13 +15,12 @@ export interface MetamaskSnapApi {
 
 declare global {
   interface Window {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     ethereum: {
       isMetaMask: boolean;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       send: (request: SnapRpcMethodRequest | {method: string; params?: any[]}) => Promise<unknown>;
       on: (eventName: unknown, callback: unknown) => unknown;
+      requestIndex: () => Promise<{getPluginApi: (origin: string) => Promise<PolkadotApi>}>;
     };
   }
 }
