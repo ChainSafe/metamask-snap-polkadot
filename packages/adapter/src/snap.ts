@@ -1,8 +1,20 @@
 import {Injected, InjectedAccount, InjectedAccounts} from "@polkadot/extension-inject/types";
-import {Signer as InjectedSigner} from '@polkadot/api/types';
-import {configure, getAccountAddress, isPolkadotSnapInstalled, 
-  addPolkadotAsset, getBalance, getAddress, exportSeed, 
-  getLatestBlock, setConfiguration, getAllTransactions} from "./methods";
+import {Signer as InjectedSigner, SignerResult} from '@polkadot/api/types';
+import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
+import {
+  addPolkadotAsset,
+  configure,
+  exportSeed,
+  getAccountAddress,
+  getAddress,
+  getAllTransactions,
+  getBalance,
+  getLatestBlock,
+  isPolkadotSnapInstalled,
+  setConfiguration,
+  signPayloadJSON,
+  signPayloadRaw
+} from "./methods";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
 
@@ -25,14 +37,22 @@ export class MetamaskPolkadotSnap implements Injected {
   };
 
   public signer: InjectedSigner = {
-    signPayload: async (_payload) => {
-      return {id: 0, signature: ""};
+    signPayload: async (payload: SignerPayloadJSON): Promise<SignerResult> => {
+      const signature = await signPayloadJSON(payload);
+      const id = this.requestCounter;
+      this.requestCounter += 1;
+      return {id, signature};
     },
-    signRaw: async (_raw) => {
-      return {id: 0, signature: ""};
+    signRaw: async (raw: SignerPayloadRaw): Promise<SignerResult> => {
+      const signature = await signPayloadRaw(raw);
+      const id = this.requestCounter;
+      this.requestCounter += 1;
+      return {id, signature};
     },
     update: () => null
   };
+
+  private requestCounter: number;
 
   private readonly config: SnapConfig;
   private readonly pluginOrigin: string;
@@ -40,6 +60,7 @@ export class MetamaskPolkadotSnap implements Injected {
   public constructor(pluginOrigin: string, config: SnapConfig) {
     this.pluginOrigin = pluginOrigin;
     this.config = config || {networkName: "westend"};
+    this.requestCounter = 0;
   }
 
   public enableSnap = async (): Promise<Injected> => {

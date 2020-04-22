@@ -7,16 +7,19 @@ import ApiPromise from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
-import {getApi} from "./polkadot/api";
+import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
 import {polkadotEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange} from "./polkadot/events/balance";
 import {EventCallback, PolkadotApi, PolkadotEvent} from "@nodefactory/metamask-polkadot-types";
+import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 import {sendUnit} from "./rpc/substrate/sendUnit";
 
 declare let wallet: Wallet;
 
-const apiDependentMethods = ["getBlock", "getBalance", "getChainHead", "addKusamaAsset"];
+const apiDependentMethods = [
+  "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw"
+];
 
 wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
   registerOnBalanceChange(wallet, origin);
@@ -53,6 +56,10 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     api = await getApi(wallet);
   }
   switch (requestObject.method) {
+    case "signPayloadJSON":
+      return await signPayloadJSON(wallet, api, requestObject.params.payload);
+    case "signPayloadRaw":
+      return await signPayloadRaw(wallet, api, requestObject.params.payload);
     case 'getPublicKey':
       return await getPublicKey(wallet);
     case 'getAddress':
@@ -69,6 +76,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return balance;
     }
     case 'configure': {
+      resetApi();
       return configure(wallet, requestObject.params.configuration.networkName, requestObject.params.configuration);
     }
     case 'addPolkadotAsset':
