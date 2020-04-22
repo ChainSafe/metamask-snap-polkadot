@@ -1,11 +1,12 @@
-import {PolkadotApi} from "@nodefactory/metamask-polkadot-types";
+import {PolkadotApi, SnapRpcMethodRequest} from "@nodefactory/metamask-polkadot-types";
 
 declare global {
     interface Window {
         ethereum: {
             isMetaMask: boolean;
-            send: (params: any)=> Promise<any>;
-            on: (eventName: any, callback: any) => any;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            send: (request: SnapRpcMethodRequest | {method: string; params?: any[]}) => Promise<unknown>;
+            on: (eventName: unknown, callback: unknown) => unknown;
             requestIndex: () => Promise<{getPluginApi: (origin: string) => Promise<PolkadotApi>}>;
         }
     }
@@ -16,7 +17,6 @@ export function hasMetaMask(): boolean {
         return false
     }
     return window.ethereum.isMetaMask;
-
 }
 
 export const origin = new URL('package.json', 'http://localhost:8081').toString();
