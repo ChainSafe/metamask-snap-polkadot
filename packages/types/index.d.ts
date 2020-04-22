@@ -80,6 +80,22 @@ export type MetamaskPolkadotRpcRequest =
 
 type Method = MetamaskPolkadotRpcRequest["method"];
 
+export interface WalletEnableRequest {
+  method: "wallet_enable";
+  params: object[];
+}
+
+export interface GetPluginsRequest {
+  method: "wallet_getPlugins";
+}
+
+export interface SnapRpcMethodRequest {
+  method: string;
+  params: [MetamaskPolkadotRpcRequest];
+}
+
+export type MetamaskRpcRequest = WalletEnableRequest | GetPluginsRequest | SnapRpcMethodRequest;
+
 export type BlockId = number|string|"latest";
 
 export interface BlockInfo {

@@ -17,7 +17,7 @@ async function sign(
   method: "signPayloadJSON"|"signPayloadRaw",
   payload: SignerPayloadJSON|SignerPayloadRaw
 ): Promise<string> {
-  return await window.ethereum.send({
+  const signature = (await window.ethereum.send({
     method: pluginOrigin,
     params: [{
       method: method,
@@ -25,7 +25,8 @@ async function sign(
         payload
       }
     }]
-  });
+  })) as string;
+  return signature;
 }
 
 export async function signPayloadJSON(payload: SignerPayloadJSON): Promise<string> {

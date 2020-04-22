@@ -1,4 +1,4 @@
-import {MetamaskPolkadotRpcRequest, PolkadotApi} from "@nodefactory/metamask-polkadot-types";
+import {PolkadotApi, SnapRpcMethodRequest} from "@nodefactory/metamask-polkadot-types";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
 
@@ -24,17 +24,3 @@ declare global {
     };
   }
 }
-
-export interface WalletEnableRequest {
-  method: "wallet_enable";
-  params: object[];
-}
-export interface GetPluginsRequest {
-  method: "wallet_getPlugins";
-}
-export interface SnapRpcMethodRequest {
-  method: string;
-  params: [MetamaskPolkadotRpcRequest];
-}
-
-export type MetamaskRpcRequest = WalletEnableRequest | GetPluginsRequest | SnapRpcMethodRequest;

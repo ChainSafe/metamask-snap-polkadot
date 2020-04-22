@@ -1,5 +1,4 @@
-import {PolkadotApi} from "@nodefactory/metamask-polkadot-types";
-import {SnapRpcMethodRequest} from "@nodefactory/metamask-polkadot-adapter/build/types";
+import {PolkadotApi, SnapRpcMethodRequest} from "@nodefactory/metamask-polkadot-types";
 
 declare global {
     interface Window {
@@ -18,7 +17,6 @@ export function hasMetaMask(): boolean {
         return false
     }
     return window.ethereum.isMetaMask;
-
 }
 
 export const origin = new URL('package.json', 'http://localhost:8081').toString();
