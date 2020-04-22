@@ -7,7 +7,7 @@ import ApiPromise from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
-import {getApi} from "./polkadot/api";
+import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
 import {polkadotEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange} from "./polkadot/events/balance";
@@ -68,6 +68,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return balance;
     }
     case 'configure': {
+      resetApi();
       return configure(wallet, requestObject.params.configuration.networkName, requestObject.params.configuration);
     }
     case 'addPolkadotAsset':
