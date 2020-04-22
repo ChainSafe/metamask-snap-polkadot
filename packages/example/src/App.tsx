@@ -5,8 +5,8 @@ import {injectMetamaskPolkadotSnapProvider} from "@nodefactory/metamask-polkadot
 
 function App() {
 
-  // injectMetamaskPolkadotSnapProvider("kusama");
-
+  injectMetamaskPolkadotSnapProvider("kusama");
+  
   return (
       <MetaMaskContextProvider>
         <Dashboard/>
