@@ -6,7 +6,6 @@ import {getConfiguration} from "../configuration";
 let api: ApiPromise;
 let provider: WsProvider;
 let isConnecting: boolean;
-let rpcUrl: string;
 
 /**
  * Initialize substrate api and awaits for it to be ready
@@ -25,9 +24,8 @@ async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
 export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
   const config = getConfiguration(wallet);
   // api not initialized or configuration changed
-  if (!api || rpcUrl != config.wsRpcUrl) {
+  if (!api) {
     // first api initialization
-    rpcUrl = config.wsRpcUrl;
     api = await initApi(config.wsRpcUrl);
     isConnecting = false;
   } else {
