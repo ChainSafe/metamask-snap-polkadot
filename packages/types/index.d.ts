@@ -64,6 +64,14 @@ export interface SignPayloadRawRequest {
   };
 }
 
+export interface SendUnitRequest {
+  method: "sendUnit";
+  params: {
+    amount: string|number;
+    to: string;
+  };
+}
+
 export type MetamaskPolkadotRpcRequest =
     GetPublicKeyRequest
     | GetAddressRequest
@@ -76,7 +84,8 @@ export type MetamaskPolkadotRpcRequest =
     | RemovePolkadotAssetRequest
     | GetChainHeadRequest
     | SignPayloadJSONRequest
-    | SignPayloadRawRequest;
+    | SignPayloadRawRequest
+    | SendUnitRequest;
 
 type Method = MetamaskPolkadotRpcRequest["method"];
 
