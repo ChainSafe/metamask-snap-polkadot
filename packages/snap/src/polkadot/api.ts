@@ -22,10 +22,9 @@ async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
 }
 
 export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
-  const config = getConfiguration(wallet);
-  // api not initialized or configuration changed
   if (!api) {
-    // first api initialization
+    // api not initialized or configuration changed
+    const config = getConfiguration(wallet);
     api = await initApi(config.wsRpcUrl);
     isConnecting = false;
   } else {

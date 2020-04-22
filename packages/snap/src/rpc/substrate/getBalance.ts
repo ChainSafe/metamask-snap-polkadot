@@ -1,7 +1,6 @@
 import {Wallet} from "../../interfaces";
 import ApiPromise from "@polkadot/api/promise";
 import {getKeyPair} from "../../polkadot/account";
-import {encodeAddress} from "@polkadot/keyring";
 
 /**
  * Returns balance as BN
