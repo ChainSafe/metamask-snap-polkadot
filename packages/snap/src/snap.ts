@@ -10,7 +10,7 @@ import {removeAsset, updateAsset} from "./asset";
 import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
 import {polkadotEventEmitter} from "./polkadot/events";
-import {registerOnBalanceChange} from "./polkadot/events/balance";
+import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
 import {EventCallback, PolkadotApi, PolkadotEvent} from "@nodefactory/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 import {sendUnit} from "./rpc/substrate/sendUnit";
@@ -22,23 +22,44 @@ const apiDependentMethods = [
 ];
 
 wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
-  registerOnBalanceChange(wallet, origin);
   return {
     on: (eventName: PolkadotEvent, callback: EventCallback): void => {
       switch (eventName) {
         case "onBalanceChange":
           polkadotEventEmitter.addListener("onBalanceChange", origin, callback);
+          // first call or first call after unregistering
+          if (polkadotEventEmitter.numberOfListeners("onBalanceChange", origin) === 1) {
+            registerOnBalanceChange(wallet, origin);
+          }
           return;
+        case "onTransactionStatus":
+          break;
         default:
           throw new Error(`Unsupported event: ${eventName}`);
       }
     },
     removeAllListeners: (eventName: PolkadotEvent): boolean => {
       polkadotEventEmitter.removeAllListeners(eventName, origin);
+      switch (eventName) {
+        case "onBalanceChange":
+          removeOnBalanceChange(origin);
+          break;
+        case "onTransactionStatus":
+          break;
+      }
       return true;
     },
     removeListener: (eventName: PolkadotEvent, callback: EventCallback): boolean => {
       polkadotEventEmitter.removeListener(eventName, origin, callback);
+      switch (eventName) {
+        case "onBalanceChange":
+          if (polkadotEventEmitter.numberOfListeners(eventName, origin) === 0) {
+            removeOnBalanceChange(origin);
+          }
+          break;
+        case "onTransactionStatus":
+          break;
+      }
       return true;
     }
   };
