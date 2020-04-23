@@ -10,10 +10,7 @@ import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
 import {getPublicKey} from "../../services/account";
 import {getPolkadotApi} from "../../services/polkadot";
 import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
-import {web3Enable} from "@polkadot/extension-dapp";
-import {InjectedExtension} from "@polkadot/extension-inject/types"
-import {InjectedMetamaskExtension} from "@nodefactory/metamask-polkadot-adapter/src/types";
-import {pluginOrigin} from "../../services/metamask";
+import {pluginOrigin, getInjectedMetamaskExtension} from "../../services/metamask";
 
 export const Dashboard = () => {
 
@@ -31,25 +28,20 @@ export const Dashboard = () => {
         setNetwork(networkName);
       };
 
-    const getMetamask = (item: InjectedExtension): boolean => {
-        if(item.name==="metamask-polkadot-snap") return true;
-        else return false
-    }
-
     useEffect(() => {
         (async () => {
             
             if(state.polkadotSnap.isInstalled) {
-                const allInjected = await web3Enable('my cool dapp');
-                const provider = allInjected.find(getMetamask) as unknown as InjectedMetamaskExtension;
-                const metamaskSnapApi = await provider.getMetamaskSnapApi();
-
-                setAddress(await metamaskSnapApi.getAddress(pluginOrigin));
-                await metamaskSnapApi.setConfiguration(pluginOrigin, {networkName: network});
-                await metamaskSnapApi.addPolkadotAsset(pluginOrigin);
-                setPublicKey(await getPublicKey());
-                setBalance(await metamaskSnapApi.getBalance(pluginOrigin));
-                setLatestBlock(await metamaskSnapApi.getLatestBlock(pluginOrigin));
+                const provider = await getInjectedMetamaskExtension();
+                if(provider !== null) {
+                    const metamaskSnapApi = await provider.getMetamaskSnapApi();
+                    setAddress(await metamaskSnapApi.getAddress(pluginOrigin));
+                    await metamaskSnapApi.setConfiguration(pluginOrigin, {networkName: network});
+                    await metamaskSnapApi.addPolkadotAsset(pluginOrigin);
+                    setPublicKey(await getPublicKey());
+                    setBalance(await metamaskSnapApi.getBalance(pluginOrigin));
+                    setLatestBlock(await metamaskSnapApi.getLatestBlock(pluginOrigin));
+                }
             }
         })();
     }, [state.polkadotSnap.isInstalled, network]);

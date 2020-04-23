@@ -1,7 +1,7 @@
 import {MetamaskPolkadotRpcRequest} from "@nodefactory/metamask-polkadot-types";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
-import {InjectedExtension} from "@polkadot/extension-inject/types"
+import {InjectedExtension} from "@polkadot/extension-inject/types";
 
 export interface MetamaskSnapApi {
   getAccountAddress(pluginOrigin: string): Promise<string>;
@@ -15,7 +15,7 @@ export interface MetamaskSnapApi {
 }
 
 export interface InjectedMetamaskExtension extends InjectedExtension {
-  getMetamaskSnapApi:() => Promise<MetamaskSnapApi>;
+  getMetamaskSnapApi: () => Promise<MetamaskSnapApi>;
 }
 
 declare global {

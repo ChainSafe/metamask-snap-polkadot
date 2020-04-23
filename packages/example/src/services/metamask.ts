@@ -1,4 +1,6 @@
 import {PolkadotApi} from "@nodefactory/metamask-polkadot-types";
+import {web3Enable} from "@polkadot/extension-dapp";
+import {InjectedMetamaskExtension} from "@nodefactory/metamask-polkadot-adapter/src/types";
 
 declare global {
     interface Window {
@@ -48,4 +50,11 @@ export async function isPolkadotSnapInstalled(): Promise<boolean> {
         console.log(e);
         return false;
     }
+}
+
+export async function getInjectedMetamaskExtension(): Promise<InjectedMetamaskExtension | null> {
+    const allInjected = await web3Enable('my cool dapp');
+    const provider = allInjected.find(item => item.name === "metamask-polkadot-snap") as unknown as InjectedMetamaskExtension;
+    if(provider) return provider;
+    else return null;
 }
