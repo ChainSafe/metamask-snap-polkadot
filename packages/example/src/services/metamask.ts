@@ -32,6 +32,7 @@ export async function installPolkadotSnap(): Promise<boolean> {
                 [pluginOrigin]: {}
             }]
         });
+        await web3Enable('my cool dapp');
         console.log("Snap installed!!");
         return true;
     } catch (e) {
