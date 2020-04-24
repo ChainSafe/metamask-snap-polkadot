@@ -23,44 +23,22 @@ const apiDependentMethods = [
 
 wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
   return {
-    on: (eventName: PolkadotEvent, callback: EventCallback): void => {
-      switch (eventName) {
-        case "onBalanceChange":
-          polkadotEventEmitter.addListener("onBalanceChange", origin, callback);
-          // first call or first call after unregistering
-          if (polkadotEventEmitter.numberOfListeners("onBalanceChange", origin) === 1) {
-            registerOnBalanceChange(wallet, origin);
-          }
-          return;
-        case "onTransactionStatus":
-          break;
-        default:
-          throw new Error(`Unsupported event: ${eventName}`);
+    subscribeToBalance: (callback: EventCallback): void => {
+      polkadotEventEmitter.addListener("onBalanceChange", origin, callback);
+      // first call or first call after unregistering
+      if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin) === 1) {
+        registerOnBalanceChange(wallet, origin);
       }
     },
-    removeAllListeners: (eventName: PolkadotEvent): boolean => {
-      polkadotEventEmitter.removeAllListeners(eventName, origin);
-      switch (eventName) {
-        case "onBalanceChange":
-          removeOnBalanceChange(origin);
-          break;
-        case "onTransactionStatus":
-          break;
-      }
-      return true;
+    unsubscribeAllFromBalance: () => {
+      polkadotEventEmitter.removeAllListeners("onBalanceChange", origin);
+      removeOnBalanceChange(origin);
     },
-    removeListener: (eventName: PolkadotEvent, callback: EventCallback): boolean => {
-      polkadotEventEmitter.removeListener(eventName, origin, callback);
-      switch (eventName) {
-        case "onBalanceChange":
-          if (polkadotEventEmitter.numberOfListeners(eventName, origin) === 0) {
-            removeOnBalanceChange(origin);
-          }
-          break;
-        case "onTransactionStatus":
-          break;
+    unsubscribeFromBalance: (callback: EventCallback): void => {
+      polkadotEventEmitter.removeListener("onBalanceChange", origin, callback);
+      if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin) === 0) {
+        removeOnBalanceChange(origin);
       }
-      return true;
     }
   };
 });

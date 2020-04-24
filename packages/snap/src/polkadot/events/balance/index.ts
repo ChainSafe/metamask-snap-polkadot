@@ -17,6 +17,11 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
       [origin]: unsubscribeCallback
     };
   } else {
+    // clean up if already subscribed
+    if (unsubscribe[origin]) {
+      unsubscribe[origin]();
+    }
+    // register new unsubscribe callback
     unsubscribe[origin] = unsubscribeCallback;
   }
 }

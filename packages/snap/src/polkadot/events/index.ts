@@ -4,7 +4,7 @@ export interface EventEmitter<K = keyof PolkadotEvent>  {
   addListener(event: K, origin: string, listener: EventCallback): this;
   removeListener(event: K, origin: string, listener: EventCallback): this;
   removeAllListeners(event: K, origin: string): this;
-  numberOfListeners(event: K, origin: string): number;
+  getListenersCount(event: K, origin: string): number;
   emit(event: K, origin: string, ...args: unknown[]): boolean;
 }
 
@@ -54,7 +54,7 @@ class EventEmitterPolkadotImplementation implements EventEmitter<PolkadotEvent> 
     return this;
   }
 
-  numberOfListeners(event: PolkadotEvent, origin: string): number {
+  getListenersCount(event: PolkadotEvent, origin: string): number {
     if (this.hasAttachedListeners(event, origin)) {
       return this.listeners[origin][event].length;
     }

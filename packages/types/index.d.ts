@@ -134,7 +134,10 @@ export type EventCallback = (...args: unknown[]) => void;
 export type PolkadotEvent = "onBalanceChange"|"onTransactionStatus";
 
 export interface PolkadotApi {
-  on(eventName: PolkadotEvent, callback: EventCallback): void;
-  removeListener(eventName: PolkadotEvent, callback: EventCallback): boolean;
-  removeAllListeners(eventName: PolkadotEvent): boolean;
+  // on(eventName: PolkadotEvent, callback: EventCallback): void;
+  // removeListener(eventName: PolkadotEvent, callback: EventCallback): boolean;
+  // removeAllListeners(eventName: PolkadotEvent): boolean;
+  subscribeToBalance(callback: EventCallback): void;
+  unsubscribeFromBalance(callback: EventCallback): void;
+  unsubscribeAllFromBalance(): void;
 }
