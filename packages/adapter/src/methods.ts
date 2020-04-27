@@ -1,6 +1,8 @@
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskPolkadotRpcRequest} from "@nodefactory/metamask-polkadot-types";
+import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import {pluginOrigin} from "example/src/services/metamask";
 
 export async function getAccountAddress(pluginOrigin: string): Promise<string> {
   return await window.ethereum.send({
@@ -9,6 +11,30 @@ export async function getAccountAddress(pluginOrigin: string): Promise<string> {
       method: 'getAddress'
     }]
   }) as string;
+}
+
+async function sign(
+  method: "signPayloadJSON"|"signPayloadRaw",
+  payload: SignerPayloadJSON|SignerPayloadRaw
+): Promise<string> {
+  const signature = (await window.ethereum.send({
+    method: pluginOrigin,
+    params: [{
+      method: method,
+      params: {
+        payload
+      }
+    }]
+  })) as string;
+  return signature;
+}
+
+export async function signPayloadJSON(payload: SignerPayloadJSON): Promise<string> {
+  return await sign("signPayloadJSON", payload);
+}
+
+export async function signPayloadRaw(payload: SignerPayloadRaw): Promise<string> {
+  return await sign("signPayloadRaw", payload);
 }
 
 export function hasMetaMask(): boolean {

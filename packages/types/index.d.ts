@@ -1,3 +1,4 @@
+import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 
 export interface GetPublicKeyRequest{
   method: "getPublicKey";
@@ -49,6 +50,28 @@ export interface GetChainHeadRequest {
   method: "getChainHead";
 }
 
+export interface SignPayloadJSONRequest {
+  method: "signPayloadJSON";
+  params: {
+    payload: SignerPayloadJSON;
+  };
+}
+
+export interface SignPayloadRawRequest {
+  method: "signPayloadRaw";
+  params: {
+    payload: SignerPayloadRaw;
+  };
+}
+
+export interface SendUnitRequest {
+  method: "sendUnit";
+  params: {
+    amount: string|number;
+    to: string;
+  };
+}
+
 export type MetamaskPolkadotRpcRequest =
     GetPublicKeyRequest
     | GetAddressRequest
@@ -59,9 +82,28 @@ export type MetamaskPolkadotRpcRequest =
     | ConfigureSnapRequest
     | AddPolkadotAssetRequest
     | RemovePolkadotAssetRequest
-    | GetChainHeadRequest;
+    | GetChainHeadRequest
+    | SignPayloadJSONRequest
+    | SignPayloadRawRequest
+    | SendUnitRequest;
 
 type Method = MetamaskPolkadotRpcRequest["method"];
+
+export interface WalletEnableRequest {
+  method: "wallet_enable";
+  params: object[];
+}
+
+export interface GetPluginsRequest {
+  method: "wallet_getPlugins";
+}
+
+export interface SnapRpcMethodRequest {
+  method: string;
+  params: [MetamaskPolkadotRpcRequest];
+}
+
+export type MetamaskRpcRequest = WalletEnableRequest | GetPluginsRequest | SnapRpcMethodRequest;
 
 export type BlockId = number|string|"latest";
 

@@ -21,9 +21,18 @@ async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
   return api;
 }
 
+export const resetApi = (): void => {
+  if (api && provider) {
+    api.disconnect();
+    provider.disconnect();
+    api = null;
+    provider = null;
+  }
+};
+
 export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
   if (!api) {
-    // first api initialization
+    // api not initialized or configuration changed
     const config = getConfiguration(wallet);
     api = await initApi(config.wsRpcUrl);
     isConnecting = false;
