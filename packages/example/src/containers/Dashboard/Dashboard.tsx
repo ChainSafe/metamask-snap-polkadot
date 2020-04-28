@@ -7,13 +7,10 @@ import {Account} from "../../components/Account/Account";
 import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
 import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
-import {getAddress, getBalance, getPublicKey} from "../../services/account";
-import {getLatestBlock} from "../../services/block";
-import {addPolkadotAsset} from "../../services/asset";
-import {setConfiguration} from "../../services/configuration";
+import {getPublicKey} from "../../services/account";
 import {getPolkadotApi} from "../../services/polkadot";
 import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
-
+import {pluginOrigin, getInjectedMetamaskExtension} from "../../services/metamask";
 
 export const Dashboard = () => {
 
@@ -33,13 +30,18 @@ export const Dashboard = () => {
 
     useEffect(() => {
         (async () => {
+            
             if(state.polkadotSnap.isInstalled) {
-                await setConfiguration({networkName: network});
-                await addPolkadotAsset();
-                setPublicKey(await getPublicKey());
-                setAddress(await getAddress());
-                setBalance(await getBalance());
-                setLatestBlock(await getLatestBlock());
+                const provider = await getInjectedMetamaskExtension();
+                if(provider !== null) {
+                    const metamaskSnapApi = await provider.getMetamaskSnapApi();
+                    setAddress(await metamaskSnapApi.getAddress(pluginOrigin));
+                    await metamaskSnapApi.setConfiguration(pluginOrigin, {networkName: network});
+                    await metamaskSnapApi.addPolkadotAsset(pluginOrigin);
+                    setPublicKey(await getPublicKey());
+                    setBalance(await metamaskSnapApi.getBalance(pluginOrigin));
+                    setLatestBlock(await metamaskSnapApi.getLatestBlock(pluginOrigin));
+                }
             }
         })();
     }, [state.polkadotSnap.isInstalled, network]);

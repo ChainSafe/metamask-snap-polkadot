@@ -1,3 +1,5 @@
+import {web3Enable} from "@polkadot/extension-dapp";
+import {InjectedMetamaskExtension} from "@nodefactory/metamask-polkadot-adapter/src/types";
 import {PolkadotApi, SnapRpcMethodRequest} from "@nodefactory/metamask-polkadot-types";
 
 declare global {
@@ -24,12 +26,7 @@ export const pluginOrigin = `wallet_plugin_${origin}`;
 
 export async function installPolkadotSnap(): Promise<boolean> {
     try {
-        await window.ethereum.send({
-            method: 'wallet_enable',
-            params: [{
-                [pluginOrigin]: {}
-            }]
-        });
+        await web3Enable('my cool dapp');
         console.log("Snap installed!!");
         return true;
     } catch (e) {
@@ -48,4 +45,11 @@ export async function isPolkadotSnapInstalled(): Promise<boolean> {
         console.log(e);
         return false;
     }
+}
+
+export async function getInjectedMetamaskExtension(): Promise<InjectedMetamaskExtension | null> {
+    const allInjected = await web3Enable('my cool dapp');
+    const provider = allInjected.find(item => item.name === "metamask-polkadot-snap") as unknown as InjectedMetamaskExtension;
+    if(provider) return provider;
+    else return null;
 }
