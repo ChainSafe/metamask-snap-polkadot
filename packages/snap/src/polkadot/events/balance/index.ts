@@ -27,6 +27,8 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
 }
 
 export function removeOnBalanceChange(origin: string): void {
-  unsubscribe[origin]();
-  delete unsubscribe[origin];
+  if (unsubscribe && unsubscribe[origin]) {
+    unsubscribe[origin]();
+    delete unsubscribe[origin];
+  }
 }
