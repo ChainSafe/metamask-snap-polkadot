@@ -136,10 +136,9 @@ export type Origin = string;
 export type HexHash = string;
 
 export interface PolkadotApi {
+  onTxFinalized(callback: EventCallback, hash: HexHash): void;
+  onTxInBlock(callback: EventCallback, hash: HexHash): void;
   subscribeToBalance(callback: EventCallback): void;
   unsubscribeFromBalance(callback: EventCallback): void;
   unsubscribeAllFromBalance(): void;
-
-  onTxFinalized(callback: EventCallback, hash: HexHash): void;
-  onTxInBlock(callback: EventCallback, hash: HexHash): void;
 }

@@ -26,7 +26,7 @@ wallet.registerApiRequestHandler(async function (origin: string): Promise<Polkad
     onTxFinalized: (callback: EventCallback, hash: HexHash): void => {
       txEventEmitter.addListener("finalized", hash, callback);
     },
-    onTxInBlock(callback: EventCallback, hash: string): void {
+    onTxInBlock: (callback: EventCallback, hash: HexHash): void => {
       txEventEmitter.addListener("inBlock", hash, callback);
     },
     subscribeToBalance: (callback: EventCallback): void => {

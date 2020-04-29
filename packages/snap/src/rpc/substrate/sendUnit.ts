@@ -6,8 +6,8 @@ import {txEventEmitter} from "../../polkadot/events";
 
 export async function sendUnit(wallet: Wallet, api: ApiPromise, amount: string|number, to: string): Promise<Hash> {
   const keypair = await getKeyPair(wallet);
-  const submittable = api.tx.balances.transfer(to, amount).sign(keypair, {});
-  submittable.send(({ status }) => {
+  const signedTx = api.tx.balances.transfer(to, amount).sign(keypair, {});
+  signedTx.send(({ status }) => {
     const hexHash = status.hash.toHex();
     if (status.isInBlock) {
       txEventEmitter.emit("inBlock", hexHash, {});
@@ -17,5 +17,5 @@ export async function sendUnit(wallet: Wallet, api: ApiPromise, amount: string|n
       txEventEmitter.removeAllListeners("finalized", hexHash);
     }
   });
-  return submittable.hash;
+  return signedTx.hash;
 }

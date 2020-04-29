@@ -10,7 +10,7 @@ export interface EventEmitter<K = keyof string, T = keyof string>  {
 }
 
 export type PolkadotEvent = "onBalanceChange" | "onTransactionStatus";
-export type TransactionEventStatus = "finalized" | "inBlock";
+export type TxEvent = "finalized" | "inBlock";
 
 export const polkadotEventEmitter: EventEmitter<PolkadotEvent, Origin> = new EventEmitterImplementation();
-export const txEventEmitter: EventEmitter<TransactionEventStatus, HexHash> = new EventEmitterImplementation();
+export const txEventEmitter: EventEmitter<TxEvent, HexHash> = new EventEmitterImplementation();
