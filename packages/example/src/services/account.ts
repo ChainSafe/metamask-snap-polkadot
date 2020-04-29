@@ -2,12 +2,12 @@ import {pluginOrigin} from "./metamask";
 
 async function sendSnapMethod(method: 'getBalance' | 'getAddress' | 'getPublicKey' | 'exportSeed'): Promise<string|null> {
     try {
-        return await window.ethereum.send({
+        return (await window.ethereum.send({
             method: pluginOrigin,
             params: [{
                 method: method
             }]
-        });
+        })) as string;
     } catch (e) {
         console.log("Keys not generated", e);
     }
