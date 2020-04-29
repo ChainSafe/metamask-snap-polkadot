@@ -4,8 +4,9 @@ import ApiPromise from "@polkadot/api/promise";
 import sinon from "sinon";
 import {registerOnBalanceChange, removeOnBalanceChange} from "../../../../../src/polkadot/events/balance";
 import * as api from "../../../../../src/polkadot/api";
-import {WalletMock} from "../../../crypto/wallet.mock.test";
+import {WalletMock} from "../../../wallet.mock.test";
 import { MetamaskState } from "../../../../../src/interfaces";
+import {testAddress, testAppKey} from "../../../rpc/keyPairTestConstants";
 
 chai.use(sinonChai);
 
@@ -21,23 +22,7 @@ describe('Test balance subscription', function() {
 
   it('should call unsubscribe function for provided origin', async function () {
     // wallet stub
-    walletStub.getPluginState.returns({
-      polkadot: {
-        account: {
-          keyring: {
-            address: "5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7",
-            // eslint-disable-next-line max-len
-            encoded: "0x3053020101300506032b6570042204206162613264643161313265656166646133666461363261613664666132316361cf043e13d9228d8a931ce4cc58efbd1ad6c5e2f1932c3174eb150dfaf9165b73a123032100cf043e13d9228d8a931ce4cc58efbd1ad6c5e2f1932c3174eb150dfaf9165b73",
-            encoding: {
-              content: ["pkcs8", "ed25519"],
-              type: "none",
-              version: "2"
-            },
-            meta: {}
-          }
-        }
-      }
-    } as MetamaskState);
+    walletStub.getAppKey.returns(testAppKey);
     // unsubscribe stub
     const unsubscribeStub = sinon.stub();
     // api stub
@@ -48,7 +33,7 @@ describe('Test balance subscription', function() {
     // call tested function
     await registerOnBalanceChange(walletStub, testOrigin);
     expect(apiStub.query.system.account).to.be.calledOnceWith(
-      "5Gk92fkWPUg6KNHSfP93UcPFhwGurM9RKAKU62Dg6upaCfH7", sinon.match.any
+      testAddress, sinon.match.any
     );
     await removeOnBalanceChange(testOrigin);
     expect(unsubscribeStub).to.have.been.calledOnce;
