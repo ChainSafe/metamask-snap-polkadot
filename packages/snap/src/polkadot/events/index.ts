@@ -1,68 +1,13 @@
-import {EventCallback, PolkadotEvent} from "@nodefactory/metamask-polkadot-types";
+import {EventCallback, Hash, Origin, PolkadotEvent, TransactionEventStatus} from "@nodefactory/metamask-polkadot-types";
+import {EventEmitterImplementation} from "./emitter";
 
-export interface EventEmitter<K = keyof PolkadotEvent>  {
-  addListener(event: K, origin: string, listener: EventCallback): this;
-  removeListener(event: K, origin: string, listener: EventCallback): this;
-  removeAllListeners(event: K, origin: string): this;
-  getListenersCount(event: K, origin: string): number;
-  emit(event: K, origin: string, ...args: unknown[]): boolean;
+export interface EventEmitter<K = keyof string, T = keyof string>  {
+  addListener(event: K, identifier: T, listener: EventCallback): this;
+  removeListener(event: K, identifier: T, listener: EventCallback): this;
+  removeAllListeners(event: K, identifier: T): this;
+  getListenersCount(event: K, identifier: T): number;
+  emit(event: K, identifier: T, ...args: unknown[]): boolean;
 }
 
-class EventEmitterPolkadotImplementation implements EventEmitter<PolkadotEvent> {
-
-  private listeners: Record<string, Record<string, EventCallback[]>>;
-
-  addListener(event: PolkadotEvent, origin: string, listener: (...args: unknown[]) => void): this {
-    // create listeners structure if first call
-    if (!this.listeners) {
-      this.listeners = {
-        [origin]: {
-          [event]: []
-        }
-      };
-    }
-    // initialize slot for origin if it doesn't exist
-    if (!this.listeners[origin]) {
-      this.listeners[origin] = {
-        [event]: []
-      };
-    }
-    // add listener
-    this.listeners[origin][event].push(listener);
-    return this;
-  }
-
-  emit(event: PolkadotEvent, origin: string, ...args: unknown[]): boolean {
-    if (this.hasAttachedListeners(event, origin)) {
-      this.listeners[origin][event].forEach(callback => callback(args));
-      return this.listeners[origin][event].length != 0;
-    }
-    return false;
-  }
-
-  removeListener(event: PolkadotEvent, origin: string, listener: (...args: unknown[]) => void): this {
-    if (this.hasAttachedListeners(event, origin)) {
-      this.listeners[origin][event] = this.listeners[origin][event].filter(l => l != listener);
-    }
-    return this;
-  }
-
-  removeAllListeners(event: PolkadotEvent, origin: string): this {
-    if (this.hasAttachedListeners(event, origin)) {
-      this.listeners[origin][event] = [];
-    }
-    return this;
-  }
-
-  getListenersCount(event: PolkadotEvent, origin: string): number {
-    if (this.hasAttachedListeners(event, origin)) {
-      return this.listeners[origin][event].length;
-    }
-    return 0;
-  }
-
-  private hasAttachedListeners = (event: PolkadotEvent, origin: string): boolean =>
-    !!(this.listeners && this.listeners[origin] && this.listeners[origin][event]);
-}
-
-export const polkadotEventEmitter: EventEmitter<PolkadotEvent> = new EventEmitterPolkadotImplementation();
+export const polkadotEventEmitter: EventEmitter<PolkadotEvent, Origin> = new EventEmitterImplementation();
+export const txEventEmitter: EventEmitter<TransactionEventStatus, Hash> = new EventEmitterImplementation();
