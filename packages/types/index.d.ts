@@ -131,10 +131,6 @@ export interface SnapConfig {
 
 export type EventCallback = (...args: unknown[]) => void;
 
-export type PolkadotEvent = "onBalanceChange"|"onTransactionStatus";
-
-export type TransactionEventStatus = "finalized" | "inBlock";
-
 export type Origin = string;
 
 export type HexHash = string;
