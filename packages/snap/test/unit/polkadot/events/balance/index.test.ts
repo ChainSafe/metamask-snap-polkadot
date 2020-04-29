@@ -5,7 +5,6 @@ import sinon from "sinon";
 import {registerOnBalanceChange, removeOnBalanceChange} from "../../../../../src/polkadot/events/balance";
 import * as api from "../../../../../src/polkadot/api";
 import {WalletMock} from "../../../wallet.mock.test";
-import { MetamaskState } from "../../../../../src/interfaces";
 import {testAddress, testAppKey} from "../../../rpc/keyPairTestConstants";
 
 chai.use(sinonChai);

@@ -9,9 +9,9 @@ import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
 import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
-import {polkadotEventEmitter} from "./polkadot/events";
+import {polkadotEventEmitter, txEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
-import {EventCallback, PolkadotApi} from "@nodefactory/metamask-polkadot-types";
+import {EventCallback, HexHash, PolkadotApi} from "@nodefactory/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 import {sendUnit} from "./rpc/substrate/sendUnit";
 
@@ -23,6 +23,12 @@ const apiDependentMethods = [
 
 wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
   return {
+    onTxFinalized: (callback: EventCallback, hash: HexHash): void => {
+      txEventEmitter.addListener("finalized", hash, callback);
+    },
+    onTxInBlock(callback: EventCallback, hash: string): void {
+      txEventEmitter.addListener("inBlock", hash, callback);
+    },
     subscribeToBalance: (callback: EventCallback): void => {
       polkadotEventEmitter.addListener("onBalanceChange", origin, callback);
       // first call or first call after unregistering

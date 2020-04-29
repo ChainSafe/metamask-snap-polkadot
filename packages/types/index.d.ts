@@ -137,10 +137,13 @@ export type TransactionEventStatus = "finalized" | "inBlock";
 
 export type Origin = string;
 
-export type Hash = string;
+export type HexHash = string;
 
 export interface PolkadotApi {
   subscribeToBalance(callback: EventCallback): void;
   unsubscribeFromBalance(callback: EventCallback): void;
   unsubscribeAllFromBalance(): void;
+
+  onTxFinalized(callback: EventCallback, hash: HexHash): void;
+  onTxInBlock(callback: EventCallback, hash: HexHash): void;
 }
