@@ -13,7 +13,8 @@ import {
   isPolkadotSnapInstalled,
   setConfiguration,
   signPayloadJSON,
-  signPayloadRaw
+  signPayloadRaw,
+  sendUnit
 } from "./methods";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
@@ -87,7 +88,8 @@ export class MetamaskPolkadotSnap implements Injected {
       getAllTransactions,
       getBalance,
       getLatestBlock,
-      setConfiguration
+      setConfiguration,
+      sendUnit
     };
   };
 }

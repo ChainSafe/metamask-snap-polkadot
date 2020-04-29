@@ -163,3 +163,16 @@ export async function getAllTransactions(pluginOrigin: string, address?: string)
     }]
   });
 }
+
+export async function sendUnit(pluginOrigin: string, amount: string | number, to: string): Promise<unknown> {
+  return await window.ethereum.send({
+    method: pluginOrigin,
+    params: [{
+      method: 'sendUnit',
+      params: {
+        amount, 
+        to
+      }
+    }]
+  });
+}

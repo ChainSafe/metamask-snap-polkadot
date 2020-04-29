@@ -12,6 +12,7 @@ export interface MetamaskSnapApi {
   getLatestBlock(pluginOrigin: string): Promise<BlockInfo>;
   setConfiguration(pluginOrigin: string, configuration: SnapConfig): Promise<void>;
   getAllTransactions(pluginOrigin: string, address?: string): Promise<unknown>;
+  sendUnit(pluginOrigin: string, amount: string | number, to: string): Promise<unknown>
 }
 
 export interface InjectedMetamaskExtension extends InjectedExtension {
