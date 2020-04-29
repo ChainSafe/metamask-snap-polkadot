@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {Button, TextField, Card, CardContent, CardHeader, Grid, Box} from '@material-ui/core/';
-import {pluginOrigin, getInjectedMetamaskExtension} from "../../services/metamask";
-import {u8aToHex} from "@polkadot/util/u8a";
+import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {stringToHex} from "@polkadot/util/string";
 
 export const SignMessage = () => {
@@ -11,23 +10,12 @@ export const SignMessage = () => {
         setTextFieldValue(event.target.value);
       };
 
-    
-
     const onSubmit = async () => {
         if(textFieldValue) {
             const provider = await getInjectedMetamaskExtension();
-            
             if(provider && provider.signer && provider.signer.signRaw) {
 
-                // const metamaskSnapApi = await provider.getMetamaskSnapApi();
-                // const address = await metamaskSnapApi.getAddress(pluginOrigin);
-                // const x = new TextEncoder().encode(textFieldValue);
-                // const y = u8aToHex(x);
-                // console.log(x);
-                // console.log(y);
                 const hexValue = stringToHex(textFieldValue);
-                console.log(hexValue);
-
                 const address = (await provider.accounts.get())[0].address
 
                 const messageSignResponse = await provider.signer.signRaw({
