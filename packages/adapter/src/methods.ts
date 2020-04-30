@@ -34,7 +34,6 @@ export async function signPayloadJSON(payload: SignerPayloadJSON): Promise<strin
 }
 
 export async function signPayloadRaw(payload: SignerPayloadRaw): Promise<string> {
-  console.log(payload);
   return await sign("signPayloadRaw", payload);
 }
 

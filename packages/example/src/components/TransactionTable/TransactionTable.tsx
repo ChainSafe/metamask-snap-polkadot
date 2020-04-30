@@ -32,7 +32,7 @@ export const TransactionTable = () => {
 
     useEffect(()=>{
         (async () => {
-            setTransactions(await getAllTransactions());
+            // setTransactions(await getAllTransactions());
         })();
     }, []);
 

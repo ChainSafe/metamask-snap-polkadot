@@ -15,11 +15,11 @@ export const SignMessage = () => {
             const provider = await getInjectedMetamaskExtension();
             if(provider && provider.signer && provider.signer.signRaw) {
 
-                const hexValue = stringToHex(textFieldValue);
+                const messageAsHex = stringToHex(textFieldValue);
                 const address = (await provider.accounts.get())[0].address
 
                 const messageSignResponse = await provider.signer.signRaw({
-                    data: hexValue,
+                    data: messageAsHex,
                     address: address,
                     type: "bytes"
                 });
