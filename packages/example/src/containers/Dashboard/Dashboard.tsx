@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {Box, Card, CardContent, CardHeader, Container, Grid, Hidden, Typography, Select, MenuItem, InputLabel} from '@material-ui/core/';
 import {Transfer} from "../../components/Transfer/Transfer";
 import {SignMessage} from "../../components/SignMessage/SignMessage";
-import {TransactionTable} from "../../components/TransactionTable/TransactionTable";
+import {Transaction, TransactionTable} from "../../components/TransactionTable/TransactionTable";
 import {Account} from "../../components/Account/Account";
 import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
@@ -20,6 +20,7 @@ export const Dashboard = () => {
     let [address, setAddress] = useState("");
     let [publicKey, setPublicKey] = useState("");
     let [latestBlock, setLatestBlock] = useState<BlockInfo>({hash: "", number: ""});
+    let [transactions, setTransactions] = useState<Transaction[]>([]);
 
     const [network, setNetwork] = useState<"kusama" | "westend">("kusama");
 
@@ -30,7 +31,6 @@ export const Dashboard = () => {
 
     useEffect(() => {
         (async () => {
-            
             if(state.polkadotSnap.isInstalled) {
                 const provider = await getInjectedMetamaskExtension();
                 if(provider !== null) {
@@ -41,6 +41,8 @@ export const Dashboard = () => {
                     setPublicKey(await getPublicKey());
                     setBalance(await metamaskSnapApi.getBalance(pluginOrigin));
                     setLatestBlock(await metamaskSnapApi.getLatestBlock(pluginOrigin));
+                    // @ts-ignore
+                    setTransactions(await metamaskSnapApi.getAllTransactions(pluginOrigin, address))
                 }
             }
         })();
@@ -118,7 +120,7 @@ export const Dashboard = () => {
                             <Card>
                                 <CardHeader title="Account transactions"/>
                                 <CardContent>
-                                    <TransactionTable/>
+                                    <TransactionTable txs={transactions}/>
                                 </CardContent>
                             </Card>
                         </Grid>
