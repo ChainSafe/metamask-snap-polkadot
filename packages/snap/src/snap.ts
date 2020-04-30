@@ -11,7 +11,7 @@ import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
 import {polkadotEventEmitter, txEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
-import {EventCallback, HexHash, PolkadotApi, TxStatus, TxStatusSubscriber} from "@nodefactory/metamask-polkadot-types";
+import {EventCallback, HexHash, PolkadotApi} from "@nodefactory/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 import {sendUnit} from "./rpc/substrate/sendUnit";
 
@@ -30,12 +30,11 @@ wallet.registerApiRequestHandler(async function (origin: string): Promise<Polkad
         registerOnBalanceChange(wallet, origin);
       }
     },
-    subscribeToTxStatus: (hash: HexHash): TxStatusSubscriber => {
-      return {
-        on: (status: TxStatus, callback: EventCallback): void => {
-          txEventEmitter.addListener(status, hash, callback);
-        }
-      };
+    subscribeToTxStatus: (hash: HexHash, onIncluded: EventCallback, onFinalized?: EventCallback): void => {
+      txEventEmitter.addListener("included", hash, onIncluded);
+      if (onFinalized) {
+        txEventEmitter.addListener("finalized", hash, onFinalized);
+      }
     },
     unsubscribeAllFromBalance: () => {
       polkadotEventEmitter.removeAllListeners("onBalanceChange", origin);

@@ -137,13 +137,9 @@ export type HexHash = string;
 
 export type TxStatus = "included" | "finalized";
 
-export interface TxStatusSubscriber {
-  on(status: TxStatus, callback: EventCallback): void;
-}
-
 export interface PolkadotApi {
   subscribeToBalance(callback: EventCallback): void;
   unsubscribeFromBalance(callback: EventCallback): void;
   unsubscribeAllFromBalance(): void;
-  subscribeToTxStatus(hash: HexHash): TxStatusSubscriber;
+  subscribeToTxStatus(hash: HexHash, onIncluded: EventCallback, onFinalized?: EventCallback): void;
 }
