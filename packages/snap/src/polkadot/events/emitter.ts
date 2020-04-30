@@ -20,6 +20,12 @@ export class EventEmitterImplementation<T extends string, K extends string> impl
         [event]: []
       } as Record<T, EventCallback[]>;
     }
+
+    // initialize slot for event if it doesn't exist
+    if (!this.listeners[identifier][event]) {
+      this.listeners[identifier][event] = [];
+    }
+
     // add listener
     this.listeners[identifier][event].push(listener);
     return this;

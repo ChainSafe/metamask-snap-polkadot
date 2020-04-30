@@ -112,8 +112,9 @@
       index = await ethereum.requestIndex();
       pluginApi = await index.getPluginApi(origin);
       console.log(pluginApi);
-      const s = await pluginApi.subscribeToTxStatus("test-hash");
-      s.on("finalized", args => {console.log("status callback")})
+      const s = await pluginApi.subscribeToTxStatus(
+              "test-hash", args => {console.log(`onIncluded: ${args}`)}, args => {console.log(`onFinalized: ${args}`)}
+      );
     }
 
     // spans for status
