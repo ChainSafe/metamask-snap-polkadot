@@ -1,7 +1,7 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
 import {exportSeed} from "../../../src/rpc/exportSeed";
-import {WalletMock} from "../crypto/wallet.mock.test";
+import {WalletMock} from "../wallet.mock.test";
 
 chai.use(sinonChai);
 

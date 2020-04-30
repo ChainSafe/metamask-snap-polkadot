@@ -55,7 +55,7 @@ export const Dashboard = () => {
             (async () => {
                 const api = await getPolkadotApi();
                 if (api) {
-                    api.on("onBalanceChange", handleBalanceChange)
+                    api.subscribeToBalance(handleBalanceChange);
                 }
             })();
         }
@@ -64,7 +64,7 @@ export const Dashboard = () => {
             (async () => {
                 const api = await getPolkadotApi();
                 if (api) {
-                    api.removeAllListeners("onBalanceChange")
+                    api.unsubscribeAllFromBalance();
                 }
             })();
         }

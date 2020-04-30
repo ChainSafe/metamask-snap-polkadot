@@ -1,6 +1,6 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {WalletMock} from "../crypto/wallet.mock.test";
+import {WalletMock} from "../wallet.mock.test";
 import {kusamaConfiguration, westendConfiguration} from "../../../src/configuration/predefined";
 import {configure} from "../../../src/rpc/configure";
 import {EmptyMetamaskState} from "../../../src/interfaces";
@@ -25,7 +25,6 @@ describe('Test rpc handler function: configure', function() {
     expect(result).to.be.deep.eq(kusamaConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
       polkadot: {
-        account: null,
         config: kusamaConfiguration
       }
     });
@@ -42,7 +41,6 @@ describe('Test rpc handler function: configure', function() {
     expect(result).to.be.deep.eq(westendConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
       polkadot: {
-        account: null,
         config: westendConfiguration
       }
     });
@@ -66,7 +64,6 @@ describe('Test rpc handler function: configure', function() {
     expect(result).to.be.deep.eq(customConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
       polkadot: {
-        account: null,
         config: customConfiguration
       }
     });
@@ -85,7 +82,6 @@ describe('Test rpc handler function: configure', function() {
     expect(result).to.be.deep.eq(customConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
       polkadot: {
-        account: null,
         config: customConfiguration
       }
     });

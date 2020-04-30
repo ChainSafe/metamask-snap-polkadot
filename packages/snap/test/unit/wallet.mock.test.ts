@@ -1,4 +1,4 @@
-import {Wallet} from "../../../src/interfaces";
+import {Wallet} from "../../src/interfaces";
 import sinon from "sinon";
 
 export class WalletMock implements Wallet {

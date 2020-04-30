@@ -1,6 +1,6 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {WalletMock} from "../../crypto/wallet.mock.test";
+import {WalletMock} from "../../wallet.mock.test";
 import ApiPromise from "@polkadot/api/promise";
 import sinon from "sinon";
 import {getBlock} from "../../../../src/rpc/substrate/getBlock";
