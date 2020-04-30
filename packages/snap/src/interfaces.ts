@@ -1,4 +1,3 @@
-import {KeyringPair$Json} from '@polkadot/keyring/types';
 import {MetamaskPolkadotRpcRequest, SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
 export type FMethodCallback = (
@@ -6,15 +5,13 @@ export type FMethodCallback = (
   requestObject: MetamaskPolkadotRpcRequest
 ) => Promise<unknown>;
 
-export type AccountState = { keyring: KeyringPair$Json };
 export type MetamaskState = {
   polkadot: {
     config: SnapConfig;
-    account: AccountState;
   };
 };
 
-export const EmptyMetamaskState: () => MetamaskState = () => ({polkadot: {account: null, config: null}});
+export const EmptyMetamaskState: () => MetamaskState = () => ({polkadot: {config: null}});
 
 export interface Wallet {
   registerApiRequestHandler: (origin: unknown) => unknown;
