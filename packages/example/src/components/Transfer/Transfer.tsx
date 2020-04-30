@@ -1,9 +1,22 @@
 import React, {useState} from "react";
 import {Box, Button, Card, CardContent, CardHeader, Grid, TextField} from '@material-ui/core/';
 import {pluginOrigin, getInjectedMetamaskExtension} from "../../services/metamask";
-export const Transfer = () => {
+
+interface ITransferProps {
+    network: string
+}
+
+export const Transfer: React.FC<ITransferProps> = ({network}) => {
     const [recipient, setRecipient] = useState<string>("");
     const [amount, setAmount] = useState<string | number>("");
+
+    const handleCurrency = (network: string): string => {
+        switch(network) {
+            case "kusama": return "KSM";
+            case "westend": return "WST";
+            default: return ""
+        }
+    }
 
     const handleRecipientChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRecipient(event.target.value);
@@ -29,7 +42,7 @@ export const Transfer = () => {
                     <Grid item xs={12}>
                         <TextField onChange={handleRecipientChange} size="medium" fullWidth id="recipient" label="Recipient" variant="outlined" />
                         <Box m="0.5rem"/>
-                        <TextField onChange={handleAmountChange} size="medium" fullWidth id="recipient" label="Amount" variant="outlined" />
+                        <TextField placeholder={handleCurrency(network)} onChange={handleAmountChange} size="medium" fullWidth id="recipient" label="Amount" variant="outlined" />
                     </Grid>
                 </Grid>
                 <Box m="0.5rem"/>

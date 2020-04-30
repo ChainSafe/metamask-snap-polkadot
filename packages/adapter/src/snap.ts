@@ -88,8 +88,8 @@ export class MetamaskPolkadotSnap implements Injected {
       getAllTransactions,
       getBalance,
       getLatestBlock,
-      setConfiguration,
-      sendUnit
+      sendUnit,
+      setConfiguration
     };
   };
 }
