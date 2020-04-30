@@ -56,7 +56,8 @@ export const Dashboard = () => {
         if (state.polkadotSnap.isInstalled) {
             (async () => {
                 const api = await getPolkadotApi();
-                if (api) {
+                if(api) console.log(api.subscribeToBalance)
+                if (api && api.subscribeToBalance) {
                     api.subscribeToBalance(handleBalanceChange);
                 }
             })();
@@ -65,7 +66,8 @@ export const Dashboard = () => {
         return function() {
             (async () => {
                 const api = await getPolkadotApi();
-                if (api) {
+                if(api) console.log(api.unsubscribeAllFromBalance)
+                if (api && api.unsubscribeAllFromBalance) {
                     api.unsubscribeAllFromBalance();
                 }
             })();
