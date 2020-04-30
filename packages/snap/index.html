@@ -111,8 +111,9 @@
     async function test() {
       index = await ethereum.requestIndex();
       pluginApi = await index.getPluginApi(origin);
-
-      pluginApi.on("onBalanceChange", (arg) => {console.log("On callback:" + arg)});
+      console.log(pluginApi);
+      const s = await pluginApi.subscribeToTxStatus("test-hash");
+      s.on("finalized", args => {console.log("status callback")})
     }
 
     // spans for status
@@ -321,9 +322,9 @@
       snapConnectedLabel.innerHTML = TRUE;
       publicKeyLabel.innerHTML = "In progress...";
       addressLabel.innerHTML = "In progress...";
+      await test();
       await fetchPublicKey();
       await fetchAddress();
-      await test();
     }
 
     // polkadot/substrate functions

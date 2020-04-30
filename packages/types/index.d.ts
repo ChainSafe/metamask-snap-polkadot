@@ -135,10 +135,15 @@ export type Origin = string;
 
 export type HexHash = string;
 
+export type TxStatus = "included" | "finalized";
+
+export interface TxStatusSubscriber {
+  on(status: TxStatus, callback: EventCallback): void;
+}
+
 export interface PolkadotApi {
-  onTxFinalized(callback: EventCallback, hash: HexHash): void;
-  onTxInBlock(callback: EventCallback, hash: HexHash): void;
   subscribeToBalance(callback: EventCallback): void;
   unsubscribeFromBalance(callback: EventCallback): void;
   unsubscribeAllFromBalance(): void;
+  subscribeToTxStatus(hash: HexHash): TxStatusSubscriber;
 }

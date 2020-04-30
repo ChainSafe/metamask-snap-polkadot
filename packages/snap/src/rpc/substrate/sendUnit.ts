@@ -10,8 +10,8 @@ export async function sendUnit(wallet: Wallet, api: ApiPromise, amount: string|n
   signedTx.send(({ status }) => {
     const hexHash = status.hash.toHex();
     if (status.isInBlock) {
-      txEventEmitter.emit("inBlock", hexHash, {});
-      txEventEmitter.removeAllListeners("inBlock", hexHash);
+      txEventEmitter.emit("included", hexHash, {});
+      txEventEmitter.removeAllListeners("included", hexHash);
     } else if (status.isFinalized) {
       txEventEmitter.emit("finalized", hexHash, {});
       txEventEmitter.removeAllListeners("finalized", hexHash);
