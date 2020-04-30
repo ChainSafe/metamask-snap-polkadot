@@ -1,4 +1,4 @@
-import {EventCallback, HexHash, Origin, TxStatus} from "@nodefactory/metamask-polkadot-types";
+import {EventCallback, HexHash, Origin} from "@nodefactory/metamask-polkadot-types";
 import {EventEmitterImplementation} from "./emitter";
 
 export interface EventEmitter<K = keyof string, T = keyof string>  {
@@ -10,6 +10,7 @@ export interface EventEmitter<K = keyof string, T = keyof string>  {
 }
 
 export type PolkadotEvent = "onBalanceChange" | "onTransactionStatus";
+export type TxStatus = "included" | "finalized";
 
 export const polkadotEventEmitter: EventEmitter<PolkadotEvent, Origin> = new EventEmitterImplementation();
 export const txEventEmitter: EventEmitter<TxStatus, HexHash> = new EventEmitterImplementation();

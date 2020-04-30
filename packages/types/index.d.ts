@@ -132,10 +132,7 @@ export interface SnapConfig {
 export type EventCallback = (...args: unknown[]) => void;
 
 export type Origin = string;
-
 export type HexHash = string;
-
-export type TxStatus = "included" | "finalized";
 
 export interface PolkadotApi {
   subscribeToBalance(callback: EventCallback): void;
