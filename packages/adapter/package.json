@@ -7,7 +7,7 @@
   "author": "NodeFactory <info@nodefactory.io>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@polkadot/api": "^1.10.1",
+    "@polkadot/api": "^1.11.2",
     "@polkadot/extension-inject": "^0.23.1"
   },
   "scripts": {

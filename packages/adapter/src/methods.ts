@@ -20,7 +20,7 @@ async function sign(
   this: MetamaskPolkadotSnap,
   method: "signPayloadJSON" | "signPayloadRaw",
   payload: SignerPayloadJSON | SignerPayloadRaw
-): Promise<string> {
+): Promise<{signature: string}> {
   return (
     await sendSnapMethod({
       method,
@@ -30,15 +30,15 @@ async function sign(
     } as SignPayloadJSONRequest | SignPayloadRawRequest,
     this.pluginOrigin
     )
-  ) as string;
+  ) as {signature: string};
 }
 
 export async function signPayloadJSON(this: MetamaskPolkadotSnap, payload: SignerPayloadJSON): Promise<string> {
-  return await sign.bind(this)("signPayloadJSON", payload);
+  return (await sign.bind(this)("signPayloadJSON", payload)).signature;
 }
 
 export async function signPayloadRaw(this: MetamaskPolkadotSnap, payload: SignerPayloadRaw): Promise<string> {
-  return await sign.bind(this)("signPayloadRaw", payload);
+  return (await sign.bind(this)("signPayloadRaw", payload)).signature;
 }
 
 export async function addPolkadotAsset(this: MetamaskPolkadotSnap): Promise<void> {

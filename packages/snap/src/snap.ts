@@ -36,7 +36,7 @@ wallet.registerApiRequestHandler(async function (origin: string): Promise<Polkad
         txEventEmitter.addListener("finalized", hash, onFinalized);
       }
     },
-    unsubscribeAllFromBalance: () => {
+    unsubscribeAllFromBalance: (): void => {
       polkadotEventEmitter.removeAllListeners("onBalanceChange", origin);
       removeOnBalanceChange(origin);
     },
