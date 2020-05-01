@@ -1,10 +1,14 @@
 import React, {useState} from "react";
-import {Button, TextField, Card, CardContent, CardHeader, Grid, Box} from '@material-ui/core/';
+import {Box, Button, Card, CardContent, CardHeader, Dialog, Grid, TextField} from '@material-ui/core/';
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {stringToHex} from "@polkadot/util/string";
+import {web3Accounts} from "@polkadot/extension-dapp";
+import {DialogActions, DialogContent, DialogContentText, DialogTitle, Typography} from "@material-ui/core";
 
 export const SignMessage = () => {
-    const [textFieldValue, setTextFieldValue] = useState<string>();
+    const [textFieldValue, setTextFieldValue] = useState<string>("");
+    const [modalBody, setModalBody] = useState<string>("");
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTextFieldValue(event.target.value);
@@ -12,19 +16,20 @@ export const SignMessage = () => {
 
     const onSubmit = async () => {
         if(textFieldValue) {
-            const provider = await getInjectedMetamaskExtension();
-            if(provider && provider.signer && provider.signer.signRaw) {
+            const extension = await getInjectedMetamaskExtension();
+            if(extension && extension.signer && extension.signer.signRaw) {
 
                 const messageAsHex = stringToHex(textFieldValue);
-                const address = (await provider.accounts.get())[0].address
+                const address = (await web3Accounts())[0].address
 
-                const messageSignResponse = await provider.signer.signRaw({
+                const messageSignResponse = await extension.signer.signRaw({
                     data: messageAsHex,
                     address: address,
                     type: "bytes"
                 });
-                console.log("Message signed.");
-                console.log(messageSignResponse);
+                setTextFieldValue("");
+                setModalBody(messageSignResponse.signature);
+                setModalOpen(true);
             }
         }
     }
@@ -49,6 +54,25 @@ export const SignMessage = () => {
                     <Button onClick={onSubmit} color="secondary" variant="contained" size="large">Sign</Button>
                 </Grid>
             </CardContent>
+            <Dialog
+                open={modalOpen}
+                onClose={() => setModalOpen(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Message signature"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        This is signature of your message:<br/>
+                        <Typography style={{ wordWrap: "break-word" }}>{modalBody}</Typography>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setModalOpen(false)} color="primary" autoFocus>
+                        OK
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Card>
     );
 }
