@@ -27,7 +27,6 @@ export enum MetamaskActions {
 }
 
 const reducer: Reducer<MetamaskState, MetamaskDispatch> = (state, action) => {
-
     switch (action.type) {
         case MetamaskActions.SET_INSTALLED_STATUS: {
             return {

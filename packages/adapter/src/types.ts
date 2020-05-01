@@ -1,17 +1,14 @@
-import {PolkadotApi, SnapRpcMethodRequest} from "@nodefactory/metamask-polkadot-types";
-import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
-import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
+import {BlockInfo, PolkadotApi, SnapConfig, SnapRpcMethodRequest} from "@nodefactory/metamask-polkadot-types";
 import {InjectedExtension} from "@polkadot/extension-inject/types";
 
 export interface MetamaskSnapApi {
-  getAccountAddress(pluginOrigin: string): Promise<string>;
-  addPolkadotAsset(pluginOrigin: string): Promise<void>;
-  getBalance(pluginOrigin: string): Promise<string>;
-  getAddress(pluginOrigin: string): Promise<string>;
-  exportSeed(pluginOrigin: string): Promise<string>;
-  getLatestBlock(pluginOrigin: string): Promise<BlockInfo>;
-  setConfiguration(pluginOrigin: string, configuration: SnapConfig): Promise<void>;
-  getAllTransactions(pluginOrigin: string, address?: string): Promise<unknown>;
+  addPolkadotAsset(): Promise<void>;
+  getPublicKey(): Promise<string>;
+  getBalance(): Promise<string>;
+  exportSeed(): Promise<string>;
+  getLatestBlock(): Promise<BlockInfo>;
+  setConfiguration(configuration: SnapConfig): Promise<void>;
+  getAllTransactions(address?: string): Promise<unknown>;
 }
 
 export interface InjectedMetamaskExtension extends InjectedExtension {

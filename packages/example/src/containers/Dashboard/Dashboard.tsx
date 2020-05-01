@@ -1,5 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Box, Card, CardContent, CardHeader, Container, Grid, Hidden, Typography, Select, MenuItem, InputLabel} from '@material-ui/core/';
+import {
+    Box,
+    Card,
+    CardContent,
+    CardHeader,
+    Container,
+    Grid,
+    Hidden,
+    InputLabel,
+    MenuItem,
+    Select,
+    Typography
+} from '@material-ui/core/';
 import {Transfer} from "../../components/Transfer/Transfer";
 import {SignMessage} from "../../components/SignMessage/SignMessage";
 import {Transaction, TransactionTable} from "../../components/TransactionTable/TransactionTable";
@@ -7,10 +19,9 @@ import {Account} from "../../components/Account/Account";
 import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
 import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
-import {getPublicKey} from "../../services/account";
-import {getPolkadotApi} from "../../services/polkadot";
 import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
-import {pluginOrigin, getInjectedMetamaskExtension} from "../../services/metamask";
+import {getInjectedMetamaskExtension} from "../../services/metamask";
+import {web3Accounts} from "@polkadot/extension-dapp";
 
 export const Dashboard = () => {
 
@@ -32,43 +43,43 @@ export const Dashboard = () => {
     useEffect(() => {
         (async () => {
             if(state.polkadotSnap.isInstalled) {
-                const provider = await getInjectedMetamaskExtension();
-                if(provider !== null) {
-                    const metamaskSnapApi = await provider.getMetamaskSnapApi();
-                    setAddress(await metamaskSnapApi.getAddress(pluginOrigin));
-                    await metamaskSnapApi.setConfiguration(pluginOrigin, {networkName: network});
-                    await metamaskSnapApi.addPolkadotAsset(pluginOrigin);
-                    setPublicKey(await getPublicKey());
-                    setBalance(await metamaskSnapApi.getBalance(pluginOrigin));
-                    setLatestBlock(await metamaskSnapApi.getLatestBlock(pluginOrigin));
-                    // @ts-ignore
-                    setTransactions(await metamaskSnapApi.getAllTransactions(pluginOrigin, address))
-                }
+                const extension = await getInjectedMetamaskExtension();
+                if(!extension) return;
+                const metamaskSnapApi = await extension.getMetamaskSnapApi();
+                const account = (await web3Accounts())[0];
+                setAddress(account.address);
+                setPublicKey(await metamaskSnapApi.getPublicKey());
+                setBalance(await metamaskSnapApi.getBalance());
+                setLatestBlock(await metamaskSnapApi.getLatestBlock());
+                // @ts-ignore
+                setTransactions(await metamaskSnapApi.getAllTransactions(address));
             }
         })();
-    }, [state.polkadotSnap.isInstalled, network]);
+    }, [state.polkadotSnap.isInstalled, network, address]);
 
     useEffect(() => {
-        function handleBalanceChange(...args: unknown[]) {
-            setBalance(String(args[0]))
-        }
+        // function handleBalanceChange(...args: unknown[]) {
+        //     setBalance(String(args[0]))
+        // }
 
         if (state.polkadotSnap.isInstalled) {
             (async () => {
-                const api = await getPolkadotApi();
-                if (api && api.subscribeToBalance) {
-                    api.subscribeToBalance(handleBalanceChange);
-                }
+                // const provider = await getInjectedMetamaskExtension();
+                // if(!provider) return;
+                // const metamaskSnapApi = await provider.getMetamaskSnapApi();
+                // if (metamaskSnapApi) {
+                //     metamaskSnapApi.subscribeToBalance(handleBalanceChange);
+                // }
             })();
         }
 
         return function() {
-            (async () => {
-                const api = await getPolkadotApi();
-                if (api && api.unsubscribeAllFromBalance) {
-                    api.unsubscribeAllFromBalance();
-                }
-            })();
+            // (async () => {
+            //     const api = await getPolkadotApi();
+            //     if (api) {
+            //         api.unsubscribeAllFromBalance();
+            //     }
+            // })();
         }
     }, [state.polkadotSnap.isInstalled, network]);
 

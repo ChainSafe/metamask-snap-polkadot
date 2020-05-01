@@ -9,9 +9,9 @@ import {getBlock} from "./rpc/substrate/getBlock";
 import {removeAsset, updateAsset} from "./asset";
 import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
-import {polkadotEventEmitter} from "./polkadot/events";
+import {polkadotEventEmitter, txEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
-import {EventCallback, PolkadotApi} from "@nodefactory/metamask-polkadot-types";
+import {EventCallback, HexHash, PolkadotApi} from "@nodefactory/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 import {sendUnit} from "./rpc/substrate/sendUnit";
 
@@ -28,6 +28,12 @@ wallet.registerApiRequestHandler(async function (origin: string): Promise<Polkad
       // first call or first call after unregistering
       if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin) === 1) {
         registerOnBalanceChange(wallet, origin);
+      }
+    },
+    subscribeToTxStatus: (hash: HexHash, onIncluded: EventCallback, onFinalized?: EventCallback): void => {
+      txEventEmitter.addListener("included", hash, onIncluded);
+      if (onFinalized) {
+        txEventEmitter.addListener("finalized", hash, onFinalized);
       }
     },
     unsubscribeAllFromBalance: () => {
