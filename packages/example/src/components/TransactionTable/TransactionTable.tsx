@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Paper, Table, TableContainer, TableCell,
     TableRow, TableHead, TableBody} from '@material-ui/core/';
-import {getAllTransactions} from "../../services/transactions";
 import {shortAddress} from "../../services/format";
 import {formatBalance} from "@polkadot/util";
 
-interface Transaction {
+export interface Transaction {
     type: string;
     id: string;
     attributes: {
@@ -26,16 +25,11 @@ interface Transaction {
     }
 }
 
-export const TransactionTable = () => {
+export interface TransactionTableProps {
+    txs: Transaction[];
+}
 
-    const [transactions, setTransactions] = useState<Transaction[]>([]);
-
-    useEffect(()=>{
-        (async () => {
-            setTransactions(await getAllTransactions());
-        })();
-    }, []);
-
+export const TransactionTable = (props: TransactionTableProps) => {
     return (
         <TableContainer className="transtaction-table" component={Paper}>
             <Table 
@@ -51,7 +45,7 @@ export const TransactionTable = () => {
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {transactions.map(tx => (
+                {props.txs.map(tx => (
                     <TableRow key={tx.id}>
                     <TableCell  align="left" component="th" scope="row">
                         {tx.id}
@@ -69,4 +63,4 @@ export const TransactionTable = () => {
             </Table>
         </TableContainer>
     );
-}
+};

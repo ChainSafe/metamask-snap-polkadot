@@ -64,8 +64,7 @@ export class MetamaskPolkadotSnap implements Injected {
   }
 
   public enableSnap = async (): Promise<Injected> => {
-
-    if(await isPolkadotSnapInstalled(this.pluginOrigin)) {
+    if(!(await isPolkadotSnapInstalled(this.pluginOrigin))) {
       await window.ethereum.send({
         method: "wallet_enable",
         params: [{
