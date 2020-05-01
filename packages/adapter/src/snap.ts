@@ -3,34 +3,33 @@ import {Signer as InjectedSigner, SignerResult} from '@polkadot/api/types';
 import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
 import {
   addPolkadotAsset,
-  configure,
   exportSeed,
-  getAccountAddress,
   getAddress,
   getAllTransactions,
   getBalance,
   getLatestBlock,
-  isPolkadotSnapInstalled,
+  getPublicKey,
   setConfiguration,
   signPayloadJSON,
   signPayloadRaw
 } from "./methods";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
+import {isPolkadotSnapInstalled} from "./utils";
 
 export class MetamaskPolkadotSnap implements Injected {
 
   public accounts: InjectedAccounts = {
     get: async () => {
       const account: InjectedAccount = {
-        address: await getAccountAddress(this.pluginOrigin),
+        address: await getAddress.bind(this)(),
         genesisHash: null,
         name: "Metamask account"
       };
       return [account];
     },
     subscribe: () => {
-      return () => {
+      return (): void => {
         throw "unsupported method";
       };
     }
@@ -38,13 +37,13 @@ export class MetamaskPolkadotSnap implements Injected {
 
   public signer: InjectedSigner = {
     signPayload: async (payload: SignerPayloadJSON): Promise<SignerResult> => {
-      const signature = await signPayloadJSON(payload);
+      const signature = await signPayloadJSON.bind(this)(payload);
       const id = this.requestCounter;
       this.requestCounter += 1;
       return {id, signature};
     },
     signRaw: async (raw: SignerPayloadRaw): Promise<SignerResult> => {
-      const signature = await signPayloadRaw(raw);
+      const signature = await signPayloadRaw.bind(this)(raw);
       const id = this.requestCounter;
       this.requestCounter += 1;
       return {id, signature};
@@ -52,10 +51,10 @@ export class MetamaskPolkadotSnap implements Injected {
     update: () => null
   };
 
+  protected readonly config: SnapConfig;
+  protected readonly pluginOrigin: string;
+  
   private requestCounter: number;
-
-  private readonly config: SnapConfig;
-  private readonly pluginOrigin: string;
 
   public constructor(pluginOrigin: string, config: SnapConfig) {
     this.pluginOrigin = pluginOrigin;
@@ -71,22 +70,21 @@ export class MetamaskPolkadotSnap implements Injected {
           [this.pluginOrigin]: {}
         }]
       });
-      await configure(this.pluginOrigin, this.config);
-      await addPolkadotAsset(this.pluginOrigin);
+      await setConfiguration.bind(this)(this.config);
+      await addPolkadotAsset.bind(this)();
     }
     return this;
   };
 
   public getMetamaskSnapApi = async (): Promise<MetamaskSnapApi> => {
     return {
-      addPolkadotAsset,
-      exportSeed,
-      getAccountAddress,
-      getAddress,
-      getAllTransactions,
-      getBalance,
-      getLatestBlock,
-      setConfiguration
+      addPolkadotAsset: addPolkadotAsset.bind(this),
+      exportSeed: exportSeed.bind(this),
+      getAllTransactions: getAllTransactions.bind(this),
+      getBalance: getBalance.bind(this),
+      getLatestBlock: getLatestBlock.bind(this),
+      getPublicKey: getPublicKey.bind(this),
+      setConfiguration: setConfiguration.bind(this)
     };
   };
 }

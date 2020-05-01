@@ -1,165 +1,83 @@
-import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
-import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
-import {MetamaskPolkadotRpcRequest} from "@nodefactory/metamask-polkadot-types";
-import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import {pluginOrigin} from "example/src/services/metamask";
+import {
+  BlockInfo,
+  MetamaskPolkadotRpcRequest,
+  SignPayloadJSONRequest, SignPayloadRawRequest,
+  SnapConfig
+} from "@nodefactory/metamask-polkadot-types";
+import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
+import {MetamaskPolkadotSnap} from "./snap";
 
-export async function getAccountAddress(pluginOrigin: string): Promise<string> {
+async function sendSnapMethod(request: MetamaskPolkadotRpcRequest, pluginOrigin: string): Promise<unknown> {
   return await window.ethereum.send({
-    method: pluginOrigin,
-    params: [{
-      method: 'getAddress'
-    }]
-  }) as string;
-}
-
-async function sign(
-  method: "signPayloadJSON"|"signPayloadRaw",
-  payload: SignerPayloadJSON|SignerPayloadRaw
-): Promise<string> {
-  const signature = (await window.ethereum.send({
-    method: pluginOrigin,
-    params: [{
-      method: method,
-      params: {
-        payload
-      }
-    }]
-  })) as string;
-  return signature;
-}
-
-export async function signPayloadJSON(payload: SignerPayloadJSON): Promise<string> {
-  return await sign("signPayloadJSON", payload);
-}
-
-export async function signPayloadRaw(payload: SignerPayloadRaw): Promise<string> {
-  return await sign("signPayloadRaw", payload);
-}
-
-export function hasMetaMask(): boolean {
-  if (!window.ethereum) {
-    return false;
-  }
-  return window.ethereum.isMetaMask;
-
-}
-
-export async function installPolkadotSnap(pluginOrigin: string): Promise<boolean> {
-  try {
-    await window.ethereum.send({
-      method: 'wallet_enable',
-      params: [{
-        [pluginOrigin]: {}
-      }]
-    });
-    return true;
-  } catch (e) {
-    console.log("Failed to install snap", e);
-    return false;
-  }
-}
-
-export async function isPolkadotSnapInstalled(pluginOrigin: string): Promise<boolean> {
-  try {
-    const result = await window.ethereum.send({
-      method: 'wallet_getPlugins',
-    }) as {[k: string]: object};
-    return !!result[pluginOrigin];
-  } catch (e) {
-    console.log("Failed to obtain installed plugins", e);
-    return false;
-  }
-}
-
-export async function addPolkadotAsset(pluginOrigin: string): Promise<void> {
-  await window.ethereum.send({
-    method: pluginOrigin,
-    params: [{
-      method: 'addPolkadotAsset'
-    }]
-  });
-}
-
-async function sendSnapMethod(request: MetamaskPolkadotRpcRequest,
-  pluginOrigin: string): Promise<unknown> {
-  const response = await window.ethereum.send({
     method: pluginOrigin,
     params: [
       request
     ]
   });
-  return response;
 }
 
-export async function getBalance(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "getBalance"}, pluginOrigin);
-  return response as string;
-}
-
-export async function getAddress(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "getAddress"}, pluginOrigin);
-  return response as string;
-}
-
-export async function getPublicKey(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "getPublicKey"}, pluginOrigin);
-  return response as string;
-}
-
-export async function exportSeed(pluginOrigin: string): Promise<string> {
-  const response = await sendSnapMethod({method: "exportSeed"}, pluginOrigin);
-  return response as string;
-}
-
-export async function configure(pluginOrigin: string, config: SnapConfig): Promise<void> {
-  await window.ethereum.send({
-    method: pluginOrigin,
-    params: [{
-      method: 'configure',
+async function sign(
+  this: MetamaskPolkadotSnap,
+  method: "signPayloadJSON" | "signPayloadRaw",
+  payload: SignerPayloadJSON | SignerPayloadRaw
+): Promise<string> {
+  return (
+    await sendSnapMethod({
+      method,
       params: {
-        configuration: config
+        payload
       }
-    }]
-  });
+    } as SignPayloadJSONRequest | SignPayloadRawRequest,
+    this.pluginOrigin
+    )
+  ) as string;
 }
 
-export async function getLatestBlock(pluginOrigin: string): Promise<BlockInfo> {
+export async function signPayloadJSON(this: MetamaskPolkadotSnap, payload: SignerPayloadJSON): Promise<string> {
+  return await sign.bind(this)("signPayloadJSON", payload);
+}
+
+export async function signPayloadRaw(this: MetamaskPolkadotSnap, payload: SignerPayloadRaw): Promise<string> {
+  return await sign.bind(this)("signPayloadRaw", payload);
+}
+
+export async function addPolkadotAsset(this: MetamaskPolkadotSnap): Promise<void> {
+  await sendSnapMethod({method: "addPolkadotAsset"}, this.pluginOrigin);
+}
+
+export async function getBalance(this: MetamaskPolkadotSnap): Promise<string> {
+  return (await sendSnapMethod({method: "getBalance"}, this.pluginOrigin)) as string;
+}
+
+export async function getAddress(this: MetamaskPolkadotSnap): Promise<string> {
+  return (await sendSnapMethod({method: "getAddress"}, this.pluginOrigin)) as string;
+}
+
+export async function getPublicKey(this: MetamaskPolkadotSnap): Promise<string> {
+  return (await sendSnapMethod({method: "getPublicKey"}, this.pluginOrigin)) as string;
+}
+
+export async function exportSeed(this: MetamaskPolkadotSnap): Promise<string> {
+  return (await sendSnapMethod({method: "exportSeed"}, this.pluginOrigin)) as string;
+}
+
+export async function setConfiguration(this: MetamaskPolkadotSnap, config: SnapConfig): Promise<void> {
+  await sendSnapMethod({method: "configure", params: {configuration: config}}, this.pluginOrigin);
+}
+
+export async function getLatestBlock(this: MetamaskPolkadotSnap): Promise<BlockInfo> {
   try {
-    const blockResponse = await window.ethereum.send({
-      method: pluginOrigin,
-      params: [{
-        method: "getBlock",
-        params: {
-          blockTag: "latest"
-        }
-      }]
-    });
-    return blockResponse as BlockInfo;
+    return (
+      await sendSnapMethod(
+        {method: "getBlock", params: {blockTag: "latest"}},
+        this.pluginOrigin)
+    ) as BlockInfo;
   } catch (e) {
     console.log("Unable to fetch latest block", e);
     return {hash: "", number: ""};
   }
 }
 
-export async function setConfiguration(pluginOrigin: string, configuration: SnapConfig): Promise<void> {
-  await window.ethereum.send({
-    method: pluginOrigin,
-    params: [{
-      method: 'configure',
-      params: {configuration: configuration}
-    }]
-  });
-}
-
-export async function getAllTransactions(pluginOrigin: string, address?: string): Promise<unknown> {
-  return await window.ethereum.send({
-    method: pluginOrigin,
-    params: [{
-      method: 'getAllTransactions',
-      params: {
-        address
-      }
-    }]
-  });
+export async function getAllTransactions(this: MetamaskPolkadotSnap, address?: string): Promise<unknown> {
+  return await sendSnapMethod({method: "getAllTransactions", params: {address}}, this.pluginOrigin);
 }
