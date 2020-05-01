@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Button, Card, CardContent, CardHeader, Divider, Grid, Typography} from '@material-ui/core/';
-import {exportSeed} from "../../services/account";
 import formatBalance from "@polkadot/util/format/formatBalance"
+import {getInjectedMetamaskExtension} from "../../services/metamask";
 
 export interface AccountProps {
     address: string,
@@ -12,7 +12,10 @@ export interface AccountProps {
 export const Account = (props: AccountProps) => {
 
     const handleExport = async () => {
-        const privateKey = await exportSeed();
+        const provider = await getInjectedMetamaskExtension();
+        if(!provider) return;
+        const metamaskSnapApi = await provider.getMetamaskSnapApi();
+        const privateKey = await metamaskSnapApi.exportSeed();
         alert(privateKey);
     };
 
