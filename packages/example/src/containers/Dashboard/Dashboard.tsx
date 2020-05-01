@@ -46,7 +46,7 @@ export const Dashboard = () => {
                 }
             }
         })();
-    }, [state.polkadotSnap.isInstalled, network]);
+    }, [state.polkadotSnap.isInstalled, network, address]);
 
     useEffect(() => {
         function handleBalanceChange(...args: unknown[]) {
@@ -56,8 +56,7 @@ export const Dashboard = () => {
         if (state.polkadotSnap.isInstalled) {
             (async () => {
                 const api = await getPolkadotApi();
-                if(api) console.log(api.subscribeToBalance)
-                if (api && api.subscribeToBalance) {
+                if (api) {
                     api.subscribeToBalance(handleBalanceChange);
                 }
             })();
@@ -66,8 +65,7 @@ export const Dashboard = () => {
         return function() {
             (async () => {
                 const api = await getPolkadotApi();
-                if(api) console.log(api.unsubscribeAllFromBalance)
-                if (api && api.unsubscribeAllFromBalance) {
+                if (api) {
                     api.unsubscribeAllFromBalance();
                 }
             })();

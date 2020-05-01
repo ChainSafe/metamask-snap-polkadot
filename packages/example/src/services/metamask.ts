@@ -26,11 +26,15 @@ export const pluginOrigin = `wallet_plugin_${origin}`;
 
 export async function installPolkadotSnap(): Promise<boolean> {
     try {
-        await web3Enable('my cool dapp');
-        console.log("Snap installed!!");
+        await window.ethereum.send({
+            method: 'wallet_enable',
+            params: [{
+                [pluginOrigin]: {}
+            }]
+        });
         return true;
     } catch (e) {
-        console.log(e);
+        console.error(e);
         return false;
     }
 }
