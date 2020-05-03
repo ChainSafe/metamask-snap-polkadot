@@ -12,6 +12,6 @@ export async function getBalance(wallet: Wallet, api: ApiPromise, address?: stri
   if(!address) {
     address = (await getKeyPair(wallet)).address;
   }
-  const account = await api.query.system.account(address);
-  return account.data.free.toString();
+  const account = await api.query.balances.account(address);
+  return account.free.toString();
 }
