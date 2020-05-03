@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {
     Box,
     Card,
@@ -19,7 +19,7 @@ import {Account} from "../../components/Account/Account";
 import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
 import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
-import {BlockInfo} from "@nodefactory/metamask-polkadot-types";
+import {BlockInfo, PolkadotApi} from "@nodefactory/metamask-polkadot-types";
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {web3Accounts} from "@polkadot/extension-dapp";
 
@@ -27,64 +27,72 @@ export const Dashboard = () => {
 
     const [state] = useContext(MetaMaskContext);
 
-    let [balance, setBalance] = useState("0");
-    let [address, setAddress] = useState("");
-    let [publicKey, setPublicKey] = useState("");
-    let [latestBlock, setLatestBlock] = useState<BlockInfo>({hash: "", number: ""});
-    let [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [balance, setBalance] = useState("0");
+    const [address, setAddress] = useState("");
+    const [publicKey, setPublicKey] = useState("");
+    const [latestBlock, setLatestBlock] = useState<BlockInfo>({hash: "", number: ""});
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [eventApi, setEventApi] = useState<PolkadotApi|null>(null);
+    const [network, setNetwork] = useState<"kusama" | "westend">("westend");
 
-    const [network, setNetwork] = useState<"kusama" | "westend">("kusama");
+    const handleBalanceChange = useCallback((newBalance: string) => {
+        setBalance(newBalance);
+    }, [setBalance]);
 
     const handleNetworkChange = (event: React.ChangeEvent<{ value: any }>) => {
         const networkName = event.target.value as "kusama" | "westend";
         setNetwork(networkName);
-      };
+    };
+
+    useEffect(() => {
+        if (state.polkadotSnap.isInstalled) {
+            (async function () {
+                const extension = await getInjectedMetamaskExtension();
+                if (!extension) return;
+                const metamaskSnapApi = await extension.getMetamaskSnapApi();
+                if (metamaskSnapApi) {
+                    const api = await metamaskSnapApi.getEventApi();
+                    setEventApi(api);
+                }
+            })();
+        }
+    }, [state.polkadotSnap.isInstalled, setEventApi]);
+
+    useEffect(() => {
+        const api = eventApi;
+        if(api) {
+            (async function () {
+                console.log("subscribing");
+                api.subscribeToBalance(handleBalanceChange);
+            })();
+        }
+        return function () {
+            console.log("cleaning", api);
+            if (api) {
+                console.log("unsubscribing");
+                api.unsubscribeAllFromBalance();
+            }
+        }
+    }, [network, handleBalanceChange, eventApi]);
 
     useEffect(() => {
         (async () => {
-            if(state.polkadotSnap.isInstalled) {
+            if (state.polkadotSnap.isInstalled) {
                 const extension = await getInjectedMetamaskExtension();
-                if(!extension) return;
+                if (!extension) return;
                 const metamaskSnapApi = await extension.getMetamaskSnapApi();
                 const account = (await web3Accounts())[0];
                 setAddress(account.address);
                 setPublicKey(await metamaskSnapApi.getPublicKey());
                 setBalance(await metamaskSnapApi.getBalance());
                 setLatestBlock(await metamaskSnapApi.getLatestBlock());
-                // @ts-ignore
-                setTransactions(await metamaskSnapApi.getAllTransactions(address));
+                setTransactions(await metamaskSnapApi.getAllTransactions(account.address) as Transaction[]);
             }
         })();
-    }, [state.polkadotSnap.isInstalled, network, address]);
-
-    useEffect(() => {
-        // function handleBalanceChange(...args: unknown[]) {
-        //     setBalance(String(args[0]))
-        // }
-
-        if (state.polkadotSnap.isInstalled) {
-            (async () => {
-                // const provider = await getInjectedMetamaskExtension();
-                // if(!provider) return;
-                // const metamaskSnapApi = await provider.getMetamaskSnapApi();
-                // if (metamaskSnapApi) {
-                //     metamaskSnapApi.subscribeToBalance(handleBalanceChange);
-                // }
-            })();
-        }
-
-        return function() {
-            // (async () => {
-            //     const api = await getPolkadotApi();
-            //     if (api) {
-            //         api.unsubscribeAllFromBalance();
-            //     }
-            // })();
-        }
     }, [state.polkadotSnap.isInstalled, network]);
 
     return (
-        <Container maxWidth="lg" >
+        <Container maxWidth="lg">
             <Grid direction="column" alignItems="center" justify="center" container spacing={3}>
                 <Box m="2rem">
                     <Typography variant="h2">
@@ -98,7 +106,7 @@ export const Dashboard = () => {
                     <Box m="1rem" alignSelf="baseline">
                         <InputLabel>Network</InputLabel>
                         <Select
-                            defaultValue={"kusama"}
+                            defaultValue={"westend"}
                             onChange={handleNetworkChange}
                         >
                             <MenuItem value={"kusama"}>Kusama</MenuItem>
@@ -107,7 +115,7 @@ export const Dashboard = () => {
                     </Box>
                     <Grid container spacing={3} alignItems={"stretch"}>
                         <Grid item xs={12}>
-                            <LatestBlock block={latestBlock}  />
+                            <LatestBlock block={latestBlock}/>
                         </Grid>
                     </Grid>
                     <Box m="1rem"/>
