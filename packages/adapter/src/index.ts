@@ -4,8 +4,13 @@ import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {hasMetaMask} from "./utils";
 
 const defaultOrigin = new URL('package.json', 'http://localhost:8081').toString();
-const defaultPluginOrigin = `wallet_plugin_${defaultOrigin}`;
 
+/**
+ *
+ * @param network
+ * @param config
+ * @param pluginOrigin url to package.json
+ */
 export function injectMetamaskPolkadotSnapProvider(
   network: "westend"|"kusama",
   config?: SnapConfig,
@@ -15,7 +20,7 @@ export function injectMetamaskPolkadotSnapProvider(
     return;
   }
   const polkadotSnap = new MetamaskPolkadotSnap(
-    pluginOrigin || defaultPluginOrigin,
+    pluginOrigin || defaultOrigin,
     config || {networkName: network}
   );
   injectExtension(
