@@ -13,15 +13,18 @@ import {polkadotEventEmitter, txEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
 import {EventCallback, HexHash, PolkadotApi} from "@nodefactory/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
-import {sendUnit} from "./rpc/substrate/sendUnit";
+import {sign} from "./rpc/sign";
+import {send} from "./rpc/send";
 
 declare let wallet: Wallet;
 
 const apiDependentMethods = [
-  "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw"
+  "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw", "sign", "send"
 ];
 
 wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
+  let api: ApiPromise = null;
+  api = await getApi(wallet);
   return {
     subscribeToBalance: (callback: EventCallback): void => {
       polkadotEventEmitter.addListener("onBalanceChange", origin, callback);
@@ -88,8 +91,10 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await updateAsset(wallet, originString, 0);
     case 'removePolkadotAsset':
       return await removeAsset(wallet, originString);
-    case "sendUnit":
-      return await sendUnit(wallet, api, requestObject.params.amount, requestObject.params.to);
+    case "sign":
+      return await sign(wallet, api, requestObject.params.amount, requestObject.params.to);
+    case "send":
+      return await send(wallet, api, requestObject.params.signedData);
     case 'getChainHead':
       // temporary method
       polkadotEventEmitter.emit("onBalanceChange", "100 KSM");

@@ -1,4 +1,5 @@
 import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import ApiPromise from "@polkadot/api/promise";
 
 export interface GetPublicKeyRequest{
   method: "getPublicKey";
@@ -64,11 +65,18 @@ export interface SignPayloadRawRequest {
   };
 }
 
-export interface SendUnitRequest {
-  method: "sendUnit";
+export interface SignUnitRequest {
+  method: "sign";
   params: {
     amount: string|number;
     to: string;
+  };
+}
+
+export interface SendUnitRequest {
+  method: "send";
+  params: {
+    signedData: string;
   };
 }
 
@@ -85,6 +93,7 @@ export type MetamaskPolkadotRpcRequest =
     | GetChainHeadRequest
     | SignPayloadJSONRequest
     | SignPayloadRawRequest
+    | SignUnitRequest
     | SendUnitRequest;
 
 type Method = MetamaskPolkadotRpcRequest["method"];
