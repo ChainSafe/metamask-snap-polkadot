@@ -12,7 +12,8 @@ import {
   setConfiguration,
   signPayloadJSON,
   signPayloadRaw,
-  sendUnit
+  signTx,
+  sendTx
 } from "./methods";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
@@ -86,7 +87,8 @@ export class MetamaskPolkadotSnap implements Injected {
       getLatestBlock: getLatestBlock.bind(this),
       getPublicKey: getPublicKey.bind(this),
       setConfiguration: setConfiguration.bind(this),
-      sendUnit: sendUnit.bind(this)
+      sign: signTx.bind(this),
+      send: sendTx.bind(this)
     };
   };
 }
