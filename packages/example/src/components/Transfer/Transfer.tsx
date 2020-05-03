@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Box, Button, Card, CardContent, CardHeader, Grid, TextField} from '@material-ui/core/';
-import {pluginOrigin, getInjectedMetamaskExtension} from "../../services/metamask";
+import {getInjectedMetamaskExtension} from "../../services/metamask";
 
 interface ITransferProps {
     network: string
@@ -30,9 +30,9 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         
         if(provider) {
             const api = await provider.getMetamaskSnapApi();
-            api.sendUnit(pluginOrigin, amount, recipient)
+            const signedTx = await api.sign(amount, recipient);
         }
-    }
+    };
 
     return (
         <Card>
