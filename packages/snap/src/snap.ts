@@ -92,7 +92,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case 'removePolkadotAsset':
       return await removeAsset(wallet, originString);
     case "generatePayload":
-      return await generatePayload(api, requestObject.params.to, requestObject.params.amount);
+      return await generatePayload(wallet, api, requestObject.params.to, requestObject.params.amount);
     case "send":
       return await send(wallet, api, requestObject.params.signedData);
     case 'getChainHead':
