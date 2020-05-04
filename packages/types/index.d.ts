@@ -65,8 +65,8 @@ export interface SignPayloadRawRequest {
   };
 }
 
-export interface SignUnitRequest {
-  method: "sign";
+export interface GeneratePayload {
+  method: "generatePayload";
   params: {
     amount: string|number;
     to: string;
@@ -93,8 +93,8 @@ export type MetamaskPolkadotRpcRequest =
     | GetChainHeadRequest
     | SignPayloadJSONRequest
     | SignPayloadRawRequest
-    | SignUnitRequest
-    | SendUnitRequest;
+    | SendUnitRequest
+    | GeneratePayload;
 
 type Method = MetamaskPolkadotRpcRequest["method"];
 

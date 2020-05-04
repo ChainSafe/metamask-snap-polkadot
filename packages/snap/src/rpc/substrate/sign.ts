@@ -7,10 +7,16 @@ import {showConfirmationDialog} from "../../util/confirmation";
 
 export async function signPayloadJSON(
   wallet: Wallet, api: ApiPromise, payload: SignerPayloadJSON
-): Promise<{ signature: string }> {
-  const extrinsic = api.registry.createType('ExtrinsicPayload', payload, { version: payload.version });
-  const keyPair = await getKeyPair(wallet);
-  return extrinsic.sign(keyPair);
+): Promise<{ signature: string }|void> {
+  const confirmation = await showConfirmationDialog(
+      wallet,
+      `Do you want to sign following payload: \n "${payload}" \n with account ${payload.address}`
+  );
+  if (confirmation) {
+    const extrinsic = api.registry.createType('ExtrinsicPayload', payload, { version: payload.version });
+    const keyPair = await getKeyPair(wallet);
+    return extrinsic.sign(keyPair);
+  }
 }
 
 export async function signPayloadRaw(
