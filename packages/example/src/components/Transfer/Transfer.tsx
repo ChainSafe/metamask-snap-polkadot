@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Box, Button, Card, CardContent, CardHeader, Grid, TextField} from '@material-ui/core/';
+import {Box, Button, Card, CardContent, CardHeader, Grid, TextField, InputProps, InputAdornment} from '@material-ui/core/';
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 
 interface ITransferProps {
@@ -40,9 +40,13 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 <CardHeader title="Transfer"/>
                 <Grid container alignItems="center" justify="space-between">
                     <Grid item xs={12}>
-                        <TextField onChange={handleRecipientChange} size="medium" fullWidth id="recipient" label="Recipient" variant="outlined" />
+                        <TextField 
+                        
+                        onChange={handleRecipientChange} size="medium" fullWidth id="recipient" label="Recipient" variant="outlined" />
                         <Box m="0.5rem"/>
-                        <TextField placeholder={handleCurrency(network)} onChange={handleAmountChange} size="medium" fullWidth id="recipient" label="Amount" variant="outlined" />
+                        <TextField 
+                        InputProps={{startAdornment: <InputAdornment position="start">{handleCurrency(network)}</InputAdornment>}}
+                        onChange={handleAmountChange} size="medium" fullWidth id="recipient" label="Amount" variant="outlined" />
                     </Grid>
                 </Grid>
                 <Box m="0.5rem"/>

@@ -82,7 +82,7 @@ export async function getAllTransactions(this: MetamaskPolkadotSnap, address?: s
   return await sendSnapMethod({method: "getAllTransactions", params: {address}}, this.pluginOrigin);
 }
 
-export async function sendTx(this: MetamaskPolkadotSnap, signedData: string): Promise<string> {
+export async function sendSignedData(this: MetamaskPolkadotSnap, signedData: string): Promise<string> {
   const response = await sendSnapMethod({
     method: "send",
     params: {
@@ -93,12 +93,5 @@ export async function sendTx(this: MetamaskPolkadotSnap, signedData: string): Pr
 }
 
 export async function signTx(this: MetamaskPolkadotSnap, amount: string | number, to: string): Promise<string> {
-  const response = await sendSnapMethod({
-    method: "sign",
-    params: {
-      amount,
-      to
-    }
-  }, this.pluginOrigin);
-  return response as string;
+  return await sendSnapMethod({method: "sign", params: {amount, to}}, this.pluginOrigin) as string;
 }

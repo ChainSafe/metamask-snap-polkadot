@@ -9,11 +9,11 @@ import {
   getBalance,
   getLatestBlock,
   getPublicKey,
+  sendSignedData,
   setConfiguration,
   signPayloadJSON,
   signPayloadRaw,
-  signTx,
-  sendTx
+  signTx
 } from "./methods";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
@@ -86,9 +86,9 @@ export class MetamaskPolkadotSnap implements Injected {
       getBalance: getBalance.bind(this),
       getLatestBlock: getLatestBlock.bind(this),
       getPublicKey: getPublicKey.bind(this),
+      send: sendSignedData.bind(this),
       setConfiguration: setConfiguration.bind(this),
-      sign: signTx.bind(this),
-      send: sendTx.bind(this)
+      sign: signTx.bind(this)
     };
   };
 }
