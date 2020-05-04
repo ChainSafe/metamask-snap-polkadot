@@ -47,5 +47,5 @@ export async function getInjectedMetamaskExtension(): Promise<InjectedMetamaskEx
 }
 
 function getMetamaskExtension(extensions: InjectedExtension[]): InjectedMetamaskExtension|undefined {
-    return extensions.find(item => item.name === "metamask-polkadot-snap") as InjectedMetamaskExtension|undefined;
+    return extensions.find(item => item.name === "metamask-polkadot-snap") as unknown as InjectedMetamaskExtension|undefined;
 }

@@ -39,8 +39,11 @@ export const Dashboard = () => {
         setBalance(newBalance);
     }, [setBalance]);
 
-    const handleNetworkChange = (event: React.ChangeEvent<{ value: any }>) => {
+    const handleNetworkChange = async (event: React.ChangeEvent<{ value: any }>) => {
         const networkName = event.target.value as "kusama" | "westend";
+        const extension = await getInjectedMetamaskExtension();
+        if (!extension) return;
+        await (await extension.getMetamaskSnapApi()).setConfiguration({networkName: networkName});
         setNetwork(networkName);
     };
 
@@ -63,6 +66,7 @@ export const Dashboard = () => {
         if(api) {
             (async function () {
                 console.log("subscribing");
+                // @ts-ignore
                 api.subscribeToBalance(handleBalanceChange);
             })();
         }
