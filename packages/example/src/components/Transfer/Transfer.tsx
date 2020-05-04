@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Box, Button, Card, CardContent, CardHeader, Grid, TextField, InputProps, InputAdornment} from '@material-ui/core/';
+import React, {useCallback, useState} from "react";
+import {Box, Button, Card, CardContent, CardHeader, Grid, TextField, InputAdornment} from '@material-ui/core/';
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 
 interface ITransferProps {
@@ -16,14 +16,15 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
             case "westend": return "WST";
             default: return ""
         }
-    }
-
-    const handleRecipientChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRecipient(event.target.value);
-      };
-    const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAmount(event.target.value);
     };
+
+    const handleRecipientChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setRecipient(event.target.value);
+    }, [setRecipient]);
+
+    const handleAmountChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setAmount(event.target.value);
+    }, [setAmount]);
 
     const onSubmit = async () => {
         const provider = await getInjectedMetamaskExtension();
