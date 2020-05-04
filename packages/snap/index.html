@@ -323,9 +323,9 @@
       publicKeyLabel.innerHTML = "In progress...";
       addressLabel.innerHTML = "In progress...";
 
-      let response = null;
+      let payload = null;
       try {
-        response = await ethereum.send({
+        payload = await ethereum.send({
           method: snapId,
           params: [{
             method: 'generatePayload',
@@ -335,10 +335,27 @@
             }
           }]
         });
-        console.log("SIGN RESULT");
-        console.log(response);
+        console.log("GENERATE PAYLOAD RESULT");
+        console.log(payload);
       } catch (e) {
-        console.log("Unable to fetch substrate chain head", e);
+        console.log("Unable to generate payload", e);
+      }
+
+      let signature = null;
+      try {
+        signature = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'signPayloadJSON',
+            params: {
+              payload: payload
+            }
+          }]
+        });
+        console.log("SIGN RESULT");
+        console.log(signature);
+      } catch (e) {
+        console.log("Unable to sign payload", e);
       }
       // await test();
       // await fetchPublicKey();
