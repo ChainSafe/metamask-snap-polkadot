@@ -92,6 +92,6 @@ export async function sendSignedData(this: MetamaskPolkadotSnap, signedData: str
   return response as string;
 }
 
-export async function signTx(this: MetamaskPolkadotSnap, amount: string | number, to: string): Promise<string> {
-  return await sendSnapMethod({method: "sign", params: {amount, to}}, this.pluginOrigin) as string;
+export async function generatePayload(this: MetamaskPolkadotSnap, amount: string | number, to: string): Promise<SignerPayloadJSON> {
+  return await sendSnapMethod({method: "generatePayload", params: {amount, to}}, this.pluginOrigin) as SignerPayloadJSON;
 }

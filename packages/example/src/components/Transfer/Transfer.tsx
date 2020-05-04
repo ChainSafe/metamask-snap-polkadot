@@ -31,7 +31,9 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         
         if(provider) {
             const api = await provider.getMetamaskSnapApi();
-            const signedTx = await api.sign(amount, recipient);
+            const payload = await api.generatePayload(amount, recipient);
+            const signedTx = provider.signer.signPayload(payload);
+            // const signedTx = await api.sign(amount, recipient);
         }
     };
 

@@ -1,5 +1,6 @@
 import {BlockInfo, PolkadotApi, SnapConfig, SnapRpcMethodRequest} from "@nodefactory/metamask-polkadot-types";
 import {InjectedExtension} from "@polkadot/extension-inject/types";
+import {SignerPayloadJSON} from '@polkadot/types/types';
 
 export interface MetamaskSnapApi {
   addPolkadotAsset(): Promise<void>;
@@ -9,8 +10,8 @@ export interface MetamaskSnapApi {
   getLatestBlock(): Promise<BlockInfo>;
   setConfiguration(configuration: SnapConfig): Promise<void>;
   getAllTransactions(address?: string): Promise<unknown>;
-  sign(amount: string | number, to: string): Promise<string>;
   send(signedData: string): Promise<string>;
+  generatePayload(amount: string | number, to: string): Promise<SignerPayloadJSON>;
 }
 
 export interface InjectedMetamaskExtension extends InjectedExtension {
