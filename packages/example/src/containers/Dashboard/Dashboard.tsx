@@ -41,6 +41,7 @@ export const Dashboard = () => {
 
     const handleNetworkChange = async (event: React.ChangeEvent<{ value: any }>) => {
         const networkName = event.target.value as "kusama" | "westend";
+        if(networkName === network) return;
         const extension = await getInjectedMetamaskExtension();
         if (!extension) return;
         await (await extension.getMetamaskSnapApi()).setConfiguration({networkName: networkName});
@@ -82,6 +83,7 @@ export const Dashboard = () => {
     useEffect(() => {
         (async () => {
             if (state.polkadotSnap.isInstalled) {
+                console.log("Updating values");
                 const extension = await getInjectedMetamaskExtension();
                 if (!extension) return;
                 const metamaskSnapApi = await extension.getMetamaskSnapApi();
@@ -125,7 +127,7 @@ export const Dashboard = () => {
                     <Box m="1rem"/>
                     <Grid container spacing={3} alignItems="stretch">
                         <Grid item xs={12}>
-                            <Account address={address} balance={balance} publicKey={publicKey}/>
+                            <Account network={network} address={address} balance={balance} publicKey={publicKey}/>
                         </Grid>
                     </Grid>
                     <Box m="1rem"/>

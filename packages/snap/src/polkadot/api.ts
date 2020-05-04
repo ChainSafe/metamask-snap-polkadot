@@ -33,8 +33,12 @@ async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
 
 export const resetApi = (): void => {
   if (api && provider) {
-    api.disconnect();
-    provider.disconnect();
+    try {
+      api.disconnect();
+      provider.disconnect();
+    } catch (e) {
+
+    }
     api = null;
     provider = null;
   }
