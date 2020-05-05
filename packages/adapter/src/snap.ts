@@ -18,6 +18,7 @@ import {
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
 import {isPolkadotSnapInstalled} from "./utils";
+import {getEventApi} from "./api";
 
 export class MetamaskPolkadotSnap implements Injected {
 
@@ -54,22 +55,26 @@ export class MetamaskPolkadotSnap implements Injected {
   };
 
   protected readonly config: SnapConfig;
+  //url to package.json
   protected readonly pluginOrigin: string;
+  //pluginOrigin prefixed with wallet_plugin_
+  protected readonly snapId: string;
 
   private requestCounter: number;
 
   public constructor(pluginOrigin: string, config: SnapConfig) {
     this.pluginOrigin = pluginOrigin;
+    this.snapId = "wallet_plugin_" + this.pluginOrigin;
     this.config = config || {networkName: "westend"};
     this.requestCounter = 0;
   }
 
   public enableSnap = async (): Promise<Injected> => {
-    if(!(await isPolkadotSnapInstalled(this.pluginOrigin))) {
+    if(!(await isPolkadotSnapInstalled(this.snapId))) {
       await window.ethereum.send({
         method: "wallet_enable",
         params: [{
-          [this.pluginOrigin]: {}
+          [this.snapId]: {}
         }]
       });
       await setConfiguration.bind(this)(this.config);
@@ -84,6 +89,7 @@ export class MetamaskPolkadotSnap implements Injected {
       exportSeed: exportSeed.bind(this),
       getAllTransactions: getAllTransactions.bind(this),
       getBalance: getBalance.bind(this),
+      getEventApi: getEventApi.bind(this),
       getLatestBlock: getLatestBlock.bind(this),
       getPublicKey: getPublicKey.bind(this),
       send: sendSignedData.bind(this),

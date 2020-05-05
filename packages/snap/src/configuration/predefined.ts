@@ -12,13 +12,13 @@ export const kusamaConfiguration: SnapConfig = {
   wsRpcUrl: "wss://kusama-rpc.polkadot.io/",
 };
 export const westendConfiguration: SnapConfig = {
-  addressPrefix: 48,
+  addressPrefix: 42,
   networkName: "westend",
   unit: {
     assetId: "wst-token",
     decimals: 12,
     image: "https://svgur.com/i/Jiy.svg",
-    symbol: "WST",
+    symbol: "WND",
   },
   wsRpcUrl: "wss://westend-rpc.polkadot.io/",
 };

@@ -7,9 +7,9 @@ import {
 import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
 import {MetamaskPolkadotSnap} from "./snap";
 
-async function sendSnapMethod(request: MetamaskPolkadotRpcRequest, pluginOrigin: string): Promise<unknown> {
+async function sendSnapMethod(request: MetamaskPolkadotRpcRequest, snapId: string): Promise<unknown> {
   return await window.ethereum.send({
-    method: pluginOrigin,
+    method: snapId,
     params: [
       request
     ]
@@ -28,7 +28,7 @@ async function sign(
         payload
       }
     } as SignPayloadJSONRequest | SignPayloadRawRequest,
-    this.pluginOrigin
+    this.snapId
     )
   ) as {signature: string};
 }
@@ -42,27 +42,27 @@ export async function signPayloadRaw(this: MetamaskPolkadotSnap, payload: Signer
 }
 
 export async function addPolkadotAsset(this: MetamaskPolkadotSnap): Promise<void> {
-  await sendSnapMethod({method: "addPolkadotAsset"}, this.pluginOrigin);
+  await sendSnapMethod({method: "addPolkadotAsset"}, this.snapId);
 }
 
 export async function getBalance(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({method: "getBalance"}, this.pluginOrigin)) as string;
+  return (await sendSnapMethod({method: "getBalance"}, this.snapId)) as string;
 }
 
 export async function getAddress(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({method: "getAddress"}, this.pluginOrigin)) as string;
+  return (await sendSnapMethod({method: "getAddress"}, this.snapId)) as string;
 }
 
 export async function getPublicKey(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({method: "getPublicKey"}, this.pluginOrigin)) as string;
+  return (await sendSnapMethod({method: "getPublicKey"}, this.snapId)) as string;
 }
 
 export async function exportSeed(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({method: "exportSeed"}, this.pluginOrigin)) as string;
+  return (await sendSnapMethod({method: "exportSeed"}, this.snapId)) as string;
 }
 
 export async function setConfiguration(this: MetamaskPolkadotSnap, config: SnapConfig): Promise<void> {
-  await sendSnapMethod({method: "configure", params: {configuration: config}}, this.pluginOrigin);
+  await sendSnapMethod({method: "configure", params: {configuration: config}}, this.snapId);
 }
 
 export async function getLatestBlock(this: MetamaskPolkadotSnap): Promise<BlockInfo> {
@@ -70,7 +70,7 @@ export async function getLatestBlock(this: MetamaskPolkadotSnap): Promise<BlockI
     return (
       await sendSnapMethod(
         {method: "getBlock", params: {blockTag: "latest"}},
-        this.pluginOrigin)
+        this.snapId)
     ) as BlockInfo;
   } catch (e) {
     console.log("Unable to fetch latest block", e);
@@ -79,7 +79,7 @@ export async function getLatestBlock(this: MetamaskPolkadotSnap): Promise<BlockI
 }
 
 export async function getAllTransactions(this: MetamaskPolkadotSnap, address?: string): Promise<unknown> {
-  return await sendSnapMethod({method: "getAllTransactions", params: {address}}, this.pluginOrigin);
+  return await sendSnapMethod({method: "getAllTransactions", params: {address}}, this.snapId);
 }
 
 export async function sendSignedData(this: MetamaskPolkadotSnap, signedData: string): Promise<string> {
@@ -88,10 +88,10 @@ export async function sendSignedData(this: MetamaskPolkadotSnap, signedData: str
     params: {
       signedData,
     }
-  }, this.pluginOrigin);
+  }, this.snapId);
   return response as string;
 }
 
 export async function generatePayload(this: MetamaskPolkadotSnap, amount: string | number, to: string): Promise<SignerPayloadJSON> {
-  return await sendSnapMethod({method: "generatePayload", params: {amount, to}}, this.pluginOrigin) as SignerPayloadJSON;
+  return await sendSnapMethod({method: "generatePayload", params: {amount, to}}, this.snapId) as SignerPayloadJSON;
 }

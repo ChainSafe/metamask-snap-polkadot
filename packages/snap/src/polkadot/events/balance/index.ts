@@ -9,8 +9,8 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
   const api = await getApi(wallet);
   const address = (await getKeyPair(wallet)).address;
   // Here we subscribe to any balance changes and update the on-screen value
-  const unsubscribeCallback = await api.query.system.account(address, ({ data: { free: currentFree }}) => {
-    polkadotEventEmitter.emit("onBalanceChange", currentFree.toString(), origin);
+  const unsubscribeCallback = await api.query.system.account(address, ({data: { free: currentFree }}) => {
+    polkadotEventEmitter.emit("onBalanceChange", origin, currentFree.toString());
   });
   if (!unsubscribe) {
     unsubscribe = {

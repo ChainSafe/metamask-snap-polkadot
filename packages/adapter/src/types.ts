@@ -12,6 +12,7 @@ export interface MetamaskSnapApi {
   getAllTransactions(address?: string): Promise<unknown>;
   send(signedData: string): Promise<string>;
   generatePayload(amount: string | number, to: string): Promise<SignerPayloadJSON>;
+  getEventApi(): Promise<PolkadotApi>;
 }
 
 export interface InjectedMetamaskExtension extends InjectedExtension {

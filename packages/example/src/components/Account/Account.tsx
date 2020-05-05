@@ -2,11 +2,13 @@ import React from "react";
 import {Box, Button, Card, CardContent, CardHeader, Divider, Grid, Typography} from '@material-ui/core/';
 import formatBalance from "@polkadot/util/format/formatBalance"
 import {getInjectedMetamaskExtension} from "../../services/metamask";
+import {getCurrency} from "../../services/format";
 
 export interface AccountProps {
     address: string,
     publicKey: string,
     balance: string
+    network: string
 }
 
 export const Account = (props: AccountProps) => {
@@ -35,7 +37,7 @@ export const Account = (props: AccountProps) => {
                         <Box m={"0.5rem"}/>
                         <Typography variant="h6">ACCOUNT BALANCE:</Typography>
                         <Typography variant="subtitle2">
-                            {formatBalance(props.balance, {decimals: 12, withSi: true, withUnit: "KSM"})}
+                            {formatBalance(props.balance, {decimals: 12, withSi: true, withUnit: getCurrency(props.network)})}
                         </Typography>
                     </Grid>
                 </Grid>

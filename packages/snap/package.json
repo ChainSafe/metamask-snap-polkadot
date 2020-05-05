@@ -15,7 +15,7 @@
     "type-check:watch": "npm run type-check -- --watch",
     "build": "yarn run build:tsc && yarn run build:snap",
     "build:tsc": "tsc --build --pretty",
-    "build:snap": "nf-snap build --stripComments --debug",
+    "build:snap": "nf-snap build --stripComments --debug --verbose",
     "watch": "concurrently  --raw --kill-others \"yarn run watch:tsc\" \"yarn run watch:snap\" \"yarn run serve\"",
     "watch:tsc": "yarn run build:tsc --watch",
     "watch:snap": "nf-snap watch --debug -s build/index.js",
@@ -73,11 +73,11 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@polkadot/api": "^1.8.0-beta.10",
-    "@polkadot/util": "2.7.1",
+    "@polkadot/api": "1.10.1",
+    "@polkadot/types": "1.10.1",
+    "@polkadot/util": "2.9.1",
     "axios": "^0.19.2",
-    "deepmerge": "^4.2.2",
-    "tweetnacl": "^1.0.3"
+    "deepmerge": "^4.2.2"
   },
   "resolutions": {
     "@polkadot/wasm-crypto": "file:./wasm-crypto-stub"

@@ -6,6 +6,7 @@ import ApiPromise from "@polkadot/api/promise";
 import {AccountInfo} from "@polkadot/types/interfaces/system";
 import sinon from "sinon";
 import {testAddress, testAppKey} from "../keyPairTestConstants";
+import {EmptyMetamaskState} from "../../../../src/interfaces";
 
 chai.use(sinonChai);
 
@@ -20,6 +21,7 @@ describe('Test rpc handler function: getBalance', function() {
   it('should return balance on saved keyring in state', async function () {
     // wallet stub
     walletStub.getAppKey.returns(testAppKey);
+    walletStub.getPluginState.returns(EmptyMetamaskState());
     // api stub
     const apiStub = {query: {system: {account: sinon.stub()}}};
     apiStub.query.system.account.returns({data: {free: '0'}} as unknown as AccountInfo);
