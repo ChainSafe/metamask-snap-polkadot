@@ -19,7 +19,7 @@ import {send} from "./rpc/send";
 declare let wallet: Wallet;
 
 const apiDependentMethods = [
-  "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw"
+  "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw", "generateTransactionPayload", "send"
 ];
 
 wallet.registerApiRequestHandler(async function (origin: URL): Promise<PolkadotApi> {
