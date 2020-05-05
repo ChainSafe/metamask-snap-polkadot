@@ -8,26 +8,30 @@ import {
     Grid,
     TextField,
     InputAdornment,
-    Hidden,
-    Badge,
-    Chip
+    Snackbar
 } from '@material-ui/core/';
 import {getInjectedMetamaskExtension} from "../../services/metamask";
+import {Alert} from "@material-ui/lab";
 
 interface ITransferProps {
     network: string
 }
 
+type AlertSeverity = "success" | "warning" | "info" | "error";
+
 export const Transfer: React.FC<ITransferProps> = ({network}) => {
     const [recipient, setRecipient] = useState<string>("");
     const [amount, setAmount] = useState<string | number>("");
-    const [included, setIncluded] = useState(true);
-    const [finalized, setFinalized] = useState(true);
+
+    const [alert, setAlert] = useState(false);
+    const [severity, setSeverity] = useState("success" as AlertSeverity);
+    const [message, setMessage] = useState("");
 
     const handleCurrency = (network: string): string => {
         switch(network) {
             case "kusama": return "KSM";
-            case "westend": return "WST";
+            case "westend":
+                return "WND";
             default: return ""
         }
     };
@@ -40,24 +44,37 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         setAmount(event.target.value);
     }, [setAmount]);
 
-    const handleTransactionIncluded = useCallback(() => {
-        setIncluded(true);
-    }, [setIncluded]);
+    const handleTransactionIncluded = useCallback((arg) => {
+        // TODO Expand messages inside alert (add polkascan url)
+        showAlert("success", `Transaction ${arg.tx} included in block`);
+    }, []);
 
-    const handleTransactionFinalized = useCallback(() => {
-        setFinalized(true);
-    }, [setFinalized]);
+    const handleTransactionFinalized = useCallback((arg) => {
+        // TODO Expand messages inside alert (add polkascan url)
+        showAlert("success", `Transaction ${arg.tx} finalized`)
+    }, []);
 
+    const showAlert = (severity: AlertSeverity, message: string) => {
+        setAlert(true);
+        setSeverity(severity);
+        setMessage(message);
+    };
+
+    // TODO refactor to callback
     const onSubmit = async () => {
         const provider = await getInjectedMetamaskExtension();
         if(provider && provider.signer.signPayload) {
-            const api = await provider.getMetamaskSnapApi();
-            const txPayload = await api.generateTransactionPayload(amount, recipient);
-            const signedTx = await provider.signer.signPayload(txPayload.payload);
-            let txHash = await api.send(signedTx.signature, txPayload);
-            // subscribe to transaction events
-            const polkadotEventApi = await api.getEventApi();
-            polkadotEventApi.subscribeToTxStatus(txHash, handleTransactionIncluded, handleTransactionFinalized)
+            if (amount && recipient) {
+                const api = await provider.getMetamaskSnapApi();
+                const txPayload = await api.generateTransactionPayload(amount, recipient);
+                const signedTx = await provider.signer.signPayload(txPayload.payload);
+                let txHash = await api.send(signedTx.signature, txPayload);
+                // subscribe to transaction events
+                const polkadotEventApi = await api.getEventApi();
+                polkadotEventApi.subscribeToTxStatus(txHash, handleTransactionIncluded, handleTransactionFinalized)
+            } else {
+                showAlert("error", "Please fill recipient and amount fields.");
+            }
         }
     };
 
@@ -67,8 +84,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 <CardHeader title="Transfer"/>
                 <Grid container alignItems="center" justify="space-between">
                     <Grid item xs={12}>
-                        <TextField 
-                        
+                        <TextField
                         onChange={handleRecipientChange} size="medium" fullWidth id="recipient" label="Recipient" variant="outlined" />
                         <Box m="0.5rem"/>
                         <TextField 
@@ -80,19 +96,12 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 <Grid container item xs={12} justify="flex-end">
                     <Button onClick={onSubmit} color="secondary" variant="contained" size="large">SEND</Button>
                 </Grid>
-                <Grid container spacing={1}>
-                    <Hidden xsUp={!included}>
-                        <Grid item>
-                            <Chip color={"primary"} label="Included" />
-                        </Grid>
-                    </Hidden>
-                    <Hidden xsUp={!finalized}>
-                        <Grid item>
-                            <Chip color={"primary"} label="Finalized" />
-                        </Grid>
-                    </Hidden>
-                </Grid>
+                <Snackbar open={alert} autoHideDuration={6000} onClose={() => setAlert(false)}>
+                    <Alert severity={severity} onClose={() => setAlert(false)}>
+                        {message}
+                    </Alert>
+                </Snackbar>
             </CardContent>
         </Card>
     );
-}
+};
