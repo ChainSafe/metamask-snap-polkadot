@@ -116,17 +116,8 @@ export type MetamaskRpcRequest = WalletEnableRequest | GetPluginsRequest | SnapR
 
 export type BlockId = number|string|"latest";
 
-export interface Tx {
-  isSigned: boolean;
-  method: {
-    args: string[];
-    method: string;
-    section: string;
-  };
-}
-
 export interface TxPayload {
-  tx: Tx;
+  tx: string;
   payload: SignerPayloadJSON;
 }
 

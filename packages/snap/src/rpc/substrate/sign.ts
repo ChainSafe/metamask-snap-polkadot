@@ -4,6 +4,7 @@ import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import {getKeyPair} from "../../polkadot/account";
 import {hexToU8a, u8aToHex} from "@polkadot/util";
 import {showConfirmationDialog} from "../../util/confirmation";
+import {expandExtensionTypes} from "@polkadot/types/extrinsic/signedExtensions";
 
 export async function signPayloadJSON(
   wallet: Wallet, api: ApiPromise, payload: SignerPayloadJSON

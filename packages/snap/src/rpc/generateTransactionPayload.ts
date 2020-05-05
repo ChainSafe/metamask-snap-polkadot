@@ -2,7 +2,7 @@ import ApiPromise from "@polkadot/api/promise";
 import {Wallet} from "../interfaces";
 import {getAddress} from "./getAddress";
 import {SubmittableExtrinsic} from "@polkadot/api/types";
-import {Tx, TxPayload} from "@nodefactory/metamask-polkadot-types";
+import {TxPayload} from "@nodefactory/metamask-polkadot-types";
 
 export async function generateTransactionPayload(wallet: Wallet, api: ApiPromise, to: string, amount: string | number): Promise<TxPayload> {
     // fetch last signed block and account address
@@ -29,11 +29,8 @@ export async function generateTransactionPayload(wallet: Wallet, api: ApiPromise
         blockNumber: signedBlock.block.header.number,
         method: transaction.method
     });
-    const tx = transaction.toHuman() as unknown as Tx;
-    // @ts-ignore
-    // tx.method.args = [to, amount];
     return {
         payload: signerPayload.toPayload(),
-        tx: tx
+        tx: transaction.toHex()
     };
 }
