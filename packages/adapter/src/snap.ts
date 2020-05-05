@@ -4,7 +4,7 @@ import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
 import {
   addPolkadotAsset,
   exportSeed,
-  generatePayload,
+  generateTransactionPayload,
   getAddress,
   getAllTransactions,
   getBalance,
@@ -94,7 +94,7 @@ export class MetamaskPolkadotSnap implements Injected {
       getPublicKey: getPublicKey.bind(this),
       send: sendSignedData.bind(this),
       setConfiguration: setConfiguration.bind(this),
-      generatePayload: generatePayload.bind(this)
+      generateTransactionPayload: generateTransactionPayload.bind(this)
     };
   };
 }

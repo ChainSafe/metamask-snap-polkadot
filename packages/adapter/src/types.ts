@@ -6,7 +6,6 @@ import {
   TxPayload
 } from "@nodefactory/metamask-polkadot-types";
 import {InjectedExtension} from "@polkadot/extension-inject/types";
-import {SignerPayloadJSON} from '@polkadot/types/types';
 
 export interface MetamaskSnapApi {
   addPolkadotAsset(): Promise<void>;
@@ -17,7 +16,7 @@ export interface MetamaskSnapApi {
   setConfiguration(configuration: SnapConfig): Promise<void>;
   getAllTransactions(address?: string): Promise<unknown>;
   send(signature: string, txPayload: TxPayload): Promise<string>;
-  generatePayload(amount: string | number, to: string): Promise<SignerPayloadJSON>;
+  generateTransactionPayload(amount: string | number, to: string): Promise<TxPayload>;
   getEventApi(): Promise<PolkadotApi>;
 }
 
