@@ -12,9 +12,19 @@ let isConnecting: boolean;
  */
 async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
   provider = new WsProvider(wsRpcUrl);
-  const api = new ApiPromise({ initWasm: false, provider });
+  let api = new ApiPromise({
+    initWasm: false,
+    provider,
+    types: {
+      //tmp fix until we figure out how to update polkadot api lib
+      RuntimeDbWeight: {
+        read: 'Weight',
+        write: 'Weight'
+      }
+    }
+  });
   try {
-    await api.isReady;
+    api = await api.isReady;
   } catch (e) {
     console.log("Api is ready with error:", e);
   }
@@ -23,8 +33,12 @@ async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
 
 export const resetApi = (): void => {
   if (api && provider) {
-    api.disconnect();
-    provider.disconnect();
+    try {
+      api.disconnect();
+      provider.disconnect();
+    } catch (e) {
+
+    }
     api = null;
     provider = null;
   }

@@ -9,6 +9,7 @@ export interface MetamaskSnapApi {
   getLatestBlock(): Promise<BlockInfo>;
   setConfiguration(configuration: SnapConfig): Promise<void>;
   getAllTransactions(address?: string): Promise<unknown>;
+  getEventApi(): Promise<PolkadotApi>;
 }
 
 export interface InjectedMetamaskExtension extends InjectedExtension {

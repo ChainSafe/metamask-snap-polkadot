@@ -21,13 +21,13 @@ const apiDependentMethods = [
   "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw"
 ];
 
-wallet.registerApiRequestHandler(async function (origin: string): Promise<PolkadotApi> {
+wallet.registerApiRequestHandler(async function (origin: URL): Promise<PolkadotApi> {
   return {
     subscribeToBalance: (callback: EventCallback): void => {
-      polkadotEventEmitter.addListener("onBalanceChange", origin, callback);
+      polkadotEventEmitter.addListener("onBalanceChange", origin.hostname, callback);
       // first call or first call after unregistering
-      if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin) === 1) {
-        registerOnBalanceChange(wallet, origin);
+      if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin.hostname) === 1) {
+        registerOnBalanceChange(wallet, origin.hostname);
       }
     },
     subscribeToTxStatus: (hash: HexHash, onIncluded: EventCallback, onFinalized?: EventCallback): void => {
@@ -37,13 +37,13 @@ wallet.registerApiRequestHandler(async function (origin: string): Promise<Polkad
       }
     },
     unsubscribeAllFromBalance: (): void => {
-      polkadotEventEmitter.removeAllListeners("onBalanceChange", origin);
-      removeOnBalanceChange(origin);
+      polkadotEventEmitter.removeAllListeners("onBalanceChange", origin.hostname);
+      removeOnBalanceChange(origin.hostname);
     },
     unsubscribeFromBalance: (callback: EventCallback): void => {
-      polkadotEventEmitter.removeListener("onBalanceChange", origin, callback);
-      if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin) === 0) {
-        removeOnBalanceChange(origin);
+      polkadotEventEmitter.removeListener("onBalanceChange", origin.hostname, callback);
+      if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin.hostname) === 0) {
+        removeOnBalanceChange(origin.hostname);
       }
     }
   };
@@ -91,8 +91,6 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case "sendUnit":
       return await sendUnit(wallet, api, requestObject.params.amount, requestObject.params.to);
     case 'getChainHead':
-      // temporary method
-      polkadotEventEmitter.emit("onBalanceChange", "100 KSM");
       const head = await api.rpc.chain.getFinalizedHead();
       return head.hash;
     default:

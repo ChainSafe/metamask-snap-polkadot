@@ -6,7 +6,7 @@ import {injectMetamaskPolkadotSnapProvider} from "@nodefactory/metamask-polkadot
 function App() {
 
     useEffect(() => {
-        injectMetamaskPolkadotSnapProvider("kusama");
+        injectMetamaskPolkadotSnapProvider("westend");
     }, [])
   
   return (
