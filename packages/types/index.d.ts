@@ -1,5 +1,4 @@
 import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import ApiPromise from "@polkadot/api/promise";
 
 export interface GetPublicKeyRequest{
   method: "getPublicKey";
@@ -65,8 +64,8 @@ export interface SignPayloadRawRequest {
   };
 }
 
-export interface GeneratePayload {
-  method: "generatePayload";
+export interface GenerateTransactionPayload {
+  method: "generateTransactionPayload";
   params: {
     amount: string|number;
     to: string;
@@ -76,7 +75,8 @@ export interface GeneratePayload {
 export interface SendUnitRequest {
   method: "send";
   params: {
-    signedData: string;
+    signature: string;
+    txPayload: TxPayload;
   };
 }
 
@@ -94,7 +94,7 @@ export type MetamaskPolkadotRpcRequest =
     | SignPayloadJSONRequest
     | SignPayloadRawRequest
     | SendUnitRequest
-    | GeneratePayload;
+    | GenerateTransactionPayload;
 
 type Method = MetamaskPolkadotRpcRequest["method"];
 
@@ -115,6 +115,20 @@ export interface SnapRpcMethodRequest {
 export type MetamaskRpcRequest = WalletEnableRequest | GetPluginsRequest | SnapRpcMethodRequest;
 
 export type BlockId = number|string|"latest";
+
+export interface Tx {
+  isSigned: boolean;
+  method: {
+    args: string[];
+    method: string;
+    section: string;
+  };
+}
+
+export interface TxPayload {
+  tx: Tx;
+  payload: SignerPayloadJSON;
+}
 
 export interface BlockInfo {
   hash: string;

@@ -1,10 +1,10 @@
 import ApiPromise from "@polkadot/api/promise";
-import {SignerPayloadJSON} from '@polkadot/types/types';
 import {Wallet} from "../interfaces";
 import {getAddress} from "./getAddress";
 import {SubmittableExtrinsic} from "@polkadot/api/types";
+import {Tx, TxPayload} from "@nodefactory/metamask-polkadot-types";
 
-export async function generatePayload(wallet: Wallet, api: ApiPromise, to: string, amount: string | number): Promise<SignerPayloadJSON> {
+export async function generateTransactionPayload(wallet: Wallet, api: ApiPromise, to: string, amount: string | number): Promise<TxPayload> {
     // fetch last signed block and account address
     const [signedBlock, address] = await Promise.all([api.rpc.chain.getBlock(), getAddress(wallet)]);
     // create signer options
@@ -29,5 +29,11 @@ export async function generatePayload(wallet: Wallet, api: ApiPromise, to: strin
         blockNumber: signedBlock.block.header.number,
         method: transaction.method
     });
-    return signerPayload.toPayload();
+    const tx = transaction.toHuman() as unknown as Tx;
+    // @ts-ignore
+    // tx.method.args = [to, amount];
+    return {
+        payload: signerPayload.toPayload(),
+        tx: tx
+    };
 }

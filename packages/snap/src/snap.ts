@@ -13,8 +13,8 @@ import {polkadotEventEmitter, txEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
 import {EventCallback, HexHash, PolkadotApi} from "@nodefactory/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
+import {generateTransactionPayload} from "./rpc/generateTransactionPayload";
 import {send} from "./rpc/send";
-import {generatePayload} from "./rpc/generatePayload";
 
 declare let wallet: Wallet;
 
@@ -91,10 +91,10 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await updateAsset(wallet, originString, 0);
     case 'removePolkadotAsset':
       return await removeAsset(wallet, originString);
-    case "generatePayload":
-      return await generatePayload(wallet, api, requestObject.params.to, requestObject.params.amount);
+    case "generateTransactionPayload":
+      return await generateTransactionPayload(wallet, api, requestObject.params.to, requestObject.params.amount);
     case "send":
-      return await send(wallet, api, requestObject.params.signedData);
+      return await send(wallet, api, requestObject.params.signature, requestObject.params.txPayload);
     case 'getChainHead':
       // temporary method
       polkadotEventEmitter.emit("onBalanceChange", "100 KSM");

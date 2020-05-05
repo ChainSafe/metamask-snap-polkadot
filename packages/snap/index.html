@@ -330,8 +330,8 @@
           params: [{
             method: 'generatePayload',
             params: {
-              amount: "1000",
-              to: "Dc6ouAsLFYLF7kCfAbW6j6kVN1FvoKcyAuTr1NCKmU2c8mk"
+              amount: "10",
+              to: "HYxTWKxPTQwcENdt41QhsDrAKoy8Vn7i1NPfYjSnBT1Z62c"
             }
           }]
         });
@@ -354,6 +354,24 @@
         });
         console.log("SIGN RESULT");
         console.log(signature);
+      } catch (e) {
+        console.log("Unable to sign payload", e);
+      }
+
+      let tx = null;
+      try {
+        tx = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'send',
+            params: {
+              signature: signature,
+              txPayload: payload
+            }
+          }]
+        });
+        console.log("SEND RESULT");
+        console.log(tx);
       } catch (e) {
         console.log("Unable to sign payload", e);
       }

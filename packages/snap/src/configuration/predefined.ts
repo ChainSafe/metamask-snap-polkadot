@@ -23,4 +23,4 @@ export const westendConfiguration: SnapConfig = {
   wsRpcUrl: "wss://westend-rpc.polkadot.io/",
 };
 
-export const defaultConfiguration: SnapConfig = kusamaConfiguration;
+export const defaultConfiguration: SnapConfig = westendConfiguration;
