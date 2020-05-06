@@ -8,10 +8,11 @@ import {
     Grid,
     TextField,
     InputAdornment,
-    Snackbar
+    Snackbar, Hidden
 } from '@material-ui/core/';
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {Alert} from "@material-ui/lab";
+import {getPolkascanBlockUrl, getPolkascanTxUrl} from "../../services/polkascan";
 
 interface ITransferProps {
     network: string
@@ -26,6 +27,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
     const [alert, setAlert] = useState(false);
     const [severity, setSeverity] = useState("success" as AlertSeverity);
     const [message, setMessage] = useState("");
+    const [polkascanUrl, setPolkascanUrl] = useState("");
 
     const handleCurrency = (network: string): string => {
         switch(network) {
@@ -44,24 +46,36 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         setAmount(event.target.value);
     }, [setAmount]);
 
-    const handleTransactionIncluded = useCallback((arg) => {
-        // TODO Expand messages inside alert (add polkascan url)
-        showAlert("success", `Transaction ${arg.tx} included in block`);
+    const handleTransactionIncluded = useCallback((args) => {
+        const txDetails = args[0];
+        if (txDetails.txHash && txDetails.blockHash) {
+            showAlert(
+                "success",
+                `Transaction ${txDetails.txHash} included in block`,
+                getPolkascanBlockUrl(txDetails.blockHash, network)
+            );
+        }
     }, []);
 
-    const handleTransactionFinalized = useCallback((arg) => {
-        // TODO Expand messages inside alert (add polkascan url)
-        showAlert("success", `Transaction ${arg.tx} finalized`)
+    const handleTransactionFinalized = useCallback((args) => {
+        const txDetails = args[0];
+        if (txDetails.txHash && txDetails.blockHash) {
+            showAlert(
+                "success",
+                `Transaction ${txDetails.txHash} finalized`,
+                getPolkascanTxUrl(txDetails.txHash, network)
+            );
+        }
     }, []);
 
-    const showAlert = (severity: AlertSeverity, message: string) => {
-        setAlert(true);
+    const showAlert = (severity: AlertSeverity, message: string, polkasacanUrl?: string) => {
+        setPolkascanUrl(polkasacanUrl ? polkasacanUrl : "");
         setSeverity(severity);
         setMessage(message);
+        setAlert(true);
     };
 
-    // TODO refactor to callback
-    const onSubmit = async () => {
+    const onSubmit = useCallback(async () => {
         const provider = await getInjectedMetamaskExtension();
         if(provider && provider.signer.signPayload) {
             if (amount && recipient) {
@@ -76,7 +90,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 showAlert("error", "Please fill recipient and amount fields.");
             }
         }
-    };
+    }, [amount, handleTransactionFinalized, handleTransactionIncluded, recipient]);
 
     return (
         <Card>
@@ -96,9 +110,19 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 <Grid container item xs={12} justify="flex-end">
                     <Button onClick={onSubmit} color="secondary" variant="contained" size="large">SEND</Button>
                 </Grid>
-                <Snackbar open={alert} autoHideDuration={6000} onClose={() => setAlert(false)}>
+                <Snackbar
+                    open={alert}
+                    autoHideDuration={6000}
+                    onClose={() => setAlert(false)}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}>
                     <Alert severity={severity} onClose={() => setAlert(false)}>
                         {message}
+                        <Hidden xsUp={polkascanUrl === ""}>
+                            <a href={polkascanUrl}>See on Polkascan</a>
+                        </Hidden>
                     </Alert>
                 </Snackbar>
             </CardContent>

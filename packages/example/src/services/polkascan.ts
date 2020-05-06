@@ -1,20 +1,22 @@
-import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
-
-export function getPolkascanTxUrl(txHash: string, configuration: SnapConfig): string {
-    return `${getPolkascanBaseUrl(configuration)}/transaction/${txHash}`;
+export function getPolkascanTxUrl(txHash: string, network: string): string {
+    return `${getPolkascanBaseUrl(network)}/transaction/${txHash}`;
 }
 
-export function getPolkascanAccUrl(address: string, configuration: SnapConfig): string {
-    return `${getPolkascanBaseUrl(configuration)}/account/${address}`;
+export function getPolkascanAccUrl(address: string, network: string): string {
+    return `${getPolkascanBaseUrl(network)}/account/${address}`;
 }
 
-function getPolkascanBaseUrl(configuration: SnapConfig): string {
-    switch (configuration.networkName) {
+export function getPolkascanBlockUrl(block: string, network: string) {
+    return`${getPolkascanBaseUrl(network)}/block/${block}`;
+}
+
+function getPolkascanBaseUrl(network: string): string {
+    switch (network) {
         case "kusama":
             return "https://polkascan.io/pre/kusama";
         case "westend":
             return "https://polkascan.io/pre/westend-m2";
         default:
-            return ""
+            return "";
     }
 }
