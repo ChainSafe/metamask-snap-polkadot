@@ -9,8 +9,8 @@ export async function signPayloadJSON(
   wallet: Wallet, api: ApiPromise, payload: SignerPayloadJSON
 ): Promise<{ signature: string }|void> {
   const confirmation = await showConfirmationDialog(
-      wallet,
-      `Do you want to sign following payload: \n "${payload.method}" \n with account ${payload.address}`
+    wallet,
+    `Do you want to sign following payload: \n "${payload.method}" \n with account ${payload.address}`
   );
   if (confirmation) {
     const extrinsic = api.registry.createType('ExtrinsicPayload', payload, { version: payload.version });

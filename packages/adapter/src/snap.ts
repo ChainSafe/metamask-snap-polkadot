@@ -87,6 +87,7 @@ export class MetamaskPolkadotSnap implements Injected {
     return {
       addPolkadotAsset: addPolkadotAsset.bind(this),
       exportSeed: exportSeed.bind(this),
+      generateTransactionPayload: generateTransactionPayload.bind(this),
       getAllTransactions: getAllTransactions.bind(this),
       getBalance: getBalance.bind(this),
       getEventApi: getEventApi.bind(this),
@@ -94,7 +95,6 @@ export class MetamaskPolkadotSnap implements Injected {
       getPublicKey: getPublicKey.bind(this),
       send: sendSignedData.bind(this),
       setConfiguration: setConfiguration.bind(this),
-      generateTransactionPayload: generateTransactionPayload.bind(this)
     };
   };
 }
