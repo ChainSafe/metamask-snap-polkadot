@@ -11,7 +11,7 @@
     "build:adapter": "lerna run build --scope @nodefactory/metamask-polkadot-adapter",
     "start:snap": "lerna run serve --scope polkadot-snap",
     "start:example": "lerna run start --scope example",
-    "predemo": "yarn run build:snap",
+    "predemo": "yarn run build:snap && yarn run build:adapter",
     "build": "lerna run build",
     "test": "lerna run test",
     "lint": "lerna run lint",
