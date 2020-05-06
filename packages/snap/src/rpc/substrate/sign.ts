@@ -4,14 +4,13 @@ import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import {getKeyPair} from "../../polkadot/account";
 import {hexToU8a, u8aToHex} from "@polkadot/util";
 import {showConfirmationDialog} from "../../util/confirmation";
-import {expandExtensionTypes} from "@polkadot/types/extrinsic/signedExtensions";
 
 export async function signPayloadJSON(
   wallet: Wallet, api: ApiPromise, payload: SignerPayloadJSON
 ): Promise<{ signature: string }|void> {
   const confirmation = await showConfirmationDialog(
       wallet,
-      `Do you want to sign following payload: \n "${payload}" \n with account ${payload.address}`
+      `Do you want to sign following payload: \n "${payload.method}" \n with account ${payload.address}`
   );
   if (confirmation) {
     const extrinsic = api.registry.createType('ExtrinsicPayload', payload, { version: payload.version });

@@ -119,7 +119,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                         horizontal: 'left',
                     }}>
                     <Alert severity={severity} onClose={() => setAlert(false)}>
-                        {message}
+                        {`${message} `}
                         <Hidden xsUp={polkascanUrl === ""}>
                             <a href={polkascanUrl}>See on Polkascan</a>
                         </Hidden>
