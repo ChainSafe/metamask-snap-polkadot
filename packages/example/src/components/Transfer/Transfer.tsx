@@ -55,7 +55,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 getPolkascanBlockUrl(txDetails.blockHash, network)
             );
         }
-    }, []);
+    }, [network]);
 
     const handleTransactionFinalized = useCallback((args) => {
         const txDetails = args[0];
@@ -66,7 +66,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 getPolkascanTxUrl(txDetails.txHash, network)
             );
         }
-    }, []);
+    }, [network]);
 
     const showAlert = (severity: AlertSeverity, message: string, polkasacanUrl?: string) => {
         setPolkascanUrl(polkasacanUrl ? polkasacanUrl : "");
