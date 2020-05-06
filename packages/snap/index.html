@@ -112,9 +112,8 @@
       index = await ethereum.requestIndex();
       pluginApi = await index.getPluginApi(origin);
       console.log(pluginApi);
-      const s = await pluginApi.subscribeToTxStatus(
-              "test-hash", args => {console.log(`onIncluded: ${args}`)}, args => {console.log(`onFinalized: ${args}`)}
-      );
+      const s = await pluginApi.sign(100, "test-address");
+      console.log(s);
     }
 
     // spans for status
@@ -323,9 +322,62 @@
       snapConnectedLabel.innerHTML = TRUE;
       publicKeyLabel.innerHTML = "In progress...";
       addressLabel.innerHTML = "In progress...";
-      await test();
-      await fetchPublicKey();
-      await fetchAddress();
+
+      let payload = null;
+      try {
+        payload = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'generateTransactionPayload',
+            params: {
+              amount: "10",
+              to: "HYxTWKxPTQwcENdt41QhsDrAKoy8Vn7i1NPfYjSnBT1Z62c"
+            }
+          }]
+        });
+        console.log("GENERATE PAYLOAD RESULT");
+        console.log(payload);
+      } catch (e) {
+        console.log("Unable to generate payload", e);
+      }
+
+      let signature = null;
+      try {
+        signature = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'signPayloadJSON',
+            params: {
+              payload: payload
+            }
+          }]
+        });
+        console.log("SIGN RESULT");
+        console.log(signature);
+      } catch (e) {
+        console.log("Unable to sign payload", e);
+      }
+
+      let tx = null;
+      try {
+        tx = await ethereum.send({
+          method: snapId,
+          params: [{
+            method: 'send',
+            params: {
+              signature: signature,
+              txPayload: payload
+            }
+          }]
+        });
+        console.log("SEND RESULT");
+        console.log(tx);
+      } catch (e) {
+        console.log("Unable to sign payload", e);
+      }
+      // await test();
+      // await fetchPublicKey();
+      // await fetchAddress();
     }
 
     // polkadot/substrate functions

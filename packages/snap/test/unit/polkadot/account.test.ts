@@ -5,6 +5,7 @@ import {WalletMock} from "../wallet.mock.test";
 import {getKeyPair} from "../../../src/polkadot/account";
 import {hexToU8a} from '@polkadot/util';
 import {testAddress, testAppKey, testPublicKey} from "../rpc/keyPairTestConstants";
+import {westendConfiguration} from "../../../src/configuration/predefined";
 
 chai.use(sinonChai);
 
@@ -17,7 +18,7 @@ describe('Test account function: getKeyPair', function() {
   });
 
   it('should return keypair', async function() {
-    walletStub.getPluginState.returns(EmptyMetamaskState());
+    walletStub.getPluginState.returns({polkadot: {configuration: westendConfiguration}});
     walletStub.getAppKey.returns(testAppKey);
     walletStub.updatePluginState.returnsArg(0);
     const result = await getKeyPair(walletStub);

@@ -5,7 +5,7 @@ import sinon from "sinon";
 import axios from "axios";
 import {getTransactions} from "../../../../src/rpc/substrate/getTransactions";
 import {testAppKey} from "../keyPairTestConstants";
-import {defaultConfiguration} from "../../../../src/configuration/predefined";
+import {defaultConfiguration, westendConfiguration} from "../../../../src/configuration/predefined";
 
 chai.use(sinonChai);
 
@@ -16,7 +16,7 @@ describe('Test rpc handler function: getTransactions', function() {
 
   beforeEach(function () {
     walletStub.getAppKey.returns(testAppKey);
-    walletStub.getPluginState.returns({polkadot: {configuration: defaultConfiguration}});
+    walletStub.getPluginState.returns({polkadot: {configuration: westendConfiguration}});
   });
 
   afterEach(function() {

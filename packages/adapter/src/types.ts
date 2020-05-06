@@ -1,4 +1,10 @@
-import {BlockInfo, PolkadotApi, SnapConfig, SnapRpcMethodRequest} from "@nodefactory/metamask-polkadot-types";
+import {
+  BlockInfo,
+  PolkadotApi,
+  SnapConfig,
+  SnapRpcMethodRequest,
+  TxPayload
+} from "@nodefactory/metamask-polkadot-types";
 import {InjectedExtension} from "@polkadot/extension-inject/types";
 
 export interface MetamaskSnapApi {
@@ -9,6 +15,8 @@ export interface MetamaskSnapApi {
   getLatestBlock(): Promise<BlockInfo>;
   setConfiguration(configuration: SnapConfig): Promise<void>;
   getAllTransactions(address?: string): Promise<unknown>;
+  send(signature: string, txPayload: TxPayload): Promise<string>;
+  generateTransactionPayload(amount: string | number, to: string): Promise<TxPayload>;
   getEventApi(): Promise<PolkadotApi>;
 }
 

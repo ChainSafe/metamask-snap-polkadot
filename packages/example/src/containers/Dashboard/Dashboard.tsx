@@ -133,7 +133,7 @@ export const Dashboard = () => {
                     <Box m="1rem"/>
                     <Grid container spacing={3} alignItems="stretch">
                         <Grid item md={6} xs={12}>
-                            <Transfer/>
+                            <Transfer network={network}/>
                         </Grid>
                         <Grid item md={6} xs={12}>
                             <SignMessage/>

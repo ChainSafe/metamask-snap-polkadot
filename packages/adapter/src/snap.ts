@@ -4,14 +4,16 @@ import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
 import {
   addPolkadotAsset,
   exportSeed,
+  generateTransactionPayload,
   getAddress,
   getAllTransactions,
   getBalance,
   getLatestBlock,
   getPublicKey,
+  sendSignedData,
   setConfiguration,
   signPayloadJSON,
-  signPayloadRaw
+  signPayloadRaw,
 } from "./methods";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
@@ -57,7 +59,7 @@ export class MetamaskPolkadotSnap implements Injected {
   protected readonly pluginOrigin: string;
   //pluginOrigin prefixed with wallet_plugin_
   protected readonly snapId: string;
-  
+
   private requestCounter: number;
 
   public constructor(pluginOrigin: string, config: SnapConfig) {
@@ -85,12 +87,14 @@ export class MetamaskPolkadotSnap implements Injected {
     return {
       addPolkadotAsset: addPolkadotAsset.bind(this),
       exportSeed: exportSeed.bind(this),
+      generateTransactionPayload: generateTransactionPayload.bind(this),
       getAllTransactions: getAllTransactions.bind(this),
       getBalance: getBalance.bind(this),
       getEventApi: getEventApi.bind(this),
       getLatestBlock: getLatestBlock.bind(this),
       getPublicKey: getPublicKey.bind(this),
-      setConfiguration: setConfiguration.bind(this)
+      send: sendSignedData.bind(this),
+      setConfiguration: setConfiguration.bind(this),
     };
   };
 }

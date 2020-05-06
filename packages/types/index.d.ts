@@ -64,11 +64,19 @@ export interface SignPayloadRawRequest {
   };
 }
 
-export interface SendUnitRequest {
-  method: "sendUnit";
+export interface GenerateTransactionPayload {
+  method: "generateTransactionPayload";
   params: {
     amount: string|number;
     to: string;
+  };
+}
+
+export interface SendUnitRequest {
+  method: "send";
+  params: {
+    signature: string;
+    txPayload: TxPayload;
   };
 }
 
@@ -85,7 +93,8 @@ export type MetamaskPolkadotRpcRequest =
     | GetChainHeadRequest
     | SignPayloadJSONRequest
     | SignPayloadRawRequest
-    | SendUnitRequest;
+    | SendUnitRequest
+    | GenerateTransactionPayload;
 
 type Method = MetamaskPolkadotRpcRequest["method"];
 
@@ -106,6 +115,11 @@ export interface SnapRpcMethodRequest {
 export type MetamaskRpcRequest = WalletEnableRequest | GetPluginsRequest | SnapRpcMethodRequest;
 
 export type BlockId = number|string|"latest";
+
+export interface TxPayload {
+  tx: string;
+  payload: SignerPayloadJSON;
+}
 
 export interface BlockInfo {
   hash: string;
