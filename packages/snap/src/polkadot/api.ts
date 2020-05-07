@@ -2,6 +2,7 @@ import ApiPromise from "@polkadot/api/promise";
 import {WsProvider} from "@polkadot/api";
 import {Wallet} from "../interfaces";
 import {getConfiguration} from "../configuration";
+import U8aFixed from "@polkadot/types/codec/U8aFixed";
 
 let api: ApiPromise;
 let provider: WsProvider;
@@ -17,6 +18,7 @@ async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
     provider,
     types: {
       //tmp fix until we figure out how to update polkadot api lib
+      ModuleId: U8aFixed,
       RuntimeDbWeight: {
         read: 'Weight',
         write: 'Weight'

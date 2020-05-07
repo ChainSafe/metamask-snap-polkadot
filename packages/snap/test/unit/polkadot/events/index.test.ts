@@ -24,7 +24,7 @@ describe('Test polkadotEventEmitter', function() {
         "onBalanceChange", "origin1", callbackStub
       );
       polkadotEventEmitter.emit("onBalanceChange", "origin1", "arg");
-      expect(callbackStub).to.have.been.calledOnceWith(["arg"]);
+      expect(callbackStub).to.have.been.calledOnceWith("arg");
       polkadotEventEmitter.removeAllListeners("onBalanceChange", "origin1");
       polkadotEventEmitter.emit("onBalanceChange", "origin1", "arg");
       expect(callbackStub).to.have.been.calledOnce;
@@ -35,7 +35,7 @@ describe('Test polkadotEventEmitter', function() {
         "onBalanceChange", "origin1", callbackStub
       );
       polkadotEventEmitter.emit("onBalanceChange", "origin1", "arg");
-      expect(callbackStub).to.have.been.calledOnceWith(["arg"]);
+      expect(callbackStub).to.have.been.calledOnceWith("arg");
       polkadotEventEmitter.emit("onBalanceChange", "origin1", "arg");
       expect(callbackStub).to.have.been.calledTwice;
       polkadotEventEmitter.removeAllListeners("onBalanceChange", "origin1");
@@ -54,8 +54,8 @@ describe('Test polkadotEventEmitter', function() {
         "onBalanceChange", "origin1", additionalCallbackStub
       );
       polkadotEventEmitter.emit("onBalanceChange", "origin1", "arg");
-      expect(callbackStub).to.have.been.calledOnceWith(["arg"]);
-      expect(additionalCallbackStub).to.have.been.calledOnceWith(["arg"]);
+      expect(callbackStub).to.have.been.calledOnceWith("arg");
+      expect(additionalCallbackStub).to.have.been.calledOnceWith("arg");
     });
 
     it('should remove all callbacks on same origin', function() {
@@ -69,13 +69,13 @@ describe('Test polkadotEventEmitter', function() {
         "onBalanceChange", "origin1", additionalCallbackStub
       );
       polkadotEventEmitter.emit("onBalanceChange", "origin1", "arg");
-      expect(callbackStub).to.have.been.calledOnceWith(["arg"]);
-      expect(additionalCallbackStub).to.have.been.calledOnceWith(["arg"]);
+      expect(callbackStub).to.have.been.calledOnceWith("arg");
+      expect(additionalCallbackStub).to.have.been.calledOnceWith("arg");
       polkadotEventEmitter.removeAllListeners("onBalanceChange", "origin1");
       // callbacks are removed and wont be called second time
       polkadotEventEmitter.emit("onBalanceChange", "origin1", "arg");
-      expect(callbackStub).to.have.been.calledOnceWith(["arg"]);
-      expect(additionalCallbackStub).to.have.been.calledOnceWith(["arg"]);
+      expect(callbackStub).to.have.been.calledOnceWith("arg");
+      expect(additionalCallbackStub).to.have.been.calledOnceWith("arg");
     });
 
     it('should fail to emit on no listeners subscribed', function () {
@@ -101,12 +101,12 @@ describe('Test polkadotEventEmitter', function() {
         "onBalanceChange", "origin2", secondOriginCallback
       );
       polkadotEventEmitter.emit("onBalanceChange", "origin1", "arg");
-      expect(firstOriginCallback).to.have.been.calledOnceWith(["arg"]);
+      expect(firstOriginCallback).to.have.been.calledOnceWith("arg");
       expect(secondOriginCallback).to.not.have.been.called;
 
       polkadotEventEmitter.emit("onBalanceChange", "origin2", "arg");
-      expect(firstOriginCallback).to.have.been.calledOnceWith(["arg"]);
-      expect(secondOriginCallback).to.have.been.calledOnceWith(["arg"]);
+      expect(firstOriginCallback).to.have.been.calledOnceWith("arg");
+      expect(secondOriginCallback).to.have.been.calledOnceWith("arg");
     });
 
 
@@ -132,7 +132,7 @@ describe('Test polkadotEventEmitter', function() {
 
       expect(firstOriginCallbackOne).not.to.have.been.called;
       expect(firstOriginCallbackTwo).not.to.have.been.called;
-      expect(secondOriginCallback).to.have.been.calledOnceWith(["arg"]);
+      expect(secondOriginCallback).to.have.been.calledOnceWith("arg");
     });
   });
 });

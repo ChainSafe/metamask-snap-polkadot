@@ -143,14 +143,25 @@ export interface SnapConfig {
 
 // Polkadot types
 
-export type EventCallback = (...args: unknown[]) => void;
+export type Callback<T> = (arg: T) => void;
+
+export type PolkadotEventArgument = Balance;
+export type PolkadotEventCallback = Callback<PolkadotEventArgument>;
+
+export type TxEventArgument = TxStatus;
+export type TxEventCallback = Callback<TxEventArgument>;
+
+export type Balance = string;
+export type TxStatus = {
+  txHash: string;
+};
 
 export type Origin = string;
 export type HexHash = string;
 
 export interface PolkadotApi {
-  subscribeToBalance(callback: EventCallback): void;
-  unsubscribeFromBalance(callback: EventCallback): void;
+  subscribeToBalance(callback: PolkadotEventCallback): void;
+  unsubscribeFromBalance(callback: PolkadotEventCallback): void;
   unsubscribeAllFromBalance(): void;
-  subscribeToTxStatus(hash: HexHash, onIncluded: EventCallback, onFinalized?: EventCallback): void;
+  subscribeToTxStatus(hash: HexHash, onIncluded: TxEventCallback, onFinalized?: TxEventCallback): void;
 }
