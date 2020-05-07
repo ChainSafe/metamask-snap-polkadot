@@ -86,7 +86,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 showAlert("error", "Please fill recipient and amount fields.");
             }
         }
-    }, [amount, handleTransactionFinalized, handleTransactionIncluded, recipient, setAmount, setRecipient, network]);
+    }, [amount, handleTransactionFinalized, handleTransactionIncluded, recipient, setAmount, setRecipient]);
 
     return (
         <Card>
