@@ -153,7 +153,6 @@ export type TxEventCallback = Callback<TxEventArgument>;
 
 export type Balance = string;
 export type TxStatus = {
-  blockHash: string;
   txHash: string;
 };
 

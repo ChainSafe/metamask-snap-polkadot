@@ -6,13 +6,14 @@ import {
     CardContent,
     CardHeader,
     Grid,
-    TextField,
+    Hidden,
     InputAdornment,
-    Snackbar, Hidden
+    Snackbar,
+    TextField
 } from '@material-ui/core/';
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {Alert} from "@material-ui/lab";
-import {getPolkascanBlockUrl, getPolkascanTxUrl} from "../../services/polkascan";
+import {getPolkascanTxUrl} from "../../services/polkascan";
 import {TxEventArgument} from "@nodefactory/metamask-polkadot-types";
 import {getCurrency} from "../../services/format";
 
@@ -40,17 +41,17 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
     }, [setAmount]);
 
     const handleTransactionIncluded = useCallback((tx: TxEventArgument) => {
-        if (tx.txHash && tx.blockHash) {
+        if (tx.txHash) {
             showAlert(
                 "success",
                 `Transaction ${tx.txHash} included in block`,
-                getPolkascanBlockUrl(tx.blockHash, network)
+                getPolkascanTxUrl(tx.txHash, network)
             );
         }
     }, [network]);
 
     const handleTransactionFinalized = useCallback((tx: TxEventArgument) => {
-        if (tx.txHash && tx.blockHash) {
+        if (tx.txHash) {
             showAlert(
                 "success",
                 `Transaction ${tx.txHash} finalized`,
@@ -98,7 +99,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                         onChange={handleRecipientChange} size="medium" fullWidth id="recipient" label="Recipient" variant="outlined" value={recipient}>
                         </TextField>
                         <Box m="0.5rem"/>
-                        <TextField 
+                        <TextField
                         InputProps={{startAdornment: <InputAdornment position="start">{`m${getCurrency(network)}`}</InputAdornment>}}
                         onChange={handleAmountChange} size="medium" fullWidth id="recipient" label="Amount" variant="outlined" value={amount}>
                         </TextField>

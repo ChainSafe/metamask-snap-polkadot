@@ -10,27 +10,27 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
   const api = await getApi(wallet);
   const address = (await getKeyPair(wallet)).address;
   // Here we subscribe to any balance changes and update the on-screen value
-  const unsubscribeCallback = await api.query.system.account(address, ({data: { free: currentFree }}) => {
+  await api.query.system.account(address, ({data: { free: currentFree }}) => {
     updateAsset(wallet, origin, currentFree.toString());
     polkadotEventEmitter.emit("onBalanceChange", origin, currentFree.toString());
   });
-  if (!unsubscribe) {
-    unsubscribe = {
-      [origin]: unsubscribeCallback
-    };
-  } else {
-    // clean up if already subscribed
-    if (unsubscribe[origin]) {
-      unsubscribe[origin]();
-    }
-    // register new unsubscribe callback
-    unsubscribe[origin] = unsubscribeCallback;
-  }
+  // if (!unsubscribe) {
+  //   unsubscribe = {
+  //     [origin]: unsubscribeCallback
+  //   };
+  // } else {
+  //   // clean up if already subscribed
+  //   if (unsubscribe[origin]) {
+  //     unsubscribe[origin]();
+  //   }
+  //   // register new unsubscribe callback
+  //   unsubscribe[origin] = unsubscribeCallback;
+  // }
 }
 
 export function removeOnBalanceChange(origin: string): void {
-  if (unsubscribe && unsubscribe[origin]) {
-    unsubscribe[origin]();
-    delete unsubscribe[origin];
-  }
+  // if (unsubscribe && unsubscribe[origin]) {
+  //   unsubscribe[origin]();
+  //   delete unsubscribe[origin];
+  // }
 }
