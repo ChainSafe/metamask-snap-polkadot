@@ -1,84 +1,29 @@
 {
-  "name": "polkadot-snap",
-  "version": "0.0.1",
-  "description": "Metamask snap to interact with Polkadot dapps.",
-  "main": "build/index.js",
-  "scripts": {
-    "postinstall": "cd example && yarn install",
-    "demo": "yarn run build && concurrently  --raw --kill-others \"yarn run serve\" \"cd example && yarn run start\"",
-    "lint": "yarn run lint:types && yarn run lint:style",
-    "lint:types": "tsc --noEmit --pretty",
-    "lint:style": "eslint 'src/**/*.{js,ts,tsx}' --fix",
-    "start": "yarn run build && yarn run serve",
-    "prebuild": "rm -rf build && rm -rf dist",
-    "type-check": "tsc --noEmit",
-    "type-check:watch": "npm run type-check -- --watch",
-    "build": "yarn run build:tsc && yarn run build:snap",
-    "build:tsc": "tsc --build --pretty",
-    "build:snap": "nf-snap build --stripComments --debug",
-    "watch": "concurrently  --raw --kill-others \"yarn run watch:tsc\" \"yarn run watch:snap\" \"yarn run serve\"",
-    "watch:tsc": "yarn run build:tsc --watch",
-    "watch:snap": "nf-snap watch --debug -s build/index.js",
-    "serve": "nf-snap serve",
-    "test": "yarn run test:unit",
-    "test:unit": "mocha -r ts-node/register \"test/unit/**/*.test.ts\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NodeFactoryIo/metamask-snap-polkadot.git"
-  },
-  "keywords": [
-    "polkadot",
-    "metamask",
-    "snap",
-    "plugin",
-    "dapp",
-    "wallet"
-  ],
+  "name": "root",
+  "private": true,
   "author": "NodeFactory <info@nodefactory.io>",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/NodeFactoryIo/metamask-snap-polkadot/issues"
-  },
-  "homepage": "https://github.com/NodeFactoryIo/metamask-snap-polkadot#readme",
-  "web3Wallet": {
-    "bundle": {
-      "local": "dist/bundle.js",
-      "url": "http://localhost:8081/dist/bundle.js"
-    },
-    "initialPermissions": {
-      "alert": {},
-      "confirm": {},
-      "getPluginState": {},
-      "updatePluginState": {},
-      "wallet_manageAssets": {}
-    }
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build:snap": "lerna run build --scope polkadot-snap",
+    "build:adapter": "lerna run build --scope @nodefactory/metamask-polkadot-adapter",
+    "start:snap": "lerna run serve --scope polkadot-snap",
+    "start:example": "lerna run start --scope example",
+    "predemo": "yarn run build:snap && yarn run build:adapter",
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "lint": "lerna run lint",
+    "lint:style:fix": "lerna run lint:style:fix",
+    "demo": "concurrently  --raw --kill-others \"yarn run start:snap\" \"yarn run start:example\""
   },
   "devDependencies": {
-    "@nodefactory/snaps-cli": "^1.0.0",
-    "@types/axios": "^0.14.0",
-    "@types/chai": "^4.2.10",
-    "@types/mocha": "^7.0.2",
-    "@types/sinon": "^7.5.2",
-    "@types/sinon-chai": "^3.2.3",
-    "@typescript-eslint/eslint-plugin": "^2.22.0",
-    "@typescript-eslint/parser": "^2.22.0",
-    "chai": "^4.2.0",
-    "concurrently": "^5.1.0",
+    "lerna": "^3.20.2",
+    "@types/node": "^12.12.35",
+    "@typescript-eslint/eslint-plugin": "^2.28.0",
+    "@typescript-eslint/parser": "^2.28.0",
     "eslint": "^6.8.0",
-    "mocha": "^7.1.0",
-    "sinon": "^9.0.1",
-    "sinon-chai": "^3.5.0",
-    "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
-  },
-  "dependencies": {
-    "@polkadot/api": "^1.8.0-beta.10",
-    "@polkadot/util": "2.7.1",
-    "axios": "^0.19.2",
-    "tweetnacl": "^1.0.3"
-  },
-  "resolutions": {
-    "@polkadot/wasm-crypto": "file:./wasm-crypto-stub"
   }
 }

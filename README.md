@@ -21,10 +21,6 @@ Metamask snap (plugin) to enable Metamask users interaction with Polkadot dapps.
 - `yarn install`
 - `yarn run demo`
 
-Alternatively `yarn watch` will build and start http server while monitoring for file changes.
-
-Snap inspector: https://xops.github.io/inspector-snaps/
-
 
 ### License
 Copyright [2020] [Node Factory d.o.o.]
