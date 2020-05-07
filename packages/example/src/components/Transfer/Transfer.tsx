@@ -14,6 +14,7 @@ import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {Alert} from "@material-ui/lab";
 import {getPolkascanBlockUrl, getPolkascanTxUrl} from "../../services/polkascan";
 import {TxEventArgument} from "@nodefactory/metamask-polkadot-types";
+import {getCurrency} from "../../services/format";
 
 interface ITransferProps {
     network: string
@@ -29,26 +30,6 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
     const [severity, setSeverity] = useState("success" as AlertSeverity);
     const [message, setMessage] = useState("");
     const [polkascanUrl, setPolkascanUrl] = useState("");
-
-    const handleCurrency = (network: string): string => {
-        switch(network) {
-            case "kusama":
-                return "KSM";
-            case "westend":
-                return "mWND";
-            default: return ""
-        }
-    };
-
-    const currencyMul = (network: string): string => {
-        switch(network) {
-            case "kusama":
-                return "1";
-            case "westend":
-                return "1000000000";
-            default: return ""
-        }
-    };
 
     const handleRecipientChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setRecipient(event.target.value);
@@ -90,10 +71,11 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         if(provider && provider.signer.signPayload) {
             if (amount && recipient) {
                 const api = await provider.getMetamaskSnapApi();
-                const convertedAmount = BigInt(amount) * BigInt(currencyMul(network));
+                const convertedAmount = BigInt(amount) * BigInt("1000000000");
                 const txPayload = await api.generateTransactionPayload(convertedAmount.toString(), recipient);
                 const signedTx = await provider.signer.signPayload(txPayload.payload);
                 let txHash = await api.send(signedTx.signature, txPayload);
+
                 // subscribe to transaction events
                 const polkadotEventApi = await api.getEventApi();
                 polkadotEventApi.subscribeToTxStatus(txHash, handleTransactionIncluded, handleTransactionFinalized);
@@ -117,7 +99,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                         </TextField>
                         <Box m="0.5rem"/>
                         <TextField 
-                        InputProps={{startAdornment: <InputAdornment position="start">{handleCurrency(network)}</InputAdornment>}}
+                        InputProps={{startAdornment: <InputAdornment position="start">{`m${getCurrency(network)}`}</InputAdornment>}}
                         onChange={handleAmountChange} size="medium" fullWidth id="recipient" label="Amount" variant="outlined" value={amount}>
                         </TextField>
                     </Grid>
