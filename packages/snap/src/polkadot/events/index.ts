@@ -1,7 +1,7 @@
 import {Callback, HexHash, Origin, PolkadotEventArgument, TxEventArgument} from "@nodefactory/metamask-polkadot-types";
 import {EventEmitterImplementation} from "./emitter";
 
-export interface EventEmitter<K = keyof string, T = keyof string, J = keyof any>  {
+export interface EventEmitter<K = keyof string, T = keyof string, J = keyof unknown>  {
   addListener(event: K, identifier: T, listener: Callback<J>): this;
   removeListener(event: K, identifier: T, listener: Callback<J>): this;
   removeAllListeners(event: K, identifier: T): this;
