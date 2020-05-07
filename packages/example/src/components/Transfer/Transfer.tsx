@@ -14,6 +14,7 @@ import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {Alert} from "@material-ui/lab";
 import {getPolkascanBlockUrl, getPolkascanTxUrl} from "../../services/polkascan";
 import {TxEventArgument} from "@nodefactory/metamask-polkadot-types";
+import {findSi, formatBalance} from "@polkadot/util";
 
 interface ITransferProps {
     network: string
@@ -32,9 +33,20 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
 
     const handleCurrency = (network: string): string => {
         switch(network) {
-            case "kusama": return "KSM";
+            case "kusama":
+                return "KSM";
             case "westend":
                 return "mWND";
+            default: return ""
+        }
+    };
+
+    const currencyMul = (network: string): string => {
+        switch(network) {
+            case "kusama":
+                return "1";
+            case "westend":
+                return "1000000000";
             default: return ""
         }
     };
@@ -79,8 +91,8 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         if(provider && provider.signer.signPayload) {
             if (amount && recipient) {
                 const api = await provider.getMetamaskSnapApi();
-                const amountWND = BigInt(amount) * BigInt("1000000000");
-                const txPayload = await api.generateTransactionPayload(amountWND.toString(), recipient);
+                const convertedAmount = BigInt(amount) * BigInt(currencyMul(network));
+                const txPayload = await api.generateTransactionPayload(convertedAmount.toString(), recipient);
                 const signedTx = await provider.signer.signPayload(txPayload.payload);
                 let txHash = await api.send(signedTx.signature, txPayload);
                 // subscribe to transaction events
