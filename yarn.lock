@@ -2093,7 +2093,7 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@nodefactory/snaps-cli@^1.0.0":
+"@nodefactory/snaps-cli@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@nodefactory/snaps-cli/-/snaps-cli-1.0.0.tgz#6f89a3ef8421c1f64e43906a51aaacac6e64c69b"
   integrity sha512-6JbPXvSvw+447///S6Ky1pBOxo2n7xjRzGMnzBY4UInOXjfBSkHeviufDJfeQXE4EB+yNV70rHI43NEgj40+Bg==

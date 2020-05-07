@@ -66,15 +66,11 @@ export const Dashboard = () => {
         const api = eventApi;
         if(api) {
             (async function () {
-                console.log("subscribing");
-                // @ts-ignore
                 api.subscribeToBalance(handleBalanceChange);
             })();
         }
         return function () {
-            console.log("cleaning", api);
             if (api) {
-                console.log("unsubscribing");
                 api.unsubscribeAllFromBalance();
             }
         }
@@ -83,7 +79,6 @@ export const Dashboard = () => {
     useEffect(() => {
         (async () => {
             if (state.polkadotSnap.isInstalled) {
-                console.log("Updating values");
                 const extension = await getInjectedMetamaskExtension();
                 if (!extension) return;
                 const metamaskSnapApi = await extension.getMetamaskSnapApi();

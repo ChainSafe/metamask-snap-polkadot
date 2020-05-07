@@ -47,4 +47,4 @@ export const Account = (props: AccountProps) => {
             </CardContent>
         </Card>
     );
-}
+};
