@@ -13,6 +13,7 @@ import {
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {Alert} from "@material-ui/lab";
 import {getPolkascanBlockUrl, getPolkascanTxUrl} from "../../services/polkascan";
+import {TxEventArgument} from "@nodefactory/metamask-polkadot-types";
 
 interface ITransferProps {
     network: string
@@ -33,7 +34,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         switch(network) {
             case "kusama": return "KSM";
             case "westend":
-                return "WND";
+                return "mWND";
             default: return ""
         }
     };
@@ -46,24 +47,22 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         setAmount(event.target.value);
     }, [setAmount]);
 
-    const handleTransactionIncluded = useCallback((args) => {
-        const txDetails = args[0];
-        if (txDetails.txHash && txDetails.blockHash) {
+    const handleTransactionIncluded = useCallback((tx: TxEventArgument) => {
+        if (tx.txHash && tx.blockHash) {
             showAlert(
                 "success",
-                `Transaction ${txDetails.txHash} included in block`,
-                getPolkascanBlockUrl(txDetails.blockHash, network)
+                `Transaction ${tx.txHash} included in block`,
+                getPolkascanBlockUrl(tx.blockHash, network)
             );
         }
     }, [network]);
 
-    const handleTransactionFinalized = useCallback((args) => {
-        const txDetails = args[0];
-        if (txDetails.txHash && txDetails.blockHash) {
+    const handleTransactionFinalized = useCallback((tx: TxEventArgument) => {
+        if (tx.txHash && tx.blockHash) {
             showAlert(
                 "success",
-                `Transaction ${txDetails.txHash} finalized`,
-                getPolkascanTxUrl(txDetails.txHash, network)
+                `Transaction ${tx.txHash} finalized`,
+                getPolkascanTxUrl(tx.txHash, network)
             );
         }
     }, [network]);
@@ -80,17 +79,21 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         if(provider && provider.signer.signPayload) {
             if (amount && recipient) {
                 const api = await provider.getMetamaskSnapApi();
-                const txPayload = await api.generateTransactionPayload(amount, recipient);
+                const amountWND = BigInt(amount) * BigInt("1000000000");
+                const txPayload = await api.generateTransactionPayload(amountWND.toString(), recipient);
                 const signedTx = await provider.signer.signPayload(txPayload.payload);
                 let txHash = await api.send(signedTx.signature, txPayload);
                 // subscribe to transaction events
                 const polkadotEventApi = await api.getEventApi();
-                polkadotEventApi.subscribeToTxStatus(txHash, handleTransactionIncluded, handleTransactionFinalized)
+                polkadotEventApi.subscribeToTxStatus(txHash, handleTransactionIncluded, handleTransactionFinalized);
+                // clear fields
+                setAmount("");
+                setRecipient("");
             } else {
                 showAlert("error", "Please fill recipient and amount fields.");
             }
         }
-    }, [amount, handleTransactionFinalized, handleTransactionIncluded, recipient]);
+    }, [amount, handleTransactionFinalized, handleTransactionIncluded, recipient, setAmount, setRecipient]);
 
     return (
         <Card>
@@ -99,11 +102,13 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 <Grid container alignItems="center" justify="space-between">
                     <Grid item xs={12}>
                         <TextField
-                        onChange={handleRecipientChange} size="medium" fullWidth id="recipient" label="Recipient" variant="outlined" />
+                        onChange={handleRecipientChange} size="medium" fullWidth id="recipient" label="Recipient" variant="outlined" value={recipient}>
+                        </TextField>
                         <Box m="0.5rem"/>
                         <TextField 
                         InputProps={{startAdornment: <InputAdornment position="start">{handleCurrency(network)}</InputAdornment>}}
-                        onChange={handleAmountChange} size="medium" fullWidth id="recipient" label="Amount" variant="outlined" />
+                        onChange={handleAmountChange} size="medium" fullWidth id="recipient" label="Amount" variant="outlined" value={amount}>
+                        </TextField>
                     </Grid>
                 </Grid>
                 <Box m="0.5rem"/>

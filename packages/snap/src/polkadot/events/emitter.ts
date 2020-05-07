@@ -1,24 +1,24 @@
-import {EventCallback} from "@nodefactory/metamask-polkadot-types";
+import {Callback} from "@nodefactory/metamask-polkadot-types";
 import {EventEmitter} from "./index";
 
-export class EventEmitterImplementation<T extends string, K extends string> implements EventEmitter<T, K> {
+export class EventEmitterImplementation<T extends string, K extends string, J> implements EventEmitter<T, K, J> {
 
-  private listeners: Record<K, Record<T, EventCallback[]>>;
+  private listeners: Record<K, Record<T, Callback<J>[]>>;
 
-  addListener(event: T, identifier: K, listener: (...args: unknown[]) => void): this {
+  addListener(event: T, identifier: K, listener: Callback<J>): this {
     // create listeners structure if first call
     if (!this.listeners) {
       this.listeners = {
         [identifier]: {
           [event]: []
         }
-      } as Record<K, Record<T, EventCallback[]>>;
+      } as Record<K, Record<T, Callback<J>[]>>;
     }
     // initialize slot for origin if it doesn't exist
     if (!this.listeners[identifier]) {
       this.listeners[identifier] = {
         [event]: []
-      } as Record<T, EventCallback[]>;
+      } as Record<T, Callback<J>[]>;
     }
 
     // initialize slot for event if it doesn't exist
@@ -31,15 +31,15 @@ export class EventEmitterImplementation<T extends string, K extends string> impl
     return this;
   }
 
-  emit(event: T, identifier: K, ...args: unknown[]): boolean {
+  emit(event: T, identifier: K, arg: J): boolean {
     if (this.hasAttachedListeners(event, identifier)) {
-      this.listeners[identifier][event].forEach(callback => callback(args));
+      this.listeners[identifier][event].forEach(callback => callback(arg));
       return this.listeners[identifier][event].length != 0;
     }
     return false;
   }
 
-  removeListener(event: T, identifier: K, listener: (...args: unknown[]) => void): this {
+  removeListener(event: T, identifier: K, listener: Callback<J>): this {
     if (this.hasAttachedListeners(event, identifier)) {
       this.listeners[identifier][event] = this.listeners[identifier][event].filter(l => l != listener);
     }
