@@ -14,7 +14,6 @@ import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {Alert} from "@material-ui/lab";
 import {getPolkascanBlockUrl, getPolkascanTxUrl} from "../../services/polkascan";
 import {TxEventArgument} from "@nodefactory/metamask-polkadot-types";
-import {findSi, formatBalance} from "@polkadot/util";
 
 interface ITransferProps {
     network: string
@@ -105,7 +104,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 showAlert("error", "Please fill recipient and amount fields.");
             }
         }
-    }, [amount, handleTransactionFinalized, handleTransactionIncluded, recipient, setAmount, setRecipient]);
+    }, [amount, handleTransactionFinalized, handleTransactionIncluded, recipient, setAmount, setRecipient, network]);
 
     return (
         <Card>
