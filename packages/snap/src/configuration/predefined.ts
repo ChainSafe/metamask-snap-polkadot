@@ -6,7 +6,7 @@ export const kusamaConfiguration: SnapConfig = {
   unit: {
     assetId: "ksm-token",
     decimals: 12,
-    image: "https://svgur.com/i/Jiy.svg",
+    image: "https://svgshare.com/i/L3o.svg",
     symbol: "KSM",
   },
   wsRpcUrl: "wss://kusama-rpc.polkadot.io/",
@@ -17,7 +17,7 @@ export const westendConfiguration: SnapConfig = {
   unit: {
     assetId: "wst-token",
     decimals: 12,
-    image: "https://svgur.com/i/Jiy.svg",
+    image: "https://svgshare.com/i/L2d.svg",
     symbol: "WND",
   },
   wsRpcUrl: "wss://westend-rpc.polkadot.io/",
