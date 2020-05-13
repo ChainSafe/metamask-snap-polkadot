@@ -1,14 +1,14 @@
 {
   "name": "example",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "latest",
     "@material-ui/styles": "^4.9.6",
-    "@nodefactory/metamask-polkadot-adapter": "^0.1.0",
-    "@nodefactory/metamask-polkadot-types": "^0.1.0",
+    "@nodefactory/metamask-polkadot-adapter": "^0.1.1",
+    "@nodefactory/metamask-polkadot-types": "^0.1.1",
     "@polkadot/api": "^1.12.2",
     "@polkadot/extension-dapp": "^0.24.1",
     "@polkadot/util": "^2.7.1",
