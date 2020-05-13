@@ -1,6 +1,6 @@
 {
   "name": "polkadot-snap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "Metamask snap to interact with Polkadot dapps.",
   "main": "build/index.js",
@@ -58,7 +58,7 @@
     }
   },
   "devDependencies": {
-    "@nodefactory/metamask-polkadot-types": "^0.1.1",
+    "@nodefactory/metamask-polkadot-types": "^0.1.2",
     "@nodefactory/snaps-cli": "1.0.0",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^7.0.2",
