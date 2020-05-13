@@ -6,9 +6,13 @@ import {injectMetamaskPolkadotSnapProvider} from "@nodefactory/metamask-polkadot
 function App() {
 
     useEffect(() => {
-        injectMetamaskPolkadotSnapProvider("westend");
+        injectMetamaskPolkadotSnapProvider(
+            "westend",
+            undefined,
+            "http://localhost:8081/dist/bundle.js"
+        );
     }, [])
-  
+
   return (
       <MetaMaskContextProvider>
         <Dashboard/>
