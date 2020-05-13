@@ -9,7 +9,7 @@ function App() {
         injectMetamaskPolkadotSnapProvider(
             "westend",
             undefined,
-            "https://ipfs.infura.io/ipfs/QmPa7anrvkCHLmwiw8fKGRVQanGXfGqvfJprmxeCj24WiU/"
+            "http://localhost:8081/dist/bundle.js"
         );
     }, [])
 
