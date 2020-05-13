@@ -4,7 +4,9 @@
   "types": "./index.d.ts",
   "author": "NodeFactory <info@nodefactory.io>",
   "license": "Apache-2.0",
+  "private": false,
   "dependencies": {
     "@polkadot/api": "^1.10.1"
-  }
+  },
+  "gitHead": "fd3f9ffd400a1048cd6026c198ac18a96fbd950d"
 }
