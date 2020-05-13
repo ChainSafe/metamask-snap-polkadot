@@ -6,9 +6,13 @@ import {injectMetamaskPolkadotSnapProvider} from "@nodefactory/metamask-polkadot
 function App() {
 
     useEffect(() => {
-        injectMetamaskPolkadotSnapProvider("westend");
+        injectMetamaskPolkadotSnapProvider(
+            "westend",
+            undefined,
+            "https://ipfs.infura.io/ipfs/QmPa7anrvkCHLmwiw8fKGRVQanGXfGqvfJprmxeCj24WiU/"
+        );
     }, [])
-  
+
   return (
       <MetaMaskContextProvider>
         <Dashboard/>
