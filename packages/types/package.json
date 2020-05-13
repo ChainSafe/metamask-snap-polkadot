@@ -5,8 +5,11 @@
   "author": "NodeFactory <info@nodefactory.io>",
   "license": "Apache-2.0",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@polkadot/api": "^1.10.1"
   },
-  "gitHead": "fd3f9ffd400a1048cd6026c198ac18a96fbd950d"
+  "gitHead": "f02721b70d74e138f6401a7a4e4d36412ca1e9dc"
 }

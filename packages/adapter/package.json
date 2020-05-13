@@ -7,6 +7,9 @@
   "author": "NodeFactory <info@nodefactory.io>",
   "license": "Apache-2.0",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@polkadot/api": "^1.11.2",
     "@polkadot/extension-inject": "^0.23.1"
@@ -29,5 +32,5 @@
     "eslint": "^6.8.0",
     "typescript": "^3.8.3"
   },
-  "gitHead": "fd3f9ffd400a1048cd6026c198ac18a96fbd950d"
+  "gitHead": "f02721b70d74e138f6401a7a4e4d36412ca1e9dc"
 }
