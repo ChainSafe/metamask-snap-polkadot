@@ -41,10 +41,10 @@ export async function updateAsset(
 ): Promise<boolean> {
   const configuration = getConfiguration(wallet);
   const assetId = configuration.unit.assetId;
-  assets.forEach((value, key) => console.log(`${key}::${value}`));
   if(assets.has(getIdentifier(origin, assetId))) {
     const asset = assets.get(getIdentifier(origin, assetId));
     const newBalance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
+    // update if balance changed
     if (asset.balance !== newBalance) {
       asset.balance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
       await executeAssetOperation(asset, wallet, "update");
