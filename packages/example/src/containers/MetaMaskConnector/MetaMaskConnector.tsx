@@ -19,6 +19,7 @@ export const MetaMaskConnector = () => {
 
     const installSnap = useCallback(async () => {
        const isInitiated = await installPolkadotSnap();
+       console.log(`SNAP INSTALLED: ${isInitiated}`);
        if(!isInitiated) {
            dispatch({type: MetamaskActions.SET_INSTALLED_STATUS, payload: {isInstalled: false, message: "Please accept snap installation prompt"}})
        } else {

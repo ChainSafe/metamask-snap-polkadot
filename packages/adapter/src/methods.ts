@@ -41,10 +41,6 @@ export async function signPayloadRaw(this: MetamaskPolkadotSnap, payload: Signer
   return (await sign.bind(this)("signPayloadRaw", payload)).signature;
 }
 
-export async function addPolkadotAsset(this: MetamaskPolkadotSnap): Promise<void> {
-  await sendSnapMethod({method: "addPolkadotAsset"}, this.snapId);
-}
-
 export async function getBalance(this: MetamaskPolkadotSnap): Promise<string> {
   return (await sendSnapMethod({method: "getBalance"}, this.snapId)) as string;
 }

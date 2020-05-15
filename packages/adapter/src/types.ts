@@ -8,7 +8,6 @@ import {
 import {InjectedExtension} from "@polkadot/extension-inject/types";
 
 export interface MetamaskSnapApi {
-  addPolkadotAsset(): Promise<void>;
   getPublicKey(): Promise<string>;
   getBalance(): Promise<string>;
   exportSeed(): Promise<string>;
