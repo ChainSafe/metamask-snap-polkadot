@@ -40,10 +40,17 @@ export async function updateAsset(
   const configuration = getConfiguration(wallet);
   const assetId = configuration.unit.assetId;
   console.log("Updating asset", origin, assetId);
+  console.log("Current saved assets");
+  assets.forEach((value, key) => console.log(`${key}::${value}`));
   if(assets.has(getIdentifier(origin, assetId))) {
     const asset = assets.get(getIdentifier(origin, assetId));
-    asset.balance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
-    await executeAssetOperation(asset, wallet, "update");
+    const newBalance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
+    console.log(`OLD BALANCE:${asset.balance} // NEW BALANCE:${newBalance}`);
+    if (asset.balance !== newBalance) {
+      asset.balance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
+      console.log("EXECUTING UPDATE");
+      await executeAssetOperation(asset, wallet, "update");
+    }
   } else {
     const asset = getPolkadotAssetDescription(0, await getAddress(wallet), configuration);
     await removeAsset(wallet, origin);
