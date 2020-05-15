@@ -89,13 +89,15 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
         resetApi();
       }
       // set new configuration
-      const configuration = configure(wallet, requestObject.params.configuration.networkName, requestObject.params.configuration);
+      const configuration = configure(
+        wallet, requestObject.params.configuration.networkName, requestObject.params.configuration
+      );
       // initialize api with new configuration
       api = await getApi(wallet);
       // add new asset
       const balance = await getBalance(wallet, api);
       await updateAsset(wallet, originString, balance);
-      return configuration
+      return configuration;
     }
     case "generateTransactionPayload":
       return await generateTransactionPayload(wallet, api, requestObject.params.to, requestObject.params.amount);
