@@ -42,10 +42,6 @@ export interface AddPolkadotAssetRequest {
   method: "addPolkadotAsset";
 }
 
-export interface RemovePolkadotAssetRequest {
-  method: "removePolkadotAsset";
-}
-
 export interface GetChainHeadRequest {
   method: "getChainHead";
 }
@@ -89,7 +85,6 @@ export type MetamaskPolkadotRpcRequest =
     | GetBalanceRequest
     | ConfigureSnapRequest
     | AddPolkadotAssetRequest
-    | RemovePolkadotAssetRequest
     | GetChainHeadRequest
     | SignPayloadJSONRequest
     | SignPayloadRawRequest
