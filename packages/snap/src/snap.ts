@@ -82,13 +82,23 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return balance;
     }
     case 'configure': {
-      resetApi();
-      return configure(wallet, requestObject.params.configuration.networkName, requestObject.params.configuration);
+      const isInitialConfiguration = wallet.getPluginState().polkadot.config === null;
+      // reset api and remove asset only if already configured
+      if (!isInitialConfiguration) {
+        await removeAsset(wallet, originString);
+        resetApi();
+      }
+      // set new configuration
+      const configuration = configure(
+        wallet, requestObject.params.configuration.networkName, requestObject.params.configuration
+      );
+      // initialize api with new configuration
+      api = await getApi(wallet);
+      // add new asset
+      const balance = await getBalance(wallet, api);
+      await updateAsset(wallet, originString, balance);
+      return configuration;
     }
-    case 'addPolkadotAsset':
-      return await updateAsset(wallet, originString, 0);
-    case 'removePolkadotAsset':
-      return await removeAsset(wallet, originString);
     case "generateTransactionPayload":
       return await generateTransactionPayload(wallet, api, requestObject.params.to, requestObject.params.amount);
     case "send":

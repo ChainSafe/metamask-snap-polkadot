@@ -2,7 +2,6 @@ import {Injected, InjectedAccount, InjectedAccounts} from "@polkadot/extension-i
 import {Signer as InjectedSigner, SignerResult} from '@polkadot/api/types';
 import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
 import {
-  addPolkadotAsset,
   exportSeed,
   generateTransactionPayload,
   getAddress,
@@ -78,14 +77,12 @@ export class MetamaskPolkadotSnap implements Injected {
         }]
       });
       await setConfiguration.bind(this)(this.config);
-      await addPolkadotAsset.bind(this)();
     }
     return this;
   };
 
   public getMetamaskSnapApi = async (): Promise<MetamaskSnapApi> => {
     return {
-      addPolkadotAsset: addPolkadotAsset.bind(this),
       exportSeed: exportSeed.bind(this),
       generateTransactionPayload: generateTransactionPayload.bind(this),
       getAllTransactions: getAllTransactions.bind(this),

@@ -29,8 +29,10 @@ export function getPolkadotAssetDescription(
 export async function removeAsset(wallet: Wallet, origin: string): Promise<boolean> {
   const configuration = getConfiguration(wallet);
   const assetId = configuration.unit.assetId;
-  await executeAssetOperation({identifier: assetId}, wallet, "remove");
-  assets.delete(getIdentifier(origin, assetId));
+  if (assets.size != 0) {
+    await executeAssetOperation({identifier: assetId}, wallet, "remove");
+    assets.delete(getIdentifier(origin, assetId));
+  }
   return true;
 }
 
@@ -39,11 +41,14 @@ export async function updateAsset(
 ): Promise<boolean> {
   const configuration = getConfiguration(wallet);
   const assetId = configuration.unit.assetId;
-  console.log("Updating asset", origin, assetId);
   if(assets.has(getIdentifier(origin, assetId))) {
     const asset = assets.get(getIdentifier(origin, assetId));
-    asset.balance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
-    await executeAssetOperation(asset, wallet, "update");
+    const newBalance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
+    // update if balance changed
+    if (asset.balance !== newBalance) {
+      asset.balance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
+      await executeAssetOperation(asset, wallet, "update");
+    }
   } else {
     const asset = getPolkadotAssetDescription(0, await getAddress(wallet), configuration);
     await removeAsset(wallet, origin);
