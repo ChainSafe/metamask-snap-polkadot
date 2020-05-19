@@ -8,10 +8,13 @@ export type FMethodCallback = (
 export type MetamaskState = {
   polkadot: {
     config: SnapConfig;
+    account: {
+      publicKey: string;
+    }
   };
 };
 
-export const EmptyMetamaskState: () => MetamaskState = () => ({polkadot: {config: null}});
+export const EmptyMetamaskState: () => MetamaskState = () => ({polkadot: {config: null, account: {publicKey: ""}}});
 
 export interface Wallet {
   registerApiRequestHandler: (origin: unknown) => unknown;
