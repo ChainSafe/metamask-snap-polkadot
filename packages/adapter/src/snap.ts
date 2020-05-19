@@ -70,15 +70,15 @@ export class MetamaskPolkadotSnap implements Injected {
 
   public enableSnap = async (): Promise<Injected> => {
     if(!(await isPolkadotSnapInstalled(this.snapId))) {
-        await installPolkadotSnap(this.snapId);
+      await installPolkadotSnap(this.snapId);
       await setConfiguration.bind(this)(this.config);
     } else {
-        // check metamask is unlocked
-        try {
-            await getAddress.bind(this)();
-        } catch (e) {
-            await installPolkadotSnap(this.snapId);
-        }
+      // check metamask is unlocked
+      try {
+        await getAddress.bind(this)();
+      } catch (e) {
+        await installPolkadotSnap(this.snapId);
+      }
     }
     return this;
   };
