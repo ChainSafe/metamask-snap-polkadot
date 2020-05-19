@@ -16,7 +16,7 @@ import {
 } from "./methods";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
-import {isPolkadotSnapInstalled} from "./utils";
+import {installPolkadotSnap, isPolkadotSnapInstalled} from "./utils";
 import {getEventApi} from "./api";
 
 export class MetamaskPolkadotSnap implements Injected {
@@ -70,13 +70,15 @@ export class MetamaskPolkadotSnap implements Injected {
 
   public enableSnap = async (): Promise<Injected> => {
     if(!(await isPolkadotSnapInstalled(this.snapId))) {
-      await window.ethereum.send({
-        method: "wallet_enable",
-        params: [{
-          [this.snapId]: {}
-        }]
-      });
+        await installPolkadotSnap(this.snapId);
       await setConfiguration.bind(this)(this.config);
+    } else {
+        // check metamask is unlocked
+        try {
+            await getAddress.bind(this)();
+        } catch (e) {
+            await installPolkadotSnap(this.snapId);
+        }
     }
     return this;
   };
