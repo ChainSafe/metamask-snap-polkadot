@@ -2,7 +2,7 @@ import {Wallet} from "../interfaces";
 import {cryptoWaitReady} from '@polkadot/util-crypto';
 import {KeyringPair} from '@polkadot/keyring/types';
 import {Keyring} from '@polkadot/keyring';
-import {hexToU8a, stringToU8a, u8aToHex, u8aToString} from "@polkadot/util";
+import {hexToU8a, stringToU8a, u8aToHex} from "@polkadot/util";
 import {getConfiguration} from "../configuration";
 
 /**
