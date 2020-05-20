@@ -19,7 +19,6 @@ export async function getKeyPair(wallet: Wallet, unlocked?: boolean): Promise<Ke
   if (state.polkadot.account.publicKey && !unlocked) {
     // account already generated
       keypair = keyring.addFromAddress(hexToU8a(state.polkadot.account.publicKey));
-      console.log(`FROM STATE: ${keypair.isLocked}`);
   } else {
     // generate new account
     const appKey = await wallet.getAppKey();
@@ -27,7 +26,6 @@ export async function getKeyPair(wallet: Wallet, unlocked?: boolean): Promise<Ke
     keypair = keyring.addFromSeed(stringToU8a(seed));
     state.polkadot.account.publicKey = u8aToHex(keypair.publicKey);
     wallet.updatePluginState(state);
-    console.log(`NEW: ${keypair.isLocked}`);
   }
   return keypair;
 }
