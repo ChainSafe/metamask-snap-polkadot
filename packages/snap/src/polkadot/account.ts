@@ -2,7 +2,7 @@ import {Wallet} from "../interfaces";
 import {cryptoWaitReady} from '@polkadot/util-crypto';
 import {KeyringPair} from '@polkadot/keyring/types';
 import {Keyring} from '@polkadot/keyring';
-import {stringToU8a, u8aToString} from "@polkadot/util";
+import {hexToU8a, stringToU8a, u8aToString} from "@polkadot/util";
 import {getConfiguration} from "../configuration";
 
 /**
@@ -17,7 +17,7 @@ export async function getKeyPair(wallet: Wallet): Promise<KeyringPair> {
   let keypair;
   if (state.polkadot.account.publicKey) {
     // account already generated
-    keypair = keyring.addFromAddress(stringToU8a(state.polkadot.account.publicKey));
+      keypair = keyring.addFromAddress(hexToU8a(state.polkadot.account.publicKey));
   } else {
     // generate new account
     const appKey = await wallet.getAppKey();
