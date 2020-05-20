@@ -2,7 +2,7 @@ import {Wallet} from "../interfaces";
 import {cryptoWaitReady} from '@polkadot/util-crypto';
 import {KeyringPair} from '@polkadot/keyring/types';
 import {Keyring} from '@polkadot/keyring';
-import {hexToU8a, stringToU8a, u8aToString} from "@polkadot/util";
+import {hexToU8a, stringToU8a, u8aToHex, u8aToString} from "@polkadot/util";
 import {getConfiguration} from "../configuration";
 
 /**
@@ -23,7 +23,7 @@ export async function getKeyPair(wallet: Wallet): Promise<KeyringPair> {
     const appKey = await wallet.getAppKey();
     const seed = appKey.substr(0, 32);
     keypair = keyring.addFromSeed(stringToU8a(seed));
-    state.polkadot.account.publicKey = u8aToString(keypair.publicKey);
+    state.polkadot.account.publicKey = u8aToHex(keypair.publicKey);
     wallet.updatePluginState(state);
   }
   return keypair;
