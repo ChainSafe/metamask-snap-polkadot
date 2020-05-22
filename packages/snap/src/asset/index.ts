@@ -16,7 +16,7 @@ export function getPolkadotAssetDescription(
     customViewUrl: configuration.unit.customViewUrl ||
         `https://polkascan.io/pre/${configuration.networkName}/account/${address}`,
     decimals: 0,
-      identifier: POLKADOT_SNAP_ASSET_IDENTIFIER,
+    identifier: POLKADOT_SNAP_ASSET_IDENTIFIER,
     image: configuration.unit.image || "",
     symbol: configuration.unit.symbol,
   };
