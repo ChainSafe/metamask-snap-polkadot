@@ -6,7 +6,7 @@ import {getAddress} from "./rpc/getAddress";
 import ApiPromise from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
-import {removeAsset, updateAsset} from "./asset";
+import {updateAsset} from "./asset";
 import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
 import {polkadotEventEmitter, txEventEmitter} from "./polkadot/events";
@@ -85,7 +85,6 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       const isInitialConfiguration = wallet.getPluginState().polkadot.config === null;
       // reset api and remove asset only if already configured
       if (!isInitialConfiguration) {
-        await removeAsset(wallet, originString);
         resetApi();
       }
       // set new configuration

@@ -54,7 +54,7 @@ describe('Test rpc handler function: configure', function() {
     const customConfiguration: SnapConfig = {
       addressPrefix: 1,
       networkName: "test-network",
-      unit: {assetId: "test-asset", customViewUrl: "custom-view-url", decimals: 1, image: "image", symbol: "TST" },
+      unit: {customViewUrl: "custom-view-url", decimals: 1, image: "image", symbol: "TST"},
       wsRpcUrl: "ws-rpc-url",
 
     };
