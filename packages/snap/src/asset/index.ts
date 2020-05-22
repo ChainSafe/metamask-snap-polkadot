@@ -6,7 +6,7 @@ import {Balance} from "@polkadot/types/interfaces";
 import {getConfiguration} from "../configuration";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
-export const polkadotSnapAssetIdentifier = "POLKADOT-SNAP-ASSET";
+export const POLKADOT_SNAP_ASSET_IDENTIFIER = "polkadot-snap-asset";
 
 export function getPolkadotAssetDescription(
   balance: number|string|Balance, address: string, configuration: SnapConfig
@@ -16,7 +16,7 @@ export function getPolkadotAssetDescription(
     customViewUrl: configuration.unit.customViewUrl ||
         `https://polkascan.io/pre/${configuration.networkName}/account/${address}`,
     decimals: 0,
-    identifier: polkadotSnapAssetIdentifier,
+      identifier: POLKADOT_SNAP_ASSET_IDENTIFIER,
     image: configuration.unit.image || "",
     symbol: configuration.unit.symbol,
   };
