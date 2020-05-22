@@ -6,11 +6,7 @@ import {Balance} from "@polkadot/types/interfaces";
 import {getConfiguration} from "../configuration";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
-const assets: Map<string, Asset> = new Map<string, Asset>();
-
-function getIdentifier(origin: string, id: string): string {
-  return `${origin}_${id}`;
-}
+const polkadotSnapAssetIdentifier = "polkadot-snap-asset";
 
 export function getPolkadotAssetDescription(
   balance: number|string|Balance, address: string, configuration: SnapConfig
@@ -20,40 +16,26 @@ export function getPolkadotAssetDescription(
     customViewUrl: configuration.unit.customViewUrl ||
         `https://polkascan.io/pre/${configuration.networkName}/account/${address}`,
     decimals: 0,
-    identifier: configuration.unit.assetId,
+      identifier: polkadotSnapAssetIdentifier,
     image: configuration.unit.image || "",
     symbol: configuration.unit.symbol,
   };
 }
 
-export async function removeAsset(wallet: Wallet, origin: string): Promise<boolean> {
-  const configuration = getConfiguration(wallet);
-  const assetId = configuration.unit.assetId;
-  if (assets.size != 0) {
-    await executeAssetOperation({identifier: assetId}, wallet, "remove");
-    assets.delete(getIdentifier(origin, assetId));
-  }
-  return true;
-}
+let assetState: { balance: string | number; network: string };
 
 export async function updateAsset(
   wallet: Wallet, origin: string, balance: number|string|Balance
-): Promise<boolean> {
+): Promise<void> {
   const configuration = getConfiguration(wallet);
-  const assetId = configuration.unit.assetId;
-  if(assets.has(getIdentifier(origin, assetId))) {
-    const asset = assets.get(getIdentifier(origin, assetId));
-    const newBalance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
-    // update if balance changed
-    if (asset.balance !== newBalance) {
-      asset.balance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
-      await executeAssetOperation(asset, wallet, "update");
-    }
-  } else {
-    const asset = getPolkadotAssetDescription(0, await getAddress(wallet), configuration);
-    await removeAsset(wallet, origin);
+    // const newBalance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
+    const asset = getPolkadotAssetDescription(balance, await getAddress(wallet), configuration);
+    if (!assetState) {
+        // create polkadot snap asset
     await executeAssetOperation(asset, wallet, "add");
-    assets.set(getIdentifier(origin, assetId), asset);
-  }
-  return true;
+    } else if (assetState.balance !== asset.balance || assetState.network !== configuration.networkName) {
+        // update if balance or network changed
+        await executeAssetOperation(asset, wallet, "update");
+    }
+    assetState = {balance: asset.balance, network: configuration.networkName};
 }

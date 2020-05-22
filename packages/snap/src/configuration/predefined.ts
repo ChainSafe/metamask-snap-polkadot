@@ -4,7 +4,6 @@ export const kusamaConfiguration: SnapConfig = {
   addressPrefix: 2,
   networkName: "kusama",
   unit: {
-    assetId: "ksm-token",
     decimals: 12,
     image: "https://svgshare.com/i/L3o.svg",
     symbol: "KSM",
@@ -15,7 +14,6 @@ export const westendConfiguration: SnapConfig = {
   addressPrefix: 42,
   networkName: "westend",
   unit: {
-    assetId: "wst-token",
     decimals: 12,
     image: "https://svgshare.com/i/L2d.svg",
     symbol: "WND",

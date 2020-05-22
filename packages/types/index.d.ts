@@ -124,7 +124,6 @@ export interface BlockInfo {
 export interface UnitConfiguration {
   symbol: string;
   decimals: number;
-  assetId: string;
   image?: string;
   customViewUrl?: string;
 }
