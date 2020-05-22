@@ -6,7 +6,7 @@ import {Balance} from "@polkadot/types/interfaces";
 import {getConfiguration} from "../configuration";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
-const polkadotSnapAssetIdentifier = "POLKADOT-SNAP-ASSET";
+export const polkadotSnapAssetIdentifier = "POLKADOT-SNAP-ASSET";
 
 export function getPolkadotAssetDescription(
   balance: number|string|Balance, address: string, configuration: SnapConfig
