@@ -37,9 +37,8 @@ export const resetApi = (): void => {
   if (api && provider) {
     try {
       api.disconnect();
-      provider.disconnect();
     } catch (e) {
-
+      console.log("Error on api disconnect.");
     }
     api = null;
     provider = null;
@@ -59,6 +58,7 @@ export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
     if (!provider.isConnected()) {
       isConnecting = true;
       await provider.connect();
+      console.log(`AFTER DISCONNECT, PROVIDER STATUS CONNECTED: ${provider.isConnected()}`);
       isConnecting = false;
     }
   }
