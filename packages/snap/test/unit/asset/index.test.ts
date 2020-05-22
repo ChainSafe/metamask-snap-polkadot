@@ -17,7 +17,7 @@ describe('Test asset functions ', function() {
         { // configuration
           networkName: "test-network",
           unit: {
-            assetId: "test-id",
+            assetId: "polkadot-snap-asset",
             customViewUrl: "custom-view",
             decimals: 5,
             image: "test-image",
@@ -31,7 +31,7 @@ describe('Test asset functions ', function() {
         balance: "1.000m",
         customViewUrl: "custom-view",
         decimals: 0,
-        identifier: "test-id",
+        identifier: "polkadot-snap-asset",
         image: "test-image",
         symbol: "TST"
       } as Asset);
@@ -44,7 +44,7 @@ describe('Test asset functions ', function() {
         { // configuration
           networkName: "test-network",
           unit: {
-            assetId: "test-id",
+            assetId: "polkadot-snap-asset",
             decimals: 5,
             symbol: "TST",
             // missing: image && customViewUrl
@@ -57,7 +57,7 @@ describe('Test asset functions ', function() {
         balance: "1.000m",
         customViewUrl: "https://polkascan.io/pre/test-network/account/test-address",
         decimals: 0,
-        identifier: "test-id",
+        identifier: "polkadot-snap-asset",
         image: "",
         symbol: "TST"
       } as Asset);

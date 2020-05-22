@@ -16,7 +16,7 @@ export function getPolkadotAssetDescription(
     customViewUrl: configuration.unit.customViewUrl ||
         `https://polkascan.io/pre/${configuration.networkName}/account/${address}`,
     decimals: 0,
-      identifier: polkadotSnapAssetIdentifier,
+    identifier: polkadotSnapAssetIdentifier,
     image: configuration.unit.image || "",
     symbol: configuration.unit.symbol,
   };
@@ -28,14 +28,14 @@ export async function updateAsset(
   wallet: Wallet, origin: string, balance: number|string|Balance
 ): Promise<void> {
   const configuration = getConfiguration(wallet);
-    // const newBalance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
-    const asset = getPolkadotAssetDescription(balance, await getAddress(wallet), configuration);
-    if (!assetState) {
-        // create polkadot snap asset
+  // const newBalance = formatBalance(balance, {decimals: 12, withSi: true, withUnit: false});
+  const asset = getPolkadotAssetDescription(balance, await getAddress(wallet), configuration);
+  if (!assetState) {
+    // create polkadot snap asset
     await executeAssetOperation(asset, wallet, "add");
-    } else if (assetState.balance !== asset.balance || assetState.network !== configuration.networkName) {
-        // update if balance or network changed
-        await executeAssetOperation(asset, wallet, "update");
-    }
-    assetState = {balance: asset.balance, network: configuration.networkName};
+  } else if (assetState.balance !== asset.balance || assetState.network !== configuration.networkName) {
+    // update if balance or network changed
+    await executeAssetOperation(asset, wallet, "update");
+  }
+  assetState = {balance: asset.balance, network: configuration.networkName};
 }
