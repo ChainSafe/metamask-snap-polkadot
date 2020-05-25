@@ -3,6 +3,8 @@ import sinonChai from "sinon-chai";
 import {WalletMock} from "../wallet.mock.test";
 import {Asset} from "../../../src/interfaces";
 import {executeAssetOperation} from "../../../src/asset/action";
+import {westendConfiguration} from "../../../src/configuration/predefined";
+import {getApi} from "../../../src/polkadot/api";
 
 chai.use(sinonChai);
 
@@ -19,6 +21,22 @@ describe('Test asset function: executeAssetOperation', function() {
 
   afterEach(function() {
     walletStub.reset();
+  });
+
+  it('should ', async function () {
+    walletStub.getPluginState.returns({polkadot: {config: westendConfiguration}});
+    const api = await getApi(walletStub);
+    const unsubscribeCallback = await api.query.system.account("HYxTWKxPTQwcENdt41QhsDrAKoy8Vn7i1NPfYjSnBT1Z62c", ({data: { free: currentFree }}) => {
+      console.log(currentFree);
+    });
+    unsubscribeCallback();
+    console.log('Unsubscribed');
+    //
+    // setTimeout(() => {
+    //   unsubscribeCallback();
+    //   console.log('Unsubscribed');
+    //   expect(api).to.not.be.null;
+    // }, 5000);
   });
 
   it('should call add method with provided asset', async () => {

@@ -14,7 +14,7 @@ let isConnecting: boolean;
 async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
   provider = new WsProvider(wsRpcUrl);
   let api = new ApiPromise({
-    initWasm: false,
+    initWasm: true,
     provider,
     types: {
       //tmp fix until we figure out how to update polkadot api lib
@@ -49,7 +49,9 @@ export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
   if (!api) {
     // api not initialized or configuration changed
     const config = getConfiguration(wallet);
+    console.log("TRY TO INIT API");
     api = await initApi(config.wsRpcUrl);
+    console.log("API INITIALIZED");
     isConnecting = false;
   } else {
     while (isConnecting) {
