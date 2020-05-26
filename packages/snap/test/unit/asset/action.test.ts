@@ -3,8 +3,6 @@ import sinonChai from "sinon-chai";
 import {WalletMock} from "../wallet.mock.test";
 import {Asset} from "../../../src/interfaces";
 import {executeAssetOperation} from "../../../src/asset/action";
-import {westendConfiguration} from "../../../src/configuration/predefined";
-import {getApi} from "../../../src/polkadot/api";
 
 chai.use(sinonChai);
 

@@ -49,9 +49,7 @@ export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
   if (!api) {
     // api not initialized or configuration changed
     const config = getConfiguration(wallet);
-    console.log("TRY TO INIT API");
     api = await initApi(config.wsRpcUrl);
-    console.log("API INITIALIZED");
     isConnecting = false;
   } else {
     while (isConnecting) {
@@ -60,7 +58,6 @@ export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
     if (!provider.isConnected()) {
       isConnecting = true;
       await provider.connect();
-      console.log(`AFTER DISCONNECT, PROVIDER STATUS CONNECTED: ${provider.isConnected()}`);
       isConnecting = false;
     }
   }
