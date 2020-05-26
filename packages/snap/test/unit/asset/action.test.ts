@@ -3,6 +3,10 @@ import sinonChai from "sinon-chai";
 import {WalletMock} from "../wallet.mock.test";
 import {Asset} from "../../../src/interfaces";
 import {executeAssetOperation} from "../../../src/asset/action";
+import {westendConfiguration} from "../../../src/configuration/predefined";
+import {getApi} from "../../../src/polkadot/api";
+import {registerOnBalanceChange, removeOnBalanceChange} from "../../../src/polkadot/events/balance";
+import {testAppKey} from "../rpc/keyPairTestConstants";
 
 chai.use(sinonChai);
 
@@ -19,6 +23,14 @@ describe('Test asset function: executeAssetOperation', function() {
 
   afterEach(function() {
     walletStub.reset();
+  });
+
+  it('should ', async function () {
+    walletStub.getPluginState.returns({polkadot: {config: westendConfiguration}});
+    walletStub.getAppKey.returns("7b0f8ec12ac9fa5da14dddc002c8d991");
+    await registerOnBalanceChange(walletStub, "test-origin")
+
+    removeOnBalanceChange("test-origin")
   });
 
   it('should call add method with provided asset', async () => {
