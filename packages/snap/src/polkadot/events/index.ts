@@ -1,19 +1,29 @@
-import {Callback, HexHash, Origin, PolkadotEventArgument, TxEventArgument} from "@nodefactory/metamask-polkadot-types";
-import {EventEmitterImplementation} from "./emitter";
+import {TxStatus} from "@nodefactory/metamask-polkadot-types";
+import {EventEmitter} from "events";
+import {StrictEmitterWithOriginProvider} from "./emitter";
+import StrictEventEmitter from "strict-event-emitter-types";
 
-export interface EventEmitter<K, T, J>  {
-  addListener(event: K, identifier: T, listener: Callback<J>): this;
-  removeListener(event: K, identifier: T, listener: Callback<J>): this;
-  removeAllListeners(event: K, identifier: T): this;
-  getListenersCount(event: K, identifier: T): number;
-  emit(event: K, identifier: T, arg: J): boolean;
+// Polkadot event emitters
+
+interface PolkadotEvents {
+    onBalanceChange: string;
 }
 
-export type PolkadotEvent = "onBalanceChange" | "onTransactionStatus";
-export type TxStatus = "included" | "finalized";
+const polkadotEventsEmitterProvider = new StrictEmitterWithOriginProvider<PolkadotEvents>();
 
-export const polkadotEventEmitter: EventEmitter<PolkadotEvent, Origin, PolkadotEventArgument> =
-    new EventEmitterImplementation<PolkadotEvent, Origin, PolkadotEventArgument>();
+export function getPolkadotEventEmitter(origin: string): StrictEventEmitter<EventEmitter, PolkadotEvents> {
+    return polkadotEventsEmitterProvider.getEventEmitter(origin);
+}
 
-export const txEventEmitter: EventEmitter<TxStatus, HexHash, TxEventArgument> =
-    new EventEmitterImplementation<TxStatus, HexHash, TxEventArgument>();
+// Transaction event emitters
+
+interface TxEvents {
+    included: TxStatus;
+    finalized: TxStatus;
+}
+
+const txEventsEmitterProvider = new StrictEmitterWithOriginProvider<TxEvents>();
+
+export function getTxEventEmitter(hash: string): StrictEventEmitter<EventEmitter, TxEvents> {
+    return txEventsEmitterProvider.getEventEmitter(hash);
+}
