@@ -14,7 +14,7 @@ let isConnecting: boolean;
 async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
   provider = new WsProvider(wsRpcUrl);
   let api = new ApiPromise({
-    initWasm: true,
+    initWasm: false,
     provider,
     types: {
       //tmp fix until we figure out how to update polkadot api lib
