@@ -30,7 +30,11 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
 
 export function removeOnBalanceChange(origin: string): void {
   // if (unsubscribe && unsubscribe[origin]) {
-  //   unsubscribe[origin]();
-  //   delete unsubscribe[origin];
+  //   try {
+  //     unsubscribe[origin]();
+  //     delete unsubscribe[origin];
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
   // }
 }

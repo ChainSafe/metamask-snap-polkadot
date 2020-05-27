@@ -37,9 +37,8 @@ export const resetApi = (): void => {
   if (api && provider) {
     try {
       api.disconnect();
-      provider.disconnect();
     } catch (e) {
-
+      console.log("Error on api disconnect.");
     }
     api = null;
     provider = null;
