@@ -9,7 +9,7 @@ import {getBlock} from "./rpc/substrate/getBlock";
 import {updateAsset} from "./asset";
 import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
-import {polkadotEventEmitter, txEventEmitter} from "./polkadot/events";
+import {getPolkadotEventEmitter, getTxEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
 import {HexHash, PolkadotApi, PolkadotEventCallback, TxEventCallback} from "@nodefactory/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
@@ -25,25 +25,29 @@ const apiDependentMethods = [
 wallet.registerApiRequestHandler(async function (origin: URL): Promise<PolkadotApi> {
   return {
     subscribeToBalance: (callback: PolkadotEventCallback): void => {
-      polkadotEventEmitter.addListener("onBalanceChange", origin.hostname, callback);
+      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
+      eventEmitter.addListener("onBalanceChange", callback);
       // first call or first call after unregistering
-      if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin.hostname) === 1) {
+      if (eventEmitter.listenerCount("onBalanceChange") === 1) {
         registerOnBalanceChange(wallet, origin.hostname);
       }
     },
     subscribeToTxStatus: (hash: HexHash, onIncluded: TxEventCallback, onFinalized?: TxEventCallback): void => {
-      txEventEmitter.addListener("included", hash, onIncluded);
+      const eventEmitter = getTxEventEmitter(hash);
+      eventEmitter.addListener("included", onIncluded);
       if (onFinalized) {
-        txEventEmitter.addListener("finalized", hash, onFinalized);
+        eventEmitter.addListener("finalized", onFinalized);
       }
     },
     unsubscribeAllFromBalance: (): void => {
-      polkadotEventEmitter.removeAllListeners("onBalanceChange", origin.hostname);
+      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
+      eventEmitter.removeAllListeners("onBalanceChange");
       removeOnBalanceChange(origin.hostname);
     },
     unsubscribeFromBalance: (callback: PolkadotEventCallback): void => {
-      polkadotEventEmitter.removeListener("onBalanceChange", origin.hostname, callback);
-      if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin.hostname) === 0) {
+      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
+      eventEmitter.removeListener("onBalanceChange", callback);
+      if (eventEmitter.listenerCount("onBalanceChange") === 0) {
         removeOnBalanceChange(origin.hostname);
       }
     }
