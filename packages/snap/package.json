@@ -16,6 +16,7 @@
     "build": "yarn run build:tsc && yarn run build:snap",
     "build:tsc": "tsc --build --pretty",
     "build:snap": "nf-snap build --stripComments --debug --verbose",
+    "snapEval": "nf-snap eval",
     "watch": "concurrently  --raw --kill-others \"yarn run watch:tsc\" \"yarn run watch:snap\" \"yarn run serve\"",
     "watch:tsc": "yarn run build:tsc --watch",
     "watch:snap": "nf-snap watch --debug -s build/index.js",
@@ -77,9 +78,9 @@
     "strict-event-emitter-types": "^2.0.0"
   },
   "dependencies": {
-    "@polkadot/api": "1.10.1",
-    "@polkadot/types": "1.10.1",
-    "@polkadot/util": "2.9.1",
+    "@polkadot/api": "^1.19.1",
+    "@polkadot/types": "^1.19.1",
+    "@polkadot/util": "^2.14.1",
     "axios": "^0.19.2",
     "deepmerge": "^4.2.2"
   },
