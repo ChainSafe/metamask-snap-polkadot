@@ -7,6 +7,8 @@
   "author": "NodeFactory <info@nodefactory.io>",
   "license": "Apache-2.0",
   "private": false,
+  "homepage": "https://github.com/NodeFactoryIo/metamask-snap-polkadot/tree/master/packages/adapter",
+  "keywords": ["polkadot", "metamask", "snap", "substrate"],
   "publishConfig": {
     "access": "public"
   },
