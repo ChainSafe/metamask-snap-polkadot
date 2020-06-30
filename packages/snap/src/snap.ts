@@ -34,6 +34,7 @@ wallet.registerApiRequestHandler(async function (origin: URL): Promise<PolkadotA
     },
     subscribeToTxStatus: (hash: HexHash, onIncluded: TxEventCallback, onFinalized?: TxEventCallback): void => {
       const eventEmitter = getTxEventEmitter(hash);
+      debugger;
       eventEmitter.addListener("included", onIncluded);
       if (onFinalized) {
         eventEmitter.addListener("finalized", onFinalized);

@@ -13,23 +13,27 @@ let isConnecting: boolean;
  */
 async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
   provider = new WsProvider(wsRpcUrl);
+  console.log("PROVIDER CREATED")
   let api = new ApiPromise({
-    initWasm: false,
+    initWasm: true,
     provider,
     types: {
       //tmp fix until we figure out how to update polkadot api lib
-      ModuleId: U8aFixed,
+      // ModuleId: U8aFixed,
       RuntimeDbWeight: {
         read: 'Weight',
         write: 'Weight'
       }
     }
   });
+  console.log("API CREATED");
   try {
     api = await api.isReady;
+
   } catch (e) {
     console.log("Api is ready with error:", e);
   }
+  console.log("API READY");
   return api;
 }
 

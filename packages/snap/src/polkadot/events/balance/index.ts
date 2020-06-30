@@ -11,6 +11,7 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
   const address = (await getKeyPair(wallet)).address;
   // Here we subscribe to any balance changes and update the on-screen value
   await api.query.system.account(address, ({data: { free: currentFree }}) => {
+    console.log(`BALANCE CHANGE: ${currentFree}`);
     updateAsset(wallet, origin, currentFree.toString());
     getPolkadotEventEmitter(origin).emit("onBalanceChange", currentFree.toString());
   });

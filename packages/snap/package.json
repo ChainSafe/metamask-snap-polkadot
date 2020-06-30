@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@nodefactory/metamask-polkadot-types": "^0.1.2",
-    "@nodefactory/snaps-cli": "1.0.0",
+    "@nodefactory/snaps-cli": "^1.4.0",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^7.0.2",
     "@types/sinon": "^7.5.2",
@@ -78,9 +78,9 @@
     "strict-event-emitter-types": "^2.0.0"
   },
   "dependencies": {
-    "@polkadot/api": "^1.19.1",
-    "@polkadot/types": "^1.19.1",
-    "@polkadot/util": "^2.14.1",
+    "@polkadot/api": "^1.21.1",
+    "@polkadot/types": "^1.21.1",
+    "@polkadot/util": "^2.15.1",
     "axios": "^0.19.2",
     "deepmerge": "^4.2.2"
   },
