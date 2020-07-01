@@ -78,7 +78,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case 'exportSeed':
       return await exportSeed(wallet);
     case 'getAllTransactions':
-      return await getTransactions(wallet, requestObject.params.address);
+      return await getTransactions(wallet);
     case 'getBlock':
       return await getBlock(requestObject.params.blockTag, api);
     case 'getBalance': {

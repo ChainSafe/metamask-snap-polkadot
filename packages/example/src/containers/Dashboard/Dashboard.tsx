@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core/';
 import {Transfer} from "../../components/Transfer/Transfer";
 import {SignMessage} from "../../components/SignMessage/SignMessage";
-import {Transaction, TransactionTable} from "../../components/TransactionTable/TransactionTable";
+import {convertTransaction, Transaction, TransactionTable} from "../../components/TransactionTable/TransactionTable";
 import {Account} from "../../components/Account/Account";
 import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
@@ -87,7 +87,7 @@ export const Dashboard = () => {
                 setPublicKey(await metamaskSnapApi.getPublicKey());
                 setBalance(await metamaskSnapApi.getBalance());
                 setLatestBlock(await metamaskSnapApi.getLatestBlock());
-                setTransactions(await metamaskSnapApi.getAllTransactions(account.address) as Transaction[]);
+                setTransactions((await metamaskSnapApi.getAllTransactions()).map(value => convertTransaction(value)));
             }
         })();
     }, [state.polkadotSnap.isInstalled, network]);

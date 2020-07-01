@@ -2,7 +2,7 @@ import {
   BlockInfo,
   MetamaskPolkadotRpcRequest,
   SignPayloadJSONRequest, SignPayloadRawRequest,
-  SnapConfig, TxPayload
+  SnapConfig, Transaction, TxPayload
 } from "@nodefactory/metamask-polkadot-types";
 import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
 import {MetamaskPolkadotSnap} from "./snap";
@@ -74,8 +74,8 @@ export async function getLatestBlock(this: MetamaskPolkadotSnap): Promise<BlockI
   }
 }
 
-export async function getAllTransactions(this: MetamaskPolkadotSnap, address?: string): Promise<unknown> {
-  return await sendSnapMethod({method: "getAllTransactions", params: {address}}, this.snapId);
+export async function getAllTransactions(this: MetamaskPolkadotSnap): Promise<Transaction[]> {
+  return (await sendSnapMethod({method: "getAllTransactions"}, this.snapId)) as Transaction[];
 }
 
 export async function sendSignedData(

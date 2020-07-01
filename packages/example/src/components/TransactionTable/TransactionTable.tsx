@@ -3,13 +3,14 @@ import {Paper, Table, TableContainer, TableCell,
     TableRow, TableHead, TableBody} from '@material-ui/core/';
 import {shortAddress} from "../../services/format";
 import {formatBalance} from "@polkadot/util";
+import {Transaction as ApiTransaction} from "@nodefactory/metamask-polkadot-types";
 
 export interface Transaction {
     type: string;
     id: string;
     attributes: {
         "block_id": number;
-        value: number,
+        value: number | string,
         fee: number,
         sender: {
             type: string;
@@ -21,6 +22,29 @@ export interface Transaction {
             attributes: {
                 address: string;
             }
+        }
+    }
+}
+
+export function convertTransaction(tx: ApiTransaction): Transaction {
+    return {
+        id: tx.hash,
+        type: "",
+        attributes: {
+            block_id: 1,
+            value: tx.amount,
+            destination: {
+                attributes: {
+                    address: tx.destination
+                },
+            },
+            sender: {
+                attributes: {
+                    address: tx.sender
+                },
+                type: ""
+            },
+            fee: 10
         }
     }
 }

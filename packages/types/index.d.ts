@@ -14,9 +14,6 @@ export interface ExportSeedRequest {
 
 export interface GetTransactionsRequest {
   method: "getAllTransactions";
-  params: {
-    address?: string;
-  };
 }
 
 export interface GetBlockRequest {
@@ -158,4 +155,13 @@ export interface PolkadotApi {
   unsubscribeFromBalance(callback: PolkadotEventCallback): void;
   unsubscribeAllFromBalance(): void;
   subscribeToTxStatus(hash: HexHash, onIncluded: TxEventCallback, onFinalized?: TxEventCallback): void;
+}
+
+export interface Transaction {
+  hash: string;
+  block: string;
+  sender: string;
+  destination: string;
+  amount: string | number;
+  fee: string
 }

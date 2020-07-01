@@ -1,4 +1,4 @@
-import {MetamaskPolkadotRpcRequest, SnapConfig} from "@nodefactory/metamask-polkadot-types";
+import {MetamaskPolkadotRpcRequest, SnapConfig, Transaction} from "@nodefactory/metamask-polkadot-types";
 
 export type FMethodCallback = (
   originString: string,
@@ -8,10 +8,16 @@ export type FMethodCallback = (
 export type MetamaskState = {
   polkadot: {
     config: SnapConfig;
+    transactions: TransactionState[];
   };
 };
 
-export const EmptyMetamaskState: () => MetamaskState = () => ({polkadot: {config: null}});
+export interface TransactionState {
+  transaction: Transaction;
+  sent: boolean;
+}
+
+export const EmptyMetamaskState: () => MetamaskState = () => ({polkadot: {config: null, transactions: []}});
 
 export interface Wallet {
   registerApiRequestHandler: (origin: unknown) => unknown;
