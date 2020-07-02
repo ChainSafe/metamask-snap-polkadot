@@ -80,7 +80,7 @@ export async function getAllTransactions(this: MetamaskPolkadotSnap): Promise<Tr
 
 export async function sendSignedData(
   this: MetamaskPolkadotSnap, signature: string,  txPayload: TxPayload
-): Promise<string> {
+): Promise<Transaction> {
   const response = await sendSnapMethod({
     method: "send",
     params: {
@@ -88,7 +88,7 @@ export async function sendSignedData(
       txPayload
     }
   }, this.snapId);
-  return response as string;
+  return response as Transaction;
 }
 
 export async function generateTransactionPayload(

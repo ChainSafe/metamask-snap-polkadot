@@ -14,7 +14,8 @@ export interface MetamaskSnapApi {
   getLatestBlock(): Promise<BlockInfo>;
   setConfiguration(configuration: SnapConfig): Promise<void>;
   getAllTransactions(): Promise<Transaction[]>;
-  send(signature: string, txPayload: TxPayload): Promise<string>;
+
+  send(signature: string, txPayload: TxPayload): Promise<Transaction>;
   generateTransactionPayload(amount: string | number, to: string): Promise<TxPayload>;
   getEventApi(): Promise<PolkadotApi>;
 }

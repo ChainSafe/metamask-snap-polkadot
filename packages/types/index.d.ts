@@ -163,5 +163,5 @@ export interface Transaction {
   sender: string;
   destination: string;
   amount: string | number;
-  fee: string
+  fee: string;
 }

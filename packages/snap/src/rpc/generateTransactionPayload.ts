@@ -33,15 +33,6 @@ export async function generateTransactionPayload(
     method: transaction.method
   });
 
-  saveTxToState(wallet, {
-    amount: amount,
-    block: signerPayload.blockHash.toHex(),
-    destination: to,
-    fee: "",
-    hash: signerPayload.hash.toHex(),
-    sender: address
-  });
-
   return {
     payload: signerPayload.toPayload(),
     tx: transaction.toHex()

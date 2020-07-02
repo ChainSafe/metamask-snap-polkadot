@@ -8,14 +8,9 @@ export type FMethodCallback = (
 export type MetamaskState = {
   polkadot: {
     config: SnapConfig;
-    transactions: TransactionState[];
+    transactions: Transaction[];
   };
 };
-
-export interface TransactionState {
-  transaction: Transaction;
-  sent: boolean;
-}
 
 export const EmptyMetamaskState: () => MetamaskState = () => ({polkadot: {config: null, transactions: []}});
 

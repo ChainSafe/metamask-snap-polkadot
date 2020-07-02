@@ -9,7 +9,7 @@ export interface Transaction {
     type: string;
     id: string;
     attributes: {
-        "block_id": number;
+        block: string;
         value: number | string,
         fee: number,
         sender: {
@@ -31,7 +31,7 @@ export function convertTransaction(tx: ApiTransaction): Transaction {
         id: tx.hash,
         type: "",
         attributes: {
-            block_id: 1,
+            block: tx.block,
             value: tx.amount,
             destination: {
                 attributes: {
@@ -75,7 +75,7 @@ export const TransactionTable = (props: TransactionTableProps) => {
                         {tx.id}
                     </TableCell>
                     <TableCell  align="center" component="th" scope="row">
-                        {tx.attributes.block_id}
+                        {tx.attributes.block}
                     </TableCell>
                     <TableCell align="center">{shortAddress(tx.attributes.sender.attributes.address)}</TableCell>
                     <TableCell align="center">{shortAddress(tx.attributes.destination.attributes.address)}</TableCell>
