@@ -9,9 +9,10 @@ let unsubscribe: Record<string, () => void>;
 export async function registerOnBalanceChange(wallet: Wallet, origin: string): Promise<void> {
   const api = await getApi(wallet);
   const address = (await getKeyPair(wallet)).address;
+  console.log(`STARTING TO LISTEN ON BALANCE CHANGE ${address} ::: ${origin}`);
   // Here we subscribe to any balance changes and update the on-screen value
-  await api.query.system.account(address, ({data: { free: currentFree }}) => {
-    console.log(`BALANCE CHANGE: ${currentFree}`);
+  await api.query.system.account(address, ({data: {free: currentFree}, nonce: currentNonce}) => {
+    console.log(`BALANCE CHANGE DETECTED: ${currentFree.toHuman()} ::: ${currentNonce}`);
     updateAsset(wallet, origin, currentFree.toString());
     getPolkadotEventEmitter(origin).emit("onBalanceChange", currentFree.toString());
   });

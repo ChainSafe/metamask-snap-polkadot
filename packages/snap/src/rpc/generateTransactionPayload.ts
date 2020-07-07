@@ -22,6 +22,7 @@ export async function generateTransactionPayload(
   };
     // define transaction method
   const transaction: SubmittableExtrinsic<'promise'> = api.tx.balances.transfer(to, amount);
+
   // create SignerPayload
   const signerPayload = api.createType('SignerPayload', {
     genesisHash: api.genesisHash,
@@ -30,8 +31,11 @@ export async function generateTransactionPayload(
     ...signerOptions,
     address: to,
     blockNumber: signedBlock.block.header.number,
-    method: transaction.method
+    method: transaction.method,
+    transactionVersion: transaction.version,
+    signedExtensions: []
   });
+
 
   return {
     payload: signerPayload.toPayload(),
