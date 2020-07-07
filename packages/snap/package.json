@@ -78,9 +78,9 @@
     "strict-event-emitter-types": "^2.0.0"
   },
   "dependencies": {
-    "@polkadot/api": "^1.21.1",
-    "@polkadot/types": "^1.21.1",
-    "@polkadot/util": "^2.15.1",
+    "@polkadot/api": "^1.22.1",
+    "@polkadot/types": "^1.22.1",
+    "@polkadot/util": "^2.16.1",
     "axios": "^0.19.2",
     "deepmerge": "^4.2.2"
   },

@@ -3,6 +3,7 @@ import {Wallet} from "../interfaces";
 import {getAddress} from "./getAddress";
 import {SubmittableExtrinsic} from "@polkadot/api/types";
 import {TxPayload} from "@nodefactory/metamask-polkadot-types";
+import {saveTxToState} from "../polkadot/tx";
 
 export async function generateTransactionPayload(
   wallet: Wallet, api: ApiPromise, to: string, amount: string | number
@@ -21,6 +22,7 @@ export async function generateTransactionPayload(
   };
     // define transaction method
   const transaction: SubmittableExtrinsic<'promise'> = api.tx.balances.transfer(to, amount);
+
   // create SignerPayload
   const signerPayload = api.createType('SignerPayload', {
     genesisHash: api.genesisHash,
@@ -29,8 +31,12 @@ export async function generateTransactionPayload(
     ...signerOptions,
     address: to,
     blockNumber: signedBlock.block.header.number,
-    method: transaction.method
+    method: transaction.method,
+    transactionVersion: transaction.version,
+    signedExtensions: []
   });
+
+
   return {
     payload: signerPayload.toPayload(),
     tx: transaction.toHex()
