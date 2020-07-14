@@ -51,7 +51,7 @@ export const Transfer: React.FC<ITransferProps> = ({network, onNewTransferCallba
                 getPolkascanTxUrl(tx.txHash, network)
             );
         }
-    }, [network]);
+    }, [network, onNewTransferCallback]);
 
     const handleTransactionFinalized = useCallback((tx: TxEventArgument) => {
         if (tx.txHash) {
@@ -93,7 +93,8 @@ export const Transfer: React.FC<ITransferProps> = ({network, onNewTransferCallba
                 showAlert("error", "Please fill recipient and amount fields.");
             }
         }
-    }, [amount, handleTransactionFinalized, handleTransactionIncluded, recipient, setAmount, setRecipient]);
+    }, [amount, handleTransactionFinalized, handleTransactionIncluded,
+        recipient, setAmount, setRecipient, onNewTransferCallback]);
 
     return (
         <Card>
