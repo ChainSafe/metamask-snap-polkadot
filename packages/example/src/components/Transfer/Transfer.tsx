@@ -72,6 +72,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         if(provider && provider.signer.signPayload) {
             if (amount && recipient) {
                 const api = await provider.getMetamaskSnapApi();
+
                 const convertedAmount = BigInt(amount) * BigInt("1000000000");
                 const txPayload = await api.generateTransactionPayload(convertedAmount.toString(), recipient);
                 const signedTx = await provider.signer.signPayload(txPayload.payload);
