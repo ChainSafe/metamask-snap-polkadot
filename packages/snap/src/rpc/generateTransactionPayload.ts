@@ -31,8 +31,8 @@ export async function generateTransactionPayload(
     address: to,
     blockNumber: signedBlock.block.header.number,
     method: transaction.method,
+    signedExtensions: [],
     transactionVersion: transaction.version,
-    signedExtensions: []
   });
 
 

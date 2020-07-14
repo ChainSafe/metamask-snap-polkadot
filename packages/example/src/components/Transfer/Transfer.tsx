@@ -72,7 +72,6 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
         if(provider && provider.signer.signPayload) {
             if (amount && recipient) {
                 const api = await provider.getMetamaskSnapApi();
-                const polkadotEventApi = await api.getEventApi();
 
                 const convertedAmount = BigInt(amount) * BigInt("1000000000");
                 const txPayload = await api.generateTransactionPayload(convertedAmount.toString(), recipient);
@@ -80,6 +79,7 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 let txHash = await api.send(signedTx.signature, txPayload);
 
                 // subscribe to transaction events
+                const polkadotEventApi = await api.getEventApi();
                 polkadotEventApi.subscribeToTxStatus(txHash, handleTransactionIncluded, handleTransactionFinalized);
                 // clear fields
                 setAmount("");
