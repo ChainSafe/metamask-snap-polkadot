@@ -44,7 +44,7 @@ export const Dashboard = () => {
         if (!extension) return;
         const metamaskSnapApi = await extension.getMetamaskSnapApi();
         setTransactions((await metamaskSnapApi.getAllTransactions()));
-    }, [state.polkadotSnap.isInstalled]);
+    }, [setTransactions]);
 
     const handleNetworkChange = async (event: React.ChangeEvent<{ value: any }>) => {
         const networkName = event.target.value as "kusama" | "westend";
