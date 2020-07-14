@@ -3,7 +3,6 @@ import {Wallet} from "../interfaces";
 import {getAddress} from "./getAddress";
 import {SubmittableExtrinsic} from "@polkadot/api/types";
 import {TxPayload} from "@nodefactory/metamask-polkadot-types";
-import {saveTxToState} from "../polkadot/tx";
 
 export async function generateTransactionPayload(
   wallet: Wallet, api: ApiPromise, to: string, amount: string | number
@@ -32,8 +31,8 @@ export async function generateTransactionPayload(
     address: to,
     blockNumber: signedBlock.block.header.number,
     method: transaction.method,
+    signedExtensions: [],
     transactionVersion: transaction.version,
-    signedExtensions: []
   });
 
 

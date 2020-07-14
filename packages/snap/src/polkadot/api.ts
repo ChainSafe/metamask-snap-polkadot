@@ -12,8 +12,7 @@ let isConnecting: boolean;
  */
 async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
   provider = new WsProvider(wsRpcUrl);
-  console.log("PROVIDER CREATED");
-  let api = await ApiPromise.create({
+  const api = await ApiPromise.create({
     initWasm: false,
     provider,
     // this seems not to make any difference anymore
@@ -25,7 +24,7 @@ async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
     }
   });
 
-  console.log("API READY");
+  console.log("Api is ready");
   return api;
 }
 
