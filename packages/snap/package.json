@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@nodefactory/metamask-polkadot-types": "^0.1.2",
-    "@nodefactory/snaps-cli": "^1.4.0",
+    "@nodefactory/snaps-cli": "^1.5.0-polkadot",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^7.0.2",
     "@types/sinon": "^7.5.2",
