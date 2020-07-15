@@ -18,12 +18,13 @@ import {TxEventArgument} from "@nodefactory/metamask-polkadot-types";
 import {getCurrency} from "../../services/format";
 
 interface ITransferProps {
-    network: string
+    network: string,
+    onNewTransferCallback: any
 }
 
 type AlertSeverity = "success" | "warning" | "info" | "error";
 
-export const Transfer: React.FC<ITransferProps> = ({network}) => {
+export const Transfer: React.FC<ITransferProps> = ({network, onNewTransferCallback}) => {
     const [recipient, setRecipient] = useState<string>("");
     const [amount, setAmount] = useState<string | number>("");
 
@@ -42,13 +43,15 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
 
     const handleTransactionIncluded = useCallback((tx: TxEventArgument) => {
         if (tx.txHash) {
+            // force new refresh after block information
+            onNewTransferCallback();
             showAlert(
                 "success",
                 `Transaction ${tx.txHash} included in block`,
                 getPolkascanTxUrl(tx.txHash, network)
             );
         }
-    }, [network]);
+    }, [network, onNewTransferCallback]);
 
     const handleTransactionFinalized = useCallback((tx: TxEventArgument) => {
         if (tx.txHash) {
@@ -76,19 +79,22 @@ export const Transfer: React.FC<ITransferProps> = ({network}) => {
                 const convertedAmount = BigInt(amount) * BigInt("1000000000");
                 const txPayload = await api.generateTransactionPayload(convertedAmount.toString(), recipient);
                 const signedTx = await provider.signer.signPayload(txPayload.payload);
-                let txHash = await api.send(signedTx.signature, txPayload);
+                let tx = await api.send(signedTx.signature, txPayload);
 
                 // subscribe to transaction events
                 const polkadotEventApi = await api.getEventApi();
-                polkadotEventApi.subscribeToTxStatus(txHash, handleTransactionIncluded, handleTransactionFinalized);
+                polkadotEventApi.subscribeToTxStatus(tx.hash, handleTransactionIncluded, handleTransactionFinalized);
                 // clear fields
                 setAmount("");
                 setRecipient("");
+                // invoke provided callback to inform parent component that new tx is sent
+                onNewTransferCallback();
             } else {
                 showAlert("error", "Please fill recipient and amount fields.");
             }
         }
-    }, [amount, handleTransactionFinalized, handleTransactionIncluded, recipient, setAmount, setRecipient]);
+    }, [amount, handleTransactionFinalized, handleTransactionIncluded,
+        recipient, setAmount, setRecipient, onNewTransferCallback]);
 
     return (
         <Card>
