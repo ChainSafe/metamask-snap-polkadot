@@ -8,29 +8,12 @@ import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 
 export const POLKADOT_SNAP_ASSET_IDENTIFIER = "polkadot-snap-asset";
 
-function getCustomViewUrl(configuration: SnapConfig, address: string): string {
-  if (configuration.unit.customViewUrl) {
-    // defined in configuration
-    return configuration.unit.customViewUrl;
-  } else {
-    // generate from network name
-    switch (configuration.networkName) {
-      case "kusama":
-        return `https://polkascan.io/${configuration.networkName}/account/${address}`;
-      case "westend":
-        return `https://westend.subscan.io/account/${address}`;
-      default:
-        return "";
-    }
-  }
-}
-
 export function getPolkadotAssetDescription(
   balance: number|string|Balance, address: string, configuration: SnapConfig
 ): Asset {
   return {
     balance: formatBalance(balance, {decimals: configuration.unit.decimals, withSi: true, withUnit: false}),
-    customViewUrl: getCustomViewUrl(configuration, address),
+    customViewUrl: configuration.unit.customViewUrl || "",
     decimals: 0,
     identifier: POLKADOT_SNAP_ASSET_IDENTIFIER,
     image: configuration.unit.image || "",
