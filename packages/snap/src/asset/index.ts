@@ -13,8 +13,7 @@ export function getPolkadotAssetDescription(
 ): Asset {
   return {
     balance: formatBalance(balance, {decimals: configuration.unit.decimals, withSi: true, withUnit: false}),
-    customViewUrl: configuration.unit.customViewUrl ||
-        `https://polkascan.io/pre/${configuration.networkName}/account/${address}`,
+    customViewUrl: configuration.unit.customViewUrl || "",
     decimals: 0,
     identifier: POLKADOT_SNAP_ASSET_IDENTIFIER,
     image: configuration.unit.image || "",

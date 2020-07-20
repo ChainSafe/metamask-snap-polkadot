@@ -42,7 +42,7 @@ describe('Test asset functions ', function() {
         100,
         "test-address",
         { // configuration
-          networkName: "test-network",
+          networkName: "kusama",
           unit: {
             assetId: POLKADOT_SNAP_ASSET_IDENTIFIER,
             decimals: 5,
@@ -55,7 +55,7 @@ describe('Test asset functions ', function() {
       expect(asset).not.to.be.null;
       expect(asset).to.be.deep.eq({
         balance: "1.000m",
-        customViewUrl: "https://polkascan.io/pre/test-network/account/test-address",
+        customViewUrl: "",
         decimals: 0,
         identifier: POLKADOT_SNAP_ASSET_IDENTIFIER,
         image: "",
