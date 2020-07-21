@@ -1,6 +1,6 @@
 {
   "name": "@nodefactory/metamask-polkadot-types",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "types": "./index.d.ts",
   "author": "NodeFactory <info@nodefactory.io>",
   "license": "Apache-2.0",
