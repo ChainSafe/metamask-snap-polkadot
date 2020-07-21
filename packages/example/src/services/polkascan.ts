@@ -1,13 +1,9 @@
 export function getPolkascanTxUrl(txHash: string, network: string): string {
-    return `${getPolkascanBaseUrl(network)}/transaction/${txHash}`;
-}
-
-function getPolkascanBaseUrl(network: string): string {
     switch (network) {
         case "kusama":
-            return "https://polkascan.io/pre/kusama";
+            return `https://polkascan.io/kusama/transaction/${txHash}`;
         case "westend":
-            return "https://polkascan.io/pre/westend-m2";
+            return `https://westend.subscan.io/extrinsic/${txHash}`;
         default:
             return "";
     }

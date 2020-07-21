@@ -25,7 +25,8 @@ describe('Test rpc handler function: configure', function() {
     expect(result).to.be.deep.eq(kusamaConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
       polkadot: {
-        config: kusamaConfiguration
+        config: kusamaConfiguration,
+        transactions: []
       }
     });
     expect(walletStub.updatePluginState).to.have.been.calledOnce;
@@ -41,7 +42,8 @@ describe('Test rpc handler function: configure', function() {
     expect(result).to.be.deep.eq(westendConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
       polkadot: {
-        config: westendConfiguration
+        config: westendConfiguration,
+        transactions: []
       }
     });
     expect(walletStub.updatePluginState).to.have.been.calledOnce;
@@ -54,7 +56,7 @@ describe('Test rpc handler function: configure', function() {
     const customConfiguration: SnapConfig = {
       addressPrefix: 1,
       networkName: "test-network",
-      unit: {assetId: "test-asset", customViewUrl: "custom-view-url", decimals: 1, image: "image", symbol: "TST" },
+      unit: {customViewUrl: "custom-view-url", decimals: 1, image: "image", symbol: "TST"},
       wsRpcUrl: "ws-rpc-url",
 
     };
@@ -64,7 +66,8 @@ describe('Test rpc handler function: configure', function() {
     expect(result).to.be.deep.eq(customConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
       polkadot: {
-        config: customConfiguration
+        config: customConfiguration,
+        transactions: []
       }
     });
     expect(walletStub.updatePluginState).to.have.been.calledOnce;
@@ -82,7 +85,8 @@ describe('Test rpc handler function: configure', function() {
     expect(result).to.be.deep.eq(customConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
       polkadot: {
-        config: customConfiguration
+        config: customConfiguration,
+        transactions: []
       }
     });
     expect(walletStub.updatePluginState).to.have.been.calledOnce;

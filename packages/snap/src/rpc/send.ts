@@ -1,21 +1,46 @@
 import {Wallet} from "../interfaces";
 import ApiPromise from "@polkadot/api/promise";
-import {TxPayload} from "@nodefactory/metamask-polkadot-types";
+import {Transaction, TxPayload} from "@nodefactory/metamask-polkadot-types";
 import {getAddress} from "./getAddress";
-import {txEventEmitter} from "../polkadot/events";
+import {getTxEventEmitter} from "../polkadot/events";
+import {saveTxToState, updateTxInState} from "../polkadot/tx";
 
-export async function send(wallet: Wallet, api: ApiPromise, signature: string, txPayload: TxPayload): Promise<string> {
+export async function send(
+  wallet: Wallet, api: ApiPromise, signature: string, txPayload: TxPayload
+): Promise<Transaction> {
+  const sender = await getAddress(wallet);
+  const destination = txPayload.payload.address;
+
   const extrinsic = api.createType('Extrinsic', txPayload.tx);
-  extrinsic.addSignature((await getAddress(wallet)), signature, txPayload.payload);
+  extrinsic.addSignature(sender, signature, txPayload.payload);
   const txHash = extrinsic.hash.toHex();
+
+  const amount = extrinsic.args[1].toJSON();
+  const paymentInfo = await api.tx.balances
+    .transfer(destination, Number(amount.toString()))
+    .paymentInfo(sender);
+  const tx = {
+    amount: amount,
+    block: "",
+    destination: destination,
+    fee: paymentInfo.partialFee.toJSON(),
+    hash: extrinsic.hash.toHex(),
+    sender: sender,
+  } as Transaction;
+
   api.rpc.author.submitAndWatchExtrinsic(extrinsic, result => {
+    const eventEmitter = getTxEventEmitter(txHash);
     if (result.isInBlock) {
-      txEventEmitter.emit("included", txHash, {txHash});
-      txEventEmitter.removeAllListeners("included", txHash);
+      tx.block = result.hash.toHex();
+      updateTxInState(wallet, tx);
+      eventEmitter.emit("included", {txHash});
+      eventEmitter.removeAllListeners("included");
     } else if (result.isFinalized) {
-      txEventEmitter.emit("finalized", txHash, {txHash});
-      txEventEmitter.removeAllListeners("finalized", txHash);
+      eventEmitter.emit("finalized", {txHash});
+      eventEmitter.removeAllListeners("finalized");
     }
   });
-  return extrinsic.hash.toHex();
+
+  saveTxToState(wallet, tx);
+  return tx;
 }

@@ -6,10 +6,10 @@ import {getAddress} from "./rpc/getAddress";
 import ApiPromise from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
-import {removeAsset, updateAsset} from "./asset";
+import {updateAsset} from "./asset";
 import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
-import {polkadotEventEmitter, txEventEmitter} from "./polkadot/events";
+import {getPolkadotEventEmitter, getTxEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
 import {HexHash, PolkadotApi, PolkadotEventCallback, TxEventCallback} from "@nodefactory/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
@@ -25,25 +25,29 @@ const apiDependentMethods = [
 wallet.registerApiRequestHandler(async function (origin: URL): Promise<PolkadotApi> {
   return {
     subscribeToBalance: (callback: PolkadotEventCallback): void => {
-      polkadotEventEmitter.addListener("onBalanceChange", origin.hostname, callback);
+      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
+      eventEmitter.addListener("onBalanceChange", callback);
       // first call or first call after unregistering
-      if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin.hostname) === 1) {
+      if (eventEmitter.listenerCount("onBalanceChange") === 1) {
         registerOnBalanceChange(wallet, origin.hostname);
       }
     },
     subscribeToTxStatus: (hash: HexHash, onIncluded: TxEventCallback, onFinalized?: TxEventCallback): void => {
-      txEventEmitter.addListener("included", hash, onIncluded);
+      const eventEmitter = getTxEventEmitter(hash);
+      eventEmitter.addListener("included", onIncluded);
       if (onFinalized) {
-        txEventEmitter.addListener("finalized", hash, onFinalized);
+        eventEmitter.addListener("finalized", onFinalized);
       }
     },
     unsubscribeAllFromBalance: (): void => {
-      polkadotEventEmitter.removeAllListeners("onBalanceChange", origin.hostname);
+      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
+      eventEmitter.removeAllListeners("onBalanceChange");
       removeOnBalanceChange(origin.hostname);
     },
     unsubscribeFromBalance: (callback: PolkadotEventCallback): void => {
-      polkadotEventEmitter.removeListener("onBalanceChange", origin.hostname, callback);
-      if (polkadotEventEmitter.getListenersCount("onBalanceChange", origin.hostname) === 0) {
+      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
+      eventEmitter.removeListener("onBalanceChange", callback);
+      if (eventEmitter.listenerCount("onBalanceChange") === 0) {
         removeOnBalanceChange(origin.hostname);
       }
     }
@@ -73,7 +77,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case 'exportSeed':
       return await exportSeed(wallet);
     case 'getAllTransactions':
-      return await getTransactions(wallet, requestObject.params.address);
+      return await getTransactions(wallet);
     case 'getBlock':
       return await getBlock(requestObject.params.blockTag, api);
     case 'getBalance': {
@@ -82,13 +86,22 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return balance;
     }
     case 'configure': {
-      resetApi();
-      return configure(wallet, requestObject.params.configuration.networkName, requestObject.params.configuration);
+      const isInitialConfiguration = wallet.getPluginState().polkadot.config === null;
+      // reset api and remove asset only if already configured
+      if (!isInitialConfiguration) {
+        resetApi();
+      }
+      // set new configuration
+      const configuration = configure(
+        wallet, requestObject.params.configuration.networkName, requestObject.params.configuration
+      );
+      // initialize api with new configuration
+      api = await getApi(wallet);
+      // add new asset
+      const balance = await getBalance(wallet, api);
+      await updateAsset(wallet, originString, balance);
+      return configuration;
     }
-    case 'addPolkadotAsset':
-      return await updateAsset(wallet, originString, 0);
-    case 'removePolkadotAsset':
-      return await removeAsset(wallet, originString);
     case "generateTransactionPayload":
       return await generateTransactionPayload(wallet, api, requestObject.params.to, requestObject.params.amount);
     case "send":

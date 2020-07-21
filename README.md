@@ -8,6 +8,12 @@
 
 Metamask snap (plugin) to enable Metamask users interaction with Polkadot dapps.
 
+### Documentation
+
+Go to [wiki](https://github.com/NodeFactoryIo/metamask-snap-polkadot/wiki) for detailed documentation on Polkadot snap.
+
+Here you can find described [integration process](https://github.com/NodeFactoryIo/metamask-snap-polkadot/wiki#integration) and full [snap API documentation](https://github.com/NodeFactoryIo/metamask-snap-polkadot/wiki/API-Documentation).
+
 ### Testing
 
 #### Metamask

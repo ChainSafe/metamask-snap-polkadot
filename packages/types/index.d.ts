@@ -14,9 +14,6 @@ export interface ExportSeedRequest {
 
 export interface GetTransactionsRequest {
   method: "getAllTransactions";
-  params: {
-    address?: string;
-  };
 }
 
 export interface GetBlockRequest {
@@ -40,10 +37,6 @@ export interface ConfigureSnapRequest {
 
 export interface AddPolkadotAssetRequest {
   method: "addPolkadotAsset";
-}
-
-export interface RemovePolkadotAssetRequest {
-  method: "removePolkadotAsset";
 }
 
 export interface GetChainHeadRequest {
@@ -89,7 +82,6 @@ export type MetamaskPolkadotRpcRequest =
     | GetBalanceRequest
     | ConfigureSnapRequest
     | AddPolkadotAssetRequest
-    | RemovePolkadotAssetRequest
     | GetChainHeadRequest
     | SignPayloadJSONRequest
     | SignPayloadRawRequest
@@ -129,7 +121,6 @@ export interface BlockInfo {
 export interface UnitConfiguration {
   symbol: string;
   decimals: number;
-  assetId: string;
   image?: string;
   customViewUrl?: string;
 }
@@ -164,4 +155,13 @@ export interface PolkadotApi {
   unsubscribeFromBalance(callback: PolkadotEventCallback): void;
   unsubscribeAllFromBalance(): void;
   subscribeToTxStatus(hash: HexHash, onIncluded: TxEventCallback, onFinalized?: TxEventCallback): void;
+}
+
+export interface Transaction {
+  hash: string;
+  block: string;
+  sender: string;
+  destination: string;
+  amount: string | number;
+  fee: string;
 }

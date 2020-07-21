@@ -1,5 +1,5 @@
 import {Wallet} from "../../../interfaces";
-import {polkadotEventEmitter} from "../index";
+import {getPolkadotEventEmitter} from "../index";
 import {getApi} from "../../api";
 import {getKeyPair} from "../../account";
 import {updateAsset} from "../../../asset";
@@ -10,9 +10,9 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
   const api = await getApi(wallet);
   const address = (await getKeyPair(wallet)).address;
   // Here we subscribe to any balance changes and update the on-screen value
-  await api.query.system.account(address, ({data: { free: currentFree }}) => {
+  await api.query.system.account(address, ({data: {free: currentFree}}) => {
     updateAsset(wallet, origin, currentFree.toString());
-    polkadotEventEmitter.emit("onBalanceChange", origin, currentFree.toString());
+    getPolkadotEventEmitter(origin).emit("onBalanceChange", currentFree.toString());
   });
   // if (!unsubscribe) {
   //   unsubscribe = {
@@ -30,7 +30,11 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
 
 export function removeOnBalanceChange(origin: string): void {
   // if (unsubscribe && unsubscribe[origin]) {
-  //   unsubscribe[origin]();
-  //   delete unsubscribe[origin];
+  //   try {
+  //     unsubscribe[origin]();
+  //     delete unsubscribe[origin];
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
   // }
 }

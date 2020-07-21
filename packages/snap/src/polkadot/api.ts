@@ -2,7 +2,6 @@ import ApiPromise from "@polkadot/api/promise";
 import {WsProvider} from "@polkadot/api";
 import {Wallet} from "../interfaces";
 import {getConfiguration} from "../configuration";
-import U8aFixed from "@polkadot/types/codec/U8aFixed";
 
 let api: ApiPromise;
 let provider: WsProvider;
@@ -13,23 +12,19 @@ let isConnecting: boolean;
  */
 async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
   provider = new WsProvider(wsRpcUrl);
-  let api = new ApiPromise({
+  const api = await ApiPromise.create({
     initWasm: false,
     provider,
+    // this seems not to make any difference anymore
     types: {
-      //tmp fix until we figure out how to update polkadot api lib
-      ModuleId: U8aFixed,
       RuntimeDbWeight: {
         read: 'Weight',
         write: 'Weight'
       }
     }
   });
-  try {
-    api = await api.isReady;
-  } catch (e) {
-    console.log("Api is ready with error:", e);
-  }
+
+  console.log("Api is ready");
   return api;
 }
 
@@ -37,9 +32,8 @@ export const resetApi = (): void => {
   if (api && provider) {
     try {
       api.disconnect();
-      provider.disconnect();
     } catch (e) {
-
+      console.log("Error on api disconnect.");
     }
     api = null;
     provider = null;
