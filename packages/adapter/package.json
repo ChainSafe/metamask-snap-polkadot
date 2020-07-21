@@ -1,6 +1,6 @@
 {
   "name": "@nodefactory/metamask-polkadot-adapter",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "./build/index.js",
   "module": "./build/index.js",
   "types": "./build/index.d.ts",
