@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@polkadot/api": "^1.22.1",
+    "@nodefactory/metamask-polkadot-types": "^0.3.0",
     "@polkadot/extension-inject": "^0.31.1"
   },
   "scripts": {
@@ -30,6 +31,7 @@
     "lint:types": "tsc --noEmit --pretty",
     "lint:style": "eslint --color 'src/**/*.{js,ts,tsx}'",
     "lint:style:fix": "yarn run lint:style --fix",
+    "prepublish": "yarn run build",
     "test": "exit 0"
   },
   "devDependencies": {
