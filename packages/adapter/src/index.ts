@@ -3,7 +3,7 @@ import {MetamaskPolkadotSnap} from "./snap";
 import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
 import {hasMetaMask} from "./utils";
 
-const defaultOrigin = "https://ipfs.infura.io/ipfs/QmfLTuyTKn5Ax66t3fDf4nzMY79dSQ6nHzSN7SepHRH9kz/";
+const defaultOrigin = "https://bafybeih426v3jpdwnltjfmeefyt4isrogvgzg2wxvryu6itodvb4vzvuma.ipfs.infura-ipfs.io/";
 
 /**
  *
