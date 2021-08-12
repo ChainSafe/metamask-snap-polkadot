@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NodeFactoryIo/metamask-snap-polkadot.git"
+    "url": "git+https://github.com/chainsafe/metamask-snap-polkadot.git"
   },
   "keywords": [
     "polkadot",
@@ -39,12 +39,12 @@
     "dapp",
     "wallet"
   ],
-  "author": "NodeFactory <info@nodefactory.io>",
+  "author": "ChainSafe <info@chainsafe.io>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/NodeFactoryIo/metamask-snap-polkadot/issues"
+    "url": "https://github.com/chainsafe/metamask-snap-polkadot/issues"
   },
-  "homepage": "https://github.com/NodeFactoryIo/metamask-snap-polkadot#readme",
+  "homepage": "https://github.com/chainsafe/metamask-snap-polkadot#readme",
   "web3Wallet": {
     "bundle": {
       "local": "dist/bundle.js",
@@ -59,7 +59,7 @@
     }
   },
   "devDependencies": {
-    "@nodefactory/metamask-polkadot-types": "^0.3.0",
+    "@chainsafe/metamask-polkadot-types": "^0.3.0",
     "@nodefactory/snaps-cli": "^1.5.0-polkadot",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^7.0.2",
