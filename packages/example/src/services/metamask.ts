@@ -1,6 +1,6 @@
 import {web3Enable, web3EnablePromise} from "@polkadot/extension-dapp";
-import {InjectedMetamaskExtension} from "@nodefactory/metamask-polkadot-adapter/src/types";
-import {PolkadotApi, SnapRpcMethodRequest} from "@nodefactory/metamask-polkadot-types";
+import {InjectedMetamaskExtension} from "@chainsafe/metamask-polkadot-adapter/src/types";
+import {PolkadotApi, SnapRpcMethodRequest} from "@chainsafe/metamask-polkadot-types";
 import {InjectedExtension} from "@polkadot/extension-inject/types";
 
 declare global {

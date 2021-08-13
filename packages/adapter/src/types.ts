@@ -4,7 +4,7 @@ import {
   SnapConfig,
   SnapRpcMethodRequest, Transaction,
   TxPayload
-} from "@nodefactory/metamask-polkadot-types";
+} from "@chainsafe/metamask-polkadot-types";
 import {InjectedExtension} from "@polkadot/extension-inject/types";
 
 export interface MetamaskSnapApi {

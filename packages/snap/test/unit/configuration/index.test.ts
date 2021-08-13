@@ -4,7 +4,7 @@ import {getConfiguration, getDefaultConfiguration} from "../../../src/configurat
 import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "../../../src/configuration/predefined";
 import {WalletMock} from "../wallet.mock.test";
 import {EmptyMetamaskState} from "../../../src/interfaces";
-import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
+import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 
 chai.use(sinonChai);
 

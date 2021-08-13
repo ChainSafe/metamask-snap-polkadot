@@ -1,5 +1,5 @@
 import ApiPromise from "@polkadot/api/promise";
-import {BlockId, BlockInfo} from "@nodefactory/metamask-polkadot-types";
+import {BlockId, BlockInfo} from "@chainsafe/metamask-polkadot-types";
 import { BlockHash } from '@polkadot/types/interfaces/chain';
 
 async function _getBlock(blockHash: BlockHash|string, api: ApiPromise): Promise<BlockInfo> {

@@ -2,7 +2,7 @@ import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
 import {Asset} from "../../../src/interfaces";
 import {getPolkadotAssetDescription, POLKADOT_SNAP_ASSET_IDENTIFIER} from "../../../src/asset";
-import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
+import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 
 chai.use(sinonChai);
 

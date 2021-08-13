@@ -14,7 +14,7 @@ import {
   signPayloadJSON,
   signPayloadRaw,
 } from "./methods";
-import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
+import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
 import {isPolkadotSnapInstalled} from "./utils";
 import {getEventApi} from "./api";

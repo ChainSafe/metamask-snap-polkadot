@@ -1,5 +1,5 @@
 import {Wallet} from "../interfaces";
-import {Transaction} from "@nodefactory/metamask-polkadot-types";
+import {Transaction} from "@chainsafe/metamask-polkadot-types";
 
 export function saveTxToState(wallet: Wallet, tx: Transaction): void {
   const state = wallet.getPluginState();

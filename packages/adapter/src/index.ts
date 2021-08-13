@@ -1,6 +1,6 @@
 import {injectExtension} from '@polkadot/extension-inject';
 import {MetamaskPolkadotSnap} from "./snap";
-import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
+import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 import {hasMetaMask} from "./utils";
 
 const defaultOrigin = "https://bafybeih426v3jpdwnltjfmeefyt4isrogvgzg2wxvryu6itodvb4vzvuma.ipfs.infura-ipfs.io/";

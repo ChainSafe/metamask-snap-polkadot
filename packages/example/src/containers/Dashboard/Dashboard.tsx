@@ -19,7 +19,7 @@ import {Account} from "../../components/Account/Account";
 import {MetaMaskConnector} from "../MetaMaskConnector/MetaMaskConnector";
 import {MetaMaskContext} from "../../context/metamask";
 import {LatestBlock} from "../../components/LatestBlock/LatestBlock";
-import {BlockInfo, PolkadotApi, Transaction} from "@nodefactory/metamask-polkadot-types";
+import {BlockInfo, PolkadotApi, Transaction} from "@chainsafe/metamask-polkadot-types";
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {web3Accounts} from "@polkadot/extension-dapp";
 

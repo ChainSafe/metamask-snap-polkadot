@@ -11,7 +11,7 @@ import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
 import {getPolkadotEventEmitter, getTxEventEmitter} from "./polkadot/events";
 import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
-import {HexHash, PolkadotApi, PolkadotEventCallback, TxEventCallback} from "@nodefactory/metamask-polkadot-types";
+import {HexHash, PolkadotApi, PolkadotEventCallback, TxEventCallback} from "@chainsafe/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 import {generateTransactionPayload} from "./rpc/generateTransactionPayload";
 import {send} from "./rpc/send";

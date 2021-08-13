@@ -14,7 +14,7 @@ import {
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {Alert} from "@material-ui/lab";
 import {getPolkascanTxUrl} from "../../services/polkascan";
-import {TxEventArgument} from "@nodefactory/metamask-polkadot-types";
+import {TxEventArgument} from "@chainsafe/metamask-polkadot-types";
 import {getCurrency} from "../../services/format";
 
 interface ITransferProps {

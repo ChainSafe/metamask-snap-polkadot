@@ -4,7 +4,7 @@ import {executeAssetOperation} from "./action";
 import formatBalance from "@polkadot/util/format/formatBalance";
 import {Balance} from "@polkadot/types/interfaces";
 import {getConfiguration} from "../configuration";
-import {SnapConfig} from "@nodefactory/metamask-polkadot-types";
+import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 
 export const POLKADOT_SNAP_ASSET_IDENTIFIER = "polkadot-snap-asset";
 
