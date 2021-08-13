@@ -1,6 +1,6 @@
 import {Wallet} from "../interfaces";
 import ApiPromise from "@polkadot/api/promise";
-import {Transaction, TxPayload} from "@nodefactory/metamask-polkadot-types";
+import {Transaction, TxPayload} from "@chainsafe/metamask-polkadot-types";
 import {getAddress} from "./getAddress";
 import {getTxEventEmitter} from "../polkadot/events";
 import {saveTxToState, updateTxInState} from "../polkadot/tx";

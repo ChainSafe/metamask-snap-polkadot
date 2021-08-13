@@ -3,7 +3,7 @@ import {Paper, Table, TableContainer, TableCell,
     TableRow, TableHead, TableBody} from '@material-ui/core/';
 import {shortAddress} from "../../services/format";
 import {formatBalance} from "@polkadot/util";
-import {Transaction} from "@nodefactory/metamask-polkadot-types";
+import {Transaction} from "@chainsafe/metamask-polkadot-types";
 
 export interface TransactionTableProps {
     txs: Transaction[];

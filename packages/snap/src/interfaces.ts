@@ -1,4 +1,4 @@
-import {MetamaskPolkadotRpcRequest, SnapConfig, Transaction} from "@nodefactory/metamask-polkadot-types";
+import {MetamaskPolkadotRpcRequest, SnapConfig, Transaction} from "@chainsafe/metamask-polkadot-types";
 
 export type FMethodCallback = (
   originString: string,

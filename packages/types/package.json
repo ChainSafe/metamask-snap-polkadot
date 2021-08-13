@@ -1,8 +1,8 @@
 {
-  "name": "@nodefactory/metamask-polkadot-types",
+  "name": "@chainsafe/metamask-polkadot-types",
   "version": "0.3.0",
   "types": "./index.d.ts",
-  "author": "NodeFactory <info@nodefactory.io>",
+  "author": "ChainSafe <info@chainsafe.io>",
   "license": "Apache-2.0",
   "private": false,
   "publishConfig": {

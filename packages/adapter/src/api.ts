@@ -1,4 +1,4 @@
-import {PolkadotApi} from "@nodefactory/metamask-polkadot-types";
+import {PolkadotApi} from "@chainsafe/metamask-polkadot-types";
 import {MetamaskPolkadotSnap} from "./snap";
 
 let api: PolkadotApi;

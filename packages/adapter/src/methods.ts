@@ -3,7 +3,7 @@ import {
   MetamaskPolkadotRpcRequest,
   SignPayloadJSONRequest, SignPayloadRawRequest,
   SnapConfig, Transaction, TxPayload
-} from "@nodefactory/metamask-polkadot-types";
+} from "@chainsafe/metamask-polkadot-types";
 import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
 import {MetamaskPolkadotSnap} from "./snap";
 

@@ -1,13 +1,13 @@
 {
-  "name": "@nodefactory/metamask-polkadot-adapter",
+  "name": "@chainsafe/metamask-polkadot-adapter",
   "version": "0.3.1",
   "main": "./build/index.js",
   "module": "./build/index.js",
   "types": "./build/index.d.ts",
-  "author": "NodeFactory <info@nodefactory.io>",
+  "author": "ChainSafe <info@chainsafe.io>",
   "license": "Apache-2.0",
   "private": false,
-  "homepage": "https://github.com/NodeFactoryIo/metamask-snap-polkadot/tree/master/packages/adapter",
+  "homepage": "https://github.com/chainsafe/metamask-snap-polkadot/tree/master/packages/adapter",
   "keywords": [
     "polkadot",
     "metamask",
