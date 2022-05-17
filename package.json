@@ -19,11 +19,12 @@
     "demo": "concurrently  --raw --kill-others \"yarn run start:snap\" \"yarn run start:example\""
   },
   "devDependencies": {
-    "lerna": "^3.20.2",
     "@types/node": "^12.12.35",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
     "eslint": "^6.8.0",
+    "lerna": "^3.20.2",
     "typescript": "^3.8.3"
-  }
+  },
+  "packageManager": "yarn@3.2.1"
 }
