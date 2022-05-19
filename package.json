@@ -7,23 +7,23 @@
     "packages/*"
   ],
   "scripts": {
-    "build:snap": "lerna run build --scope polkadot-snap",
-    "build:adapter": "lerna run build --scope @chainsafe/metamask-polkadot-adapter",
-    "start:snap": "lerna run serve --scope polkadot-snap",
-    "start:example": "lerna run start --scope example",
+    "build:snap": "yarn workspace polkadot-snap build",
+    "build:adapter": "yarn workspace @chainsafe/metamask-polkadot-adapter build",
+    "start:snap": "yarn workspace polkadot-snap serve",
+    "start:example": "yarn workspace example start",
     "predemo": "yarn run build:snap && yarn run build:adapter",
-    "build": "lerna run build",
-    "test": "lerna run test",
-    "lint": "lerna run lint",
+    "build": "yarn workspaces foreach -vpt run build",
+    "test": "yarn workspaces foreach -vpt run test",
+    "lint": "yarn workspaces foreach -vpt run lint",
     "lint:style:fix": "lerna run lint:style:fix",
     "demo": "concurrently  --raw --kill-others \"yarn run start:snap\" \"yarn run start:example\""
   },
   "devDependencies": {
-    "lerna": "^3.20.2",
     "@types/node": "^12.12.35",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
     "eslint": "^6.8.0",
     "typescript": "^3.8.3"
-  }
+  },
+  "packageManager": "yarn@3.2.1"
 }

@@ -59,7 +59,7 @@
     }
   },
   "devDependencies": {
-    "@chainsafe/metamask-polkadot-types": "^0.3.0",
+    "@chainsafe/metamask-polkadot-types": "workspace:^",
     "@nodefactory/snaps-cli": "^1.5.0-polkadot",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^7.0.2",

@@ -6,7 +6,6 @@
   "types": "./build/index.d.ts",
   "author": "ChainSafe <info@chainsafe.io>",
   "license": "Apache-2.0",
-  "private": false,
   "homepage": "https://github.com/chainsafe/metamask-snap-polkadot/tree/master/packages/adapter",
   "keywords": [
     "polkadot",
@@ -38,6 +37,5 @@
     "@typescript-eslint/parser": "^2.28.0",
     "eslint": "^6.8.0",
     "typescript": "^3.8.3"
-  },
-  "gitHead": "f02721b70d74e138f6401a7a4e4d36412ca1e9dc"
+  }
 }
