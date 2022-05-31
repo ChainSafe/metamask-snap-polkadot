@@ -1,5 +1,5 @@
 import {Wallet} from "../../interfaces";
-import ApiPromise from "@polkadot/api/promise";
+import {ApiPromise} from "@polkadot/api/";
 import {getKeyPair} from "../../polkadot/account";
 
 /**
@@ -13,5 +13,9 @@ export async function getBalance(wallet: Wallet, api: ApiPromise, address?: stri
     address = (await getKeyPair(wallet)).address;
   }
   const account = await api.query.system.account(address);
-  return account.data.free.toString();
+  
+  // TEMP disabled
+  // return account.data.free.toString();
+
+  return "TEMP"
 }

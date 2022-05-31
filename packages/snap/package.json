@@ -75,12 +75,12 @@
     "sinon-chai": "^3.5.0",
     "strict-event-emitter-types": "^2.0.0",
     "ts-node": "^8.6.2",
-    "typescript": "^3.8.3"
+    "typescript": "^4.6.4"
   },
   "dependencies": {
-    "@polkadot/api": "^1.22.1",
-    "@polkadot/types": "^1.22.1",
-    "@polkadot/util": "^2.16.1",
+    "@polkadot/api": "^8.4.2",
+    "@polkadot/types": "^8.4.2",
+    "@polkadot/util": "^9.2.1",
     "axios": "^0.19.2",
     "deepmerge": "^4.2.2"
   },

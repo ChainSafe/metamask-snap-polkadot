@@ -3,7 +3,7 @@ import {getPublicKey} from "./rpc/getPublicKey";
 import {exportSeed} from "./rpc/exportSeed";
 import {getBalance} from "./rpc/substrate/getBalance";
 import {getAddress} from "./rpc/getAddress";
-import ApiPromise from "@polkadot/api/promise";
+import {ApiPromise} from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {updateAsset} from "./asset";
@@ -14,7 +14,8 @@ import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/
 import {HexHash, PolkadotApi, PolkadotEventCallback, TxEventCallback} from "@chainsafe/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 import {generateTransactionPayload} from "./rpc/generateTransactionPayload";
-import {send} from "./rpc/send";
+// TEMP
+// import {send} from "./rpc/send";
 
 declare let wallet: Wallet;
 
@@ -104,11 +105,19 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     }
     case "generateTransactionPayload":
       return await generateTransactionPayload(wallet, api, requestObject.params.to, requestObject.params.amount);
-    case "send":
-      return await send(wallet, api, requestObject.params.signature, requestObject.params.txPayload);
-    case 'getChainHead':
-      const head = await api.rpc.chain.getFinalizedHead();
-      return head.hash;
+
+    // TEMP disabled
+    // case "send":
+    //   return await send(wallet, api, requestObject.params.signature, requestObject.params.txPayload);
+
+
+    //TEMP disabled
+    // case 'getChainHead':
+    //   const head = await api.rpc.chain.getFinalizedHead();
+
+    //   return head.hash;
+
+
     default:
       throw new Error('Method not found.');
   }

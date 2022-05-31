@@ -1,7 +1,7 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
 import {WalletMock} from "../../wallet.mock.test";
-import ApiPromise from "@polkadot/api/promise";
+import {ApiPromise} from "@polkadot/api/";
 import sinon from "sinon";
 import {getBlock} from "../../../../src/rpc/substrate/getBlock";
 import { BlockHash } from '@polkadot/types/interfaces';

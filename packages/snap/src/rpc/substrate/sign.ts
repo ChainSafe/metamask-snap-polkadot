@@ -1,8 +1,8 @@
 import {Wallet} from "../../interfaces";
-import ApiPromise from "@polkadot/api/promise";
-import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import {ApiPromise} from "@polkadot/api/";
+import { SignerPayloadJSON, SignerPayloadRaw } from "@polkadot/types/types";
 import {getKeyPair} from "../../polkadot/account";
-import {hexToU8a, u8aToHex} from "@polkadot/util";
+import { hexToU8a, u8aToHex } from "@polkadot/util";
 import {showConfirmationDialog} from "../../util/confirmation";
 
 export async function signPayloadJSON(

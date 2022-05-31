@@ -1,12 +1,12 @@
 import {Wallet} from "../interfaces";
-import ApiPromise from "@polkadot/api/promise";
+import {ApiPromise} from "@polkadot/api/";
 import {Transaction, TxPayload} from "@chainsafe/metamask-polkadot-types";
 import {getAddress} from "./getAddress";
 import {getTxEventEmitter} from "../polkadot/events";
 import {saveTxToState, updateTxInState} from "../polkadot/tx";
 
 export async function send(
-  wallet: Wallet, api: ApiPromise, signature: string, txPayload: TxPayload
+  wallet: Wallet, api: ApiPromise, signature: Uint8Array | `0x${string}`, txPayload: TxPayload
 ): Promise<Transaction> {
   const sender = await getAddress(wallet);
   const destination = txPayload.payload.address;

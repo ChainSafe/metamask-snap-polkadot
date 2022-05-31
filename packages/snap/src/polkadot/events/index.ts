@@ -1,7 +1,7 @@
 import {TxStatus} from "@chainsafe/metamask-polkadot-types";
 import {EventEmitter} from "events";
 import {StrictEmitterWithOriginProvider} from "./emitter";
-import StrictEventEmitter from "strict-event-emitter-types";
+import {StrictEventEmitter} from "strict-event-emitter-types";
 
 // Polkadot event emitters
 

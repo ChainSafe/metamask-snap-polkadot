@@ -1,5 +1,4 @@
-import {WsProvider} from "@polkadot/api";
-import ApiPromise from "@polkadot/api/promise";
+import {ApiPromise, WsProvider} from "@polkadot/api/";
 
 (async function() {
   const provider = new WsProvider("wss://westend-rpc.polkadot.io");
@@ -13,5 +12,6 @@ import ApiPromise from "@polkadot/api/promise";
   } catch (e) {
     console.log("Api is ready with error:", e);
   }
-  console.log((await api.query.system.account("5o96D5Nu589vP9FDDt967uxNYugQ8LEGfwdbpjcXVaZaGNmS")).data.free.toHuman());
+  //TEMP
+  // console.log((await api.query.system.account("5o96D5Nu589vP9FDDt967uxNYugQ8LEGfwdbpjcXVaZaGNmS")).data.free.toHuman());
 })();
