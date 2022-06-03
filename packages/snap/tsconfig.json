@@ -9,10 +9,11 @@
     },
     "outDir": "./build",
     "types": [
-      "@types/chai",
-      "@types/mocha",
-      "@types/sinon",
-      "@types/sinon-chai"
+      "./src/@types"
+    ],
+    "typeRoots": [
+      "./node_modules",
+      "./src/@types"
     ]
   },
   "include": [

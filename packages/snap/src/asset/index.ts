@@ -1,11 +1,10 @@
 import {Asset, Wallet} from "../interfaces";
 import {getAddress} from "../rpc/getAddress";
 import {executeAssetOperation} from "./action";
-import {formatBalance} from "@polkadot/util/format/";
+import {formatBalance} from "@polkadot/util/cjs/format/formatBalance"
 import {Balance} from "@polkadot/types/interfaces";
 import {getConfiguration} from "../configuration";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
-// import { Balance } from "@polkadot/types/interfaces";
 
 export const POLKADOT_SNAP_ASSET_IDENTIFIER = "polkadot-snap-asset";
 
