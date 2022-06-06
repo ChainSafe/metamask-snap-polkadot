@@ -9,9 +9,6 @@ import {getBlock} from "./rpc/substrate/getBlock";
 import {updateAsset} from "./asset";
 import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
-import {getPolkadotEventEmitter, getTxEventEmitter} from "./polkadot/events";
-import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
-import {HexHash, PolkadotApi, PolkadotEventCallback, TxEventCallback} from "@chainsafe/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 import {generateTransactionPayload} from "./rpc/generateTransactionPayload";
 // TEMP
@@ -22,38 +19,6 @@ declare let wallet: Wallet;
 const apiDependentMethods = [
   "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw", "generateTransactionPayload", "send"
 ];
-
-wallet.registerApiRequestHandler(async function (origin: URL): Promise<PolkadotApi> {
-  return {
-    subscribeToBalance: (callback: PolkadotEventCallback): void => {
-      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
-      eventEmitter.addListener("onBalanceChange", callback);
-      // first call or first call after unregistering
-      if (eventEmitter.listenerCount("onBalanceChange") === 1) {
-        registerOnBalanceChange(wallet, origin.hostname);
-      }
-    },
-    subscribeToTxStatus: (hash: HexHash, onIncluded: TxEventCallback, onFinalized?: TxEventCallback): void => {
-      const eventEmitter = getTxEventEmitter(hash);
-      eventEmitter.addListener("included", onIncluded);
-      if (onFinalized) {
-        eventEmitter.addListener("finalized", onFinalized);
-      }
-    },
-    unsubscribeAllFromBalance: (): void => {
-      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
-      eventEmitter.removeAllListeners("onBalanceChange");
-      removeOnBalanceChange(origin.hostname);
-    },
-    unsubscribeFromBalance: (callback: PolkadotEventCallback): void => {
-      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
-      eventEmitter.removeListener("onBalanceChange", callback);
-      if (eventEmitter.listenerCount("onBalanceChange") === 0) {
-        removeOnBalanceChange(origin.hostname);
-      }
-    }
-  };
-});
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   const state = wallet.getPluginState();

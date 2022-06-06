@@ -1,10 +1,10 @@
 {
-  "version": "0.4.0",
+  "version": "0.3.0",
   "proposedName": "Polkadot snap",
   "description": "The Polkadot snap.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ChainSafe/metamask-snap-polkadot.git"
+    "url": "git+https://github.com/chainsafe/metamask-snap-polkadot.git"
   },
   "source": {
     "shasum": "Gr0rN8CYjPk9BdG0l/d8CFScKUQr+A5jyiVOtGYfVYs=",
