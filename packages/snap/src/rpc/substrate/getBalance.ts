@@ -12,10 +12,7 @@ export async function getBalance(wallet: Wallet, api: ApiPromise, address?: stri
   if(!address) {
     address = (await getKeyPair(wallet)).address;
   }
-  const account = await api.query.system.account(address);
+  const account = (await api.query.system.account(address)) as any;
   
-  // TEMP disabled
-  // return account.data.free.toString();
-
-  return "TEMP"
+  return account.data.free.toString();
 }

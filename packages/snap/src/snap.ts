@@ -11,8 +11,7 @@ import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 import {generateTransactionPayload} from "./rpc/generateTransactionPayload";
-// TEMP
-// import {send} from "./rpc/send";
+import {send} from "./rpc/send";
 
 declare let wallet: Wallet;
 
@@ -71,16 +70,14 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case "generateTransactionPayload":
       return await generateTransactionPayload(wallet, api, requestObject.params.to, requestObject.params.amount);
 
-    // TEMP disabled
-    // case "send":
-    //   return await send(wallet, api, requestObject.params.signature, requestObject.params.txPayload);
+    case "send":
+      return await send(wallet, api, (requestObject.params.signature) as (Uint8Array | `0x${string}`), requestObject.params.txPayload);
 
 
-    //TEMP disabled
-    // case 'getChainHead':
-    //   const head = await api.rpc.chain.getFinalizedHead();
+    case 'getChainHead':
+      const head = await api.rpc.chain.getFinalizedHead();
 
-    //   return head.hash;
+      return head.hash;
 
 
     default:

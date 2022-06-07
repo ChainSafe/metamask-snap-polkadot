@@ -12,6 +12,4 @@ import {ApiPromise, WsProvider} from "@polkadot/api/";
   } catch (e) {
     console.log("Api is ready with error:", e);
   }
-  //TEMP
-  // console.log((await api.query.system.account("5o96D5Nu589vP9FDDt967uxNYugQ8LEGfwdbpjcXVaZaGNmS")).data.free.toHuman());
 })();
