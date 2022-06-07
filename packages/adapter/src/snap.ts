@@ -22,13 +22,6 @@ import {getEventApi} from "./api";
 
 export class MetamaskPolkadotSnap implements Injected {
 
-  public constructor(pluginOrigin: string, config: SnapConfig) {
-    this.pluginOrigin = pluginOrigin;
-    this.snapId = "wallet_plugin_" + this.pluginOrigin;
-    this.config = config || {networkName: "westend"};
-    this.requestCounter = 0;
-  }
-
   public accounts: InjectedAccounts = {
     get: async (): Promise<InjectedAccount[]> => {
       const account: InjectedAccount = {
@@ -69,7 +62,12 @@ export class MetamaskPolkadotSnap implements Injected {
 
   private requestCounter: number;
 
-
+  public constructor(pluginOrigin: string, config: SnapConfig) {
+    this.pluginOrigin = pluginOrigin;
+    this.snapId = "wallet_plugin_" + this.pluginOrigin;
+    this.config = config || {networkName: "westend"};
+    this.requestCounter = 0;
+  }
 
   public enableSnap = async (): Promise<Injected> => {
     if(!(await isPolkadotSnapInstalled(this.snapId))) {
