@@ -71,7 +71,11 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await generateTransactionPayload(wallet, api, requestObject.params.to, requestObject.params.amount);
 
     case "send":
-      return await send(wallet, api, (requestObject.params.signature) as (Uint8Array | `0x${string}`), requestObject.params.txPayload);
+      return await send(
+        wallet, 
+        api, 
+        (requestObject.params.signature) as (Uint8Array | `0x${string}`), 
+        requestObject.params.txPayload);
 
 
     case 'getChainHead':

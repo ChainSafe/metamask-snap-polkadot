@@ -16,6 +16,7 @@ module.exports = {
         "@typescript-eslint/indent": ["error", 2],
         "@typescript-eslint/member-ordering": "error",
         "@typescript-eslint/semi": "error",
+        "@typescript-eslint/ban-ts-ignore": "off",
         "max-len": ["error", {
             "code": 120
         }],

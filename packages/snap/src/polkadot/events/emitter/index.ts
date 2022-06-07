@@ -15,7 +15,7 @@ export class StrictEmitterWithOriginProvider<T> {
       };
     }  
     else if (!this.emitters[origin]) {
-      this.emitters[origin] = new EventEmitter() as StrictEventEmitter<EventEmitter, T>
+      this.emitters[origin] = new EventEmitter() as StrictEventEmitter<EventEmitter, T>;
     }
 
     return this.emitters[origin];

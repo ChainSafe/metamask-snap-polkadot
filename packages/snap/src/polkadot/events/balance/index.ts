@@ -4,7 +4,7 @@ import {getApi} from "../../api";
 import {getKeyPair} from "../../account";
 import {updateAsset} from "../../../asset";
 
-let unsubscribe: Record<string, () => void>;
+// let unsubscribe: Record<string, () => void>;
 
 export async function registerOnBalanceChange(wallet: Wallet, origin: string): Promise<void> {
   const api = await getApi(wallet);
@@ -31,6 +31,7 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
 }
 
 export function removeOnBalanceChange(origin: string): void {
+  console.log(origin);
   // if (unsubscribe && unsubscribe[origin]) {
   //   try {
   //     unsubscribe[origin]();

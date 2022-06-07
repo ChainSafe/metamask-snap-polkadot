@@ -1,4 +1,4 @@
-import '@polkadot/types-augment/'
+import '@polkadot/types-augment/';
 import {injectExtension} from '@polkadot/extension-inject';
 import {MetamaskPolkadotSnap} from "./snap";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
