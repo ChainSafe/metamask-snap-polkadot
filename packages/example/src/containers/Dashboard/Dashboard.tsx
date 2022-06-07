@@ -11,7 +11,7 @@ import {
     MenuItem,
     Select,
     Typography
-} from '@material-ui/core/';
+} from '@material-ui/core';
 import {Transfer} from "../../components/Transfer/Transfer";
 import {SignMessage} from "../../components/SignMessage/SignMessage";
 import {TransactionTable} from "../../components/TransactionTable/TransactionTable";

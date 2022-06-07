@@ -10,7 +10,7 @@ import {
     InputAdornment,
     Snackbar,
     TextField
-} from '@material-ui/core/';
+} from '@material-ui/core';
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {Alert} from "@material-ui/lab";
 import {getPolkascanTxUrl} from "../../services/polkascan";

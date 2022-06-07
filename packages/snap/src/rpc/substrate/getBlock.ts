@@ -1,4 +1,4 @@
-import {ApiPromise} from "@polkadot/api/";
+import {ApiPromise} from "@polkadot/api";
 import {BlockId, BlockInfo} from "@chainsafe/metamask-polkadot-types";
 import { BlockHash } from "@polkadot/types/interfaces";
 

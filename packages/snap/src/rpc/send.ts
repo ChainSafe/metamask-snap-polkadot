@@ -1,5 +1,5 @@
 import {Wallet} from "../interfaces";
-import {ApiPromise} from "@polkadot/api/";
+import {ApiPromise} from "@polkadot/api";
 import {Transaction, TxPayload} from "@chainsafe/metamask-polkadot-types";
 import {getAddress} from "./getAddress";
 import {getTxEventEmitter} from "../polkadot/events";

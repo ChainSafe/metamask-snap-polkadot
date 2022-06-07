@@ -1,6 +1,6 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {ApiPromise} from "@polkadot/api/";
+import {ApiPromise} from "@polkadot/api";
 import sinon from "sinon";
 import {registerOnBalanceChange, removeOnBalanceChange} from "../../../../../src/polkadot/events/balance";
 import * as api from "../../../../../src/polkadot/api";

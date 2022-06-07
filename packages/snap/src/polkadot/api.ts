@@ -1,4 +1,4 @@
-import {ApiPromise} from "@polkadot/api/";
+import {ApiPromise} from "@polkadot/api";
 import {WsProvider} from "@polkadot/api";
 import {Wallet} from "../interfaces";
 import {getConfiguration} from "../configuration";

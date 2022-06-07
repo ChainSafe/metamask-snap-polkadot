@@ -1,4 +1,4 @@
-import {ApiPromise, WsProvider} from "@polkadot/api/";
+import {ApiPromise, WsProvider} from "@polkadot/api";
 
 (async function(): Promise<void> {
   const provider = new WsProvider("wss://westend-rpc.polkadot.io");

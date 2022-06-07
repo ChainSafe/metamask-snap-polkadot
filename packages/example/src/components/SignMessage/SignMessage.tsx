@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Box, Button, Card, CardContent, CardHeader, Dialog, Grid, TextField} from '@material-ui/core/';
+import {Box, Button, Card, CardContent, CardHeader, Dialog, Grid, TextField} from '@material-ui/core';
 import {getInjectedMetamaskExtension} from "../../services/metamask";
 import {stringToHex} from "@polkadot/util/string";
 import {web3Accounts} from "@polkadot/extension-dapp";
