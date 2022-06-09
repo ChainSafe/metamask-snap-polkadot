@@ -1,54 +1,55 @@
-import {hasMetaMask} from "../services/metamask";
-import React, {createContext, Dispatch, PropsWithChildren, Reducer, useReducer} from "react";
+import { hasMetaMask } from "../services/metamask";
+import React, { createContext, Dispatch, PropsWithChildren, Reducer, useReducer } from "react";
 
 interface IPolkadotSnap {
-    isInstalled: boolean
-    message: string
+  isInstalled: boolean
+  message: string
 }
 
 export interface MetamaskState {
-    polkadotSnap: IPolkadotSnap,
-    hasMetaMask: boolean,
+  polkadotSnap: IPolkadotSnap,
+  hasMetaMask: boolean,
 }
 
 const initialState: MetamaskState = {
-    polkadotSnap: {
-        isInstalled: false,
-        message: ""
-    },
-    hasMetaMask: hasMetaMask()
+  hasMetaMask: hasMetaMask(),
+  polkadotSnap: {
+    isInstalled: false,
+    message: ""
+  }
 };
-type MetamaskDispatch = {type: MetamaskActions, payload: any};
-
-export const MetaMaskContext = createContext<[MetamaskState, Dispatch<MetamaskDispatch>]>([initialState, () => {}]);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MetamaskDispatch = { type: MetamaskActions, payload: any };
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export const MetaMaskContext = createContext<[MetamaskState, Dispatch<MetamaskDispatch>]>([initialState, () => { }]);
 
 export enum MetamaskActions {
-    SET_INSTALLED_STATUS
+  SET_INSTALLED_STATUS
 }
 
 const reducer: Reducer<MetamaskState, MetamaskDispatch> = (state, action) => {
-    switch (action.type) {
-        case MetamaskActions.SET_INSTALLED_STATUS: {
-            return {
-                ...state,
-                polkadotSnap: action.payload
-            }
-        }
-        default: {
-            return state;
-        }
+  switch (action.type) {
+    case MetamaskActions.SET_INSTALLED_STATUS: {
+      return {
+        ...state,
+        polkadotSnap: action.payload
+      };
     }
+    default: {
+      return state;
+    }
+  }
 
 };
 
 
-export const MetaMaskContextProvider = (props: PropsWithChildren<{}>) => {
+export const MetaMaskContextProvider = (props: PropsWithChildren<Record<string, unknown>>) => {
 
-    const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-    return (
-        <MetaMaskContext.Provider value={[state, dispatch]}>
-            {props.children}
-        </MetaMaskContext.Provider>
-    );
+  return (
+    <MetaMaskContext.Provider value={[state, dispatch]}>
+      {props.children}
+    </MetaMaskContext.Provider>
+  );
 };

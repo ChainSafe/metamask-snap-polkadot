@@ -1,6 +1,6 @@
 {
   "name": "example",
-  "version": "0.3.0",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@chainsafe/metamask-polkadot-adapter": "workspace:^",
@@ -12,27 +12,34 @@
     "@polkadot/api": "^8.7.1",
     "@polkadot/extension-dapp": "^0.43.2",
     "@polkadot/util": "^9.2.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^17.0.36",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.39",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-scripts": "5.0.1",
     "sass": "^1.26.3",
-    "typescript": "^4.7.2"
+    "typescript": "^4.7.3",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/parser": "^5.27.1",
+    "eslint": "^8.17.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "exit 0",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "eject": "react-scripts eject",
+    "lint": "yarn run lint:types && yarn run lint:style",
+    "lint:types": "tsc --noEmit --pretty",
+    "lint:style": "eslint 'src/**/*.{js,ts,tsx}' --fix",
+    "lint:fix": "yarn run lint --fix"
   },
   "browserslist": {
     "production": [
