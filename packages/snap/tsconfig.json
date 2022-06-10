@@ -8,15 +8,9 @@
       ]
     },
     "outDir": "./build",
-    "types": [
-      "./src/@types"
-    ],
-    "typeRoots": [
-      "./node_modules",
-      "./src/@types"
-    ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ]
 }
