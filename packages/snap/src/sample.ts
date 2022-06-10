@@ -8,6 +8,7 @@ import {ApiPromise, WsProvider} from "@polkadot/api";
     write: 'Weight'
   }} });
   try {
+    //eslint-disable-next-line
     api = await api.isReady;
   } catch (e) {
     console.log("Api is ready with error:", e);
