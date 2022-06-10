@@ -14,9 +14,9 @@ jobs:
         with:
           node-version: '16.x'
       - run: yarn install --immutable
-      - name: Run linter
-        run: yarn run lint
       - name: Build
         run: yarn run build
+      - name: Run linter
+        run: yarn run lint
       - name: Run tests
         run: yarn run test
