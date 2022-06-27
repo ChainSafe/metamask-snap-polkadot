@@ -27,7 +27,7 @@ let assetState: { balance: string | number; network: string };
 export async function updateAsset(
   wallet: Wallet, origin: string, balance: number|string|Balance
 ): Promise<void> {
-  const configuration = getConfiguration(wallet);
+  const configuration = await getConfiguration(wallet);
   const asset = getPolkadotAssetDescription(balance, await getAddress(wallet), configuration);
   if (!assetState) {
     // create polkadot snap asset

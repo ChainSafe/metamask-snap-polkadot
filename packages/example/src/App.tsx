@@ -6,14 +6,6 @@ import { injectMetamaskPolkadotSnapProvider } from "@chainsafe/metamask-polkadot
 
 function App() {
 
-  useEffect(() => {
-    injectMetamaskPolkadotSnapProvider(
-      "westend",
-      undefined,
-      "http://localhost:8081/package.json"
-    );
-  }, []);
-
   return (
     <MetaMaskContextProvider>
       <Dashboard />

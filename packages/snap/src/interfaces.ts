@@ -20,6 +20,7 @@ export interface Wallet {
   getAppKey(): Promise<string>;
   updatePluginState(state: MetamaskState): void;
   getPluginState(): MetamaskState;
+  request(options: {method: string; params?: unknown[]}): unknown;
 }
 
 export interface Asset {

@@ -8,7 +8,7 @@ import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
 import {MetamaskPolkadotSnap} from "./snap";
 
 async function sendSnapMethod(request: MetamaskPolkadotRpcRequest, snapId: string): Promise<unknown> {
-  return await window.ethereum.send({
+  return await window.ethereum.request({
     method: snapId,
     params: [
       request

@@ -104,14 +104,14 @@ export const Dashboard = () => {
       <Grid direction="column" alignItems="center" justify="center" container spacing={3}>
         <Box m="2rem">
           <Typography variant="h2">
-                        Polkadot snap demo
+            Polkadot snap demo
           </Typography>
         </Box>
         {
-          state.polkadotSnap.isInstalled && <MetaMaskConnector />
+          !state.polkadotSnap.isInstalled && <MetaMaskConnector />
         }
         {
-          !state.polkadotSnap.isInstalled && <>
+          state.polkadotSnap.isInstalled && <>
             <Box m="1rem" alignSelf="baseline">
               <InputLabel>Network</InputLabel>
               <Select

@@ -1,4 +1,4 @@
-import {EmptyMetamaskState, Wallet} from "./interfaces";
+import {EmptyMetamaskState, MetamaskState, Wallet} from "./interfaces";
 import {getPublicKey} from "./rpc/getPublicKey";
 import {exportSeed} from "./rpc/exportSeed";
 import {getBalance} from "./rpc/substrate/getBalance";
@@ -20,11 +20,19 @@ const apiDependentMethods = [
 ];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
-  const state = wallet.getPluginState();
+  const state = await wallet.request({
+    method: 'snap_manageState',
+    params: ['get'],
+  });
+
   if (!state) {
     // initialize state if empty and set default config
-    wallet.updatePluginState(EmptyMetamaskState());
+    await wallet.request({
+      method: 'snap_manageState',
+      params: ['update', EmptyMetamaskState()],
+    });
   }
+
   // fetch api promise
   let api: ApiPromise = null;
   if (apiDependentMethods.includes(requestObject.method)) {
@@ -51,20 +59,24 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return balance;
     }
     case 'configure': {
-      const isInitialConfiguration = wallet.getPluginState().polkadot.config === null;
+      const state = await wallet.request({
+        method: 'snap_manageState',
+        params: ['get'],
+      }) as MetamaskState;
+      const isInitialConfiguration = state.polkadot.config === null;
       // reset api and remove asset only if already configured
       if (!isInitialConfiguration) {
         resetApi();
       }
       // set new configuration
-      const configuration = configure(
+      const configuration = await configure(
         wallet, requestObject.params.configuration.networkName, requestObject.params.configuration
       );
       // initialize api with new configuration
-      api = await getApi(wallet);
+      // api = await getApi(wallet);
       // add new asset
-      const balance = await getBalance(wallet, api);
-      await updateAsset(wallet, originString, balance);
+      // const balance = await getBalance(wallet, api);
+      // await updateAsset(wallet, originString, balance);
       return configuration;
     }
     case "generateTransactionPayload":

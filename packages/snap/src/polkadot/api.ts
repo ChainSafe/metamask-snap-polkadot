@@ -43,7 +43,7 @@ export const resetApi = (): void => {
 export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
   if (!api) {
     // api not initialized or configuration changed
-    const config = getConfiguration(wallet);
+    const config = await getConfiguration(wallet);
     api = await initApi(config.wsRpcUrl);
     isConnecting = false;
   } else {

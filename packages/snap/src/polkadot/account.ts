@@ -14,6 +14,8 @@ export async function getKeyPair(wallet: Wallet): Promise<KeyringPair> {
   const [appKey] = await Promise.all([wallet.getAppKey(), cryptoWaitReady()]);
   // generate keys
   const seed = appKey.substr(0, 32);
-  const keyring = new Keyring({ss58Format: getConfiguration(wallet).addressPrefix});
+  const config = await getConfiguration(wallet);
+  const ss58Format = config.addressPrefix;
+  const keyring = new Keyring({ss58Format});
   return keyring.addFromSeed(stringToU8a(seed));
 }

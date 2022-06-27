@@ -59,10 +59,10 @@ export const MetaMaskConnector = () => {
         }
       />
       {state.hasMetaMask &&
-                <Fragment>
-                  <Alert severity="warning">Ensure that MetaMask is installed!</Alert>
-                  <Box mt={"1rem"} />
-                </Fragment>
+        <Fragment>
+          <Alert severity="warning">Ensure that MetaMask is installed!</Alert>
+          <Box mt={"1rem"} />
+        </Fragment>
       }
       <Button
         disabled={!state.hasMetaMask}
@@ -71,7 +71,7 @@ export const MetaMaskConnector = () => {
         size={"large"}
         color="primary"
       >
-                Connect to MetaMask
+        Connect to MetaMask
       </Button>
     </div>
   );
