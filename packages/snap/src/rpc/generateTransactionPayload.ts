@@ -1,7 +1,7 @@
-import ApiPromise from "@polkadot/api/promise";
+import {ApiPromise} from "@polkadot/api/";
 import {Wallet} from "../interfaces";
 import {getAddress} from "./getAddress";
-import {SubmittableExtrinsic} from "@polkadot/api/types";
+import { SubmittableExtrinsic } from "@polkadot/api/types";
 import {TxPayload} from "@chainsafe/metamask-polkadot-types";
 
 export async function generateTransactionPayload(

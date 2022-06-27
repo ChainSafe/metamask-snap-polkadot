@@ -3,15 +3,12 @@ import {getPublicKey} from "./rpc/getPublicKey";
 import {exportSeed} from "./rpc/exportSeed";
 import {getBalance} from "./rpc/substrate/getBalance";
 import {getAddress} from "./rpc/getAddress";
-import ApiPromise from "@polkadot/api/promise";
+import {ApiPromise} from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
 import {updateAsset} from "./asset";
 import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
-import {getPolkadotEventEmitter, getTxEventEmitter} from "./polkadot/events";
-import {registerOnBalanceChange, removeOnBalanceChange} from "./polkadot/events/balance";
-import {HexHash, PolkadotApi, PolkadotEventCallback, TxEventCallback} from "@chainsafe/metamask-polkadot-types";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
 import {generateTransactionPayload} from "./rpc/generateTransactionPayload";
 import {send} from "./rpc/send";
@@ -21,38 +18,6 @@ declare let wallet: Wallet;
 const apiDependentMethods = [
   "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw", "generateTransactionPayload", "send"
 ];
-
-wallet.registerApiRequestHandler(async function (origin: URL): Promise<PolkadotApi> {
-  return {
-    subscribeToBalance: (callback: PolkadotEventCallback): void => {
-      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
-      eventEmitter.addListener("onBalanceChange", callback);
-      // first call or first call after unregistering
-      if (eventEmitter.listenerCount("onBalanceChange") === 1) {
-        registerOnBalanceChange(wallet, origin.hostname);
-      }
-    },
-    subscribeToTxStatus: (hash: HexHash, onIncluded: TxEventCallback, onFinalized?: TxEventCallback): void => {
-      const eventEmitter = getTxEventEmitter(hash);
-      eventEmitter.addListener("included", onIncluded);
-      if (onFinalized) {
-        eventEmitter.addListener("finalized", onFinalized);
-      }
-    },
-    unsubscribeAllFromBalance: (): void => {
-      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
-      eventEmitter.removeAllListeners("onBalanceChange");
-      removeOnBalanceChange(origin.hostname);
-    },
-    unsubscribeFromBalance: (callback: PolkadotEventCallback): void => {
-      const eventEmitter = getPolkadotEventEmitter(origin.hostname);
-      eventEmitter.removeListener("onBalanceChange", callback);
-      if (eventEmitter.listenerCount("onBalanceChange") === 0) {
-        removeOnBalanceChange(origin.hostname);
-      }
-    }
-  };
-});
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   const state = wallet.getPluginState();
@@ -104,11 +69,21 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     }
     case "generateTransactionPayload":
       return await generateTransactionPayload(wallet, api, requestObject.params.to, requestObject.params.amount);
+
     case "send":
-      return await send(wallet, api, requestObject.params.signature, requestObject.params.txPayload);
+      return await send(
+        wallet, 
+        api, 
+        (requestObject.params.signature) as (Uint8Array | `0x${string}`), 
+        requestObject.params.txPayload);
+
+
     case 'getChainHead':
       const head = await api.rpc.chain.getFinalizedHead();
+
       return head.hash;
+
+
     default:
       throw new Error('Method not found.');
   }

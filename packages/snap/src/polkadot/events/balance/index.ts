@@ -4,12 +4,15 @@ import {getApi} from "../../api";
 import {getKeyPair} from "../../account";
 import {updateAsset} from "../../../asset";
 
-let unsubscribe: Record<string, () => void>;
+// let unsubscribe: Record<string, () => void>;
 
 export async function registerOnBalanceChange(wallet: Wallet, origin: string): Promise<void> {
   const api = await getApi(wallet);
   const address = (await getKeyPair(wallet)).address;
   // Here we subscribe to any balance changes and update the on-screen value
+  
+  // eslint-disable-next-line
+  // @ts-ignore
   await api.query.system.account(address, ({data: {free: currentFree}}) => {
     updateAsset(wallet, origin, currentFree.toString());
     getPolkadotEventEmitter(origin).emit("onBalanceChange", currentFree.toString());
@@ -29,6 +32,7 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
 }
 
 export function removeOnBalanceChange(origin: string): void {
+  console.log(origin);
   // if (unsubscribe && unsubscribe[origin]) {
   //   try {
   //     unsubscribe[origin]();

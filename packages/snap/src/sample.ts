@@ -1,7 +1,6 @@
-import {WsProvider} from "@polkadot/api";
-import ApiPromise from "@polkadot/api/promise";
+import {ApiPromise, WsProvider} from "@polkadot/api";
 
-(async function() {
+(async function(): Promise<void> {
   const provider = new WsProvider("wss://westend-rpc.polkadot.io");
   // const provider = new WsProvider("wss://kusama-rpc.polkadot.io");
   let api = new ApiPromise({ initWasm: false, provider, types: {RuntimeDbWeight: {
@@ -9,9 +8,9 @@ import ApiPromise from "@polkadot/api/promise";
     write: 'Weight'
   }} });
   try {
+    //eslint-disable-next-line
     api = await api.isReady;
   } catch (e) {
     console.log("Api is ready with error:", e);
   }
-  console.log((await api.query.system.account("5o96D5Nu589vP9FDDt967uxNYugQ8LEGfwdbpjcXVaZaGNmS")).data.free.toHuman());
 })();

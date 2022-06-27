@@ -28,7 +28,7 @@ describe('Test asset functions ', function() {
       // assertions
       expect(asset).not.to.be.null;
       expect(asset).to.be.deep.eq({
-        balance: "1.000m",
+        balance: "1.0000 m",
         customViewUrl: "custom-view",
         decimals: 0,
         identifier: POLKADOT_SNAP_ASSET_IDENTIFIER,
@@ -54,7 +54,7 @@ describe('Test asset functions ', function() {
       // assertions
       expect(asset).not.to.be.null;
       expect(asset).to.be.deep.eq({
-        balance: "1.000m",
+        balance: "1.0000 m",
         customViewUrl: "",
         decimals: 0,
         identifier: POLKADOT_SNAP_ASSET_IDENTIFIER,

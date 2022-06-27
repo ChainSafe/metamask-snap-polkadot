@@ -14,16 +14,16 @@
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "build": "yarn run build:tsc && yarn run build:snap",
-    "build:tsc": "tsc --build --pretty",
-    "build:snap": "nf-snap build --stripComments --debug --verbose",
-    "snapEval": "nf-snap eval",
+    "build:tsc": "tsc --pretty --project tsconfig.build.json",
+    "build:snap": "mm-snap build --transpilationMode localAndDeps  --stripComments",
+    "snapEval": "mm-snap eval",
     "watch": "concurrently  --raw --kill-others \"yarn run watch:tsc\" \"yarn run watch:snap\" \"yarn run serve\"",
     "watch:tsc": "yarn run build:tsc --watch",
-    "watch:snap": "nf-snap watch --debug -s build/index.js",
+    "watch:snap": "mm-snap watch --debug",
     "prepublish": "yarn run build && mkdir ipfs && cp package.json ipfs/package.json",
     "publish": "export BUNDLE_URL=`ipd --no-clipboard -O -p infura dist/bundle.js` && sed -i 's/http:\\/\\/localhost:8081\\/dist\\/bundle.js/https:\\/\\/ipfs.infura.io\\/ipfs\\/'\"$BUNDLE_URL\"'/g' ipfs/package.json && ipd --no-clipboard -O -p infura ipfs/package.json",
     "postpublish": "rm -rf ipfs",
-    "serve": "nf-snap serve",
+    "serve": "mm-snap serve",
     "test": "yarn run test:unit",
     "test:unit": "mocha --colors -r ts-node/register \"test/unit/**/*.test.ts\""
   },
@@ -60,31 +60,32 @@
   },
   "devDependencies": {
     "@chainsafe/metamask-polkadot-types": "workspace:^",
-    "@nodefactory/snaps-cli": "^1.5.0-polkadot",
+    "@metamask/snaps-cli": "0.15.0",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^7.0.2",
     "@types/sinon": "^7.5.2",
     "@types/sinon-chai": "^3.2.3",
-    "@typescript-eslint/eslint-plugin": "^2.22.0",
-    "@typescript-eslint/parser": "^2.22.0",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/parser": "^5.27.1",
     "chai": "^4.2.0",
     "concurrently": "^5.1.0",
-    "eslint": "^6.8.0",
+    "eslint": "^8.17.0",
     "mocha": "^7.1.1",
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
     "strict-event-emitter-types": "^2.0.0",
     "ts-node": "^8.6.2",
-    "typescript": "^3.8.3"
+    "typescript": "4.7.3"
   },
   "dependencies": {
-    "@polkadot/api": "^1.22.1",
-    "@polkadot/types": "^1.22.1",
-    "@polkadot/util": "^2.16.1",
-    "axios": "^0.19.2",
+    "@polkadot/api": "^8.7.1",
+    "@polkadot/types": "^8.7.1",
+    "@polkadot/util": "9.4.1",
+    "axios": "0.27.2",
     "deepmerge": "^4.2.2"
   },
   "resolutions": {
+    "@polkadot/util": "9.4.1",
     "@polkadot/wasm-crypto": "file:./wasm-crypto-stub"
   }
 }

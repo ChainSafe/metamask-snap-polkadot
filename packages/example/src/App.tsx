@@ -1,22 +1,23 @@
-import React, {useEffect} from 'react';
-import {Dashboard} from "./containers/Dashboard/Dashboard";
-import {MetaMaskContextProvider} from "./context/metamask";
-import {injectMetamaskPolkadotSnapProvider} from "@chainsafe/metamask-polkadot-adapter";
+import { useEffect } from 'react';
+import { Dashboard } from "./containers/Dashboard/Dashboard";
+import { MetaMaskContextProvider } from "./context/metamask";
+//eslint-disable-next-line
+import { injectMetamaskPolkadotSnapProvider } from "@chainsafe/metamask-polkadot-adapter";
 
 function App() {
 
-    useEffect(() => {
-        injectMetamaskPolkadotSnapProvider(
-            "westend",
-            undefined,
-            "http://localhost:8081/package.json"
-        );
-    }, [])
+  useEffect(() => {
+    injectMetamaskPolkadotSnapProvider(
+      "westend",
+      undefined,
+      "http://localhost:8081/package.json"
+    );
+  }, []);
 
   return (
-      <MetaMaskContextProvider>
-        <Dashboard/>
-      </MetaMaskContextProvider>
+    <MetaMaskContextProvider>
+      <Dashboard />
+    </MetaMaskContextProvider>
   );
 }
 

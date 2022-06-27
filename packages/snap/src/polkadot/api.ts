@@ -1,4 +1,4 @@
-import ApiPromise from "@polkadot/api/promise";
+import {ApiPromise} from "@polkadot/api";
 import {WsProvider} from "@polkadot/api";
 import {Wallet} from "../interfaces";
 import {getConfiguration} from "../configuration";
@@ -50,7 +50,7 @@ export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
     while (isConnecting) {
       await new Promise(r => setTimeout(r, 100));
     }
-    if (!provider.isConnected()) {
+    if (!provider.isConnected) {
       isConnecting = true;
       await provider.connect();
       isConnecting = false;

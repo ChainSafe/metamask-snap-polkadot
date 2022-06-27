@@ -1,6 +1,7 @@
 import {Injected, InjectedAccount, InjectedAccounts} from "@polkadot/extension-inject/types";
 import {Signer as InjectedSigner, SignerResult} from '@polkadot/api/types';
 import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
+import {HexString} from '@polkadot/util/types';
 import {
   exportSeed,
   generateTransactionPayload,
@@ -22,7 +23,7 @@ import {getEventApi} from "./api";
 export class MetamaskPolkadotSnap implements Injected {
 
   public accounts: InjectedAccounts = {
-    get: async () => {
+    get: async (): Promise<InjectedAccount[]> => {
       const account: InjectedAccount = {
         address: await getAddress.bind(this)(),
         genesisHash: null,
@@ -39,18 +40,18 @@ export class MetamaskPolkadotSnap implements Injected {
 
   public signer: InjectedSigner = {
     signPayload: async (payload: SignerPayloadJSON): Promise<SignerResult> => {
-      const signature = await signPayloadJSON.bind(this)(payload);
+      const signature = (await signPayloadJSON.bind(this)(payload) as HexString);
       const id = this.requestCounter;
       this.requestCounter += 1;
       return {id, signature};
     },
     signRaw: async (raw: SignerPayloadRaw): Promise<SignerResult> => {
-      const signature = await signPayloadRaw.bind(this)(raw);
+      const signature =( await signPayloadRaw.bind(this)(raw) as HexString);
       const id = this.requestCounter;
       this.requestCounter += 1;
       return {id, signature};
     },
-    update: () => null
+    update: (): null => null
   };
 
   protected readonly config: SnapConfig;

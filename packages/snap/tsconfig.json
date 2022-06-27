@@ -8,14 +8,9 @@
       ]
     },
     "outDir": "./build",
-    "types": [
-      "@types/chai",
-      "@types/mocha",
-      "@types/sinon",
-      "@types/sinon-chai"
-    ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ]
 }
