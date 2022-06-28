@@ -1,7 +1,8 @@
-import { web3Enable, web3EnablePromise } from "@polkadot/extension-dapp";
+import { web3EnablePromise } from "@polkadot/extension-dapp";
 import { InjectedMetamaskExtension } from "@chainsafe/metamask-polkadot-adapter/src/types";
 import { PolkadotApi, SnapRpcMethodRequest } from "@chainsafe/metamask-polkadot-types";
 import { InjectedExtension } from "@polkadot/extension-inject/types";
+import { enablePolkadotSnap } from "@chainsafe/metamask-polkadot-adapter";
 
 declare global {
   interface Window {
@@ -10,6 +11,8 @@ declare global {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       send: (request: SnapRpcMethodRequest | { method: string; params?: any[] }) => Promise<unknown>;
       on: (eventName: unknown, callback: unknown) => unknown;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      request: <T>(request: SnapRpcMethodRequest | { method: string; params?: any[] }) => Promise<T>;
       requestIndex: () => Promise<{ getPluginApi: (origin: string) => Promise<PolkadotApi> }>;
     };
   }
@@ -22,13 +25,15 @@ export function hasMetaMask(): boolean {
   return window.ethereum.isMetaMask;
 }
 
-export const origin = new URL('package.json', 'http://localhost:8081').toString();
-export const pluginOrigin = `wallet_plugin_${origin}`;
+export const defaultSnapId = 'local:http://localhost:8081';
 
 export async function installPolkadotSnap(): Promise<boolean> {
+  const snapId = process.env.REACT_APP_SNAP_ID ? process.env.REACT_APP_SNAP_ID : defaultSnapId;
   try {
     console.log("installing snap");
-    await web3Enable('my cool dapp');
+
+    await enablePolkadotSnap({ networkName: "westend" }, snapId, { version: "latest" });
+
     console.log("Snap installed!!");
     return true;
   } catch (e) {

@@ -17,7 +17,6 @@ import {
 } from "./methods";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
-import {isPolkadotSnapInstalled} from "./utils";
 import {getEventApi} from "./api";
 
 export class MetamaskPolkadotSnap implements Injected {
@@ -64,23 +63,11 @@ export class MetamaskPolkadotSnap implements Injected {
 
   public constructor(pluginOrigin: string, config: SnapConfig) {
     this.pluginOrigin = pluginOrigin;
-    this.snapId = "wallet_plugin_" + this.pluginOrigin;
+    this.snapId = `wallet_snap_${this.pluginOrigin}`;
     this.config = config || {networkName: "westend"};
     this.requestCounter = 0;
   }
-
-  public enableSnap = async (): Promise<Injected> => {
-    if(!(await isPolkadotSnapInstalled(this.snapId))) {
-      await window.ethereum.send({
-        method: "wallet_enable",
-        params: [{
-          [this.snapId]: {}
-        }]
-      });
-      await setConfiguration.bind(this)(this.config);
-    }
-    return this;
-  };
+  
 
   public getMetamaskSnapApi = async (): Promise<MetamaskSnapApi> => {
     return {

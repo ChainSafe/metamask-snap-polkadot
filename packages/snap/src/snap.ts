@@ -1,4 +1,4 @@
-import {EmptyMetamaskState, Wallet} from "./interfaces";
+import {EmptyMetamaskState, MetamaskState, Wallet} from "./interfaces";
 import {getPublicKey} from "./rpc/getPublicKey";
 import {exportSeed} from "./rpc/exportSeed";
 import {getBalance} from "./rpc/substrate/getBalance";
@@ -6,7 +6,7 @@ import {getAddress} from "./rpc/getAddress";
 import {ApiPromise} from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
-import {updateAsset} from "./asset";
+// import {updateAsset} from "./asset";
 import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
@@ -20,11 +20,19 @@ const apiDependentMethods = [
 ];
 
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
-  const state = wallet.getPluginState();
+  const state = await wallet.request({
+    method: 'snap_manageState',
+    params: ['get'],
+  });
+
   if (!state) {
     // initialize state if empty and set default config
-    wallet.updatePluginState(EmptyMetamaskState());
+    await wallet.request({
+      method: 'snap_manageState',
+      params: ['update', EmptyMetamaskState()],
+    });
   }
+
   // fetch api promise
   let api: ApiPromise = null;
   if (apiDependentMethods.includes(requestObject.method)) {
@@ -47,24 +55,29 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
       return await getBlock(requestObject.params.blockTag, api);
     case 'getBalance': {
       const balance = await getBalance(wallet, api);
-      await updateAsset(wallet, originString, balance);
+      // await updateAsset(wallet, originString, balance);
       return balance;
     }
     case 'configure': {
-      const isInitialConfiguration = wallet.getPluginState().polkadot.config === null;
+      const state = await wallet.request({
+        method: 'snap_manageState',
+        params: ['get'],
+      }) as MetamaskState;
+      const isInitialConfiguration = state.polkadot.config === null;
       // reset api and remove asset only if already configured
       if (!isInitialConfiguration) {
         resetApi();
       }
       // set new configuration
-      const configuration = configure(
+      const configuration = await configure(
         wallet, requestObject.params.configuration.networkName, requestObject.params.configuration
       );
       // initialize api with new configuration
       api = await getApi(wallet);
       // add new asset
       const balance = await getBalance(wallet, api);
-      await updateAsset(wallet, originString, balance);
+
+      // await updateAsset(wallet, originString, balance);
       return configuration;
     }
     case "generateTransactionPayload":

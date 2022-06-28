@@ -28,11 +28,11 @@ export async function send(
     sender: sender,
   } as Transaction;
 
-  api.rpc.author.submitAndWatchExtrinsic(extrinsic, result => {
+  api.rpc.author.submitAndWatchExtrinsic(extrinsic, async result => {
     const eventEmitter = getTxEventEmitter(txHash);
     if (result.isInBlock) {
       tx.block = result.hash.toHex();
-      updateTxInState(wallet, tx);
+      await updateTxInState(wallet, tx);
       eventEmitter.emit("included", {txHash});
       eventEmitter.removeAllListeners("included");
     } else if (result.isFinalized) {
@@ -41,6 +41,6 @@ export async function send(
     }
   });
 
-  saveTxToState(wallet, tx);
+  await saveTxToState(wallet, tx);
   return tx;
 }

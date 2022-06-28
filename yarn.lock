@@ -2802,6 +2802,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@metamask/key-tree@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@metamask/key-tree@npm:3.0.1"
+  dependencies:
+    bip39: ^3.0.4
+    keccak: ^3.0.2
+    secp256k1: ^4.0.2
+  checksum: cd1798e3bd39fc6a8dd49e72a921ff3d3db2d5cbb85dccd94962eee9ebaf92bcbe1f8a7d933443eaaff40c4152539c640664ac72fb415bb0c28a84d11fe521a5
+  languageName: node
+  linkType: hard
+
 "@metamask/metamask-eth-abis@npm:3.0.0":
   version: 3.0.0
   resolution: "@metamask/metamask-eth-abis@npm:3.0.0"
@@ -5798,6 +5809,18 @@ __metadata:
   version: 2.2.0
   resolution: "binary-extensions@npm:2.2.0"
   checksum: d73d8b897238a2d3ffa5f59c0241870043aa7471335e89ea5e1ff48edb7c2d0bb471517a3e4c5c3f4c043615caa2717b5f80a5e61e07503d51dc85cb848e665d
+  languageName: node
+  linkType: hard
+
+"bip39@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "bip39@npm:3.0.4"
+  dependencies:
+    "@types/node": 11.11.6
+    create-hash: ^1.1.0
+    pbkdf2: ^3.0.9
+    randombytes: ^2.0.1
+  checksum: f95f40613474b64c82e2db046a6245e9dd6011e09d12b90c1cd0455e92830d7f0b92b9d7e120f583974047d2da7b5eb18afa6645647d841c11ff5cca5aaeb67d
   languageName: node
   linkType: hard
 
@@ -12192,7 +12215,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"keccak@npm:^3.0.0":
+"keccak@npm:^3.0.0, keccak@npm:^3.0.2":
   version: 3.0.2
   resolution: "keccak@npm:3.0.2"
   dependencies:
@@ -14011,6 +14034,7 @@ __metadata:
   resolution: "polkadot-snap@workspace:packages/snap"
   dependencies:
     "@chainsafe/metamask-polkadot-types": "workspace:^"
+    "@metamask/key-tree": ^3.0.1
     "@metamask/snaps-cli": 0.15.0
     "@polkadot/api": ^8.7.1
     "@polkadot/types": ^8.7.1
@@ -16144,7 +16168,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"secp256k1@npm:^4.0.0, secp256k1@npm:^4.0.1":
+"secp256k1@npm:^4.0.0, secp256k1@npm:^4.0.1, secp256k1@npm:^4.0.2":
   version: 4.0.3
   resolution: "secp256k1@npm:4.0.3"
   dependencies:

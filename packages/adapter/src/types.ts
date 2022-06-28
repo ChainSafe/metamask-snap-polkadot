@@ -31,6 +31,7 @@ declare global {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       send: (request: SnapRpcMethodRequest | {method: string; params?: any[]}) => Promise<unknown>;
       on: (eventName: unknown, callback: unknown) => unknown;
+      request: <T>(request: SnapRpcMethodRequest | {method: string; params?: any[]}) => Promise<T>;
       requestIndex: () => Promise<{getPluginApi: (origin: string) => Promise<PolkadotApi>}>;
     };
   }

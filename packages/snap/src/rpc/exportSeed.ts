@@ -1,5 +1,8 @@
+import { JsonBIP44CoinTypeNode } from "@metamask/key-tree";
 import {Wallet} from "../interfaces";
 import {showConfirmationDialog} from "../util/confirmation";
+
+const kusamaCoinType = 434;
 
 export async function exportSeed(wallet: Wallet): Promise<string|null> {
   // ask for confirmation
@@ -9,8 +12,13 @@ export async function exportSeed(wallet: Wallet): Promise<string|null> {
   );
   // return seed if user confirmed action
   if (confirmation) {
-    const appKey = await wallet.getAppKey();
-    return appKey.substr(0, 32);
+    const bip44Node = (await wallet.request({
+      method: `snap_getBip44Entropy_${kusamaCoinType}`,
+      params: [],
+    })) as JsonBIP44CoinTypeNode;
+  
+    const seed = bip44Node.key.slice(0, 32);
+    return seed
   }
   return null;
 }
