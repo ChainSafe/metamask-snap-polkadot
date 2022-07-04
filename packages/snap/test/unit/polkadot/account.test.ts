@@ -1,6 +1,6 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {EmptyMetamaskState} from "../../../src/interfaces";
+import {EmptyMetamaskState, Wallet} from "../../../src/interfaces";
 import {WalletMock} from "../wallet.mock.test";
 import {getKeyPair} from "../../../src/polkadot/account";
 import {hexToU8a} from '@polkadot/util';

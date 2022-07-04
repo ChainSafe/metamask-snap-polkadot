@@ -20,7 +20,7 @@ describe('Test rpc handler function: configure', function() {
     walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.updatePluginState.returnsArg(0);
     // tested method
-    const result = configure(walletStub as unknown as Wallet, "kusama", {});
+    const result = configure(walletStub, "kusama", {});
     // assertions
     expect(result).to.be.deep.eq(kusamaConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
@@ -37,7 +37,7 @@ describe('Test rpc handler function: configure', function() {
     walletStub.getPluginState.returns(EmptyMetamaskState());
     walletStub.updatePluginState.returnsArg(0);
     // tested method
-    const result = configure(walletStub as unknown as Wallet, "westend", {});
+    const result = configure(walletStub, "westend", {});
     // assertions
     expect(result).to.be.deep.eq(westendConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
@@ -61,7 +61,7 @@ describe('Test rpc handler function: configure', function() {
 
     };
     // tested method
-    const result = configure(walletStub as unknown as Wallet, "test-network", customConfiguration);
+    const result = configure(walletStub, "test-network", customConfiguration);
     // assertions
     expect(result).to.be.deep.eq(customConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({
@@ -80,7 +80,7 @@ describe('Test rpc handler function: configure', function() {
     // tested method
     const customConfiguration = kusamaConfiguration;
     customConfiguration.unit.symbol = "TST_KSM";
-    const result = configure(walletStub as unknown as Wallet, "kusama", {unit: {symbol: "TST_KSM"}} as SnapConfig);
+    const result = configure(walletStub, "kusama", {unit: {symbol: "TST_KSM"}} as SnapConfig);
     // assertions
     expect(result).to.be.deep.eq(customConfiguration);
     expect(walletStub.updatePluginState).to.have.been.calledOnceWithExactly({

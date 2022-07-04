@@ -25,5 +25,5 @@ export async function getKeyPair(wallet: Wallet): Promise<KeyringPair> {
   const ss58Format = config.addressPrefix;
   const keyring = new Keyring({ ss58Format });
 
-  return keyring.addFromSeed(stringToU8a(seed))
+  return keyring.addFromSeed(stringToU8a(seed));
 }

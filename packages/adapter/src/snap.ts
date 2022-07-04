@@ -1,7 +1,3 @@
-import {Injected, InjectedAccount, InjectedAccounts} from "@polkadot/extension-inject/types";
-import {Signer as InjectedSigner, SignerResult} from '@polkadot/api/types';
-import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
-import {HexString} from '@polkadot/util/types';
 import {
   exportSeed,
   generateTransactionPayload,
@@ -12,46 +8,14 @@ import {
   getPublicKey,
   sendSignedData,
   setConfiguration,
-  signPayloadJSON,
-  signPayloadRaw,
+  // signPayloadJSON,
+  // signPayloadRaw,
 } from "./methods";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
 import {getEventApi} from "./api";
 
-export class MetamaskPolkadotSnap implements Injected {
-
-  public accounts: InjectedAccounts = {
-    get: async (): Promise<InjectedAccount[]> => {
-      const account: InjectedAccount = {
-        address: await getAddress.bind(this)(),
-        genesisHash: null,
-        name: "Metamask account"
-      };
-      return [account];
-    },
-    subscribe: () => {
-      return (): void => {
-        throw "unsupported method";
-      };
-    }
-  };
-
-  public signer: InjectedSigner = {
-    signPayload: async (payload: SignerPayloadJSON): Promise<SignerResult> => {
-      const signature = (await signPayloadJSON.bind(this)(payload) as HexString);
-      const id = this.requestCounter;
-      this.requestCounter += 1;
-      return {id, signature};
-    },
-    signRaw: async (raw: SignerPayloadRaw): Promise<SignerResult> => {
-      const signature =( await signPayloadRaw.bind(this)(raw) as HexString);
-      const id = this.requestCounter;
-      this.requestCounter += 1;
-      return {id, signature};
-    },
-    update: (): null => null
-  };
+export class MetamaskPolkadotSnap {
 
   protected readonly config: SnapConfig;
   //url to package.json
@@ -59,13 +23,10 @@ export class MetamaskPolkadotSnap implements Injected {
   //pluginOrigin prefixed with wallet_plugin_
   protected readonly snapId: string;
 
-  private requestCounter: number;
-
   public constructor(pluginOrigin: string, config: SnapConfig) {
     this.pluginOrigin = pluginOrigin;
     this.snapId = `wallet_snap_${this.pluginOrigin}`;
     this.config = config || {networkName: "westend"};
-    this.requestCounter = 0;
   }
   
 
@@ -73,6 +34,7 @@ export class MetamaskPolkadotSnap implements Injected {
     return {
       exportSeed: exportSeed.bind(this),
       generateTransactionPayload: generateTransactionPayload.bind(this),
+      getAddress: getAddress.bind(this),
       getAllTransactions: getAllTransactions.bind(this),
       getBalance: getBalance.bind(this),
       getEventApi: getEventApi.bind(this),

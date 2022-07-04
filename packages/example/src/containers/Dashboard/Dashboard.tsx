@@ -19,8 +19,7 @@ import { MetaMaskConnector } from "../MetaMaskConnector/MetaMaskConnector";
 import { MetaMaskContext } from "../../context/metamask";
 import { LatestBlock } from "../../components/LatestBlock/LatestBlock";
 import { BlockInfo, PolkadotApi, Transaction } from "@chainsafe/metamask-polkadot-types";
-import { getInjectedMetamaskExtension } from "../../services/metamask";
-import { web3Accounts } from "@polkadot/extension-dapp";
+import { MetamaskSnapApi } from "@chainsafe/metamask-polkadot-adapter/build/types";
 
 export const Dashboard = () => {
 
@@ -34,37 +33,34 @@ export const Dashboard = () => {
   const [eventApi, setEventApi] = useState<PolkadotApi | null>(null);
   const [network, setNetwork] = useState<"kusama" | "westend">("westend");
 
+  const [api, setApi] = useState<MetamaskSnapApi | null>(null);
+
   const handleBalanceChange = useCallback((newBalance: string) => {
     setBalance(newBalance);
   }, [setBalance]);
 
   const handleNewTransaction = useCallback(async () => {
-    const extension = await getInjectedMetamaskExtension();
-    if (!extension) return;
-    const metamaskSnapApi = await extension.getMetamaskSnapApi();
-    setTransactions((await metamaskSnapApi.getAllTransactions()));
+    if (!api) return;
+    setTransactions((await api.getAllTransactions()));
   }, [setTransactions]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleNetworkChange = async (event: React.ChangeEvent<{ value: any }>) => {
-    const networkName = event.target.value as "kusama" | "westend";
+    const networkName = event.target.value as "kusama" | "westend";
     if (networkName === network) return;
-    const extension = await getInjectedMetamaskExtension();
-    if (!extension) return;
-    await (await extension.getMetamaskSnapApi()).setConfiguration({ networkName: networkName });
+    if (!api) return;
+    await api.setConfiguration({ networkName: networkName });
     setNetwork(networkName);
   };
 
   useEffect(() => {
     if (state.polkadotSnap.isInstalled) {
       (async function () {
-        const extension = await getInjectedMetamaskExtension();
-        if (!extension) return;
-        const metamaskSnapApi = await extension.getMetamaskSnapApi();
-        if (metamaskSnapApi) {
-          const api = await metamaskSnapApi.getEventApi();
-          setEventApi(api);
-        }
+        if (!api) return;
+
+        const eventApi = await api.getEventApi();
+        setEventApi(eventApi);
+
       })();
     }
   }, [state.polkadotSnap.isInstalled, setEventApi]);
@@ -85,19 +81,25 @@ export const Dashboard = () => {
 
   useEffect(() => {
     (async () => {
-      if (state.polkadotSnap.isInstalled) {
-        const extension = await getInjectedMetamaskExtension();
-        if (!extension) return;
-        const metamaskSnapApi = await extension.getMetamaskSnapApi();
-        const account = (await web3Accounts())[0];
-        setAddress(account.address);
-        setPublicKey(await metamaskSnapApi.getPublicKey());
-        setBalance(await metamaskSnapApi.getBalance());
-        setLatestBlock(await metamaskSnapApi.getLatestBlock());
-        setTransactions((await metamaskSnapApi.getAllTransactions()));
+      if (state.polkadotSnap.isInstalled && state.polkadotSnap.snap) {
+        const polkadotApi = await state.polkadotSnap.snap.getMetamaskSnapApi();
+        setApi(polkadotApi);
       }
     })();
-  }, [state.polkadotSnap.isInstalled, network]);
+  }, [state.polkadotSnap.isInstalled, state.polkadotSnap.snap]);
+
+  useEffect(() => {
+    (async () => {
+      console.log(api);
+      if (api) {
+        setAddress(await api.getAddress());
+        setPublicKey(await api.getPublicKey());
+        setBalance(await api.getBalance());
+        setLatestBlock(await api.getLatestBlock());
+        setTransactions((await api.getAllTransactions()));
+      }
+    })();
+  }, [api, network]);
 
   return (
     <Container maxWidth="lg">

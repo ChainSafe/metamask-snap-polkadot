@@ -8,6 +8,7 @@ import {
 import {InjectedExtension} from "@polkadot/extension-inject/types";
 
 export interface MetamaskSnapApi {
+  getAddress(): Promise<string>;
   getPublicKey(): Promise<string>;
   getBalance(): Promise<string>;
   exportSeed(): Promise<string>;
@@ -31,6 +32,7 @@ declare global {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       send: (request: SnapRpcMethodRequest | {method: string; params?: any[]}) => Promise<unknown>;
       on: (eventName: unknown, callback: unknown) => unknown;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       request: <T>(request: SnapRpcMethodRequest | {method: string; params?: any[]}) => Promise<T>;
       requestIndex: () => Promise<{getPluginApi: (origin: string) => Promise<PolkadotApi>}>;
     };

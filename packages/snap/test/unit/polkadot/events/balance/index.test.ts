@@ -6,7 +6,7 @@ import {registerOnBalanceChange, removeOnBalanceChange} from "../../../../../src
 import * as api from "../../../../../src/polkadot/api";
 import {WalletMock} from "../../../wallet.mock.test";
 import {testAddress, testAppKey} from "../../../rpc/keyPairTestConstants";
-import {EmptyMetamaskState} from "../../../../../src/interfaces";
+import {EmptyMetamaskState, Wallet} from "../../../../../src/interfaces";
 
 chai.use(sinonChai);
 

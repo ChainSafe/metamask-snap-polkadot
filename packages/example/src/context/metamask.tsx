@@ -1,9 +1,11 @@
 import { hasMetaMask } from "../services/metamask";
 import React, { createContext, Dispatch, PropsWithChildren, Reducer, useReducer } from "react";
+import { MetamaskPolkadotSnap } from "@chainsafe/metamask-polkadot-adapter/build/snap";
 
 interface IPolkadotSnap {
   isInstalled: boolean
-  message: string
+  message: string;
+  snap?: MetamaskPolkadotSnap;
 }
 
 export interface MetamaskState {
