@@ -10,7 +10,7 @@ export async function signPayloadJSON(
 ): Promise<{ signature: string }|void> {
   const confirmation = await showConfirmationDialog(
     wallet,
-    `Do you want to sign following payload: \n "${payload.method}" \n with account ${payload.address}`
+    { prompt: `Do you want to sign following payload: \n "${payload.method}" \n with account ${payload.address}` }
   );
   if (confirmation) {
     const extrinsic = api.registry.createType('ExtrinsicPayload', payload, { version: payload.version });
@@ -25,7 +25,7 @@ export async function signPayloadRaw(
   // ask for confirmation
   const confirmation = await showConfirmationDialog(
     wallet,
-    `Do you want to sign following message: \n "${payload.data}" \n with account ${payload.address}`
+    { prompt:  `Do you want to sign following message: \n "${payload.data}" \n with account ${payload.address}` }
   );
   // return seed if user confirmed action
   if (confirmation) {
