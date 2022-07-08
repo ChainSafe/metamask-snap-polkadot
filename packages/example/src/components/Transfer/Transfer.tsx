@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, {useCallback, useContext, useState} from "react";
 import {
   Box,
   Button,
@@ -10,11 +10,9 @@ import {
   Snackbar,
   TextField
 } from '@material-ui/core';
-import { getInjectedMetamaskExtension } from "../../services/metamask";
 import { Alert } from "@material-ui/lab";
-import { getPolkascanTxUrl } from "../../services/polkascan";
-import { TxEventArgument } from "@chainsafe/metamask-polkadot-types";
 import { getCurrency } from "../../services/format";
+import {MetaMaskContext} from "../../context/metamask";
 
 interface ITransferProps {
   network: string;
@@ -25,6 +23,8 @@ interface ITransferProps {
 type AlertSeverity = "success" | "warning" | "info" | "error";
 
 export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallback }) => {
+  const [state] = useContext(MetaMaskContext);
+
   const [recipient, setRecipient] = useState<string>("");
   const [amount, setAmount] = useState<string | number>("");
 
@@ -41,28 +41,6 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
     setAmount(event.target.value);
   }, [setAmount]);
 
-  const handleTransactionIncluded = useCallback((tx: TxEventArgument) => {
-    if (tx.txHash) {
-      // force new refresh after block information
-      onNewTransferCallback();
-      showAlert(
-        "success",
-        `Transaction ${tx.txHash} included in block`,
-        getPolkascanTxUrl(tx.txHash, network)
-      );
-    }
-  }, [network, onNewTransferCallback]);
-
-  const handleTransactionFinalized = useCallback((tx: TxEventArgument) => {
-    if (tx.txHash) {
-      showAlert(
-        "success",
-        `Transaction ${tx.txHash} finalized`,
-        getPolkascanTxUrl(tx.txHash, network)
-      );
-    }
-  }, [network]);
-
   const showAlert = (severity: AlertSeverity, message: string, polkasacanUrl?: string) => {
     setPolkascanUrl(polkasacanUrl ? polkasacanUrl : "");
     setSeverity(severity);
@@ -71,19 +49,16 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
   };
 
   const onSubmit = useCallback(async () => {
-    const provider = await getInjectedMetamaskExtension();
-    if (provider && provider.signer.signPayload) {
+    if (!state.polkadotSnap.snap) return;
+    if (amount && recipient) {
+      const api = await state.polkadotSnap.snap.getMetamaskSnapApi();
       if (amount && recipient) {
-        const api = await provider.getMetamaskSnapApi();
 
         const convertedAmount = BigInt(amount) * BigInt("1000000000");
         const txPayload = await api.generateTransactionPayload(convertedAmount.toString(), recipient);
-        const signedTx = await provider.signer.signPayload(txPayload.payload);
-        const tx = await api.send(signedTx.signature, txPayload);
-
-        // subscribe to transaction events
-        const polkadotEventApi = await api.getEventApi();
-        polkadotEventApi.subscribeToTxStatus(tx.hash, handleTransactionIncluded, handleTransactionFinalized);
+        const signedTx = await api.signPayloadJSON(txPayload.payload);
+        const tx = await api.send(signedTx, txPayload);
+        showAlert("info", `Transaction: ${JSON.stringify(tx, null, 2)}`);
         // clear fields
         setAmount("");
         setRecipient("");
@@ -93,8 +68,7 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
         showAlert("error", "Please fill recipient and amount fields.");
       }
     }
-  }, [amount, handleTransactionFinalized, handleTransactionIncluded,
-    recipient, setAmount, setRecipient, onNewTransferCallback]);
+  }, [amount, recipient, setAmount, setRecipient, onNewTransferCallback]);
 
   return (
     <Card>

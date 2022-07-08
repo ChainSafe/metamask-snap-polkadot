@@ -13,7 +13,6 @@ import {
 } from "./methods";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
-import {getEventApi} from "./api";
 
 export class MetamaskPolkadotSnap {
 
@@ -37,7 +36,6 @@ export class MetamaskPolkadotSnap {
       getAddress: getAddress.bind(this),
       getAllTransactions: getAllTransactions.bind(this),
       getBalance: getBalance.bind(this),
-      getEventApi: getEventApi.bind(this),
       getLatestBlock: getLatestBlock.bind(this),
       getPublicKey: getPublicKey.bind(this),
       send: sendSignedData.bind(this),

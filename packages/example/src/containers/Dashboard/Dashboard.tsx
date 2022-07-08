@@ -18,11 +18,10 @@ import { Account } from "../../components/Account/Account";
 import { MetaMaskConnector } from "../MetaMaskConnector/MetaMaskConnector";
 import { MetaMaskContext } from "../../context/metamask";
 import { LatestBlock } from "../../components/LatestBlock/LatestBlock";
-import { BlockInfo, PolkadotApi, Transaction } from "@chainsafe/metamask-polkadot-types";
+import { BlockInfo, Transaction } from "@chainsafe/metamask-polkadot-types";
 import { MetamaskSnapApi } from "@chainsafe/metamask-polkadot-adapter/build/types";
 
 export const Dashboard = () => {
-
   const [state] = useContext(MetaMaskContext);
 
   const [balance, setBalance] = useState("0");
@@ -30,14 +29,9 @@ export const Dashboard = () => {
   const [publicKey, setPublicKey] = useState("");
   const [latestBlock, setLatestBlock] = useState<BlockInfo>({ hash: "", number: "" });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [eventApi, setEventApi] = useState<PolkadotApi | null>(null);
   const [network, setNetwork] = useState<"kusama" | "westend">("westend");
 
   const [api, setApi] = useState<MetamaskSnapApi | null>(null);
-
-  const handleBalanceChange = useCallback((newBalance: string) => {
-    setBalance(newBalance);
-  }, [setBalance]);
 
   const handleNewTransaction = useCallback(async () => {
     if (!api) return;
@@ -54,32 +48,6 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (state.polkadotSnap.isInstalled) {
-      (async function () {
-        if (!api) return;
-
-        const eventApi = await api.getEventApi();
-        setEventApi(eventApi);
-
-      })();
-    }
-  }, [state.polkadotSnap.isInstalled, setEventApi]);
-
-  useEffect(() => {
-    const api = eventApi;
-    if (api) {
-      (async function () {
-        api.subscribeToBalance(handleBalanceChange);
-      })();
-    }
-    return function () {
-      if (api) {
-        api.unsubscribeAllFromBalance();
-      }
-    };
-  }, [network, handleBalanceChange, eventApi]);
-
-  useEffect(() => {
     (async () => {
       if (state.polkadotSnap.isInstalled && state.polkadotSnap.snap) {
         const polkadotApi = await state.polkadotSnap.snap.getMetamaskSnapApi();
@@ -90,7 +58,6 @@ export const Dashboard = () => {
 
   useEffect(() => {
     (async () => {
-      console.log(api);
       if (api) {
         setAddress(await api.getAddress());
         setPublicKey(await api.getPublicKey());
@@ -100,6 +67,17 @@ export const Dashboard = () => {
       }
     })();
   }, [api, network]);
+
+  useEffect( () => {
+    // periodically check balance
+    const interval = setInterval(async () => {
+      if (api) {
+        const newBalance = await api.getBalance();
+        setBalance(newBalance);
+      }
+    }, 30000); // every 30 seconds
+    return () => clearInterval(interval);
+  }, [api, balance, setBalance]);
 
   return (
     <Container maxWidth="lg">

@@ -1,6 +1,5 @@
 import {
   BlockInfo,
-  PolkadotApi,
   SnapConfig,
   SnapRpcMethodRequest, Transaction,
   TxPayload
@@ -22,7 +21,6 @@ export interface MetamaskSnapApi {
   signPayloadRaw(payload: SignerPayloadRaw): Promise<string>;
   send(signature: string, txPayload: TxPayload): Promise<Transaction>;
   generateTransactionPayload(amount: string | number, to: string): Promise<TxPayload>;
-  getEventApi(): Promise<PolkadotApi>;
 }
 
 export interface InjectedMetamaskExtension extends InjectedExtension {
@@ -38,7 +36,6 @@ declare global {
       on: (eventName: unknown, callback: unknown) => unknown;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       request: <T>(request: SnapRpcMethodRequest | {method: string; params?: any[]}) => Promise<T>;
-      requestIndex: () => Promise<{getPluginApi: (origin: string) => Promise<PolkadotApi>}>;
     };
   }
 }

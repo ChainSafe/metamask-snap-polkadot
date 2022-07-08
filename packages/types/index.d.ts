@@ -150,13 +150,6 @@ export type TxStatus = {
 export type Origin = string;
 export type HexHash = string;
 
-export interface PolkadotApi {
-  subscribeToBalance(callback: PolkadotEventCallback): void;
-  unsubscribeFromBalance(callback: PolkadotEventCallback): void;
-  unsubscribeAllFromBalance(): void;
-  subscribeToTxStatus(hash: HexHash, onIncluded: TxEventCallback, onFinalized?: TxEventCallback): void;
-}
-
 export interface Transaction {
   hash: string;
   block: string;
