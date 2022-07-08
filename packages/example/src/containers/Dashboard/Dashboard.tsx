@@ -141,7 +141,7 @@ export const Dashboard = () => {
                 <Transfer network={network} onNewTransferCallback={handleNewTransaction} />
               </Grid>
               <Grid item md={6} xs={12}>
-                <SignMessage />
+                <SignMessage address={address} />
               </Grid>
             </Grid>
             <Box m="1rem" />

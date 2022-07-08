@@ -8,8 +8,8 @@ import {
   getPublicKey,
   sendSignedData,
   setConfiguration,
-  // signPayloadJSON,
-  // signPayloadRaw,
+  signPayloadJSON,
+  signPayloadRaw,
 } from "./methods";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 import {MetamaskSnapApi} from "./types";
@@ -42,6 +42,8 @@ export class MetamaskPolkadotSnap {
       getPublicKey: getPublicKey.bind(this),
       send: sendSignedData.bind(this),
       setConfiguration: setConfiguration.bind(this),
+      signPayloadJSON: signPayloadJSON.bind(this),
+      signPayloadRaw: signPayloadRaw.bind(this),
     };
   };
 }
