@@ -38,6 +38,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   if (apiDependentMethods.includes(requestObject.method)) {
     api = await getApi(wallet);
   }
+
   switch (requestObject.method) {
     case "signPayloadJSON":
       return await signPayloadJSON(wallet, api, requestObject.params.payload);
