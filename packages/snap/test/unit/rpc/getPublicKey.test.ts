@@ -16,10 +16,9 @@ describe('Test rpc handler function: getPublicKey', function() {
   });
 
   it('should return pk', async function () {
-    walletStub.getAppKey.returns(testAppKey);
-    walletStub.getPluginState.returns(EmptyMetamaskState());
+    walletStub.request.onFirstCall().returns({key: testAppKey});
+    walletStub.request.onSecondCall().returns(EmptyMetamaskState());
     const result = await getPublicKey(walletStub);
-    expect(walletStub.getAppKey).to.have.been.calledOnce;
     expect(result).to.be.eq(testPublicKey);
   });
 });

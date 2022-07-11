@@ -41,14 +41,14 @@ describe('Test configuration functions', function() {
 
     it('should return configuration saved in state"', async function () {
       const customConfiguration: SnapConfig = {addressPrefix: 5, networkName: "test-network", wsRpcUrl: "url"};
-      walletStub.getPluginState.returns({polkadot: {config: customConfiguration}});
+      walletStub.request.returns({polkadot: {config: customConfiguration}});
       const configuration = await getConfiguration(walletStub);
       expect(configuration).to.be.deep.eq(customConfiguration);
     });
 
-    it('should return default configuration on empty state"', function () {
-      walletStub.getPluginState.returns(EmptyMetamaskState());
-      const configuration = getConfiguration(walletStub);
+    it('should return default configuration on empty state"', async function () {
+      walletStub.request.returns(EmptyMetamaskState());
+      const configuration = await getConfiguration(walletStub);
       expect(configuration).to.be.deep.eq(defaultConfiguration);
     });
   });

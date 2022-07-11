@@ -16,10 +16,9 @@ describe('Test rpc handler function: getAddress', function() {
   });
 
   it('should return valid address with westend configuration', async function () {
-    walletStub.getAppKey.returns(testAppKey);
-    walletStub.getPluginState.returns({polkadot: {configuration: westendConfiguration}});
+    walletStub.request.onFirstCall().returns({ key: testAppKey});
+    walletStub.request.onSecondCall().returns({polkadot: {configuration: westendConfiguration}});
     const result = await getAddress(walletStub);
-    expect(walletStub.getPluginState).to.have.been.calledOnce;
     expect(result).to.be.eq("5DW5CXHWbM13Az7aetLQVUEviNq8WeXFQanHNPVMmzyRYKvX");
   });
 });
