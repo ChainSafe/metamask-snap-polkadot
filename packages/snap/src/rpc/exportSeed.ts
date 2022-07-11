@@ -16,9 +16,8 @@ export async function exportSeed(wallet: Wallet): Promise<string|null> {
       method: `snap_getBip44Entropy_${kusamaCoinType}`,
       params: [],
     })) as JsonBIP44CoinTypeNode;
-  
-    const seed = bip44Node.key.slice(0, 32);
-    return seed;
+
+    return bip44Node.key.slice(0, 32);
   }
   return null;
 }

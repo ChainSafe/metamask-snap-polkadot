@@ -2,7 +2,6 @@ import {Wallet} from "../../../interfaces";
 import {getPolkadotEventEmitter} from "../index";
 import {getApi} from "../../api";
 import {getKeyPair} from "../../account";
-import {updateAsset} from "../../../asset";
 
 // let unsubscribe: Record<string, () => void>;
 
@@ -14,7 +13,6 @@ export async function registerOnBalanceChange(wallet: Wallet, origin: string): P
   // eslint-disable-next-line
   // @ts-ignore
   await api.query.system.account(address, ({data: {free: currentFree}}) => {
-    updateAsset(wallet, origin, currentFree.toString());
     getPolkadotEventEmitter(origin).emit("onBalanceChange", currentFree.toString());
   });
   // if (!unsubscribe) {

@@ -6,7 +6,6 @@ import {getAddress} from "./rpc/getAddress";
 import {ApiPromise} from "@polkadot/api/promise";
 import {getTransactions} from "./rpc/substrate/getTransactions";
 import {getBlock} from "./rpc/substrate/getBlock";
-// import {updateAsset} from "./asset";
 import {getApi, resetApi} from "./polkadot/api";
 import {configure} from "./rpc/configure";
 import {signPayloadJSON, signPayloadRaw} from "./rpc/substrate/sign";
@@ -55,9 +54,7 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
     case 'getBlock':
       return await getBlock(requestObject.params.blockTag, api);
     case 'getBalance': {
-      const balance = await getBalance(wallet, api);
-      // await updateAsset(wallet, originString, balance);
-      return balance;
+      return await getBalance(wallet, api);
     }
     case 'configure': {
       const state = await wallet.request({
@@ -70,16 +67,9 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
         resetApi();
       }
       // set new configuration
-      const configuration = await configure(
+      return await configure(
         wallet, requestObject.params.configuration.networkName, requestObject.params.configuration
       );
-      // initialize api with new configuration
-      api = await getApi(wallet);
-      // add new asset
-      const balance = await getBalance(wallet, api);
-
-      // await updateAsset(wallet, originString, balance);
-      return configuration;
     }
     case "generateTransactionPayload":
       return await generateTransactionPayload(wallet, api, requestObject.params.to, requestObject.params.amount);
@@ -91,12 +81,9 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
         (requestObject.params.signature) as (Uint8Array | `0x${string}`), 
         requestObject.params.txPayload);
 
-
     case 'getChainHead':
       const head = await api.rpc.chain.getFinalizedHead();
-
       return head.hash;
-
 
     default:
       throw new Error('Method not found.');

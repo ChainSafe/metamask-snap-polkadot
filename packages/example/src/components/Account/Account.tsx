@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Box, Button, Card, CardContent, CardHeader, Divider, Grid, Typography } from '@material-ui/core';
 import { formatBalance } from "@polkadot/util/format/formatBalance";
-import { getInjectedMetamaskExtension } from "../../services/metamask";
 import { getCurrency } from "../../services/format";
 import { MetaMaskContext } from "../../context/metamask";
 

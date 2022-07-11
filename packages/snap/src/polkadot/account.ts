@@ -6,7 +6,7 @@ import { getConfiguration } from "../configuration";
 import { JsonBIP44CoinTypeNode } from "@metamask/key-tree";
 
 const kusamaCoinType = 434;
-const polkadotCoinType = 354;
+// const polkadotCoinType = 354;
 
 /**
  * Returns KeyringPair if one is saved in wallet state, creates new one otherwise
