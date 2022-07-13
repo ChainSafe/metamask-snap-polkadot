@@ -17,7 +17,7 @@ export async function exportSeed(wallet: Wallet): Promise<string|null> {
       params: [],
     })) as JsonBIP44CoinTypeNode;
 
-    return bip44Node.key.slice(0, 32);
+    return bip44Node.privateKey.slice(0, 32);
   }
   return null;
 }
