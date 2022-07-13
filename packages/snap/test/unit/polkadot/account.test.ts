@@ -17,7 +17,7 @@ describe('Test account function: getKeyPair', function() {
   });
 
   it('should return keypair', async function() {
-    walletStub.request.onFirstCall().returns({key: testAppKey});
+    walletStub.request.onFirstCall().returns({privateKey: testAppKey});
     walletStub.request.onSecondCall().returns({polkadot: {configuration: westendConfiguration}});
     const result = await getKeyPair(walletStub);
     expect(result.address).to.be.eq(testAddress);

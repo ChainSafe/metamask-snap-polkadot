@@ -16,7 +16,7 @@ describe('Test rpc handler function: exportSeed', function() {
   it('should return seed on positive prompt confirmation and keyring saved in state', async function () {
     walletStub.request.onFirstCall().returns(true);
     walletStub.request.onSecondCall()
-      .returns({ key: "aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca" });
+      .returns({ privateKey: "aba2dd1a12eeafda3fda62aa6dfa21ca2aa6dfaba13fda6a22ea2dd1eafda1ca" });
     const result = await exportSeed(walletStub);
     expect(result).to.be.eq("aba2dd1a12eeafda3fda62aa6dfa21ca");
   });

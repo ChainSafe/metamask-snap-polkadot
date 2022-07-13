@@ -16,7 +16,7 @@ describe('Test rpc handler function: getPublicKey', function() {
   });
 
   it('should return pk', async function () {
-    walletStub.request.onFirstCall().returns({key: testAppKey});
+    walletStub.request.onFirstCall().returns({privateKey: testAppKey});
     walletStub.request.onSecondCall().returns(EmptyMetamaskState());
     const result = await getPublicKey(walletStub);
     expect(result).to.be.eq(testPublicKey);
