@@ -3,7 +3,7 @@ import sinonChai from "sinon-chai";
 import {getConfiguration, getDefaultConfiguration} from "../../../src/configuration";
 import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "../../../src/configuration/predefined";
 import {WalletMock} from "../wallet.mock.test";
-import {EmptyMetamaskState} from "../../../src/interfaces";
+import {EmptyMetamaskState, Wallet} from "../../../src/interfaces";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 
 chai.use(sinonChai);
@@ -39,16 +39,16 @@ describe('Test configuration functions', function() {
       walletStub.reset();
     });
 
-    it('should return configuration saved in state"', function () {
+    it('should return configuration saved in state"', async function () {
       const customConfiguration: SnapConfig = {addressPrefix: 5, networkName: "test-network", wsRpcUrl: "url"};
-      walletStub.getPluginState.returns({polkadot: {config: customConfiguration}});
-      const configuration = getConfiguration(walletStub);
+      walletStub.request.returns({polkadot: {config: customConfiguration}});
+      const configuration = await getConfiguration(walletStub);
       expect(configuration).to.be.deep.eq(customConfiguration);
     });
 
-    it('should return default configuration on empty state"', function () {
-      walletStub.getPluginState.returns(EmptyMetamaskState());
-      const configuration = getConfiguration(walletStub);
+    it('should return default configuration on empty state"', async function () {
+      walletStub.request.returns(EmptyMetamaskState());
+      const configuration = await getConfiguration(walletStub);
       expect(configuration).to.be.deep.eq(defaultConfiguration);
     });
   });

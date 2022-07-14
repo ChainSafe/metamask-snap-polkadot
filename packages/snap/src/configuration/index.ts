@@ -1,4 +1,4 @@
-import {Wallet} from "../interfaces";
+import {MetamaskState, Wallet} from "../interfaces";
 import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "./predefined";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 
@@ -15,8 +15,11 @@ export function getDefaultConfiguration(networkName: string): SnapConfig {
   }
 }
 
-export function getConfiguration(wallet: Wallet): SnapConfig {
-  const state = wallet.getPluginState();
+export async function getConfiguration(wallet: Wallet): Promise<SnapConfig> {
+  const state = await wallet.request({
+    method: 'snap_manageState',
+    params: ['get'],
+  }) as MetamaskState;
   if (!state || !state.polkadot.config) {
     return defaultConfiguration;
   }

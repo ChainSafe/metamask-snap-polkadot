@@ -2802,6 +2802,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@metamask/key-tree@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@metamask/key-tree@npm:4.0.0"
+  dependencies:
+    "@noble/ed25519": ^1.6.0
+    "@noble/hashes": ^1.0.0
+    "@noble/secp256k1": ^1.5.5
+    "@scure/base": ^1.0.0
+    "@scure/bip39": ^1.0.0
+  checksum: f3b869888ae6bb5a174a0971fdd32b7242f067792437a41a0e166d8315825c86d7317035da7fb49ef8387f1601baeae381293f9426f123c7ce5d197aa29c1c8b
+  languageName: node
+  linkType: hard
+
 "@metamask/metamask-eth-abis@npm:3.0.0":
   version: 3.0.0
   resolution: "@metamask/metamask-eth-abis@npm:3.0.0"
@@ -2988,6 +3001,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/ed25519@npm:^1.6.0":
+  version: 1.6.1
+  resolution: "@noble/ed25519@npm:1.6.1"
+  checksum: 6ccf3a61fc2c683e2b8441651a19d361910a489d74342d70fec576b0a71bb7ee8157e9e9668543633ff94ea12ec44fd3e570dfd8eab21df5dd6f368667df2681
+  languageName: node
+  linkType: hard
+
 "@noble/hashes@npm:1.0.0":
   version: 1.0.0
   resolution: "@noble/hashes@npm:1.0.0"
@@ -2995,10 +3015,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/hashes@npm:^1.0.0, @noble/hashes@npm:~1.1.1":
+  version: 1.1.2
+  resolution: "@noble/hashes@npm:1.1.2"
+  checksum: 452a197522dabd163cf5297fe7b768fabba73072a198752074da6fce7c1438c7f614b27891391e9f6b118842656a4da4c0fc04e464ba1e15f306291d05dd106a
+  languageName: node
+  linkType: hard
+
 "@noble/secp256k1@npm:1.5.5":
   version: 1.5.5
   resolution: "@noble/secp256k1@npm:1.5.5"
   checksum: 7c451c09ba539e305f94c27f6f2651c806938006d2f91ca69245b334b6a60f747ec26a81b277a3c41be4dc75988700a78d01484909711d9b6bfd90cfa2a271e1
+  languageName: node
+  linkType: hard
+
+"@noble/secp256k1@npm:^1.5.5":
+  version: 1.6.1
+  resolution: "@noble/secp256k1@npm:1.6.1"
+  checksum: b9a9a41fbad05e2412874d62ec985cbf085beabcff1de58741114684fe05b0c445bcb0d1c2d96f8eb4b031cbe0055d9d8277e9a8e945ae465f18cfc04ba81ee8
   languageName: node
   linkType: hard
 
@@ -3603,6 +3637,23 @@ __metadata:
   version: 1.0.0
   resolution: "@scure/base@npm:1.0.0"
   checksum: b5a87f7d3a5b97bf65b8f8b306d796c86607451904aaef882be7fbb65dae7a2cf6dab943dcf0623cd63c8f1543ea7e39c5c0b1dd90064180a1816c2ef455b72b
+  languageName: node
+  linkType: hard
+
+"@scure/base@npm:^1.0.0, @scure/base@npm:~1.1.0":
+  version: 1.1.1
+  resolution: "@scure/base@npm:1.1.1"
+  checksum: 97d200da8915ca18a4eceb73c23dda7fc3a4b8509f620c9b7756ee451d7c9ebbc828c6662f9ffa047806fbe41f37bf236c6ef75692690688b7659196cb2dc804
+  languageName: node
+  linkType: hard
+
+"@scure/bip39@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "@scure/bip39@npm:1.1.0"
+  dependencies:
+    "@noble/hashes": ~1.1.1
+    "@scure/base": ~1.1.0
+  checksum: f6fc291b03155742daf9861482a13d9108ee6e9a32cb4cec34f7e424b8bf2a21cee73e4e4ef464911c4c0fa3906fefcf1bf0208127a878b5f02b6e50647fbbe8
   languageName: node
   linkType: hard
 
@@ -14011,6 +14062,7 @@ __metadata:
   resolution: "polkadot-snap@workspace:packages/snap"
   dependencies:
     "@chainsafe/metamask-polkadot-types": "workspace:^"
+    "@metamask/key-tree": ^4.0.0
     "@metamask/snaps-cli": 0.15.0
     "@polkadot/api": ^8.7.1
     "@polkadot/types": ^8.7.1

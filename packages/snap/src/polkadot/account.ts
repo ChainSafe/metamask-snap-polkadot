@@ -1,19 +1,29 @@
-import {Wallet} from "../interfaces";
-import {cryptoWaitReady} from '@polkadot/util-crypto';
-import {KeyringPair} from '@polkadot/keyring/types';
-import {Keyring} from '@polkadot/keyring';
-import {stringToU8a} from "@polkadot/util";
-import {getConfiguration} from "../configuration";
+import { Wallet } from "../interfaces";
+import { KeyringPair } from '@polkadot/keyring/types';
+import { Keyring } from '@polkadot/keyring';
+import { stringToU8a } from "@polkadot/util";
+import { getConfiguration } from "../configuration";
+import { JsonBIP44CoinTypeNode } from "@metamask/key-tree";
+
+const kusamaCoinType = 434;
+// const polkadotCoinType = 354;
 
 /**
  * Returns KeyringPair if one is saved in wallet state, creates new one otherwise
  * @param wallet
  */
 export async function getKeyPair(wallet: Wallet): Promise<KeyringPair> {
-  // get app key and wait for api to be ready
-  const [appKey] = await Promise.all([wallet.getAppKey(), cryptoWaitReady()]);
+
+  const bip44Node = (await wallet.request({
+    method: `snap_getBip44Entropy_${kusamaCoinType}`,
+    params: [],
+  })) as JsonBIP44CoinTypeNode;
+
   // generate keys
-  const seed = appKey.substr(0, 32);
-  const keyring = new Keyring({ss58Format: getConfiguration(wallet).addressPrefix});
+  const seed = bip44Node.privateKey.slice(0, 32);
+  const config = await getConfiguration(wallet);
+  const ss58Format = config.addressPrefix;
+  const keyring = new Keyring({ ss58Format });
+
   return keyring.addFromSeed(stringToU8a(seed));
 }

@@ -3,7 +3,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import React, { useCallback, useContext, useEffect, Fragment } from "react";
 import Alert from "@material-ui/lab/Alert";
 import { MetamaskActions, MetaMaskContext } from "../../context/metamask";
-import { installPolkadotSnap, isPolkadotSnapInstalled } from "../../services/metamask";
+import { initiateFilecoinSnap, isPolkadotSnapInstalled } from "../../services/metamask";
 
 export const MetaMaskConnector = () => {
 
@@ -18,12 +18,13 @@ export const MetaMaskConnector = () => {
   }, [dispatch]);
 
   const installSnap = useCallback(async () => {
-    const isInitiated = await installPolkadotSnap();
-    if (!isInitiated) {
+    const installResult = await initiateFilecoinSnap();
+    if (!installResult.isSnapInstalled) {
       // eslint-disable-next-line max-len
       dispatch({ payload: { isInstalled: false, message: "Please accept snap installation prompt" }, type: MetamaskActions.SET_INSTALLED_STATUS });
     } else {
-      dispatch({ payload: { isInstalled: true }, type: MetamaskActions.SET_INSTALLED_STATUS });
+      // eslint-disable-next-line max-len
+      dispatch({ payload: { isInstalled: true, snap: installResult.snap }, type: MetamaskActions.SET_INSTALLED_STATUS });
     }
   }, [dispatch]);
 
@@ -59,10 +60,10 @@ export const MetaMaskConnector = () => {
         }
       />
       {state.hasMetaMask &&
-                <Fragment>
-                  <Alert severity="warning">Ensure that MetaMask is installed!</Alert>
-                  <Box mt={"1rem"} />
-                </Fragment>
+        <Fragment>
+          <Alert severity="warning">Ensure that MetaMask is installed!</Alert>
+          <Box mt={"1rem"} />
+        </Fragment>
       }
       <Button
         disabled={!state.hasMetaMask}
@@ -71,7 +72,7 @@ export const MetaMaskConnector = () => {
         size={"large"}
         color="primary"
       >
-                Connect to MetaMask
+        Connect to MetaMask
       </Button>
     </div>
   );

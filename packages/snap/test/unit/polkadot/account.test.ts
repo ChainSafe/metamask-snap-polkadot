@@ -1,6 +1,5 @@
 import chai, {expect} from "chai";
 import sinonChai from "sinon-chai";
-import {EmptyMetamaskState} from "../../../src/interfaces";
 import {WalletMock} from "../wallet.mock.test";
 import {getKeyPair} from "../../../src/polkadot/account";
 import {hexToU8a} from '@polkadot/util';
@@ -18,11 +17,9 @@ describe('Test account function: getKeyPair', function() {
   });
 
   it('should return keypair', async function() {
-    walletStub.getPluginState.returns({polkadot: {configuration: westendConfiguration}});
-    walletStub.getAppKey.returns(testAppKey);
-    walletStub.updatePluginState.returnsArg(0);
+    walletStub.request.onFirstCall().returns({privateKey: testAppKey});
+    walletStub.request.onSecondCall().returns({polkadot: {configuration: westendConfiguration}});
     const result = await getKeyPair(walletStub);
-    expect(walletStub.getAppKey).to.have.been.calledOnce;
     expect(result.address).to.be.eq(testAddress);
     expect(result.publicKey).to.be.deep.eq(hexToU8a(testPublicKey));
   });

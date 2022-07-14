@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Button, Card, CardContent, CardHeader, Divider, Grid, Typography } from '@material-ui/core';
 import { formatBalance } from "@polkadot/util/format/formatBalance";
-import { getInjectedMetamaskExtension } from "../../services/metamask";
 import { getCurrency } from "../../services/format";
+import { MetaMaskContext } from "../../context/metamask";
 
 export interface AccountProps {
   address: string;
@@ -13,11 +13,12 @@ export interface AccountProps {
 
 export const Account = (props: AccountProps) => {
 
+  const [state] = useContext(MetaMaskContext);
+
   const handleExport = async () => {
-    const provider = await getInjectedMetamaskExtension();
-    if (!provider) return;
-    const metamaskSnapApi = await provider.getMetamaskSnapApi();
-    const privateKey = await metamaskSnapApi.exportSeed();
+    if (!state.polkadotSnap.snap) return;
+    const api = await state.polkadotSnap.snap.getMetamaskSnapApi();
+    const privateKey = await api.exportSeed();
     alert(privateKey);
   };
 

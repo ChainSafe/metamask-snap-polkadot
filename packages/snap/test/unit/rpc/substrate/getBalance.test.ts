@@ -20,16 +20,14 @@ describe('Test rpc handler function: getBalance', function() {
 
   it('should return balance on saved keyring in state', async function () {
     // wallet stub
-    walletStub.getAppKey.returns(testAppKey);
-    walletStub.getPluginState.returns(EmptyMetamaskState());
+    walletStub.request.onFirstCall().returns({privateKey: testAppKey});
+    walletStub.request.onSecondCall().returns(EmptyMetamaskState());
     // api stub
     const apiStub = {query: {system: {account: sinon.stub()}}};
     apiStub.query.system.account.returns({data: {free: '0'}} as unknown as AccountInfo);
     const api = apiStub as unknown as ApiPromise;
     const result = await getBalance(walletStub, api);
     expect(result).to.be.eq("0");
-    expect(walletStub.getAppKey).to.have.been.calledOnce;
-    // eslint-disable-next-line max-len
     expect(apiStub.query.system.account).to.have.been.calledOnceWith(testAddress);
   });
 });

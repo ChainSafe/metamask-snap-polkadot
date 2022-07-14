@@ -18,12 +18,10 @@ import { Account } from "../../components/Account/Account";
 import { MetaMaskConnector } from "../MetaMaskConnector/MetaMaskConnector";
 import { MetaMaskContext } from "../../context/metamask";
 import { LatestBlock } from "../../components/LatestBlock/LatestBlock";
-import { BlockInfo, PolkadotApi, Transaction } from "@chainsafe/metamask-polkadot-types";
-import { getInjectedMetamaskExtension } from "../../services/metamask";
-import { web3Accounts } from "@polkadot/extension-dapp";
+import { BlockInfo, Transaction } from "@chainsafe/metamask-polkadot-types";
+import { MetamaskSnapApi } from "@chainsafe/metamask-polkadot-adapter/build/types";
 
 export const Dashboard = () => {
-
   const [state] = useContext(MetaMaskContext);
 
   const [balance, setBalance] = useState("0");
@@ -31,87 +29,69 @@ export const Dashboard = () => {
   const [publicKey, setPublicKey] = useState("");
   const [latestBlock, setLatestBlock] = useState<BlockInfo>({ hash: "", number: "" });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [eventApi, setEventApi] = useState<PolkadotApi | null>(null);
   const [network, setNetwork] = useState<"kusama" | "westend">("westend");
 
-  const handleBalanceChange = useCallback((newBalance: string) => {
-    setBalance(newBalance);
-  }, [setBalance]);
+  const [api, setApi] = useState<MetamaskSnapApi | null>(null);
 
   const handleNewTransaction = useCallback(async () => {
-    const extension = await getInjectedMetamaskExtension();
-    if (!extension) return;
-    const metamaskSnapApi = await extension.getMetamaskSnapApi();
-    setTransactions((await metamaskSnapApi.getAllTransactions()));
+    if (!api) return;
+    setTransactions((await api.getAllTransactions()));
   }, [setTransactions]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleNetworkChange = async (event: React.ChangeEvent<{ value: any }>) => {
-    const networkName = event.target.value as "kusama" | "westend";
+    const networkName = event.target.value as "kusama" | "westend";
     if (networkName === network) return;
-    const extension = await getInjectedMetamaskExtension();
-    if (!extension) return;
-    await (await extension.getMetamaskSnapApi()).setConfiguration({ networkName: networkName });
+    if (!api) return;
+    await api.setConfiguration({ networkName: networkName });
     setNetwork(networkName);
   };
 
   useEffect(() => {
-    if (state.polkadotSnap.isInstalled) {
-      (async function () {
-        const extension = await getInjectedMetamaskExtension();
-        if (!extension) return;
-        const metamaskSnapApi = await extension.getMetamaskSnapApi();
-        if (metamaskSnapApi) {
-          const api = await metamaskSnapApi.getEventApi();
-          setEventApi(api);
-        }
-      })();
-    }
-  }, [state.polkadotSnap.isInstalled, setEventApi]);
-
-  useEffect(() => {
-    const api = eventApi;
-    if (api) {
-      (async function () {
-        api.subscribeToBalance(handleBalanceChange);
-      })();
-    }
-    return function () {
-      if (api) {
-        api.unsubscribeAllFromBalance();
+    (async () => {
+      if (state.polkadotSnap.isInstalled && state.polkadotSnap.snap) {
+        const polkadotApi = await state.polkadotSnap.snap.getMetamaskSnapApi();
+        setApi(polkadotApi);
       }
-    };
-  }, [network, handleBalanceChange, eventApi]);
+    })();
+  }, [state.polkadotSnap.isInstalled, state.polkadotSnap.snap]);
 
   useEffect(() => {
     (async () => {
-      if (state.polkadotSnap.isInstalled) {
-        const extension = await getInjectedMetamaskExtension();
-        if (!extension) return;
-        const metamaskSnapApi = await extension.getMetamaskSnapApi();
-        const account = (await web3Accounts())[0];
-        setAddress(account.address);
-        setPublicKey(await metamaskSnapApi.getPublicKey());
-        setBalance(await metamaskSnapApi.getBalance());
-        setLatestBlock(await metamaskSnapApi.getLatestBlock());
-        setTransactions((await metamaskSnapApi.getAllTransactions()));
+      if (api) {
+        setAddress(await api.getAddress());
+        setPublicKey(await api.getPublicKey());
+        setBalance(await api.getBalance());
+        setLatestBlock(await api.getLatestBlock());
+        setTransactions((await api.getAllTransactions()));
       }
     })();
-  }, [state.polkadotSnap.isInstalled, network]);
+  }, [api, network]);
+
+  useEffect( () => {
+    // periodically check balance
+    const interval = setInterval(async () => {
+      if (api) {
+        const newBalance = await api.getBalance();
+        setBalance(newBalance);
+      }
+    }, 30000); // every 30 seconds
+    return () => clearInterval(interval);
+  }, [api, balance, setBalance]);
 
   return (
     <Container maxWidth="lg">
       <Grid direction="column" alignItems="center" justify="center" container spacing={3}>
         <Box m="2rem">
           <Typography variant="h2">
-                        Polkadot snap demo
+            Polkadot snap demo
           </Typography>
         </Box>
         {
-          state.polkadotSnap.isInstalled && <MetaMaskConnector />
+          !state.polkadotSnap.isInstalled && <MetaMaskConnector />
         }
         {
-          !state.polkadotSnap.isInstalled && <>
+          state.polkadotSnap.isInstalled && <>
             <Box m="1rem" alignSelf="baseline">
               <InputLabel>Network</InputLabel>
               <Select
@@ -139,7 +119,7 @@ export const Dashboard = () => {
                 <Transfer network={network} onNewTransferCallback={handleNewTransaction} />
               </Grid>
               <Grid item md={6} xs={12}>
-                <SignMessage />
+                <SignMessage address={address} />
               </Grid>
             </Grid>
             <Box m="1rem" />

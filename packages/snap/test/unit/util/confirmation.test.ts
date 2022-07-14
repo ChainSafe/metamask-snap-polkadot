@@ -6,7 +6,6 @@ import {showConfirmationDialog} from "../../../src/util/confirmation";
 chai.use(sinonChai);
 
 describe('Test showConfirmationDialog', function() {
-
   const walletStub = new WalletMock();
 
   afterEach(() => {
@@ -14,21 +13,16 @@ describe('Test showConfirmationDialog', function() {
   });
 
   it('should return true on positive confirmation', async function () {
-    walletStub.send.returns(true);
-    const result = await showConfirmationDialog(walletStub, "confirmation");
-    expect(walletStub.send).to.have.been.calledOnceWith(
-      { method: 'confirm', params: ["confirmation"] }
+    await showConfirmationDialog(walletStub, { prompt: "confirmation" });
+    expect(walletStub.request).to.have.been.calledOnceWith(
+      { method: 'snap_confirm', params: [{ prompt: "confirmation" }] }
     );
-    expect(result).to.be.eq(true);
   });
 
   it('should return false on negative confirmation', async function () {
-    walletStub.send.returns(false);
-    const result = await showConfirmationDialog(walletStub, "confirmation");
-    expect(walletStub.send).to.have.been.calledOnceWith(
-      { method: 'confirm', params: ["confirmation"] }
+    await showConfirmationDialog(walletStub, { prompt: "confirmation" });
+    expect(walletStub.request).to.have.been.calledOnceWith(
+      { method: 'snap_confirm', params: [{ prompt: "confirmation" }] }
     );
-    expect(result).to.be.eq(false);
   });
-
 });

@@ -12,17 +12,7 @@ let isConnecting: boolean;
  */
 async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
   provider = new WsProvider(wsRpcUrl);
-  const api = await ApiPromise.create({
-    initWasm: false,
-    provider,
-    // this seems not to make any difference anymore
-    types: {
-      RuntimeDbWeight: {
-        read: 'Weight',
-        write: 'Weight'
-      }
-    }
-  });
+  const api = await ApiPromise.create({provider});
 
   console.log("Api is ready");
   return api;
@@ -43,7 +33,7 @@ export const resetApi = (): void => {
 export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
   if (!api) {
     // api not initialized or configuration changed
-    const config = getConfiguration(wallet);
+    const config = await getConfiguration(wallet);
     api = await initApi(config.wsRpcUrl);
     isConnecting = false;
   } else {

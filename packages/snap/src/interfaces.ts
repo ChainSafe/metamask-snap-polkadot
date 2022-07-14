@@ -17,9 +17,7 @@ export const EmptyMetamaskState: () => MetamaskState = () => ({polkadot: {config
 export interface Wallet {
   registerRpcMessageHandler: (fn: FMethodCallback) => unknown;
   send(options: {method: string; params: unknown[]}): unknown;
-  getAppKey(): Promise<string>;
-  updatePluginState(state: MetamaskState): void;
-  getPluginState(): MetamaskState;
+  request(options: {method: string; params?: unknown[]}): unknown;
 }
 
 export interface Asset {

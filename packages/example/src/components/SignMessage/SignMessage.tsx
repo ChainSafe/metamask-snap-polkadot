@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import { Box, Button, Card, CardContent, CardHeader, Dialog, Grid, TextField } from '@material-ui/core';
-import { getInjectedMetamaskExtension } from "../../services/metamask";
 import { stringToHex } from "@polkadot/util/string";
-import { web3Accounts } from "@polkadot/extension-dapp";
 import { DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@material-ui/core";
+import {MetaMaskContext} from "../../context/metamask";
 
-export const SignMessage = () => {
+interface Props {
+  address: string;
+}
+
+export const SignMessage: React.FC<Props> = ({address}) => {
+  const [state] = useContext(MetaMaskContext);
+
   const [textFieldValue, setTextFieldValue] = useState<string>("");
   const [modalBody, setModalBody] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -15,20 +20,19 @@ export const SignMessage = () => {
   };
 
   const onSubmit = async () => {
+    if (!state.polkadotSnap.snap) return;
     if (textFieldValue) {
-      const extension = await getInjectedMetamaskExtension();
-      if (extension && extension.signer && extension.signer.signRaw) {
-
+      const api = await state.polkadotSnap.snap.getMetamaskSnapApi();
+      if (api && api.signPayloadRaw) {
         const messageAsHex = stringToHex(textFieldValue);
-        const address = (await web3Accounts())[0].address;
 
-        const messageSignResponse = await extension.signer.signRaw({
+        const messageSignResponse = await api.signPayloadRaw({
           address: address,
           data: messageAsHex,
           type: "bytes"
         });
         setTextFieldValue("");
-        setModalBody(messageSignResponse.signature);
+        setModalBody(messageSignResponse);
         setModalOpen(true);
       }
     }
