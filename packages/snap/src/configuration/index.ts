@@ -1,5 +1,7 @@
 import {MetamaskState, Wallet} from "../interfaces";
-import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "./predefined";
+import {
+  defaultConfiguration, kusamaConfiguration, localConfiguration, polkadotConfiguration, westendConfiguration
+} from "./predefined";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 
 export function getDefaultConfiguration(networkName: string): SnapConfig {
@@ -7,6 +9,12 @@ export function getDefaultConfiguration(networkName: string): SnapConfig {
     case "kusama":
       console.log("Kusama configuration selected");
       return kusamaConfiguration;
+    case "local":
+      console.log("Local configuration selected");
+      return localConfiguration;
+    case "polkadot":
+      console.log("Polkadot configuration selected");
+      return polkadotConfiguration;
     case "westend":
       console.log("Westend configuration selected");
       return westendConfiguration;
