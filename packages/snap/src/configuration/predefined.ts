@@ -40,5 +40,15 @@ export const westendConfiguration: SnapConfig = {
   },
   wsRpcUrl: "wss://westend-rpc.polkadot.io/",
 };
+export const westmintConfiguration: SnapConfig = {
+  addressPrefix: 42,
+  networkName: "westmint",
+  unit: {
+    decimals: 12,
+    image: "https://polkadot.js.org/apps/static/statemine.65437936..svg",
+    symbol: "WND",
+  },
+  wsRpcUrl: "wss://westmint-rpc.polkadot.io/",
+};
 
 export const defaultConfiguration: SnapConfig = westendConfiguration;

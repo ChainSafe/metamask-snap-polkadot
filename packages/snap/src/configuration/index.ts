@@ -1,6 +1,7 @@
 import {MetamaskState, Wallet} from "../interfaces";
 import {
-  defaultConfiguration, kusamaConfiguration, localConfiguration, polkadotConfiguration, westendConfiguration
+  defaultConfiguration, kusamaConfiguration, localConfiguration,
+  polkadotConfiguration, westendConfiguration, westmintConfiguration,
 } from "./predefined";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 
@@ -18,6 +19,9 @@ export function getDefaultConfiguration(networkName: string): SnapConfig {
     case "westend":
       console.log("Westend configuration selected");
       return westendConfiguration;
+    case "westmint":
+      console.log("Westmint configuration selected");
+      return westmintConfiguration;
     default:
       return defaultConfiguration;
   }

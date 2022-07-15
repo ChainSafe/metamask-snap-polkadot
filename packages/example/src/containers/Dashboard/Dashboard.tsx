@@ -29,7 +29,7 @@ export const Dashboard = () => {
   const [publicKey, setPublicKey] = useState("");
   const [latestBlock, setLatestBlock] = useState<BlockInfo>({ hash: "", number: "" });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [network, setNetwork] = useState<"kusama" | "local" | "polkadot" | "westend">("westend");
+  const [network, setNetwork] = useState<"kusama" | "local" | "polkadot" | "westend" | "westmint">("westend");
 
   const [api, setApi] = useState<MetamaskSnapApi | null>(null);
 
@@ -40,7 +40,7 @@ export const Dashboard = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleNetworkChange = async (event: React.ChangeEvent<{ value: any }>) => {
-    const networkName = event.target.value as "kusama" | "local" | "polkadot" | "westend";
+    const networkName = event.target.value as "kusama" | "local" | "polkadot" | "westend" | "westmint";
     if (networkName === network) return;
     if (!api) return;
     await api.setConfiguration({ networkName: networkName });
@@ -100,6 +100,7 @@ export const Dashboard = () => {
               >
                 <MenuItem value={"local"}>Local</MenuItem>
                 <MenuItem value={"westend"}>Westend</MenuItem>
+                <MenuItem value={"westmint"}>Westmint</MenuItem>
                 <MenuItem value={"kusama"}>Kusama</MenuItem>
                 <MenuItem value={"polkadot"}>Polkadot</MenuItem>
               </Select>
