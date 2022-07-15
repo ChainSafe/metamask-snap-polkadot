@@ -11,7 +11,7 @@
     "location": {
       "npm": {
         "filePath": "./dist/bundle.js",
-        "packageName": "polkadot-snap",
+        "packageName": "@chainsafe/polkadot-snap",
         "registry": "https://registry.npmjs.org/"
       }
     }
