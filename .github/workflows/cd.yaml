@@ -2,7 +2,6 @@ name: Release
 on:
   workflow_run:
     workflows: [ ci ]
-    branches: [ master ]
     types:
       - completed
 
@@ -10,7 +9,7 @@ jobs:
   maybe-release:
     name: release
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.event.workflow_run.conclusion == 'success'
     steps:
 
         # you should probably do this after your regular CI checks passes
