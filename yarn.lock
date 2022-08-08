@@ -1528,6 +1528,36 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@chainsafe/polkadot-snap@workspace:packages/snap":
+  version: 0.0.0-use.local
+  resolution: "@chainsafe/polkadot-snap@workspace:packages/snap"
+  dependencies:
+    "@chainsafe/metamask-polkadot-types": "workspace:^"
+    "@metamask/key-tree": ^4.0.0
+    "@metamask/snaps-cli": ^0.18.1
+    "@polkadot/api": ^8.7.1
+    "@polkadot/types": ^8.7.1
+    "@polkadot/util": 9.4.1
+    "@types/chai": ^4.2.10
+    "@types/mocha": ^7.0.2
+    "@types/sinon": ^7.5.2
+    "@types/sinon-chai": ^3.2.3
+    "@typescript-eslint/eslint-plugin": ^5.27.1
+    "@typescript-eslint/parser": ^5.27.1
+    axios: 0.27.2
+    chai: ^4.2.0
+    concurrently: ^5.1.0
+    deepmerge: ^4.2.2
+    eslint: ^8.17.0
+    mocha: ^7.1.1
+    sinon: ^9.0.1
+    sinon-chai: ^3.5.0
+    strict-event-emitter-types: ^2.0.0
+    ts-node: ^8.6.2
+    typescript: 4.7.3
+  languageName: unknown
+  linkType: soft
+
 "@chainsafe/strip-comments@npm:^1.0.7":
   version: 1.0.7
   resolution: "@chainsafe/strip-comments@npm:1.0.7"
@@ -14065,36 +14095,6 @@ __metadata:
   checksum: ecb60e1f8e1f611c0bdf1a0b6a474d6dfb51185567dc6f29cdef37c8d480ecba5362e006606bb290519bbb6f49526c403fabea93c3090c20368d98bb90c999ab
   languageName: node
   linkType: hard
-
-"polkadot-snap@workspace:packages/snap":
-  version: 0.0.0-use.local
-  resolution: "polkadot-snap@workspace:packages/snap"
-  dependencies:
-    "@chainsafe/metamask-polkadot-types": "workspace:^"
-    "@metamask/key-tree": ^4.0.0
-    "@metamask/snaps-cli": ^0.18.1
-    "@polkadot/api": ^8.7.1
-    "@polkadot/types": ^8.7.1
-    "@polkadot/util": 9.4.1
-    "@types/chai": ^4.2.10
-    "@types/mocha": ^7.0.2
-    "@types/sinon": ^7.5.2
-    "@types/sinon-chai": ^3.2.3
-    "@typescript-eslint/eslint-plugin": ^5.27.1
-    "@typescript-eslint/parser": ^5.27.1
-    axios: 0.27.2
-    chai: ^4.2.0
-    concurrently: ^5.1.0
-    deepmerge: ^4.2.2
-    eslint: ^8.17.0
-    mocha: ^7.1.1
-    sinon: ^9.0.1
-    sinon-chai: ^3.5.0
-    strict-event-emitter-types: ^2.0.0
-    ts-node: ^8.6.2
-    typescript: 4.7.3
-  languageName: unknown
-  linkType: soft
 
 "popper.js@npm:1.16.1-lts":
   version: 1.16.1-lts
