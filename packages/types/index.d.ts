@@ -106,7 +106,7 @@ export interface SnapRpcMethodRequest {
 
 export type MetamaskRpcRequest = WalletEnableRequest | GetPluginsRequest | SnapRpcMethodRequest;
 
-export type BlockId = number|string|"latest";
+export type BlockId = number | string | "latest";
 
 export interface TxPayload {
   tx: string;

@@ -10,7 +10,7 @@ async function _getBlock(blockHash: BlockHash|string, api: ApiPromise): Promise<
   };
 }
 
-async function _getBlockById(blockId: number, api: ApiPromise): Promise<BlockInfo | null> {
+async function _getBlockById(blockId: number, api: ApiPromise): Promise<BlockInfo | null> {
   const blockHash = await api.rpc.chain.getBlockHash(blockId);
   if (!blockHash.isEmpty) {
     return await _getBlock(blockHash, api);
@@ -37,17 +37,17 @@ export async function getBlock(blockTag: BlockId, api: ApiPromise): Promise<Bloc
     case "string":
       if (blockTag === "latest") {
         // get latest block
-        const h = await api.rpc.chain.getHeader();
-        return await _getBlock(h.hash, api);
-      } else if (blockTag.startsWith("0x")) {
+        const { hash } = await api.rpc.chain.getHeader();
+        return await _getBlock(hash, api);
+      }
+      if (blockTag.startsWith("0x")) {
         // get block by hash
         return await _getBlock(blockTag, api);
-      } else {
-        // get block by id sent as string
-        const blockId = parseInt(blockTag);
-        if (blockId) {
-          return await _getBlockById(blockId, api);
-        }
+      }
+      // get block by id sent as string
+      const blockId = parseInt(blockTag);
+      if (blockId) {
+        return await _getBlockById(blockId, api);
       }
   }
   return null;

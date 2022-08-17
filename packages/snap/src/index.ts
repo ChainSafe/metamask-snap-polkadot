@@ -68,12 +68,10 @@ module.exports.onRpcRequest = (async ({ origin, request }: { origin: string, req
       }
       // set new configuration
       return await configure(
-
         wallet, request.params.configuration.networkName, request.params.configuration
       );
     }
     case "generateTransactionPayload":
-
       return await generateTransactionPayload(wallet, api, request.params.to, request.params.amount);
 
     case "send":
