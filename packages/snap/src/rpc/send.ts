@@ -2,8 +2,7 @@ import {Wallet} from "../interfaces";
 import {ApiPromise} from "@polkadot/api";
 import {Transaction, TxPayload} from "@chainsafe/metamask-polkadot-types";
 import {getAddress} from "./getAddress";
-import {getTxEventEmitter} from "../polkadot/events";
-import {saveTxToState, updateTxInState} from "../polkadot/tx";
+import {saveTxToState} from "../polkadot/tx";
 
 export async function send(
   wallet: Wallet, api: ApiPromise, signature: Uint8Array | `0x${string}`, txPayload: TxPayload
@@ -13,33 +12,22 @@ export async function send(
 
   const extrinsic = api.createType('Extrinsic', txPayload.tx);
   extrinsic.addSignature(sender, signature, txPayload.payload);
-  const txHash = extrinsic.hash.toHex();
 
   const amount = extrinsic.args[1].toJSON();
   const paymentInfo = await api.tx.balances
     .transfer(destination, Number(amount.toString()))
     .paymentInfo(sender);
+
+  const txHash = await api.rpc.author.submitExtrinsic(extrinsic);
+
   const tx = {
     amount: amount,
-    block: "",
+    block: txHash.toHex(),
     destination: destination,
     fee: paymentInfo.partialFee.toJSON(),
     hash: extrinsic.hash.toHex(),
     sender: sender,
   } as Transaction;
-
-  api.rpc.author.submitAndWatchExtrinsic(extrinsic, async result => {
-    const eventEmitter = getTxEventEmitter(txHash);
-    if (result.isInBlock) {
-      tx.block = result.hash.toHex();
-      await updateTxInState(wallet, tx);
-      eventEmitter.emit("included", {txHash});
-      eventEmitter.removeAllListeners("included");
-    } else if (result.isFinalized) {
-      eventEmitter.emit("finalized", {txHash});
-      eventEmitter.removeAllListeners("finalized");
-    }
-  });
 
   await saveTxToState(wallet, tx);
   return tx;

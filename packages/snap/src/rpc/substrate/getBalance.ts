@@ -1,6 +1,7 @@
 import {Wallet} from "../../interfaces";
 import {ApiPromise} from "@polkadot/api/";
 import {getKeyPair} from "../../polkadot/account";
+import {AccountData} from "@polkadot/types/interfaces/balances/types";
 
 /**
  * Returns balance as BN
@@ -12,8 +13,6 @@ export async function getBalance(wallet: Wallet, api: ApiPromise, address?: stri
   if(!address) {
     address = (await getKeyPair(wallet)).address;
   }
-  // eslint-disable-next-line
-  const account = (await api.query.system.account(address)) as any;
-  
+  const account = await api.query.system.account(address) as unknown as { data: AccountData };
   return account.data.free.toString();
 }
