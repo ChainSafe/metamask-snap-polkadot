@@ -1,5 +1,5 @@
 {
-  "packages/snap": "0.3.0",
-  "packages/types": "0.3.0",
-  "packages/adapter": "0.3.1"
+  "packages/snap": "0.4.0",
+  "packages/types": "0.4.0",
+  "packages/adapter": "0.4.0"
 }
