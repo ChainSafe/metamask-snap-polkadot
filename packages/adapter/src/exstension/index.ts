@@ -33,8 +33,7 @@ function injectPolkadotSnap (win: Web3Window): void {
             return transformAccounts([response]);
           },
           // Currently there is only available only one account, in that case this method will never return anything
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          subscribe: (cb: (accounts: InjectedAccount[]) => void): (() => void) => {
+          subscribe: (_cb: (accounts: InjectedAccount[]) => void): (() => void) => {
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             return (): void => {};
           }
