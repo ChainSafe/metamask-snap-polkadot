@@ -7,7 +7,7 @@ const defaultSnapOrigin = "https://bafybeih426v3jpdwnltjfmeefyt4isrogvgzg2wxvryu
 
 export type SnapInstallationParamNames = "version" | string;
 
-export * from './exstension';
+export * from './extension';
 
 export async function enablePolkadotSnap(
   config: SnapConfig,
