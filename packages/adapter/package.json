@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@polkadot/api": "^8.7.1",
-    "@polkadot/extension-inject": "^0.34.0-beta.12"
+    "@polkadot/extension-inject": "^0.44.5"
   },
   "scripts": {
     "prebuild": "rm -rf build",
