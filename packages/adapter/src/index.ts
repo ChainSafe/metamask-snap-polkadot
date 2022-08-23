@@ -3,7 +3,7 @@ import {MetamaskPolkadotSnap} from "./snap";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 import {hasMetaMask, isMetamaskSnapsSupported, isPolkadotSnapInstalled} from "./utils";
 
-const defaultSnapOrigin = "https://bafybeih426v3jpdwnltjfmeefyt4isrogvgzg2wxvryu6itodvb4vzvuma.ipfs.infura-ipfs.io/";
+const defaultSnapOrigin = 'npm:@chainsafe/polkadot-snap';
 
 export type SnapInstallationParamNames = "version" | string;
 
