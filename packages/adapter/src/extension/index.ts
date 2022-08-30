@@ -1,7 +1,7 @@
 import {Injected, InjectedAccount, InjectedWindow} from "@polkadot/extension-inject/types";
 import {enablePolkadotSnap} from "../index";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
-import {SignerPayloadRaw, SignerResult} from "@polkadot/types/types";
+import {SignerPayloadJSON, SignerPayloadRaw, SignerResult} from "@polkadot/types/types";
 import {HexString} from "@polkadot/util/types";
 import {hasMetaMask, isMetamaskSnapsSupported} from "../utils";
 
@@ -39,10 +39,14 @@ function injectPolkadotSnap (win: Web3Window): void {
           }
         },
         signer: {
+          signPayload: async (payload: SignerPayloadJSON): Promise<SignerResult> => {
+            const signature = await snap.signPayloadJSON(payload) as HexString;
+            return { id: 0, signature };
+          },
           signRaw: async (raw: SignerPayloadRaw): Promise<SignerResult> => {
             const signature = await snap.signPayloadRaw(raw) as HexString;
             return { id: 0, signature };
-          }
+          },
         }
       };
     },
