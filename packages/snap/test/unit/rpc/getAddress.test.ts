@@ -16,8 +16,8 @@ describe('Test rpc handler function: getAddress', function() {
   });
 
   it('should return valid address with westend configuration', async function () {
-    walletStub.request.onFirstCall().returns({ privateKey: testAppKey});
-    walletStub.request.onSecondCall().returns({polkadot: {configuration: westendConfiguration}});
+    walletStub.request.onFirstCall().returns({polkadot: {configuration: westendConfiguration}});
+    walletStub.request.onSecondCall().returns({ privateKey: testAppKey});
     const result = await getAddress(walletStub);
     expect(result).to.be.eq("5DW5CXHWbM13Az7aetLQVUEviNq8WeXFQanHNPVMmzyRYKvX");
   });
