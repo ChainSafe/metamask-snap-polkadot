@@ -38,8 +38,7 @@ export const Dashboard = () => {
     setTransactions((await api.getAllTransactions()));
   }, [setTransactions]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleNetworkChange = async (event: React.ChangeEvent<{ value: any }>) => {
+  const handleNetworkChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
     const networkName = event.target.value as SnapNetworks;
     if (networkName === network) return;
     if (!api) return;
@@ -99,7 +98,6 @@ export const Dashboard = () => {
                 onChange={handleNetworkChange}
               >
                 <MenuItem value={"westend"}>Westend</MenuItem>
-                <MenuItem value={"westmint"}>Westmint</MenuItem>
                 <MenuItem value={"kusama"}>Kusama</MenuItem>
                 <MenuItem value={"polkadot"}>Polkadot</MenuItem>
               </Select>

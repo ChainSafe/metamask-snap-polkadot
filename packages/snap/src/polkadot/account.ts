@@ -32,7 +32,6 @@ const getCoinTypeByNetwork = (network: SnapNetworks): number => {
     case "westend":
       return 354;
     case "polkadot":
-    case "westmint":
       return 354;
   }
 };
