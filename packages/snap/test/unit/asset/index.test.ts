@@ -15,7 +15,7 @@ describe('Test asset functions ', function() {
         100,
         "test-address",
         { // configuration
-          networkName: "westmint",
+          networkName: "westend",
           unit: {
             assetId: POLKADOT_SNAP_ASSET_IDENTIFIER,
             customViewUrl: "custom-view",
