@@ -20,8 +20,8 @@ describe('Test rpc handler function: getBalance', function() {
 
   it('should return balance on saved keyring in state', async function () {
     // wallet stub
-    walletStub.request.onFirstCall().returns({privateKey: testAppKey});
-    walletStub.request.onSecondCall().returns(EmptyMetamaskState());
+    walletStub.request.onFirstCall().returns(EmptyMetamaskState());
+    walletStub.request.onSecondCall().returns({privateKey: testAppKey});
     // api stub
     const apiStub = {query: {system: {account: sinon.stub()}}};
     apiStub.query.system.account.returns({data: {free: '0'}} as unknown as AccountInfo);

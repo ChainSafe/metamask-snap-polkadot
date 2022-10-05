@@ -18,7 +18,7 @@ import { Account } from "../../components/Account/Account";
 import { MetaMaskConnector } from "../MetaMaskConnector/MetaMaskConnector";
 import { MetaMaskContext } from "../../context/metamask";
 import { LatestBlock } from "../../components/LatestBlock/LatestBlock";
-import { BlockInfo, Transaction } from "@chainsafe/metamask-polkadot-types";
+import { BlockInfo, SnapNetworks, Transaction } from "@chainsafe/metamask-polkadot-types";
 import { MetamaskSnapApi } from "@chainsafe/metamask-polkadot-adapter/build/types";
 
 export const Dashboard = () => {
@@ -29,7 +29,7 @@ export const Dashboard = () => {
   const [publicKey, setPublicKey] = useState("");
   const [latestBlock, setLatestBlock] = useState<BlockInfo>({ hash: "", number: "" });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [network, setNetwork] = useState<"kusama" | "westend">("westend");
+  const [network, setNetwork] = useState<SnapNetworks>("westend");
 
   const [api, setApi] = useState<MetamaskSnapApi | null>(null);
 
@@ -38,9 +38,8 @@ export const Dashboard = () => {
     setTransactions((await api.getAllTransactions()));
   }, [setTransactions]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleNetworkChange = async (event: React.ChangeEvent<{ value: any }>) => {
-    const networkName = event.target.value as "kusama" | "westend";
+  const handleNetworkChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
+    const networkName = event.target.value as SnapNetworks;
     if (networkName === network) return;
     if (!api) return;
     await api.setConfiguration({ networkName: networkName });
@@ -98,8 +97,9 @@ export const Dashboard = () => {
                 defaultValue={"westend"}
                 onChange={handleNetworkChange}
               >
-                <MenuItem value={"kusama"}>Kusama</MenuItem>
                 <MenuItem value={"westend"}>Westend</MenuItem>
+                <MenuItem value={"kusama"}>Kusama</MenuItem>
+                <MenuItem value={"polkadot"}>Polkadot</MenuItem>
               </Select>
             </Box>
             <Grid container spacing={3} alignItems={"stretch"}>

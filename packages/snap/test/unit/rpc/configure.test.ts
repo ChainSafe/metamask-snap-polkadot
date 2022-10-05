@@ -37,7 +37,7 @@ describe('Test rpc handler function: configure', function() {
     // stubs
     const customConfiguration: SnapConfig = {
       addressPrefix: 1,
-      networkName: "test-network",
+      networkName: "westend",
       unit: {customViewUrl: "custom-view-url", decimals: 1, image: "image", symbol: "TST"},
       wsRpcUrl: "ws-rpc-url",
 

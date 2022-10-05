@@ -3,7 +3,7 @@ import sinonChai from "sinon-chai";
 import {getConfiguration, getDefaultConfiguration} from "../../../src/configuration";
 import {defaultConfiguration, kusamaConfiguration, westendConfiguration} from "../../../src/configuration/predefined";
 import {WalletMock} from "../wallet.mock.test";
-import {EmptyMetamaskState, Wallet} from "../../../src/interfaces";
+import {EmptyMetamaskState} from "../../../src/interfaces";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
 
 chai.use(sinonChai);
@@ -40,7 +40,7 @@ describe('Test configuration functions', function() {
     });
 
     it('should return configuration saved in state"', async function () {
-      const customConfiguration: SnapConfig = {addressPrefix: 5, networkName: "test-network", wsRpcUrl: "url"};
+      const customConfiguration: SnapConfig = {addressPrefix: 5, networkName: "westend", wsRpcUrl: "url"};
       walletStub.request.returns({polkadot: {config: customConfiguration}});
       const configuration = await getConfiguration(walletStub);
       expect(configuration).to.be.deep.eq(customConfiguration);
