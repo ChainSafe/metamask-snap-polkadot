@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.4.0...polkadot-snap-v0.5.0) (2022-10-05)
+
+
+### Features
+
+* implemented `polkadot` and `westmint` network ([#155](https://github.com/ChainSafe/metamask-snap-polkadot/issues/155)) ([78cb267](https://github.com/ChainSafe/metamask-snap-polkadot/commit/78cb26742cf4fa7b4ffc88a36e6718c47e2d3e73))
+
 ## [0.4.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.3.0...polkadot-snap-v0.4.0) (2022-08-18)
 
 
