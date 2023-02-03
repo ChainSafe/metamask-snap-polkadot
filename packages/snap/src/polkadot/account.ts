@@ -1,10 +1,10 @@
-import { Wallet } from "../interfaces";
 import { KeyringPair } from '@polkadot/keyring/types';
 import { Keyring } from '@polkadot/keyring';
 import { stringToU8a } from "@polkadot/util";
 import { getConfiguration } from "../configuration";
 import { JsonBIP44CoinTypeNode } from "@metamask/key-tree";
 import { SnapNetworks } from "@chainsafe/metamask-polkadot-types";
+import { Wallet } from '../interfaces';
 
 /**
  * Returns KeyringPair if one is saved in wallet state, creates new one otherwise
@@ -14,8 +14,10 @@ export async function getKeyPair(wallet: Wallet): Promise<KeyringPair> {
   const config = await getConfiguration(wallet);
 
   const bip44Node = (await wallet.request({
-    method: `snap_getBip44Entropy_${getCoinTypeByNetwork(config.networkName)}`,
-    params: [],
+    method: "snap_getBip44Entropy",
+    params: {
+      coinType: getCoinTypeByNetwork(config.networkName)
+    },
   })) as JsonBIP44CoinTypeNode;
 
   // generate keys

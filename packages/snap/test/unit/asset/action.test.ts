@@ -27,7 +27,9 @@ describe('Test asset function: executeAssetOperation', function() {
     // tested method
     const result = await executeAssetOperation(testAsset, walletStub, "add");
     // assertions
+    console.log(result)
     expect(result).not.to.be.null;
+    expect(result).not.to.be.undefined;
     expect(result).to.be.eq(testAsset);
     expect(walletStub.send).to.have.been.calledOnceWithExactly({
       method: 'wallet_manageAssets',
