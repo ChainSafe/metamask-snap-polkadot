@@ -4,7 +4,7 @@ import {showConfirmationDialog} from "../util/confirmation";
 
 const kusamaCoinType = 434;
 
-export async function exportSeed(wallet: Wallet): Promise<string|null> {
+export async function exportSeed(wallet: Wallet): Promise<string | null> {
   // ask for confirmation
   const confirmation = await showConfirmationDialog(
     wallet,
@@ -13,8 +13,8 @@ export async function exportSeed(wallet: Wallet): Promise<string|null> {
   // return seed if user confirmed action
   if (confirmation) {
     const bip44Node = (await wallet.request({
-      method: `snap_getBip44Entropy_${kusamaCoinType}`,
-      params: [],
+      method: "snap_getBip44Entropy",
+      params: { coinType: kusamaCoinType },
     })) as JsonBIP44CoinTypeNode;
 
     return bip44Node.privateKey.slice(0, 32);
