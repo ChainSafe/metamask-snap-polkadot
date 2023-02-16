@@ -1,19 +1,20 @@
-import {MetamaskState, Wallet} from "../interfaces";
+import {MetamaskState} from "../interfaces";
 import deepmerge from "deepmerge";
 import {getDefaultConfiguration} from "../configuration";
 import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
+import { SnapsGlobalObject } from "@metamask/snaps-types";
 
-export async function configure(wallet: Wallet, networkName: string, overrides: unknown): Promise<SnapConfig> {
+export async function configure(snap: SnapsGlobalObject, networkName: string, overrides: unknown): Promise<SnapConfig> {
   const defaultConfig = getDefaultConfiguration(networkName);
   const configuration = deepmerge(defaultConfig, overrides);
-  const state = await wallet.request({
+  const state = await snap.request({
     method: 'snap_manageState',
-    params: ['get'],
+    params: { operation: 'get' },
   }) as MetamaskState;
   state.polkadot.config = configuration;
-  wallet.request({
+  snap.request({
     method: 'snap_manageState',
-    params: ['update', state],
+    params: { newState: state, operation: 'update' },
   });
 
   return configuration;

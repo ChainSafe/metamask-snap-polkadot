@@ -1,7 +1,7 @@
 import {ApiPromise} from "@polkadot/api";
 import {WsProvider} from "@polkadot/api";
-import {Wallet} from "../interfaces";
 import {getConfiguration} from "../configuration";
+import { SnapsGlobalObject } from "@metamask/snaps-types";
 
 let api: ApiPromise;
 let provider: WsProvider;
@@ -30,10 +30,10 @@ export const resetApi = (): void => {
   }
 };
 
-export const getApi = async (wallet: Wallet): Promise<ApiPromise> => {
+export const getApi = async (snap: SnapsGlobalObject): Promise<ApiPromise> => {
   if (!api) {
     // api not initialized or configuration changed
-    const config = await getConfiguration(wallet);
+    const config = await getConfiguration(snap);
     api = await initApi(config.wsRpcUrl);
     isConnecting = false;
   } else {
