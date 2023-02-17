@@ -26,7 +26,7 @@ export async function updateTxInState(snap: SnapsGlobalObject, transaction: Tran
     state.polkadot.transactions[index] = transaction;
     snap.request({
       method: 'snap_manageState',
-      params: ['update', state],
+      params: { newState: state, operation: 'update' },
     });
   }
 }
