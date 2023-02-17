@@ -1,17 +1,17 @@
-import {Wallet} from "../../interfaces";
 import {ApiPromise} from "@polkadot/api/";
 import { SignerPayloadJSON, SignerPayloadRaw } from "@polkadot/types/types";
 import {getKeyPair} from "../../polkadot/account";
 import { hexToU8a, u8aToHex } from "@polkadot/util";
 import {showConfirmationDialog} from "../../util/confirmation";
 import {messageCreator} from "../../util/messageCreator";
+import { SnapsGlobalObject } from "@metamask/snaps-types";
 
 export async function signPayloadJSON(
-  wallet: Wallet, api: ApiPromise, payload: SignerPayloadJSON
+  snap: SnapsGlobalObject, api: ApiPromise, payload: SignerPayloadJSON
 ): Promise<{ signature: string }|void> {
-  const keyPair = await getKeyPair(wallet);
+  const keyPair = await getKeyPair(snap);
   const confirmation = await showConfirmationDialog(
-    wallet,
+    snap,
     {
       description: `It will be signed with address: ${keyPair.address}`,
       prompt: `Do you want to sign this message?`,
@@ -37,12 +37,12 @@ export async function signPayloadJSON(
 }
 
 export async function signPayloadRaw(
-  wallet: Wallet, api: ApiPromise, payload: SignerPayloadRaw
+  snap: SnapsGlobalObject, api: ApiPromise, payload: SignerPayloadRaw
 ): Promise<{ signature: string }|void> {
-  const keyPair = await getKeyPair(wallet);
+  const keyPair = await getKeyPair(snap);
   // ask for confirmation
   const confirmation = await showConfirmationDialog(
-    wallet,
+    snap,
     {
       description: `It will be signed with address: ${keyPair.address}`,
       prompt: `Do you want to sign this message?`,

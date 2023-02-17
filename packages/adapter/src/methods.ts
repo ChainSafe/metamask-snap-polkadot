@@ -4,15 +4,17 @@ import {
   SignPayloadJSONRequest, SignPayloadRawRequest,
   SnapConfig, Transaction, TxPayload
 } from "@chainsafe/metamask-polkadot-types";
-import {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
-import {MetamaskPolkadotSnap} from "./snap";
+import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import { MetamaskPolkadotSnap } from "./snap";
 
 async function sendSnapMethod(request: MetamaskPolkadotRpcRequest, snapId: string): Promise<unknown> {
   return await window.ethereum.request({
-    method: snapId,
-    params: [
-      request
-    ]
+    method: "wallet_invokeSnap",
+    params:
+    {
+      request,
+      snapId
+    },
   });
 }
 
@@ -20,7 +22,7 @@ async function sign(
   this: MetamaskPolkadotSnap,
   method: "signPayloadJSON" | "signPayloadRaw",
   payload: SignerPayloadJSON | SignerPayloadRaw
-): Promise<{signature: string}> {
+): Promise<{ signature: string }> {
   return (
     await sendSnapMethod({
       method,
@@ -30,7 +32,7 @@ async function sign(
     } as SignPayloadJSONRequest | SignPayloadRawRequest,
     this.snapId
     )
-  ) as {signature: string};
+  ) as { signature: string };
 }
 
 export async function signPayloadJSON(this: MetamaskPolkadotSnap, payload: SignerPayloadJSON): Promise<string> {
@@ -42,44 +44,44 @@ export async function signPayloadRaw(this: MetamaskPolkadotSnap, payload: Signer
 }
 
 export async function getBalance(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({method: "getBalance"}, this.snapId)) as string;
+  return (await sendSnapMethod({ method: "getBalance" }, this.snapId)) as string;
 }
 
 export async function getAddress(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({method: "getAddress"}, this.snapId)) as string;
+  return (await sendSnapMethod({ method: "getAddress" }, this.snapId)) as string;
 }
 
 export async function getPublicKey(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({method: "getPublicKey"}, this.snapId)) as string;
+  return (await sendSnapMethod({ method: "getPublicKey" }, this.snapId)) as string;
 }
 
 export async function exportSeed(this: MetamaskPolkadotSnap): Promise<string> {
-  return (await sendSnapMethod({method: "exportSeed"}, this.snapId)) as string;
+  return (await sendSnapMethod({ method: "exportSeed" }, this.snapId)) as string;
 }
 
 export async function setConfiguration(this: MetamaskPolkadotSnap, config: SnapConfig): Promise<void> {
-  await sendSnapMethod({method: "configure", params: {configuration: config}}, this.snapId);
+  await sendSnapMethod({ method: "configure", params: { configuration: config } }, this.snapId);
 }
 
 export async function getLatestBlock(this: MetamaskPolkadotSnap): Promise<BlockInfo> {
   try {
     return (
       await sendSnapMethod(
-        {method: "getBlock", params: {blockTag: "latest"}},
+        { method: "getBlock", params: { blockTag: "latest" } },
         this.snapId)
     ) as BlockInfo;
   } catch (e) {
     console.log("Unable to fetch latest block", e);
-    return {hash: "", number: ""};
+    return { hash: "", number: "" };
   }
 }
 
 export async function getAllTransactions(this: MetamaskPolkadotSnap): Promise<Transaction[]> {
-  return (await sendSnapMethod({method: "getAllTransactions"}, this.snapId)) as Transaction[];
+  return (await sendSnapMethod({ method: "getAllTransactions" }, this.snapId)) as Transaction[];
 }
 
 export async function sendSignedData(
-  this: MetamaskPolkadotSnap, signature: string,  txPayload: TxPayload
+  this: MetamaskPolkadotSnap, signature: string, txPayload: TxPayload
 ): Promise<Transaction> {
   const response = await sendSnapMethod({
     method: "send",
@@ -95,6 +97,6 @@ export async function generateTransactionPayload(
   this: MetamaskPolkadotSnap, amount: string | number, to: string
 ): Promise<TxPayload> {
   return await sendSnapMethod(
-    {method: "generateTransactionPayload", params: {amount, to}}, this.snapId
+    { method: "generateTransactionPayload", params: { amount, to } }, this.snapId
   ) as TxPayload;
 }

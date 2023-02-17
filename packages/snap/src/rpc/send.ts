@@ -1,13 +1,13 @@
-import {Wallet} from "../interfaces";
 import {ApiPromise} from "@polkadot/api";
 import {Transaction, TxPayload} from "@chainsafe/metamask-polkadot-types";
 import {getAddress} from "./getAddress";
 import {saveTxToState} from "../polkadot/tx";
+import { SnapsGlobalObject } from "@metamask/snaps-types";
 
 export async function send(
-  wallet: Wallet, api: ApiPromise, signature: Uint8Array | `0x${string}`, txPayload: TxPayload
+  snap: SnapsGlobalObject, api: ApiPromise, signature: Uint8Array | `0x${string}`, txPayload: TxPayload
 ): Promise<Transaction> {
-  const sender = await getAddress(wallet);
+  const sender = await getAddress(snap);
   const destination = txPayload.payload.address;
 
   const extrinsic = api.createType('Extrinsic', txPayload.tx);
@@ -29,6 +29,6 @@ export async function send(
     sender: sender,
   } as Transaction;
 
-  await saveTxToState(wallet, tx);
+  await saveTxToState(snap, tx);
   return tx;
 }

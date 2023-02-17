@@ -1,4 +1,5 @@
-import {MetamaskState, Wallet} from "../interfaces";
+import { SnapsGlobalObject } from "@metamask/snaps-types";
+import {MetamaskState} from "../interfaces";
 import {
   defaultConfiguration,
   kusamaConfiguration,
@@ -23,10 +24,10 @@ export function getDefaultConfiguration(networkName: string): SnapConfig {
   }
 }
 
-export async function getConfiguration(wallet: Wallet): Promise<SnapConfig> {
-  const state = await wallet.request({
+export async function getConfiguration(snap: SnapsGlobalObject): Promise<SnapConfig> {
+  const state = await snap.request({
     method: 'snap_manageState',
-    params: ['get'],
+    params: { operation: 'get' },
   }) as MetamaskState;
   if (!state || !state.polkadot.config) {
     return defaultConfiguration;

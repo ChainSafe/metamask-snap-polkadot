@@ -81,11 +81,13 @@
   },
   "dependencies": {
     "@metamask/key-tree": "^4.0.0",
+    "@metamask/snaps-types": "^0.26.2",
     "@polkadot/api": "^8.7.1",
     "@polkadot/types": "^8.7.1",
     "@polkadot/util": "9.4.1",
     "axios": "0.27.2",
-    "deepmerge": "^4.2.2"
+    "deepmerge": "^4.2.2",
+    "superstruct": "^1.0.3"
   },
   "resolutions": {
     "@polkadot/util": "9.4.1",

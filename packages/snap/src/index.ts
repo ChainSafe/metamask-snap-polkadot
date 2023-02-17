@@ -1,4 +1,4 @@
-import { EmptyMetamaskState, MetamaskState, Wallet } from "./interfaces";
+import { EmptyMetamaskState, MetamaskState } from "./interfaces";
 import { getPublicKey } from "./rpc/getPublicKey";
 import { exportSeed } from "./rpc/exportSeed";
 import { getBalance } from "./rpc/substrate/getBalance";
@@ -11,55 +11,65 @@ import { configure } from "./rpc/configure";
 import { signPayloadJSON, signPayloadRaw } from "./rpc/substrate/sign";
 import { generateTransactionPayload } from "./rpc/generateTransactionPayload";
 import { send } from "./rpc/send";
-
-declare let wallet: Wallet;
+import { OnRpcRequestHandler } from '@metamask/snaps-types';
+import { assert } from "superstruct";
+import {
+  validConfigureSchema,
+  validGenerateTransactionPayloadSchema,
+  validGetBlockSchema,
+  validSendSchema,
+  validSignPayloadJSONSchema,
+  validSignPayloadRawSchema
+} from "./util/validation";
 
 const apiDependentMethods = [
   "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw", "generateTransactionPayload", "send"
 ];
 // eslint-disable-next-line
-module.exports.onRpcRequest = (async ({ origin, request }: { origin: string, request: any }) => {
-  const state = await wallet.request({
+export const onRpcRequest: OnRpcRequestHandler = (async ({ request }) => {
+  const state = await snap.request({
     method: 'snap_manageState',
-    params: ['get'],
+    params: { operation: 'get' },
   });
 
   if (!state) {
     // initialize state if empty and set default config
-    await wallet.request({
+    await snap.request({
       method: 'snap_manageState',
-      params: ['update', EmptyMetamaskState()],
+      params: { newState: EmptyMetamaskState(), operation: 'update' },
     });
   }
-
   // fetch api promise
   let api: ApiPromise = null;
   if (apiDependentMethods.includes(request.method)) {
-    api = await getApi(wallet);
+    api = await getApi(snap);
   }
 
   switch (request.method) {
     case "signPayloadJSON":
-      return await signPayloadJSON(wallet, api, request.params.payload);
+      assert(request.params, validSignPayloadJSONSchema);
+      return await signPayloadJSON(snap, api, request.params.payload);
     case "signPayloadRaw":
-      return await signPayloadRaw(wallet, api, request.params.payload);
+      assert(request.params, validSignPayloadRawSchema);
+      return await signPayloadRaw(snap, api, request.params.payload);
     case 'getPublicKey':
-      return await getPublicKey(wallet);
+      return await getPublicKey(snap);
     case 'getAddress':
-      return await getAddress(wallet);
+      return await getAddress(snap);
     case 'exportSeed':
-      return await exportSeed(wallet);
+      return await exportSeed(snap);
     case 'getAllTransactions':
-      return await getTransactions(wallet);
+      return await getTransactions(snap);
     case 'getBlock':
+      assert(request.params, validGetBlockSchema);
       return await getBlock(request.params.blockTag, api);
     case 'getBalance': {
-      return await getBalance(wallet, api);
+      return await getBalance(snap, api);
     }
     case 'configure': {
-      const state = await wallet.request({
+      const state = await snap.request({
         method: 'snap_manageState',
-        params: ['get'],
+        params: { operation: 'get' },
       }) as MetamaskState;
       const isInitialConfiguration = state.polkadot.config === null;
       // reset api and remove asset only if already configured
@@ -67,16 +77,19 @@ module.exports.onRpcRequest = (async ({ origin, request }: { origin: string, req
         resetApi();
       }
       // set new configuration
+      assert(request.params, validConfigureSchema);
       return await configure(
-        wallet, request.params.configuration.networkName, request.params.configuration
+        snap, request.params.configuration.networkName, request.params.configuration
       );
     }
     case "generateTransactionPayload":
-      return await generateTransactionPayload(wallet, api, request.params.to, request.params.amount);
+      assert(request.params, validGenerateTransactionPayloadSchema);
+      return await generateTransactionPayload(snap, api, request.params.to, request.params.amount);
 
     case "send":
+      assert(request.params, validSendSchema);
       return await send(
-        wallet,
+        snap,
         api,
         (request.params.signature) as (Uint8Array | `0x${string}`),
         request.params.txPayload);

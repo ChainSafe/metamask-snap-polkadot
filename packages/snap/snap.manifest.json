@@ -1,13 +1,13 @@
 {
   "version": "0.5.0",
-  "proposedName": "Polkadot snap",
   "description": "The Polkadot snap.",
+  "proposedName": "Polkadot snap",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chainsafe/metamask-snap-polkadot.git"
   },
   "source": {
-    "shasum": "E+d4PhG47pFx88awHda5bsbpHlbCt9v2kbKMC2Gocwg=",
+    "shasum": "/SMUQreyofVCgsozr0SlaSj+oMATvlLhbEZ4qn36kV4=",
     "location": {
       "npm": {
         "filePath": "./dist/bundle.js",
@@ -17,6 +17,10 @@
     }
   },
   "initialPermissions": {
+    "endowment:rpc": {
+      "dapps": true,
+      "snaps": true
+    },
     "endowment:network-access": {},
     "snap_confirm": {},
     "snap_getBip44Entropy": [

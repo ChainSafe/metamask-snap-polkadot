@@ -1,7 +1,7 @@
 import '@polkadot/types-augment';
-import {MetamaskPolkadotSnap} from "./snap";
-import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
-import {hasMetaMask, isMetamaskSnapsSupported, isPolkadotSnapInstalled} from "./utils";
+import { MetamaskPolkadotSnap } from "./snap";
+import { SnapConfig } from "@chainsafe/metamask-polkadot-types";
+import { hasMetaMask, isMetamaskSnapsSupported, isPolkadotSnapInstalled } from "./utils";
 
 const defaultSnapOrigin = 'npm:@chainsafe/polkadot-snap';
 
@@ -33,14 +33,11 @@ export async function enablePolkadotSnap(
   if (!isInstalled) {
     // // enable snap
     await window.ethereum.request({
-      method: "wallet_enable",
-      params: [
-        {
-          [`wallet_snap_${snapId}`]: {
-            ...snapInstallationParams,
-          },
-        },
-      ],
+      method: "wallet_requestSnaps",
+      params:
+      {
+        [`${snapId}`]: { ...snapInstallationParams },
+      },
     });
   }
 
