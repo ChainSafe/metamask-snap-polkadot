@@ -25,7 +25,7 @@ export const polkadotConfiguration: SnapConfig = {
   addressPrefix: 0,
   networkName: "polkadot",
   unit: {
-    decimals: 12,
+    decimals: 10,
     image: "https://polkadot.js.org/apps/static/polkadot-circle.1eea41b2..svg",
     symbol: "DOT",
   },
