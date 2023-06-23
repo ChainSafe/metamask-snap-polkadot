@@ -10,28 +10,29 @@ For more details on polkadot snap itself see [snap repo](https://github.com/chai
 
 ## Usage
 
-Adapter has only one exposed function for injecting snap as web3 provider.
+Adapter has only one exposed function for enabling snap as web3 provider.
 
 ```typescript
-function injectMetamaskPolkadotSnapProvider(
-  network: "westend"|"kusama",
+function enablePolkadotSnap(
   config?: SnapConfig,
-  pluginOrigin?: string
-): void
+  snapOrigin?: string,
+  snapInstallationParams?: Record<SnapInstallationParamNames, unknown> = {}
+): Promise<MetamaskPolkadotSnap>
 ```
 
-If only `network` argument is provided, predefined configuration for specific network will be used. 
 By providing `config` as argument it is possible to override default configurations.
 
 Configuration structure is shown below.
 
 ```
 SnapConfig {
-  networkName: string;
+  networkName: SnapNetworks;
   wsRpcUrl?: string;
   addressPrefix?: number;
   unit?: UnitConfiguration;
 }
+
+SnapNetworks = "polkadot" | "kusama" | "westend";
 
 UnitConfiguration {
   symbol: string;
