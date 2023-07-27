@@ -80,17 +80,17 @@
     "typescript": "4.7.3"
   },
   "dependencies": {
-    "@metamask/key-tree": "^4.0.0",
-    "@metamask/snaps-types": "^0.26.2",
-    "@polkadot/api": "^8.7.1",
-    "@polkadot/types": "^8.7.1",
-    "@polkadot/util": "9.4.1",
-    "axios": "0.27.2",
+    "@metamask/key-tree": "^9.0.0",
+    "@metamask/snaps-types": "^0.32.2",
+    "@metamask/snaps-ui": "^0.32.2",
+    "@polkadot/api": "^10.8.1",
+    "@polkadot/keyring": "^12.3.2",
+    "@polkadot/types": "^10.9.1",
+    "@polkadot/util": "^12.3.2",
     "deepmerge": "^4.2.2",
     "superstruct": "^1.0.3"
   },
   "resolutions": {
-    "@polkadot/util": "9.4.1",
     "@polkadot/wasm-crypto": "file:./wasm-crypto-stub"
   }
 }

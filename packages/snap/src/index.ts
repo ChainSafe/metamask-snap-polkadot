@@ -71,7 +71,7 @@ export const onRpcRequest: OnRpcRequestHandler = (async ({ request }) => {
         method: 'snap_manageState',
         params: { operation: 'get' },
       }) as MetamaskState;
-      const isInitialConfiguration = state.polkadot.config === null;
+      const isInitialConfiguration = state.config === null;
       // reset api and remove asset only if already configured
       if (!isInitialConfiguration) {
         resetApi();
@@ -95,7 +95,7 @@ export const onRpcRequest: OnRpcRequestHandler = (async ({ request }) => {
         request.params.txPayload);
 
     case 'getChainHead':
-      const head = await api.rpc.chain.getFinalizedHead();
+      const head = api && await api.rpc.chain.getFinalizedHead();
       return head.hash;
 
     default:

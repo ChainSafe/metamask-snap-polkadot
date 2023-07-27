@@ -25,12 +25,12 @@ export function getDefaultConfiguration(networkName: string): SnapConfig {
 }
 
 export async function getConfiguration(snap: SnapsGlobalObject): Promise<SnapConfig> {
-  const state = await snap.request({
-    method: 'snap_manageState',
-    params: { operation: 'get' },
-  }) as MetamaskState;
-  if (!state || !state.polkadot.config) {
+  const state = (await snap.request({
+    method: "snap_manageState",
+    params: { operation: "get" },
+  })) as MetamaskState;
+  if (!state || !state.config) {
     return defaultConfiguration;
   }
-  return state.polkadot.config;
+  return JSON.parse(<string>state.config) as SnapConfig;
 }

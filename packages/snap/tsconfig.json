@@ -1,17 +1,18 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "target": "ES2020",
     "baseUrl": ".",
     "paths": {
       "*": [
         "../../node_modules"
       ]
     },
-    "outDir": "./build",
+    "outDir": "./build"
   },
   "include": [
     "src/**/*",
     "test/**/*"
   ],
-  "files": ["../../node_modules/@metamask/snaps-types/global.d.ts"]
+  "files": ["../../node_modules/@metamask/snaps-types/dist/global.d.ts"]
 }

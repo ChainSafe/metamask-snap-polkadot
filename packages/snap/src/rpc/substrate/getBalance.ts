@@ -5,7 +5,7 @@ import { SnapsGlobalObject } from "@metamask/snaps-types";
 
 /**
  * Returns balance as BN
- * @param wallet
+ * @param snap
  * @param api
  * @param address
  */

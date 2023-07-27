@@ -8,7 +8,7 @@ import { SnapsGlobalObject } from '@metamask/snaps-types';
 
 /**
  * Returns KeyringPair if one is saved in wallet state, creates new one otherwise
- * @param wallet
+ * @param snap
  */
 export async function getKeyPair(snap: SnapsGlobalObject): Promise<KeyringPair> {
   const config = await getConfiguration(snap);

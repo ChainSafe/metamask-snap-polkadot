@@ -19,7 +19,7 @@ import { MetaMaskConnector } from "../MetaMaskConnector/MetaMaskConnector";
 import { MetaMaskContext } from "../../context/metamask";
 import { LatestBlock } from "../../components/LatestBlock/LatestBlock";
 import { BlockInfo, SnapNetworks, Transaction } from "@chainsafe/metamask-polkadot-types";
-import { MetamaskSnapApi } from "@chainsafe/metamask-polkadot-adapter/build/types";
+import { MetamaskSnapApi } from "@chainsafe/metamask-polkadot-adapter/src/types";
 
 export const Dashboard = () => {
   const [state] = useContext(MetaMaskContext);
