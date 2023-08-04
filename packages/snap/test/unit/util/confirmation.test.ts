@@ -15,14 +15,14 @@ describe('Test showConfirmationDialog', function() {
   it('should return true on positive confirmation', async function () {
     await showConfirmationDialog(walletStub, { prompt: "confirmation" });
     expect(walletStub.request).to.have.been.calledOnceWith(
-      { method: 'snap_confirm', params: [{ prompt: "confirmation" }] }
+      { method: 'snap_dialog', params: [{ prompt: "confirmation" }] }
     );
   });
 
   it('should return false on negative confirmation', async function () {
     await showConfirmationDialog(walletStub, { prompt: "confirmation" });
     expect(walletStub.request).to.have.been.calledOnceWith(
-      { method: 'snap_confirm', params: [{ prompt: "confirmation" }] }
+      { method: 'snap_dialog', params: [{ prompt: "confirmation" }] }
     );
   });
 });

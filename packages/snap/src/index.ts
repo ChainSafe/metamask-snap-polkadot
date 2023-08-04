@@ -71,13 +71,17 @@ export const onRpcRequest: OnRpcRequestHandler = (async ({ request }) => {
         method: 'snap_manageState',
         params: { operation: 'get' },
       }) as MetamaskState;
+
+      console.log('state', state);
+      console.log('request', request);
       const isInitialConfiguration = state.config === null;
       // reset api and remove asset only if already configured
       if (!isInitialConfiguration) {
         resetApi();
       }
       // set new configuration
-      assert(request.params, validConfigureSchema);
+      assert(request.params, validConfigureSchema, 'ERRROR Invalid configuration schema');
+      console.log("ASSERT PASSED");
       return await configure(
         snap, request.params.configuration.networkName, request.params.configuration
       );

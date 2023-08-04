@@ -10,12 +10,17 @@ export async function configure(
   overrides: unknown,
 ): Promise<SnapConfig> {
   const defaultConfig = getDefaultConfiguration(networkName) as SnapConfig;
+
+  console.log("configure.ts defaultConfig", defaultConfig);
   const configuration = deepmerge(defaultConfig, overrides) as SnapConfig;
+  console.log("configure.ts configuration", configuration);
 
   const state = (await snap.request({
     method: "snap_manageState",
     params: { operation: "get" },
   })) as MetamaskState;
+
+  console.log("configure.ts current state", state);
 
   state.config = JSON.stringify(configuration);
 

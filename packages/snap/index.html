@@ -1,10 +1,8 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-  <title>Hello Plugins!</title>
+  <title>Polkadot metamask snap</title>
 </head>
-
 <body>
 <img src="https://blog.coinfabrik.com/wp-content/uploads/2019/04/polkadot-substrate.png" height="60" />
 <h2>Polkadot metamask snap</h2>
@@ -115,6 +113,16 @@
     console.log(s);
   }
 
+  async function invokeSnap(request) {
+    return ethereum.request({
+      method: "wallet_invokeSnap",
+      params: {
+        snapId,
+        request
+      }
+    });
+  }
+
   // spans for status
   const FALSE = "<span style='color: darkred'>FALSE</span>";
   const TRUE = "<span style='color: darkgreen'>TRUE</span>";
@@ -165,12 +173,11 @@
 
   async function loadConfiguration() {
     try {
-      const c = await ethereum.send({
-        method: snapId,
-        params: [{
+      const c = await invokeSnap({
           method: "configure",
           params: {
             configuration: {
+              networkName: "kusama",
               network: {
                 wsRpcUrl: "wss://kusama-rpc.polkadot.io/",
                 unit: {
@@ -181,8 +188,9 @@
               }
             }
           }
-        }]
-      });
+        }
+      );
+
       console.log(c);
     } catch (e) {
       console.log("Keys not generated", e);
@@ -191,11 +199,8 @@
 
   async function removeAsset() {
     try {
-      await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "removeKusamaAsset"
-        }]
+      await invokeSnap({
+        method: "removeKusamaAsset"
       });
     } catch (e) {
       console.log("Keys not generated", e);
@@ -204,11 +209,8 @@
 
   async function createAsset() {
     try {
-      await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "addKusamaAsset"
-        }]
+      await invokeSnap({
+        method: "addKusamaAsset"
       });
     } catch (e) {
       console.log("Keys not generated", e);
@@ -218,14 +220,11 @@
   async function findBlock() {
     let block = null;
     try {
-      block = await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "getBlock",
-          params: {
-            blockTag: blockTagInput.value
-          }
-        }]
+      block = await invokeSnap({
+        method: "getBlock",
+        params: {
+          blockTag: blockTagInput.value
+        }
       });
     } catch (e) {
       console.log("Unable to fetch substrate chain head", e);
@@ -249,11 +248,8 @@
   async function exportSeed() {
     let response = null;
     try {
-      response = await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "exportSeed"
-        }]
+      response = await invokeSnap({
+        method: "exportSeed"
       });
     } catch (e) {
       console.log("Keys not generated", e);
@@ -270,14 +266,11 @@
   async function fetchPublicKey() {
     let response = null;
     try {
-      response = await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "getPublicKey"
-        }]
+      response = await invokeSnap({
+        method: "getPublicKey"
       });
     } catch (e) {
-      console.log("Keys not generated", e);
+      console.log("fetchPublicKey - Keys not generated", e);
       publicKeyLabel.innerHTML = "Error on key generation";
     }
     if (response != null) {
@@ -290,11 +283,8 @@
   async function fetchAddress() {
     let response = null;
     try {
-      response = await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "getAddress"
-        }]
+      response = await invokeSnap({
+        method: "getAddress"
       });
     } catch (e) {
       console.log("Keys not generated", e);
@@ -307,7 +297,6 @@
   }
 
   async function connectSnap() {
-    console.log(snapId);
     try {
       await ethereum.request({
         method: "wallet_requestSnaps",
@@ -316,7 +305,7 @@
         }
       });
     } catch (e) {
-      console.error(e);
+      console.error("Connect Snap error", e);
     }
     snapConnectedLabel.innerHTML = TRUE;
     publicKeyLabel.innerHTML = "In progress...";
@@ -324,16 +313,14 @@
 
     let payload = null;
     try {
-      payload = await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "generateTransactionPayload",
-          params: {
-            amount: "10",
-            to: "HYxTWKxPTQwcENdt41QhsDrAKoy8Vn7i1NPfYjSnBT1Z62c"
-          }
-        }]
+      payload = await invokeSnap({
+        method: "generateTransactionPayload",
+        params: {
+          amount: "10",
+          to: "HYxTWKxPTQwcENdt41QhsDrAKoy8Vn7i1NPfYjSnBT1Z62c"
+        }
       });
+
       console.log("GENERATE PAYLOAD RESULT");
       console.log(payload);
     } catch (e) {
@@ -342,15 +329,13 @@
 
     let signature = null;
     try {
-      signature = await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "signPayloadJSON",
-          params: {
-            payload: payload
-          }
-        }]
+      signature = await invokeSnap({
+        method: "signPayloadJSON",
+        params: {
+          payload: payload
+        }
       });
+
       console.log("SIGN RESULT");
       console.log(signature);
     } catch (e) {
@@ -359,16 +344,16 @@
 
     let tx = null;
     try {
-      tx = await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "send",
+      tx = await invokeSnap({
+        method: "send",
+        params: {
           params: {
             signature: signature,
             txPayload: payload
           }
-        }]
+        }
       });
+
       console.log("SEND RESULT");
       console.log(tx);
     } catch (e) {
@@ -384,11 +369,8 @@
   async function getChainHead() {
     let response = null;
     try {
-      response = await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "getChainHead"
-        }]
+      response = await invokeSnap({
+        method: "getChainHead"
       });
     } catch (e) {
       console.log("Unable to fetch substrate chain head", e);
@@ -403,12 +385,10 @@
   async function getBalance() {
     let response = null;
     try {
-      response = await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "getBalance"
-        }]
+      response = await invokeSnap({
+        method: "getBalance"
       });
+
     } catch (e) {
       console.log("Unable to fetch balance", e);
     }
@@ -422,14 +402,11 @@
   async function getAllTransactions() {
     let response = null;
     try {
-      response = await ethereum.send({
-        method: snapId,
-        params: [{
-          method: "getAllTransactions",
-          params: {
-            address: "Dc6ouAsLFYLF7kCfAbW6j6kVN1FvoKcyAuTr1NCKmU2c8mk"
-          }
-        }]
+      response = await invokeSnap({
+        method: "getAllTransactions",
+        params: {
+          address: "Dc6ouAsLFYLF7kCfAbW6j6kVN1FvoKcyAuTr1NCKmU2c8mk"
+        }
       });
     } catch (e) {
       console.log("Unable to fetch transactions", e);
@@ -441,7 +418,5 @@
     }
     return false;
   }
-
 </script>
-
 </html>

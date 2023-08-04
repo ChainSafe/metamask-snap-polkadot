@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "skipLibCheck": true,
     "target": "ES2020",
     "baseUrl": ".",
     "paths": {
