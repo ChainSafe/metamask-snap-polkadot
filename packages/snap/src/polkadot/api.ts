@@ -1,6 +1,5 @@
 import { getConfiguration } from '../configuration';
-import { WsProvider } from '@polkadot/api';
-import { ApiPromise } from '@polkadot/api/promise';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 
 let api: ApiPromise;
 let provider: WsProvider;
@@ -47,7 +46,7 @@ export const getApi = async (): Promise<ApiPromise> => {
     isConnecting = false;
   } else {
     while (isConnecting) {
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise((r) => setTimeout(r, 100));
     }
     if (!provider.isConnected) {
       isConnecting = true;
