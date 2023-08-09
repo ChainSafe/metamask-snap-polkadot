@@ -26,7 +26,10 @@ export const Dashboard = () => {
   const [balance, setBalance] = useState('0');
   const [address, setAddress] = useState('');
   const [publicKey, setPublicKey] = useState('');
-  const [latestBlock, setLatestBlock] = useState<BlockInfo>({ hash: '', number: '' });
+  const [latestBlock, setLatestBlock] = useState<BlockInfo>({
+    hash: '',
+    number: ''
+  });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [network, setNetwork] = useState<SnapNetworks>('westend');
   const [api, setApi] = useState<MetamaskSnapApi | null>(null);
@@ -79,14 +82,19 @@ export const Dashboard = () => {
   return (
     <Container maxWidth="lg">
       <Grid direction="column" alignItems="center" justifyContent="center" container spacing={3}>
-        <Box m="2rem">
+        <Box style={{ margin: '2rem' }}>
           <Typography variant="h2">Polkadot snap demo</Typography>
         </Box>
         {!state.polkadotSnap.isInstalled ? (
           <MetaMaskConnector />
         ) : (
           <>
-            <Box m="1rem" alignSelf="baseline">
+            <Box
+              style={{ margin: '1rem' }}
+              alignSelf="flex-start"
+              justifySelf={'flex-start'}
+              alignContent={'flex-start'}
+            >
               <InputLabel>Network</InputLabel>
               <Select defaultValue={'westend'} onChange={handleNetworkChange}>
                 <MenuItem value={'westend'}>Westend</MenuItem>
@@ -99,13 +107,18 @@ export const Dashboard = () => {
                 <LatestBlock block={latestBlock} />
               </Grid>
             </Grid>
-            <Box m="1rem" />
+            <Box style={{ margin: '1rem' }} />
             <Grid container spacing={3} alignItems="stretch">
               <Grid item xs={12}>
-                <Account network={network} address={address} balance={balance} publicKey={publicKey} />
+                <Account
+                  network={network}
+                  address={address}
+                  balance={balance}
+                  publicKey={publicKey}
+                />
               </Grid>
             </Grid>
-            <Box m="1rem" />
+            <Box style={{ margin: '1rem' }} />
             <Grid container spacing={3} alignItems="stretch">
               <Grid item md={6} xs={12}>
                 <Transfer network={network} onNewTransferCallback={handleNewTransaction} />
@@ -114,10 +127,10 @@ export const Dashboard = () => {
                 <SignMessage address={address} />
               </Grid>
             </Grid>
-            <Box m="1rem" />
+            <Box style={{ margin: '1rem' }} />
             <Grid container spacing={3} alignItems={'stretch'}>
               <Grid item xs={12}>
-                <Card>
+                <Card style={{ margin: '1rem 0' }}>
                   <CardHeader title="Account transactions" />
                   <CardContent>
                     <TransactionTable txs={transactions} />

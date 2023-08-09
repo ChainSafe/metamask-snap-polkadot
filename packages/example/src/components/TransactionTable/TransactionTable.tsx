@@ -1,11 +1,16 @@
-import React from "react";
+import React from 'react';
 import {
-  Paper, Table, TableContainer, TableCell,
-  TableRow, TableHead, TableBody
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
 } from '@material-ui/core';
-import { shortAddress } from "../../services/format";
-import { formatBalance } from "@polkadot/util";
-import { Transaction } from "@chainsafe/metamask-polkadot-types";
+import { shortAddress } from '../../services/format';
+import { formatBalance } from '@polkadot/util';
+import { Transaction } from '@chainsafe/metamask-polkadot-types';
 
 export interface TransactionTableProps {
   txs: Transaction[];
@@ -14,8 +19,7 @@ export interface TransactionTableProps {
 export const TransactionTable = (props: TransactionTableProps) => {
   return (
     <TableContainer className="transtaction-table" component={Paper}>
-      <Table
-        aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Transaction id</TableCell>
@@ -27,7 +31,7 @@ export const TransactionTable = (props: TransactionTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.txs.map(tx => (
+          {props.txs.map((tx) => (
             <TableRow key={tx.hash}>
               <TableCell align="left" component="th" scope="row">
                 {tx.hash}
@@ -37,16 +41,20 @@ export const TransactionTable = (props: TransactionTableProps) => {
               </TableCell>
               <TableCell align="center">{shortAddress(tx.sender)}</TableCell>
               <TableCell align="center">{shortAddress(tx.destination)}</TableCell>
-              <TableCell align="center">{formatBalance(tx.amount, {
-                decimals: 12,
-                withSi: true,
-                withUnit: "KSM"
-              })}</TableCell>
-              <TableCell align="center">{formatBalance(tx.fee, {
-                decimals: 12,
-                withSi: true,
-                withUnit: "KSM"
-              })}</TableCell>
+              <TableCell align="center">
+                {formatBalance(tx.amount, {
+                  decimals: 12,
+                  withSi: true,
+                  withUnit: 'KSM'
+                })}
+              </TableCell>
+              <TableCell align="center">
+                {formatBalance(tx.fee, {
+                  decimals: 12,
+                  withSi: true,
+                  withUnit: 'KSM'
+                })}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

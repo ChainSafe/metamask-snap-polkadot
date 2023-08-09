@@ -1,7 +1,20 @@
 import React, { useContext, useState } from 'react';
-import { Box, Button, Card, CardContent, CardHeader, Dialog, Grid, TextField } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  TextField,
+  Typography
+} from '@material-ui/core';
 import { stringToHex } from '@polkadot/util/string';
-import { DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@material-ui/core';
 import { MetaMaskContext } from '../../context/metamask';
 
 interface Props {
@@ -53,9 +66,15 @@ export const SignMessage: React.FC<Props> = ({ address }) => {
             variant="outlined"
           />
         </Grid>
-        <Box m="0.5rem" />
+        <Box style={{ margin: '0.5rem' }} />
         <Grid container justifyContent="flex-end">
-          <Button onClick={onSubmit} color="secondary" variant="contained" size="large">
+          <Button
+            style={{ marginTop: '0.5rem' }}
+            onClick={onSubmit}
+            color="secondary"
+            variant="contained"
+            size="large"
+          >
             Sign
           </Button>
         </Grid>

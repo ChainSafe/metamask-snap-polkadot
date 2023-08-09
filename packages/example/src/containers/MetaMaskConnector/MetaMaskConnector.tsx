@@ -76,7 +76,7 @@ export const MetaMaskConnector = () => {
         </Fragment>
       )}
       <Button
-        style={{ marginTop: '1rem' }}
+        style={{ marginTop: '0.5rem' }}
         disabled={!state.hasMetaMask}
         onClick={installSnap}
         variant="contained"

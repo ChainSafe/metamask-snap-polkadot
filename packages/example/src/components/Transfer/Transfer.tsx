@@ -60,7 +60,10 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
       const api = await state.polkadotSnap.snap.getMetamaskSnapApi();
       if (amount && recipient) {
         const convertedAmount = BigInt(amount) * BigInt('1000000000');
-        const txPayload = await api.generateTransactionPayload(convertedAmount.toString(), recipient);
+        const txPayload = await api.generateTransactionPayload(
+          convertedAmount.toString(),
+          recipient
+        );
         const signedTx = await api.signPayloadJSON(txPayload.payload);
         const tx = await api.send(signedTx, txPayload);
         showAlert('info', `Transaction: ${JSON.stringify(tx, null, 2)}`);
@@ -76,7 +79,7 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
   }, [amount, recipient, setAmount, setRecipient, onNewTransferCallback]);
 
   return (
-    <Card>
+    <Card style={{ margin: '1rem 0' }}>
       <CardContent>
         <CardHeader title="Transfer" />
         <Grid container alignItems="center" justifyContent="space-between">
@@ -90,12 +93,15 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
               label="Recipient"
               variant="outlined"
               value={recipient}
+              style={{ marginBottom: '1rem' }}
             ></TextField>
-            <Box m="0.5rem" />
+            <Box style={{ margin: '0.5rem' }} />
             <TextField
               // eslint-disable-next-line max-len
               InputProps={{
-                startAdornment: <InputAdornment position="start">{`m${getCurrency(network)}`}</InputAdornment>
+                startAdornment: (
+                  <InputAdornment position="start">{`m${getCurrency(network)}`}</InputAdornment>
+                )
               }}
               // eslint-disable-next-line max-len
               onChange={handleAmountChange}
@@ -108,9 +114,15 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
             ></TextField>
           </Grid>
         </Grid>
-        <Box m="0.5rem" />
+        <Box style={{ margin: '0.5rem' }} />
         <Grid container item xs={12} justifyContent="flex-end">
-          <Button onClick={onSubmit} color="secondary" variant="contained" size="large">
+          <Button
+            onClick={onSubmit}
+            color="secondary"
+            variant="contained"
+            size="large"
+            style={{ marginTop: '0.5rem' }}
+          >
             SEND
           </Button>
         </Grid>
