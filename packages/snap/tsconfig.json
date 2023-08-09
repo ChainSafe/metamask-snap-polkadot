@@ -4,6 +4,7 @@
     "skipLibCheck": true,
     "target": "ES2020",
     "baseUrl": ".",
+    "strictNullChecks": false,
     "paths": {
       "*": [
         "../../node_modules"

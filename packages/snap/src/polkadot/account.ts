@@ -11,7 +11,7 @@ import { SnapsGlobalObject } from '@metamask/snaps-types';
  * @param snap
  */
 export async function getKeyPair(snap: SnapsGlobalObject): Promise<KeyringPair> {
-  const config = await getConfiguration(snap);
+  const config = await getConfiguration();
 
   const bip44Node = (await snap.request({
     method: "snap_getBip44Entropy",

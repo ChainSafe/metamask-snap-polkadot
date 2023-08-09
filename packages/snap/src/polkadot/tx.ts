@@ -1,16 +1,12 @@
 import { SnapsGlobalObject } from "@metamask/snaps-types";
-import { MetamaskState } from "../interfaces";
 import { Transaction } from "@chainsafe/metamask-polkadot-types";
+import { getMetamaskState } from "../rpc/getMetamaskState";
 
 export async function saveTxToState(
   snap: SnapsGlobalObject,
   tx: Transaction,
 ): Promise<void> {
-  const state = (await snap.request({
-    method: "snap_manageState",
-    params: { operation: "get" },
-  }))  as MetamaskState;
-
+  const state = await getMetamaskState();
   const transactionsArray = state.transactions as unknown as Transaction[];
   transactionsArray.push(tx);
 
@@ -24,11 +20,7 @@ export async function updateTxInState(
   snap: SnapsGlobalObject,
   transaction: Transaction,
 ): Promise<void> {
-  const state = (await snap.request({
-    method: "snap_manageState",
-    params: { operation: "get" },
-  }))  as MetamaskState;
-
+  const state = await getMetamaskState();
   const transactionsArray = state.transactions as unknown as Transaction[];
 
   const index = transactionsArray.findIndex(

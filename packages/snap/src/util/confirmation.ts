@@ -1,5 +1,5 @@
-import { SnapsGlobalObject } from "@metamask/snaps-types";
-import { panel, text } from "@metamask/snaps-ui";
+import { SnapsGlobalObject } from '@metamask/snaps-types';
+import { panel, text } from '@metamask/snaps-ui';
 
 type ConfirmationDialogContent = {
   prompt: string;
@@ -9,17 +9,17 @@ type ConfirmationDialogContent = {
 
 export async function showConfirmationDialog(
   snap: SnapsGlobalObject,
-  message: ConfirmationDialogContent,
+  message: ConfirmationDialogContent
 ): Promise<boolean> {
   return (await snap.request({
-    method: "snap_dialog",
+    method: 'snap_dialog',
     params: {
       content: panel([
-        text(message.prompt),
-        text(message.description),
-        text(message.textAreaContent),
+        text(message.prompt || 'Are you sure?'),
+        text(message.description || ''),
+        text(message.textAreaContent || '')
       ]),
-      type: "confirmation",
-    },
+      type: 'confirmation'
+    }
   })) as boolean;
 }

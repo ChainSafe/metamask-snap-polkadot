@@ -1,7 +1,7 @@
-import {ApiPromise} from "@polkadot/api/";
-import {getKeyPair} from "../../polkadot/account";
-import {AccountData} from "@polkadot/types/interfaces/balances/types";
-import { SnapsGlobalObject } from "@metamask/snaps-types";
+import { ApiPromise } from '@polkadot/api';
+import { getKeyPair } from '../../polkadot/account';
+import { AccountData } from '@polkadot/types/interfaces/balances/types';
+import { SnapsGlobalObject } from '@metamask/snaps-types';
 
 /**
  * Returns balance as BN
@@ -10,9 +10,15 @@ import { SnapsGlobalObject } from "@metamask/snaps-types";
  * @param address
  */
 export async function getBalance(snap: SnapsGlobalObject, api: ApiPromise, address?: string): Promise<string> {
-  if(!address) {
+  console.log('getBalance', address);
+
+  if (!address) {
     address = (await getKeyPair(snap)).address;
   }
-  const account = await api.query.system.account(address) as unknown as { data: AccountData };
+
+  console.log('START QUERY BALANCE');
+  const account = (await api.query.system.account(address)) as unknown as { data: AccountData };
+  console.log('END QUERY BALANCE', account);
+
   return account.data.free.toString();
 }

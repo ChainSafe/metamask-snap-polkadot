@@ -1,29 +1,29 @@
-import { hasMetaMask } from "../services/metamask";
-import React, { createContext, Dispatch, PropsWithChildren, Reducer, useReducer } from "react";
-import { MetamaskPolkadotSnap } from "@chainsafe/metamask-polkadot-adapter/build/snap";
+import { hasMetaMask } from '../services/metamask';
+import React, { createContext, Dispatch, PropsWithChildren, Reducer, useReducer } from 'react';
+import { MetamaskPolkadotSnap } from '@chainsafe/metamask-polkadot-adapter/build/snap';
 
 interface IPolkadotSnap {
   isInstalled: boolean
-  message: string;
-  snap?: MetamaskPolkadotSnap;
+  message: string
+  snap?: MetamaskPolkadotSnap
 }
 
 export interface MetamaskState {
-  polkadotSnap: IPolkadotSnap,
-  hasMetaMask: boolean,
+  polkadotSnap: IPolkadotSnap
+  hasMetaMask: boolean
 }
 
 const initialState: MetamaskState = {
   hasMetaMask: hasMetaMask(),
   polkadotSnap: {
     isInstalled: false,
-    message: ""
+    message: ''
   }
 };
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MetamaskDispatch = { type: MetamaskActions, payload: any };
+type MetamaskDispatch = { type: MetamaskActions; payload: any };
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-export const MetaMaskContext = createContext<[MetamaskState, Dispatch<MetamaskDispatch>]>([initialState, () => { }]);
+export const MetaMaskContext = createContext<[MetamaskState, Dispatch<MetamaskDispatch>]>([initialState, () => {}]);
 
 export enum MetamaskActions {
   SET_INSTALLED_STATUS
@@ -41,17 +41,10 @@ const reducer: Reducer<MetamaskState, MetamaskDispatch> = (state, action) => {
       return state;
     }
   }
-
 };
 
-
 export const MetaMaskContextProvider = (props: PropsWithChildren<Record<string, unknown>>) => {
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  return (
-    <MetaMaskContext.Provider value={[state, dispatch]}>
-      {props.children}
-    </MetaMaskContext.Provider>
-  );
+  return <MetaMaskContext.Provider value={[state, dispatch]}>{props.children}</MetaMaskContext.Provider>;
 };

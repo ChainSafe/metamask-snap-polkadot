@@ -17,8 +17,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@polkadot/api": "^8.7.1",
-    "@polkadot/extension-inject": "^0.44.5"
+    "@polkadot/api": "^10.9.1",
+    "@polkadot/extension-inject": "^0.46.5"
   },
   "scripts": {
     "prebuild": "rm -rf build",

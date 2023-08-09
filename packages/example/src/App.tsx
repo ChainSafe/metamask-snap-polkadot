@@ -1,8 +1,7 @@
-import { Dashboard } from "./containers/Dashboard/Dashboard";
-import { MetaMaskContextProvider } from "./context/metamask";
+import { Dashboard } from './containers/Dashboard/Dashboard';
+import { MetaMaskContextProvider } from './context/metamask';
 
 function App() {
-
   return (
     <MetaMaskContextProvider>
       <Dashboard />

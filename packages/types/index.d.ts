@@ -1,7 +1,6 @@
-import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import { Json } from "@metamask/snaps-types";
+import { SignerPayloadJSON, SignerPayloadRaw } from "@polkadot/types/types";
 
-export interface GetPublicKeyRequest{
+export interface GetPublicKeyRequest {
   method: "getPublicKey";
 }
 

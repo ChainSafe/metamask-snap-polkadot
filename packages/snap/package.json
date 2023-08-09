@@ -83,11 +83,11 @@
     "@metamask/key-tree": "^9.0.0",
     "@metamask/snaps-types": "^0.32.2",
     "@metamask/snaps-ui": "^0.32.2",
-    "@polkadot/api": "^10.8.1",
+    "@polkadot/api": "^10.9.1",
     "@polkadot/keyring": "^12.3.2",
     "@polkadot/types": "^10.9.1",
     "@polkadot/util": "^12.3.2",
-    "deepmerge": "^4.2.2",
+    "deepmerge": "^4.3.1",
     "superstruct": "^1.0.3"
   },
   "resolutions": {
