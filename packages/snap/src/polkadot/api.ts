@@ -1,16 +1,16 @@
 import { getConfiguration } from '../configuration';
-import { ApiPromise, WsProvider } from '@polkadot/api';
+import { ApiPromise, HttpProvider } from '@polkadot/api';
 
 let api: ApiPromise;
-let provider: WsProvider;
+let provider: HttpProvider;
 let isConnecting: boolean;
 
 /**
  * Initialize substrate api and awaits for it to be ready
  */
-async function initApi(wsRpcUrl: string): Promise<ApiPromise> {
+async function initApi(rpcUrl: string): Promise<ApiPromise> {
   try {
-    provider = new WsProvider(wsRpcUrl);
+    provider = new HttpProvider(rpcUrl);
   } catch (error) {
     console.log('Error on provider creation', error);
   }
