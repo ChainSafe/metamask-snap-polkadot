@@ -1,9 +1,9 @@
 import { KeyringPair } from '@polkadot/keyring/types';
 import { Keyring } from '@polkadot/keyring';
-import { stringToU8a } from "@polkadot/util";
-import { getConfiguration } from "../configuration";
-import { JsonBIP44CoinTypeNode } from "@metamask/key-tree";
-import { SnapNetworks } from "@chainsafe/metamask-polkadot-types";
+import { stringToU8a } from '@polkadot/util';
+import { getConfiguration } from '../configuration';
+import { JsonBIP44CoinTypeNode } from '@metamask/key-tree';
+import { SnapNetworks } from '@chainsafe/metamask-polkadot-types';
 import { SnapsGlobalObject } from '@metamask/snaps-types';
 
 /**
@@ -14,10 +14,10 @@ export async function getKeyPair(snap: SnapsGlobalObject): Promise<KeyringPair> 
   const config = await getConfiguration();
 
   const bip44Node = (await snap.request({
-    method: "snap_getBip44Entropy",
+    method: 'snap_getBip44Entropy',
     params: {
       coinType: getCoinTypeByNetwork(config.networkName)
-    },
+    }
   })) as JsonBIP44CoinTypeNode;
 
   // generate keys
@@ -30,10 +30,10 @@ export async function getKeyPair(snap: SnapsGlobalObject): Promise<KeyringPair> 
 
 const getCoinTypeByNetwork = (network: SnapNetworks): number => {
   switch (network) {
-    case "kusama":
-    case "westend":
+    case 'kusama':
+    case 'westend':
       return 434;
-    case "polkadot":
+    case 'polkadot':
       return 354;
   }
 };

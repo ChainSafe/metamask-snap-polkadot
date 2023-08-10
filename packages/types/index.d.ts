@@ -1,72 +1,71 @@
-import { SignerPayloadJSON, SignerPayloadRaw } from "@polkadot/types/types";
+import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 
 export interface GetPublicKeyRequest {
-  method: "getPublicKey";
+  method: 'getPublicKey';
 }
 
 export interface GetAddressRequest {
-  method: "getAddress";
+  method: 'getAddress';
 }
 
 export interface ExportSeedRequest {
-  method: "exportSeed";
+  method: 'exportSeed';
 }
 
 export interface GetTransactionsRequest {
-  method: "getAllTransactions";
+  method: 'getAllTransactions';
 }
 
 export interface GetBlockRequest {
-  method: "getBlock";
+  method: 'getBlock';
   params: {
     blockTag?: BlockId;
   };
 }
 
 export interface GetBalanceRequest {
-  method: "getBalance";
+  method: 'getBalance';
 }
 
-
 export interface ConfigureSnapRequest {
-  method: "configure";
+  method: 'configure';
   params: {
     configuration: SnapConfig;
   };
 }
 
 export interface AddPolkadotAssetRequest {
-  method: "addPolkadotAsset";
+  method: 'addPolkadotAsset';
 }
 
 export interface GetChainHeadRequest {
-  method: "getChainHead";
+  method: 'getChainHead';
 }
 
 export interface SignPayloadJSONRequest {
-  method: "signPayloadJSON";
+  method: 'signPayloadJSON';
   params: {
     payload: SignerPayloadJSON;
   };
 }
 
 export interface SignPayloadRawRequest {
-  method: "signPayloadRaw";
+  method: 'signPayloadRaw';
   params: {
     payload: SignerPayloadRaw;
   };
 }
 
 export interface GenerateTransactionPayload {
-  method: "generateTransactionPayload";
+  method: 'generateTransactionPayload';
   params: {
-    amount: string|number;
+    amount: string | number;
     to: string;
   };
 }
 
 export interface SendUnitRequest {
-  method: "send";
+  method: 'send';
   params: {
     signature: string;
     txPayload: TxPayload;
@@ -74,29 +73,29 @@ export interface SendUnitRequest {
 }
 
 export type MetamaskPolkadotRpcRequest =
-    GetPublicKeyRequest
-    | GetAddressRequest
-    | ExportSeedRequest
-    | GetTransactionsRequest
-    | GetBlockRequest
-    | GetBalanceRequest
-    | ConfigureSnapRequest
-    | AddPolkadotAssetRequest
-    | GetChainHeadRequest
-    | SignPayloadJSONRequest
-    | SignPayloadRawRequest
-    | SendUnitRequest
-    | GenerateTransactionPayload;
+  | GetPublicKeyRequest
+  | GetAddressRequest
+  | ExportSeedRequest
+  | GetTransactionsRequest
+  | GetBlockRequest
+  | GetBalanceRequest
+  | ConfigureSnapRequest
+  | AddPolkadotAssetRequest
+  | GetChainHeadRequest
+  | SignPayloadJSONRequest
+  | SignPayloadRawRequest
+  | SendUnitRequest
+  | GenerateTransactionPayload;
 
-type Method = MetamaskPolkadotRpcRequest["method"];
+type Method = MetamaskPolkadotRpcRequest['method'];
 
 export interface WalletEnableRequest {
-  method: "wallet_enable";
+  method: 'wallet_enable';
   params: object[];
 }
 
 export interface GetPluginsRequest {
-  method: "wallet_getPlugins";
+  method: 'wallet_getPlugins';
 }
 
 export interface SnapRpcMethodRequest {
@@ -106,7 +105,7 @@ export interface SnapRpcMethodRequest {
 
 export type MetamaskRpcRequest = WalletEnableRequest | GetPluginsRequest | SnapRpcMethodRequest;
 
-export type BlockId = number | string | "latest";
+export type BlockId = number | string | 'latest';
 
 export interface TxPayload {
   tx: string;
@@ -125,7 +124,7 @@ export interface UnitConfiguration {
   customViewUrl?: string;
 }
 
-export type SnapNetworks = "polkadot" | "kusama" | "westend";
+export type SnapNetworks = 'polkadot' | 'kusama' | 'westend';
 
 export interface SnapConfig {
   networkName: SnapNetworks;

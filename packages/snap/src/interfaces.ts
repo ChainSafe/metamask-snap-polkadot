@@ -1,11 +1,9 @@
-import {
-  MetamaskPolkadotRpcRequest,
-} from "@chainsafe/metamask-polkadot-types";
-import { Json } from "@metamask/snaps-types";
+import { MetamaskPolkadotRpcRequest } from '@chainsafe/metamask-polkadot-types';
+import { Json } from '@metamask/snaps-types';
 
 export type FMethodCallback = (
   originString: string,
-  requestObject: MetamaskPolkadotRpcRequest,
+  requestObject: MetamaskPolkadotRpcRequest
 ) => Promise<unknown>;
 
 export type MetamaskState = {
@@ -15,11 +13,12 @@ export type MetamaskState = {
 
 export const EmptyMetamaskState: () => MetamaskState = () => ({
   config: null,
-  transactions: [],
+  transactions: []
 });
 
 export interface Wallet {
   send(options: { method: string; params: unknown[] }): unknown;
+
   request(options: { method: string; params?: unknown }): unknown;
 }
 
