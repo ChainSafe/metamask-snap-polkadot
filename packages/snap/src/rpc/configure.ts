@@ -13,7 +13,7 @@ export async function configure(
   const configuration = deepmerge(defaultConfig, overrides) as SnapConfig;
 
   const state = await getMetamaskState();
-  console.log('state', state);
+  console.info('Current state', state);
   await snap.request({
     method: 'snap_manageState',
     params: {

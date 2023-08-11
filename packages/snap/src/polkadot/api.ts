@@ -12,12 +12,12 @@ async function initApi(rpcUrl: string): Promise<ApiPromise> {
   try {
     provider = new HttpProvider(rpcUrl);
   } catch (error) {
-    console.log('Error on provider creation', error);
+    console.error('Error on provider creation', error);
   }
-  console.log('Provider created', provider);
+  console.info('Provider created', provider);
   const api = await ApiPromise.create({ provider });
 
-  console.log('Api is ready', api);
+  console.info('Api is ready', api);
   return api;
 }
 
@@ -26,7 +26,7 @@ export const resetApi = (): void => {
     try {
       api.disconnect();
     } catch (e) {
-      console.log('Error on api disconnect.');
+      console.error('Error on api disconnect.');
     }
     api = null;
     provider = null;
@@ -34,15 +34,14 @@ export const resetApi = (): void => {
 };
 
 export const getApi = async (): Promise<ApiPromise> => {
-  console.log('Getting api');
+  console.info('Getting api');
   if (!api) {
     // api not initialized or configuration changed
     const config = await getConfiguration();
-    console.log('Config API', config);
-    console.log('Connecting to', config.wsRpcUrl);
-    console.log('initApi');
+    console.info('Config API', config);
+    console.info('Connecting to', config.wsRpcUrl);
     api = await initApi(config.wsRpcUrl);
-    console.log('API', api);
+    console.info('API', api);
     isConnecting = false;
   } else {
     while (isConnecting) {

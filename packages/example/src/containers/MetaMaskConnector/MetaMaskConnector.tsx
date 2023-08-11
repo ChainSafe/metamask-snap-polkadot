@@ -11,7 +11,6 @@ export const MetaMaskConnector = () => {
   useEffect(() => {
     (async () => {
       if (await isPolkadotSnapInstalled()) {
-        console.log('== = == == = == = = isPolkadotSnapInstalled HOOK = = == = == = == = = == ');
         dispatch({
           payload: { isInstalled: true },
           type: MetamaskActions.SET_INSTALLED_STATUS

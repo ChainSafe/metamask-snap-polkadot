@@ -1,5 +1,8 @@
 {
   "extends": "../../tsconfig.json",
+  "ts-node": {
+    "files": true
+  },
   "compilerOptions": {
     "skipLibCheck": true,
     "target": "ES2020",
@@ -14,7 +17,9 @@
   },
   "include": [
     "src/**/*",
-    "test/**/*"
+    "__tests__/**/*"
   ],
-  "files": ["../../node_modules/@metamask/snaps-types/dist/global.d.ts"]
+  "files": [
+    "__tests__/test-globals.ts"
+  ]
 }
