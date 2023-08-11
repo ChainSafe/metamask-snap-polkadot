@@ -4,13 +4,11 @@ import { stringToU8a } from '@polkadot/util';
 import { getConfiguration } from '../configuration';
 import { JsonBIP44CoinTypeNode } from '@metamask/key-tree';
 import { SnapNetworks } from '@chainsafe/metamask-polkadot-types';
-import { SnapsGlobalObject } from '@metamask/snaps-types';
 
 /**
  * Returns KeyringPair if one is saved in wallet state, creates new one otherwise
- * @param snap
  */
-export async function getKeyPair(snap: SnapsGlobalObject): Promise<KeyringPair> {
+export async function getKeyPair(): Promise<KeyringPair> {
   const config = await getConfiguration();
 
   const bip44Node = (await snap.request({

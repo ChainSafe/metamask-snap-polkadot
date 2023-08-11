@@ -19,7 +19,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "@typescript-eslint/no-empty-function": "warn",
   },
   "include": [
     "src"

@@ -1713,7 +1713,7 @@ __metadata:
     "@polkadot/types": ^10.9.1
     "@polkadot/util": ^12.3.2
     "@types/chai": ^4.2.10
-    "@types/mocha": ^7.0.2
+    "@types/mocha": ^10.0.1
     "@types/sinon": ^7.5.2
     "@types/sinon-chai": ^3.2.3
     "@typescript-eslint/eslint-plugin": ^5.27.1
@@ -5345,10 +5345,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mocha@npm:^7.0.2":
-  version: 7.0.2
-  resolution: "@types/mocha@npm:7.0.2"
-  checksum: 52b4e6a461214ed9e880659dd49d59107e06bdda5b0d5ebf62ee2d052a08cead04bb0ba041be3dd0ce17dee04ff414b638ba4a3068cc4d2ace980fefe3412e2a
+"@types/mocha@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "@types/mocha@npm:10.0.1"
+  checksum: 547873329c89bfff00cf311a84d8b7f0c0c9d6209c634d0cfa4a068f036ead593d0c7f1b9fe2c28bdb2be9d95d75ff2cda0c5c0a5bbc8909bb62293647a7abbb
   languageName: node
   linkType: hard
 

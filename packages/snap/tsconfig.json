@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "ts-node": {
-    "files": true
+    "files": true,
   },
   "compilerOptions": {
     "skipLibCheck": true,
@@ -17,9 +17,7 @@
   },
   "include": [
     "src/**/*",
-    "__tests__/**/*"
+    "test/**/*"
   ],
-  "files": [
-    "__tests__/test-globals.ts"
-  ]
+  "files": ["../../node_modules/@metamask/snaps-types/dist/global.d.ts"]
 }

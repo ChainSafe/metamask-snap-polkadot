@@ -11,7 +11,7 @@ declare global {
       isMetaMask: boolean;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       send: (
-        request: SnapRpcMethodRequest | { method: string; params?: any[] }
+        request: SnapRpcMethodRequest | { method: string; params?: never[] }
       ) => Promise<unknown>;
       on: (eventName: unknown, callback: unknown) => unknown;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

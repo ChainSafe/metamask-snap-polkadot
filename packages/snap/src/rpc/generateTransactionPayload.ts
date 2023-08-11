@@ -1,14 +1,15 @@
-import {ApiPromise} from "@polkadot/api/";
-import {getAddress} from "./getAddress";
-import { SubmittableExtrinsic } from "@polkadot/api/types";
-import {TxPayload} from "@chainsafe/metamask-polkadot-types";
-import { SnapsGlobalObject } from "@metamask/snaps-types";
+import { ApiPromise } from '@polkadot/api/';
+import { getAddress } from './getAddress';
+import { SubmittableExtrinsic } from '@polkadot/api/types';
+import { TxPayload } from '@chainsafe/metamask-polkadot-types';
 
 export async function generateTransactionPayload(
-  snap: SnapsGlobalObject, api: ApiPromise, to: string, amount: string | number
+  api: ApiPromise,
+  to: string,
+  amount: string | number
 ): Promise<TxPayload> {
   // fetch last signed block and account address
-  const [signedBlock, address] = await Promise.all([api.rpc.chain.getBlock(), getAddress(snap)]);
+  const [signedBlock, address] = await Promise.all([api.rpc.chain.getBlock(), getAddress()]);
   // create signer options
   const nonce = (await api.derive.balances.account(address)).accountNonce;
   const signerOptions = {
@@ -32,9 +33,8 @@ export async function generateTransactionPayload(
     blockNumber: signedBlock.block.header.number,
     method: transaction.method,
     signedExtensions: [],
-    transactionVersion: transaction.version,
+    transactionVersion: transaction.version
   });
-
 
   return {
     payload: signerPayload.toPayload(),

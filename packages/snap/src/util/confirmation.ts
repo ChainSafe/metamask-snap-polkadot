@@ -7,10 +7,7 @@ type ConfirmationDialogContent = {
   textAreaContent?: string;
 };
 
-export async function showConfirmationDialog(
-  snap: SnapsGlobalObject,
-  message: ConfirmationDialogContent
-): Promise<boolean> {
+export async function showConfirmationDialog(message: ConfirmationDialogContent): Promise<boolean> {
   return (await snap.request({
     method: 'snap_dialog',
     params: {

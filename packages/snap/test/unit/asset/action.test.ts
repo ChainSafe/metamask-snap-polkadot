@@ -1,23 +1,23 @@
-import chai, {expect} from "chai";
-import sinonChai from "sinon-chai";
-import {WalletMock} from "../wallet.mock.test";
-import {Asset, Wallet} from "../../../src/interfaces";
-import {executeAssetOperation} from "../../../src/asset/action";
+import chai, { expect } from 'chai';
+import sinonChai from 'sinon-chai';
+import { WalletMock } from '../wallet.mock.test';
+import { Asset } from '../../../src/interfaces';
+import { executeAssetOperation } from '../../../src/asset/action';
 
 chai.use(sinonChai);
 
-describe('Test asset function: executeAssetOperation', function() {
+describe('Test asset function: executeAssetOperation', function () {
   const walletStub = new WalletMock();
   const testAsset: Asset = {
-    balance: "100",
+    balance: '100',
     customViewUrl: `https://polkascan.io/`,
     decimals: 0,
     identifier: 'test-asset',
     image: 'image.png',
-    symbol: 'TST',
+    symbol: 'TST'
   };
 
-  afterEach(function() {
+  afterEach(function () {
     walletStub.reset();
   });
 
@@ -25,13 +25,13 @@ describe('Test asset function: executeAssetOperation', function() {
     // stubs
     walletStub.send.returns(testAsset);
     // tested method
-    const result = await executeAssetOperation(testAsset, walletStub, "add");
+    const result = await executeAssetOperation(testAsset, walletStub, 'add');
     // assertions
     expect(result).not.to.be.null;
     expect(result).to.be.eq(testAsset);
     expect(walletStub.send).to.have.been.calledOnceWithExactly({
       method: 'wallet_manageAssets',
-      params: ["add", testAsset]
+      params: ['add', testAsset]
     });
   });
 
@@ -39,13 +39,13 @@ describe('Test asset function: executeAssetOperation', function() {
     // stubs
     walletStub.send.returns(testAsset);
     // tested method
-    const result = await executeAssetOperation(testAsset, walletStub, "update");
+    const result = await executeAssetOperation(testAsset, walletStub, 'update');
     // assertions
     expect(result).not.to.be.null;
     expect(result).to.be.eq(testAsset);
     expect(walletStub.send).to.have.been.calledOnceWithExactly({
       method: 'wallet_manageAssets',
-      params: ["update", testAsset]
+      params: ['update', testAsset]
     });
   });
 
@@ -53,12 +53,12 @@ describe('Test asset function: executeAssetOperation', function() {
     // stubs
     walletStub.send.returns(null);
     // tested method
-    const result = await executeAssetOperation(testAsset, walletStub, "remove");
+    const result = await executeAssetOperation(testAsset, walletStub, 'remove');
     // assertions
     expect(result).to.be.null;
     expect(walletStub.send).to.have.been.calledOnceWithExactly({
       method: 'wallet_manageAssets',
-      params: ["remove", testAsset]
+      params: ['remove', testAsset]
     });
   });
 });

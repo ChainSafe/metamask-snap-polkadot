@@ -54,23 +54,23 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
   switch (request.method) {
     case 'signPayloadJSON':
       assert(request.params, validSignPayloadJSONSchema);
-      return await signPayloadJSON(snap, api, request.params.payload);
+      return await signPayloadJSON(api, request.params.payload);
     case 'signPayloadRaw':
       assert(request.params, validSignPayloadRawSchema);
-      return await signPayloadRaw(snap, api, request.params.payload);
+      return await signPayloadRaw(api, request.params.payload);
     case 'getPublicKey':
-      return await getPublicKey(snap);
+      return await getPublicKey();
     case 'getAddress':
-      return await getAddress(snap);
+      return await getAddress();
     case 'exportSeed':
-      return await exportSeed(snap);
+      return await exportSeed();
     case 'getAllTransactions':
-      return await getTransactions(snap);
+      return await getTransactions();
     case 'getBlock':
       assert(request.params, validGetBlockSchema);
       return await getBlock(request.params.blockTag, api);
     case 'getBalance': {
-      return await getBalance(snap, api);
+      return await getBalance(api);
     }
     case 'configure': {
       const state = (await snap.request({
@@ -91,19 +91,17 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
       );
       console.info('Configuring snap with', request.params.configuration);
       return await configure(
-        snap,
         request.params.configuration.networkName,
         request.params.configuration
       );
     }
     case 'generateTransactionPayload':
       assert(request.params, validGenerateTransactionPayloadSchema);
-      return await generateTransactionPayload(snap, api, request.params.to, request.params.amount);
+      return await generateTransactionPayload(api, request.params.to, request.params.amount);
 
     case 'send':
       assert(request.params, validSendSchema);
       return await send(
-        snap,
         api,
         request.params.signature as Uint8Array | `0x${string}`,
         request.params.txPayload

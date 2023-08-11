@@ -27,7 +27,7 @@
     "postpublish": "rm -rf ipfs",
     "serve": "mm-snap serve",
     "test": "yarn run test:unit",
-    "test:unit": "mocha --colors -r ts-node/register \"test/unit/**/*.test.ts\""
+    "test:unit": "mocha --colors"
   },
   "repository": {
     "type": "git",
@@ -64,7 +64,7 @@
     "@chainsafe/metamask-polkadot-types": "workspace:^",
     "@metamask/snaps-cli": "^0.18.1",
     "@types/chai": "^4.2.10",
-    "@types/mocha": "^7.0.2",
+    "@types/mocha": "^10.0.1",
     "@types/sinon": "^7.5.2",
     "@types/sinon-chai": "^3.2.3",
     "@typescript-eslint/eslint-plugin": "^5.27.1",

@@ -25,7 +25,7 @@ type MetamaskDispatch = { type: MetamaskActions; payload: any };
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const MetaMaskContext = createContext<[MetamaskState, Dispatch<MetamaskDispatch>]>([
   initialState,
-  () => {}
+  () => null
 ]);
 
 export enum MetamaskActions {

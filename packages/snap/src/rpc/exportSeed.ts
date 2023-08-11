@@ -1,12 +1,11 @@
 import { JsonBIP44CoinTypeNode } from '@metamask/key-tree';
 import { showConfirmationDialog } from '../util/confirmation';
-import { SnapsGlobalObject } from '@metamask/snaps-types';
 
 const kusamaCoinType = 434;
 
-export async function exportSeed(snap: SnapsGlobalObject): Promise<string | null> {
+export async function exportSeed(): Promise<string | null> {
   // ask for confirmation
-  const confirmation = await showConfirmationDialog(snap, {
+  const confirmation = await showConfirmationDialog({
     prompt: 'Do you want to export your seed?'
   });
   // return seed if user confirmed action

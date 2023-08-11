@@ -190,8 +190,8 @@
                     }
                 });
                 console.log(c);
-            } catch (e) {
-                console.log('Keys not generated', e);
+            } catch (err) {
+                console.error('Keys not generated', err);
             }
         }
 
@@ -225,7 +225,7 @@
                     }
                 });
             } catch (e) {
-                console.log('Unable to fetch substrate chain head', e);
+                console.error('Unable to fetch substrate chain head', e);
             }
             if (block !== null) {
                 console.log(block);
@@ -243,7 +243,7 @@
                     // connectButton.disabled = false;
                 }
             })
-            .catch((reason) => console.log(reason));
+            .catch((err) => console.error(err));
 
         async function exportSeed() {
             let response = null;
@@ -252,7 +252,7 @@
                     method: 'exportSeed'
                 });
             } catch (e) {
-                console.log('Keys not generated', e);
+                console.error('Keys not generated', error);
             }
             if (response != null) {
                 seedLabel.innerHTML = response;
