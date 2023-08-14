@@ -9,13 +9,12 @@ import {
   sendSignedData,
   setConfiguration,
   signPayloadJSON,
-  signPayloadRaw,
-} from "./methods";
-import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
-import {MetamaskSnapApi} from "./types";
+  signPayloadRaw
+} from './methods';
+import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import { MetamaskSnapApi } from './types';
 
 export class MetamaskPolkadotSnap {
-
   protected readonly config: SnapConfig;
   //url to package.json
   protected readonly pluginOrigin: string;
@@ -25,9 +24,8 @@ export class MetamaskPolkadotSnap {
   public constructor(pluginOrigin: string, config: SnapConfig) {
     this.pluginOrigin = pluginOrigin;
     this.snapId = `${this.pluginOrigin}`;
-    this.config = config || {networkName: "westend"};
+    this.config = config || { networkName: 'westend' };
   }
-  
 
   public getMetamaskSnapApi = async (): Promise<MetamaskSnapApi> => {
     return {
@@ -41,7 +39,7 @@ export class MetamaskPolkadotSnap {
       send: sendSignedData.bind(this),
       setConfiguration: setConfiguration.bind(this),
       signPayloadJSON: signPayloadJSON.bind(this),
-      signPayloadRaw: signPayloadRaw.bind(this),
+      signPayloadRaw: signPayloadRaw.bind(this)
     };
   };
 }
