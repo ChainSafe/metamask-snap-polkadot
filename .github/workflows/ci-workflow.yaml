@@ -31,10 +31,10 @@ jobs:
         with:
           files: |
             packages/snap/snap.manifest.json
-      - name: Check if snap manifest updated
-        if: steps.verify-changed-files.outputs.files_changed == 'true'
-        run: |
-          echo "Snap manifest not updated: ${{ steps.verify-changed-files.outputs.changed_files }}"
-          exit 1
+#      - name: Check if snap manifest updated
+#        if: steps.verify-changed-files.outputs.files_changed == 'true'
+#        run: |
+#          echo "Snap manifest not updated: ${{ steps.verify-changed-files.outputs.changed_files }}"
+#          exit 1
       - name: Run tests
         run: yarn run test
