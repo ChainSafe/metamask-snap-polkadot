@@ -36,7 +36,9 @@ describe('Test configuration functions', function () {
   });
 
   describe('getConfiguration', function () {
-    const walletStub = new WalletMock();
+    // eslint-disable-next-line
+    // @ts-ignore
+    const walletStub = global.snap as WalletMock;
 
     afterEach(function () {
       walletStub.reset();
@@ -48,7 +50,7 @@ describe('Test configuration functions', function () {
         networkName: 'westend',
         wsRpcUrl: 'url'
       };
-      walletStub.request.returns({ polkadot: { config: customConfiguration } });
+      walletStub.request.returns({ config: JSON.stringify(customConfiguration) });
       const configuration = await getConfiguration();
       expect(configuration).to.be.deep.eq(customConfiguration);
     });

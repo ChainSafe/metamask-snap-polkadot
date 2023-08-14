@@ -6,7 +6,9 @@ import { WalletMock } from '../wallet.mock.test';
 chai.use(sinonChai);
 
 describe('Test rpc handler function: exportSeed', function () {
-  const walletStub = new WalletMock();
+  // eslint-disable-next-line
+  // @ts-ignore
+  const walletStub = global.snap as WalletMock;
 
   afterEach(function () {
     walletStub.reset();

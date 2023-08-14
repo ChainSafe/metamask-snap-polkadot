@@ -7,7 +7,9 @@ import { executeAssetOperation } from '../../../src/asset/action';
 chai.use(sinonChai);
 
 describe('Test asset function: executeAssetOperation', function () {
-  const walletStub = new WalletMock();
+  // eslint-disable-next-line
+  // @ts-ignore
+  const walletStub = global.snap as WalletMock;
   const testAsset: Asset = {
     balance: '100',
     customViewUrl: `https://polkascan.io/`,

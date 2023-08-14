@@ -8,7 +8,9 @@ import { EmptyMetamaskState } from '../../../src/interfaces';
 chai.use(sinonChai);
 
 describe('Test rpc handler function: getPublicKey', function () {
-  const walletStub = new WalletMock();
+  // eslint-disable-next-line
+  // @ts-ignore
+  const walletStub = global.snap as WalletMock;
 
   afterEach(function () {
     walletStub.reset();
