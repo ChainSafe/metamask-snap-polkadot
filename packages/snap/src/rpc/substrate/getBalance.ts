@@ -1,7 +1,6 @@
 import { ApiPromise } from '@polkadot/api';
 import { getKeyPair } from '../../polkadot/account';
 import { AccountData } from '@polkadot/types/interfaces/balances/types';
-import { SnapsGlobalObject } from '@metamask/snaps-types';
 
 /**
  * Returns balance as BN

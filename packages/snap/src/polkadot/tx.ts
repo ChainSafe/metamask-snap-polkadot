@@ -1,4 +1,3 @@
-import { SnapsGlobalObject } from '@metamask/snaps-types';
 import { Transaction } from '@chainsafe/metamask-polkadot-types';
 import { getMetamaskState } from '../rpc/getMetamaskState';
 

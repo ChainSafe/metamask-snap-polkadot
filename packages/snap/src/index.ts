@@ -51,6 +51,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
     api = await getApi();
   }
 
+  const head = api && (await api.rpc.chain.getFinalizedHead());
+
   switch (request.method) {
     case 'signPayloadJSON':
       assert(request.params, validSignPayloadJSONSchema);
@@ -107,7 +109,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
         request.params.txPayload
       );
     case 'getChainHead':
-      const head = api && (await api.rpc.chain.getFinalizedHead());
       return head.hash;
 
     default:

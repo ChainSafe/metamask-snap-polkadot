@@ -1,24 +1,8 @@
 import { web3EnablePromise } from '@polkadot/extension-dapp';
 import { InjectedMetamaskExtension } from '@chainsafe/metamask-polkadot-adapter/src/types';
-import { SnapRpcMethodRequest } from '@chainsafe/metamask-polkadot-types';
 import { InjectedExtension } from '@polkadot/extension-inject/types';
 import { enablePolkadotSnap } from '@chainsafe/metamask-polkadot-adapter';
 import { MetamaskPolkadotSnap } from '@chainsafe/metamask-polkadot-adapter/build/snap';
-
-declare global {
-  interface Window {
-    ethereum: {
-      isMetaMask: boolean;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      send: (
-        request: SnapRpcMethodRequest | { method: string; params?: never[] }
-      ) => Promise<unknown>;
-      on: (eventName: unknown, callback: unknown) => unknown;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      request: <T>(request: SnapRpcMethodRequest | { method: string; params?: any }) => Promise<T>;
-    };
-  }
-}
 
 export function hasMetaMask(): boolean {
   if (!window.ethereum) {
