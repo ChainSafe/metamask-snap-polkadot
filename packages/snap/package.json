@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "@chainsafe/metamask-polkadot-types": "workspace:^",
-    "@metamask/snaps-cli": "^0.18.1",
+    "@metamask/snaps-cli": "^0.32.2",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^10.0.1",
     "@types/sinon": "^7.5.2",
