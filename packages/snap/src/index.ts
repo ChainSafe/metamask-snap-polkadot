@@ -51,8 +51,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
     api = await getApi();
   }
 
-  const head = api && (await api.rpc.chain.getFinalizedHead());
-
   switch (request.method) {
     case 'signPayloadJSON':
       assert(request.params, validSignPayloadJSONSchema);
@@ -109,7 +107,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
         request.params.txPayload
       );
     case 'getChainHead':
-      return head.hash;
+      return api && (await api.rpc.chain.getFinalizedHead()).hash;
 
     default:
       throw new Error('Method not found.');
