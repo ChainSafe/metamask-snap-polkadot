@@ -13,6 +13,7 @@ async function initApi(rpcUrl: string): Promise<ApiPromise> {
     provider = new HttpProvider(rpcUrl);
   } catch (error) {
     console.error('Error on provider creation', error);
+    throw error;
   }
   console.info('Provider created', provider);
   const api = await ApiPromise.create({ provider });

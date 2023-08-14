@@ -50,7 +50,7 @@ export const validConfigureSchema: Describe<{
 }> = object({
   configuration: object({
     addressPrefix: optional(number()),
-    networkName: optional(string()),
+    networkName: string(),
     unit: optional(object({ image: string(), symbol: string() })),
     wsRpcUrl: optional(string())
   })
