@@ -89,8 +89,5 @@
     "@polkadot/util": "^12.3.2",
     "deepmerge": "^4.3.1",
     "superstruct": "^1.0.3"
-  },
-  "resolutions": {
-    "@polkadot/wasm-crypto": "file:./wasm-crypto-stub"
   }
 }

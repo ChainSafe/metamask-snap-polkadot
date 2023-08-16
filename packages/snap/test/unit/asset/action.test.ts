@@ -1,8 +1,7 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import { Asset } from '../../../src/interfaces';
-import { executeAssetOperation } from '../../../src/asset/action';
-import { getWalletMock } from '../wallet.mock';
+import { executeAssetOperation, getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
 
