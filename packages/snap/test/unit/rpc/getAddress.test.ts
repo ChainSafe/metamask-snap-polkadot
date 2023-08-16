@@ -1,16 +1,14 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { WalletMock } from '../wallet.mock.test';
 import { getAddress } from '../../../src/rpc/getAddress';
 import { testAppKey } from './keyPairTestConstants';
 import { westendConfiguration } from '../../../src/configuration/predefined';
+import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
 
 describe('Test rpc handler function: getAddress', function () {
-  // eslint-disable-next-line
-  // @ts-ignore
-  const walletStub = global.snap as WalletMock;
+  const walletStub = getWalletMock();
 
   afterEach(function () {
     walletStub.reset();

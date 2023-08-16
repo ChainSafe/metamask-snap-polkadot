@@ -1,4 +1,4 @@
-import { WalletMock } from './unit/wallet.mock.test';
+import { WalletMock } from './unit/wallet.mock';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

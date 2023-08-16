@@ -1,19 +1,17 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { WalletMock } from '../../wallet.mock.test';
 import { ApiPromise } from '@polkadot/api';
 import sinon from 'sinon';
 import { getBlock } from '../../../../src/rpc/substrate/getBlock';
 import { BlockHash } from '@polkadot/types/interfaces';
 import { H256 } from '@polkadot/types/interfaces/runtime';
 import { hexToU8a } from '@polkadot/util';
+import { getWalletMock } from '../../wallet.mock';
 
 chai.use(sinonChai);
 
 describe('Test rpc handler function: getBlock', function () {
-  // eslint-disable-next-line
-  // @ts-ignore
-  const walletStub = global.snap as WalletMock;
+  const walletStub = getWalletMock();
 
   afterEach(function () {
     walletStub.reset();

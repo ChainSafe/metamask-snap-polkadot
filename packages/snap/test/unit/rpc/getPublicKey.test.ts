@@ -1,16 +1,14 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import { getPublicKey } from '../../../src/rpc/getPublicKey';
-import { WalletMock } from '../wallet.mock.test';
 import { testAppKey, testPublicKey } from './keyPairTestConstants';
 import { EmptyMetamaskState } from '../../../src/interfaces';
+import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
 
 describe('Test rpc handler function: getPublicKey', function () {
-  // eslint-disable-next-line
-  // @ts-ignore
-  const walletStub = global.snap as WalletMock;
+  const walletStub = getWalletMock();
 
   afterEach(function () {
     walletStub.reset();

@@ -1,14 +1,12 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import { exportSeed } from '../../../src/rpc/exportSeed';
-import { WalletMock } from '../wallet.mock.test';
+import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
 
 describe('Test rpc handler function: exportSeed', function () {
-  // eslint-disable-next-line
-  // @ts-ignore
-  const walletStub = global.snap as WalletMock;
+  const walletStub = getWalletMock();
 
   afterEach(function () {
     walletStub.reset();

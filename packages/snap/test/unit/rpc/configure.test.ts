@@ -1,17 +1,15 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { WalletMock } from '../wallet.mock.test';
 import { kusamaConfiguration, westendConfiguration } from '../../../src/configuration/predefined';
 import { configure } from '../../../src/rpc/configure';
 import { EmptyMetamaskState } from '../../../src/interfaces';
 import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
 
 describe('Test rpc handler function: configure', function () {
-  // eslint-disable-next-line
-  // @ts-ignore
-  const walletStub = global.snap as WalletMock;
+  const walletStub = getWalletMock();
 
   afterEach(function () {
     walletStub.reset();

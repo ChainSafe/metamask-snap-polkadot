@@ -6,9 +6,9 @@ import {
   kusamaConfiguration,
   westendConfiguration
 } from '../../../src/configuration/predefined';
-import { WalletMock } from '../wallet.mock.test';
 import { EmptyMetamaskState } from '../../../src/interfaces';
 import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
 
@@ -36,9 +36,7 @@ describe('Test configuration functions', function () {
   });
 
   describe('getConfiguration', function () {
-    // eslint-disable-next-line
-    // @ts-ignore
-    const walletStub = global.snap as WalletMock;
+    const walletStub = getWalletMock();
 
     afterEach(function () {
       walletStub.reset();

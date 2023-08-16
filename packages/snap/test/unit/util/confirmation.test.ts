@@ -1,15 +1,13 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { WalletMock } from '../wallet.mock.test';
 import { showConfirmationDialog } from '../../../src/util/confirmation';
 import { panel, text } from '@metamask/snaps-ui';
+import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
 
 describe('Test showConfirmationDialog', function () {
-  // eslint-disable-next-line
-  // @ts-ignore
-  const walletStub = global.snap as WalletMock;
+  const walletStub = getWalletMock();
 
   afterEach(() => {
     walletStub.reset();

@@ -1,15 +1,13 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { WalletMock } from '../wallet.mock.test';
 import { Asset } from '../../../src/interfaces';
 import { executeAssetOperation } from '../../../src/asset/action';
+import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
 
 describe('Test asset function: executeAssetOperation', function () {
-  // eslint-disable-next-line
-  // @ts-ignore
-  const walletStub = global.snap as WalletMock;
+  const walletStub = getWalletMock();
   const testAsset: Asset = {
     balance: '100',
     customViewUrl: `https://polkascan.io/`,
@@ -27,7 +25,7 @@ describe('Test asset function: executeAssetOperation', function () {
     // stubs
     walletStub.send.returns(testAsset);
     // tested method
-    const result = await executeAssetOperation(testAsset, walletStub, 'add');
+    const result = await executeAssetOperation(testAsset, 'add');
     // assertions
     expect(result).not.to.be.null;
     expect(result).to.be.eq(testAsset);
@@ -41,7 +39,7 @@ describe('Test asset function: executeAssetOperation', function () {
     // stubs
     walletStub.send.returns(testAsset);
     // tested method
-    const result = await executeAssetOperation(testAsset, walletStub, 'update');
+    const result = await executeAssetOperation(testAsset, 'update');
     // assertions
     expect(result).not.to.be.null;
     expect(result).to.be.eq(testAsset);
@@ -55,7 +53,7 @@ describe('Test asset function: executeAssetOperation', function () {
     // stubs
     walletStub.send.returns(null);
     // tested method
-    const result = await executeAssetOperation(testAsset, walletStub, 'remove');
+    const result = await executeAssetOperation(testAsset, 'remove');
     // assertions
     expect(result).to.be.null;
     expect(walletStub.send).to.have.been.calledOnceWithExactly({
