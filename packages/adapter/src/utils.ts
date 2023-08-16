@@ -10,8 +10,9 @@ export async function isPolkadotSnapInstalled(
   version?: string
 ): Promise<boolean> {
   try {
-    console.info('getWalletSnaps', await getWalletSnaps());
-    return !!Object.values(await getWalletSnaps()).find(
+    const walletSnaps = await getWalletSnaps();
+    console.info('getWalletSnaps', walletSnaps);
+    return !!Object.values(walletSnaps).find(
       (permission) => permission.id === snapOrigin && (!version || permission.version === version)
     );
   } catch (e) {
