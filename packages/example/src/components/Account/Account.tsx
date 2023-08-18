@@ -25,7 +25,7 @@ export const Account = (props: AccountProps): React.JSX.Element => {
 
   const handleExport = async (): Promise<void> => {
     if (!state.polkadotSnap.snap) return;
-    const api = await state.polkadotSnap.snap.getMetamaskSnapApi();
+    const api = state.polkadotSnap.snap.getMetamaskSnapApi();
     const privateKey = await api.exportSeed();
     alert(privateKey);
   };

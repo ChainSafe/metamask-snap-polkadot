@@ -50,9 +50,9 @@ export const Dashboard = (): React.JSX.Element => {
   };
 
   useEffect(() => {
-    void (async () => {
+    void (() => {
       if (state.polkadotSnap.isInstalled && state.polkadotSnap.snap) {
-        const polkadotApi = await state.polkadotSnap.snap.getMetamaskSnapApi();
+        const polkadotApi = state.polkadotSnap.snap.getMetamaskSnapApi();
         setApi(polkadotApi);
       }
     })();

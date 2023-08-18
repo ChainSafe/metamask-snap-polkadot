@@ -56,7 +56,7 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
   const onSubmit = useCallback(async () => {
     if (!state.polkadotSnap.snap) return;
     if (amount && recipient) {
-      const api = await state.polkadotSnap.snap.getMetamaskSnapApi();
+      const api = state.polkadotSnap.snap.getMetamaskSnapApi();
       if (amount && recipient) {
         const convertedAmount = BigInt(amount) * BigInt('1000000000');
         const txPayload = await api.generateTransactionPayload(

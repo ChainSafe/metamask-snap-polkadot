@@ -35,7 +35,7 @@ export const SignMessage: React.FC<Props> = ({ address }) => {
   const onSubmit = async (): Promise<void> => {
     if (!state.polkadotSnap.snap) return;
     if (textFieldValue) {
-      const api = await state.polkadotSnap.snap.getMetamaskSnapApi();
+      const api = state.polkadotSnap.snap.getMetamaskSnapApi();
       if (api && api.signPayloadRaw) {
         const messageAsHex = stringToHex(textFieldValue);
 
