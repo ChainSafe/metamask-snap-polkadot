@@ -1,7 +1,7 @@
-import { ApiPromise } from '@polkadot/api';
-import { Transaction, TxPayload } from '@chainsafe/metamask-polkadot-types';
-import { getAddress } from './getAddress';
+import type { ApiPromise } from '@polkadot/api';
+import type { Transaction, TxPayload } from '@chainsafe/metamask-polkadot-types';
 import { saveTxToState } from '../polkadot/tx';
+import { getAddress } from './getAddress';
 
 export async function send(
   api: ApiPromise,
@@ -16,7 +16,7 @@ export async function send(
 
   const amount = extrinsic.args[1].toJSON();
   const paymentInfo = await api.tx.balances
-    .transfer(destination, Number(amount.toString()))
+    .transfer(destination, String(amount))
     .paymentInfo(sender);
 
   const txHash = await api.rpc.author.submitExtrinsic(extrinsic);
@@ -25,7 +25,7 @@ export async function send(
     amount: amount,
     block: txHash.toHex(),
     destination: destination,
-    fee: paymentInfo.partialFee.toJSON(),
+    fee: String(paymentInfo.partialFee.toJSON()),
     hash: extrinsic.hash.toHex(),
     sender: sender
   } as Transaction;

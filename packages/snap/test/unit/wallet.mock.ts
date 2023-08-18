@@ -1,5 +1,5 @@
-import { Asset, Wallet } from '../../src/interfaces';
 import sinon from 'sinon';
+import { Wallet } from '../../src/interfaces';
 
 export class WalletMock implements Wallet {
   public registerRpcMessageHandler = sinon.stub();
@@ -18,14 +18,3 @@ export const getWalletMock = (): WalletMock => {
   // @ts-ignore
   return global.snap as WalletMock;
 };
-
-export function executeAssetOperation(
-  asset: Partial<Asset>,
-  method: 'update' | 'add' | 'remove'
-): Promise<Asset> {
-  const snap = getWalletMock();
-  return snap.send({
-    method: 'wallet_manageAssets',
-    params: [method, asset]
-  }) as Promise<Asset>;
-}

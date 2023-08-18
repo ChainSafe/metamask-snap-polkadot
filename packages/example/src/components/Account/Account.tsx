@@ -20,10 +20,10 @@ export interface AccountProps {
   network: string;
 }
 
-export const Account = (props: AccountProps) => {
+export const Account = (props: AccountProps): React.JSX.Element => {
   const [state] = useContext(MetaMaskContext);
 
-  const handleExport = async () => {
+  const handleExport = async (): Promise<void> => {
     if (!state.polkadotSnap.snap) return;
     const api = await state.polkadotSnap.snap.getMetamaskSnapApi();
     const privateKey = await api.exportSeed();

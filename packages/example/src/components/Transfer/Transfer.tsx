@@ -16,8 +16,7 @@ import { MetaMaskContext } from '../../context/metamask';
 
 interface ITransferProps {
   network: string;
-  // eslint-disable-next-line
-  onNewTransferCallback: any;
+  onNewTransferCallback: () => void;
 }
 
 type AlertSeverity = 'success' | 'warning' | 'info' | 'error';
@@ -47,7 +46,7 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
     [setAmount]
   );
 
-  const showAlert = (severity: AlertSeverity, message: string, polkasacanUrl?: string) => {
+  const showAlert = (severity: AlertSeverity, message: string, polkasacanUrl?: string): void => {
     setPolkascanUrl(polkasacanUrl ? polkasacanUrl : '');
     setSeverity(severity);
     setMessage(message);
@@ -85,7 +84,6 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item xs={12}>
             <TextField
-              // eslint-disable-next-line max-len
               onChange={handleRecipientChange}
               size="medium"
               fullWidth
@@ -97,13 +95,11 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
             ></TextField>
             <Box style={{ margin: '0.5rem' }} />
             <TextField
-              // eslint-disable-next-line max-len
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">{`m${getCurrency(network)}`}</InputAdornment>
                 )
               }}
-              // eslint-disable-next-line max-len
               onChange={handleAmountChange}
               size="medium"
               fullWidth

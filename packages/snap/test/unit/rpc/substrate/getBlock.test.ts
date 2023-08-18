@@ -1,11 +1,11 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { ApiPromise } from '@polkadot/api';
+import type { ApiPromise } from '@polkadot/api';
 import sinon from 'sinon';
-import { getBlock } from '../../../../src/rpc/substrate/getBlock';
-import { BlockHash } from '@polkadot/types/interfaces';
-import { H256 } from '@polkadot/types/interfaces/runtime';
+import type { BlockHash } from '@polkadot/types/interfaces';
+import type { H256 } from '@polkadot/types/interfaces/runtime';
 import { hexToU8a } from '@polkadot/util';
+import { getBlock } from '../../../../src/rpc/substrate/getBlock';
 import { getWalletMock } from '../../wallet.mock';
 
 chai.use(sinonChai);
@@ -23,7 +23,7 @@ describe('Test rpc handler function: getBlock', function () {
     apiStub.rpc.chain.getBlockHash.returns(
       hexToU8a('0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75') as BlockHash
     );
-    // eslint-disable-next-line max-len
+
     apiStub.rpc.chain.getBlock.returns({
       block: {
         hash: {
@@ -40,7 +40,7 @@ describe('Test rpc handler function: getBlock', function () {
     );
     expect(result.number).to.be.eq('10');
     expect(apiStub.rpc.chain.getBlockHash).to.have.been.calledOnceWith(1);
-    // eslint-disable-next-line max-len
+
     expect(apiStub.rpc.chain.getBlock).to.have.been.calledOnceWith(
       hexToU8a('0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75') as BlockHash
     );
@@ -52,7 +52,7 @@ describe('Test rpc handler function: getBlock', function () {
     apiStub.rpc.chain.getBlockHash.returns(
       hexToU8a('0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75') as BlockHash
     );
-    // eslint-disable-next-line max-len
+
     apiStub.rpc.chain.getBlock.returns({
       block: {
         hash: {
@@ -69,7 +69,7 @@ describe('Test rpc handler function: getBlock', function () {
     );
     expect(result.number).to.be.eq('10');
     expect(apiStub.rpc.chain.getBlockHash).to.have.been.calledOnceWith(1);
-    // eslint-disable-next-line max-len
+
     expect(apiStub.rpc.chain.getBlock).to.have.been.calledOnceWith(
       hexToU8a('0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75') as BlockHash
     );
@@ -79,7 +79,7 @@ describe('Test rpc handler function: getBlock', function () {
     // api stub
     const apiStub = { rpc: { chain: { getBlock: sinon.stub() } } };
     apiStub.rpc.chain.getBlock.returns({});
-    // eslint-disable-next-line max-len
+
     apiStub.rpc.chain.getBlock.returns({
       block: {
         hash: {
@@ -89,7 +89,7 @@ describe('Test rpc handler function: getBlock', function () {
       }
     });
     const api = apiStub as unknown as ApiPromise;
-    // eslint-disable-next-line max-len
+
     const result = await getBlock(
       '0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75',
       api
@@ -99,7 +99,7 @@ describe('Test rpc handler function: getBlock', function () {
       '0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75'
     );
     expect(result.number).to.be.eq('10');
-    // eslint-disable-next-line max-len
+
     expect(apiStub.rpc.chain.getBlock).to.have.been.calledOnceWith(
       '0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75'
     );
@@ -109,7 +109,7 @@ describe('Test rpc handler function: getBlock', function () {
     // api stub
     const apiStub = { rpc: { chain: { getBlock: sinon.stub(), getHeader: sinon.stub() } } };
     apiStub.rpc.chain.getBlock.returns({});
-    // eslint-disable-next-line max-len
+
     apiStub.rpc.chain.getBlock.returns({
       block: {
         hash: {
@@ -118,7 +118,7 @@ describe('Test rpc handler function: getBlock', function () {
         header: { number: 10 }
       }
     });
-    // eslint-disable-next-line max-len
+
     apiStub.rpc.chain.getHeader.returns({
       hash: hexToU8a('0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75') as H256
     });
@@ -130,7 +130,7 @@ describe('Test rpc handler function: getBlock', function () {
     );
     expect(result.number).to.be.eq('10');
     expect(apiStub.rpc.chain.getHeader).to.have.been.calledOnce;
-    // eslint-disable-next-line max-len
+
     expect(apiStub.rpc.chain.getBlock).to.have.been.calledOnceWith(
       hexToU8a('0xc9fb400866641ca80ef3e760d904fe15a8c9eda6ff1bd769b0628e26e82d5c75') as BlockHash
     );

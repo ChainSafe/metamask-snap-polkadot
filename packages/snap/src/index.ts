@@ -1,9 +1,12 @@
-import { EmptyMetamaskState, MetamaskState } from './interfaces';
+import type { ApiPromise } from '@polkadot/api/promise';
+import type { OnRpcRequestHandler } from '@metamask/snaps-types';
+import { assert } from 'superstruct';
+import type { MetamaskState } from './interfaces';
+import { EmptyMetamaskState } from './interfaces';
 import { getPublicKey } from './rpc/getPublicKey';
 import { exportSeed } from './rpc/exportSeed';
 import { getBalance } from './rpc/substrate/getBalance';
 import { getAddress } from './rpc/getAddress';
-import { ApiPromise } from '@polkadot/api/promise';
 import { getTransactions } from './rpc/substrate/getTransactions';
 import { getBlock } from './rpc/substrate/getBlock';
 import { getApi, resetApi } from './polkadot/api';
@@ -11,8 +14,6 @@ import { configure } from './rpc/configure';
 import { signPayloadJSON, signPayloadRaw } from './rpc/substrate/sign';
 import { generateTransactionPayload } from './rpc/generateTransactionPayload';
 import { send } from './rpc/send';
-import { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { assert } from 'superstruct';
 import {
   validConfigureSchema,
   validGenerateTransactionPayloadSchema,
@@ -81,7 +82,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
       const isInitialConfiguration = state.config === null;
       // reset api and remove asset only if already configured
       if (!isInitialConfiguration) {
-        resetApi();
+        await resetApi();
       }
       // set new configuration
       assert(

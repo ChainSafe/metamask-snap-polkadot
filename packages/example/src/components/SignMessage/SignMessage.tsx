@@ -28,11 +28,11 @@ export const SignMessage: React.FC<Props> = ({ address }) => {
   const [modalBody, setModalBody] = useState<string>('');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setTextFieldValue(event.target.value);
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (): Promise<void> => {
     if (!state.polkadotSnap.snap) return;
     if (textFieldValue) {
       const api = await state.polkadotSnap.snap.getMetamaskSnapApi();

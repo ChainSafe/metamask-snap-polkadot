@@ -1,11 +1,11 @@
 import '@polkadot/types-augment';
+import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
 import { MetamaskPolkadotSnap } from './snap';
-import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
 import { hasMetaMask, isMetamaskSnapsSupported, isPolkadotSnapInstalled } from './utils';
 
 const defaultSnapOrigin = 'npm:@chainsafe/polkadot-snap';
 
-export type SnapInstallationParamNames = 'version' | string;
+export type SnapInstallationParamNames = string;
 
 export * from './extension';
 
@@ -45,13 +45,12 @@ export async function enablePolkadotSnap(
   // set initial configuration
 
   try {
-    const snapApi = await snap.getMetamaskSnapApi();
+    const snapApi = snap.getMetamaskSnapApi();
     console.info('snapApi', snapApi);
     await snapApi.setConfiguration(config);
   } catch (err) {
     console.error('Failed to set configuration', err);
   }
-  // return snap object
 
   return snap;
 }

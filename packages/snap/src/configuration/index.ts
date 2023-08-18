@@ -1,11 +1,11 @@
+import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import { getMetamaskState } from '../rpc/getMetamaskState';
 import {
   defaultConfiguration,
   kusamaConfiguration,
   polkadotConfiguration,
   westendConfiguration
 } from './predefined';
-import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
-import { getMetamaskState } from '../rpc/getMetamaskState';
 
 export function getDefaultConfiguration(networkName: string): SnapConfig {
   switch (networkName) {

@@ -1,3 +1,4 @@
+import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
 import {
   exportSeed,
   generateTransactionPayload,
@@ -11,8 +12,7 @@ import {
   signPayloadJSON,
   signPayloadRaw
 } from './methods';
-import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
-import { MetamaskSnapApi } from './types';
+import type { MetamaskSnapApi } from './types';
 
 export class MetamaskPolkadotSnap {
   protected readonly config: SnapConfig;
@@ -27,7 +27,7 @@ export class MetamaskPolkadotSnap {
     this.config = config || { networkName: 'westend' };
   }
 
-  public getMetamaskSnapApi = async (): Promise<MetamaskSnapApi> => {
+  public getMetamaskSnapApi = (): MetamaskSnapApi => {
     return {
       exportSeed: exportSeed.bind(this),
       generateTransactionPayload: generateTransactionPayload.bind(this),

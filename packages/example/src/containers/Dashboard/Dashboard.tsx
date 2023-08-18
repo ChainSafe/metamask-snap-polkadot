@@ -11,6 +11,8 @@ import {
   Select,
   Typography
 } from '@material-ui/core';
+import type { BlockInfo, SnapNetworks, Transaction } from '@chainsafe/metamask-polkadot-types';
+import type { MetamaskSnapApi } from '@chainsafe/metamask-polkadot-adapter/src/types';
 import { Transfer } from '../../components/Transfer/Transfer';
 import { SignMessage } from '../../components/SignMessage/SignMessage';
 import { TransactionTable } from '../../components/TransactionTable/TransactionTable';
@@ -18,10 +20,8 @@ import { Account } from '../../components/Account/Account';
 import { MetaMaskConnector } from '../MetaMaskConnector/MetaMaskConnector';
 import { MetaMaskContext } from '../../context/metamask';
 import { LatestBlock } from '../../components/LatestBlock/LatestBlock';
-import { BlockInfo, SnapNetworks, Transaction } from '@chainsafe/metamask-polkadot-types';
-import { MetamaskSnapApi } from '@chainsafe/metamask-polkadot-adapter/src/types';
 
-export const Dashboard = () => {
+export const Dashboard = (): React.JSX.Element => {
   const [state] = useContext(MetaMaskContext);
   const [balance, setBalance] = useState('0');
   const [address, setAddress] = useState('');
@@ -39,7 +39,9 @@ export const Dashboard = () => {
     setTransactions(await api.getAllTransactions());
   }, [setTransactions]);
 
-  const handleNetworkChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleNetworkChange = async (
+    event: React.ChangeEvent<{ value: unknown }>
+  ): Promise<void> => {
     const networkName = event.target.value as SnapNetworks;
     if (networkName === network) return;
     if (!api) return;
@@ -48,7 +50,7 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
-    (async () => {
+    void (async () => {
       if (state.polkadotSnap.isInstalled && state.polkadotSnap.snap) {
         const polkadotApi = await state.polkadotSnap.snap.getMetamaskSnapApi();
         setApi(polkadotApi);
@@ -57,7 +59,7 @@ export const Dashboard = () => {
   }, [state.polkadotSnap.isInstalled, state.polkadotSnap.snap]);
 
   useEffect(() => {
-    (async () => {
+    void (async () => {
       if (api) {
         setAddress(await api.getAddress());
         setPublicKey(await api.getPublicKey());

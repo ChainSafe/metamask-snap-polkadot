@@ -1,6 +1,7 @@
-import { BlockId, TxPayload } from '@chainsafe/metamask-polkadot-types';
-import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import { array, Describe, enums, number, object, optional, string, type, union } from 'superstruct';
+import type { BlockId, TxPayload } from '@chainsafe/metamask-polkadot-types';
+import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import type { Describe } from 'superstruct';
+import { array, enums, number, object, optional, string, type, union } from 'superstruct';
 
 const SignaturePayloadJSONSchema = type({
   address: string(),

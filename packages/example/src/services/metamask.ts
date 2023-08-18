@@ -1,8 +1,8 @@
 import { web3EnablePromise } from '@polkadot/extension-dapp';
-import { InjectedMetamaskExtension } from '@chainsafe/metamask-polkadot-adapter/src/types';
-import { InjectedExtension } from '@polkadot/extension-inject/types';
+import type { InjectedMetamaskExtension } from '@chainsafe/metamask-polkadot-adapter/src/types';
+import type { InjectedExtension } from '@polkadot/extension-inject/types';
 import { enablePolkadotSnap } from '@chainsafe/metamask-polkadot-adapter';
-import { MetamaskPolkadotSnap } from '@chainsafe/metamask-polkadot-adapter/build/snap';
+import type { MetamaskPolkadotSnap } from '@chainsafe/metamask-polkadot-adapter/build/snap';
 
 export function hasMetaMask(): boolean {
   if (!window.ethereum) {
@@ -37,7 +37,6 @@ export async function getInjectedMetamaskExtension(): Promise<InjectedMetamaskEx
 function getMetamaskExtension(
   extensions: InjectedExtension[]
 ): InjectedMetamaskExtension | undefined {
-  // eslint-disable-next-line max-len
   return extensions.find((item) => item.name === 'metamask-polkadot-snap') as unknown as
     | InjectedMetamaskExtension
     | undefined;

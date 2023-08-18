@@ -1,7 +1,7 @@
-import { ApiPromise } from '@polkadot/api/';
-import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import { getKeyPair } from '../../polkadot/account';
+import type { ApiPromise } from '@polkadot/api/';
+import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import { hexToU8a, u8aToHex } from '@polkadot/util';
+import { getKeyPair } from '../../polkadot/account';
 import { showConfirmationDialog } from '../../util/confirmation';
 import { messageCreator } from '../../util/messageCreator';
 

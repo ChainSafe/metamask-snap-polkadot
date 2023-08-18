@@ -1,9 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
   "ts-node": {
     "files": true,
   },
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
     "skipLibCheck": true,
     "target": "ES2020",
     "baseUrl": ".",

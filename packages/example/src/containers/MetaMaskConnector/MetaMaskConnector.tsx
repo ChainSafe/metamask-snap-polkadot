@@ -5,11 +5,11 @@ import Alert from '@material-ui/lab/Alert';
 import { MetamaskActions, MetaMaskContext } from '../../context/metamask';
 import { initiatePolkdatodSnap, isPolkadotSnapInstalled } from '../../services/metamask';
 
-export const MetaMaskConnector = () => {
+export const MetaMaskConnector = (): React.JSX.Element => {
   const [state, dispatch] = useContext(MetaMaskContext);
 
   useEffect(() => {
-    (async () => {
+    void (async (): Promise<void> => {
       if (await isPolkadotSnapInstalled()) {
         dispatch({
           payload: { isInstalled: true },
@@ -19,10 +19,9 @@ export const MetaMaskConnector = () => {
     })();
   }, [dispatch]);
 
-  const installSnap = useCallback(async () => {
+  const installSnap = useCallback(async (): Promise<void> => {
     const installResult = await initiatePolkdatodSnap();
     if (!installResult.isSnapInstalled) {
-      // eslint-disable-next-line max-len
       dispatch({
         payload: {
           isInstalled: false,
@@ -31,7 +30,6 @@ export const MetaMaskConnector = () => {
         type: MetamaskActions.SET_INSTALLED_STATUS
       });
     } else {
-      // eslint-disable-next-line max-len
       dispatch({
         payload: { isInstalled: true, snap: installResult.snap },
         type: MetamaskActions.SET_INSTALLED_STATUS
@@ -39,7 +37,7 @@ export const MetaMaskConnector = () => {
     }
   }, [dispatch]);
 
-  const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+  const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string): void => {
     if (reason === 'clickaway') return;
 
     dispatch({ payload: false, type: MetamaskActions.SET_INSTALLED_STATUS });

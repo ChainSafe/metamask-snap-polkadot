@@ -31,9 +31,9 @@ export type GetSnapsResponse = {
 };
 
 async function getWalletSnaps(): Promise<GetSnapsResponse> {
-  return (await window.ethereum.request({
+  return await window.ethereum.request({
     method: 'wallet_getSnaps'
-  })) as GetSnapsResponse;
+  });
 }
 
 export async function isMetamaskSnapsSupported(): Promise<boolean> {

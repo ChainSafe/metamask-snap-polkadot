@@ -1,4 +1,4 @@
-import {
+import type {
   BlockInfo,
   MetamaskPolkadotRpcRequest,
   SignPayloadJSONRequest,
@@ -7,8 +7,8 @@ import {
   Transaction,
   TxPayload
 } from '@chainsafe/metamask-polkadot-types';
-import { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import { MetamaskPolkadotSnap } from './snap';
+import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import type { MetamaskPolkadotSnap } from './snap';
 
 async function sendSnapMethod(
   request: MetamaskPolkadotRpcRequest,

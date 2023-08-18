@@ -1,4 +1,4 @@
-import { MetamaskState } from '../interfaces';
+import type { MetamaskState } from '../interfaces';
 
 export const getMetamaskState = async (): Promise<MetamaskState> => {
   const persistedData = await snap.request({

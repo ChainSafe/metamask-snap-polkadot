@@ -1,7 +1,7 @@
-import { ApiPromise } from '@polkadot/api/';
+import type { ApiPromise } from '@polkadot/api/';
+import type { SubmittableExtrinsic } from '@polkadot/api/types';
+import type { TxPayload } from '@chainsafe/metamask-polkadot-types';
 import { getAddress } from './getAddress';
-import { SubmittableExtrinsic } from '@polkadot/api/types';
-import { TxPayload } from '@chainsafe/metamask-polkadot-types';
 
 export async function generateTransactionPayload(
   api: ApiPromise,

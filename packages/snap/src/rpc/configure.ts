@@ -1,10 +1,10 @@
 import deepmerge from 'deepmerge';
+import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
 import { getDefaultConfiguration } from '../configuration';
-import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
 import { getMetamaskState } from './getMetamaskState';
 
 export async function configure(networkName: string, overrides: unknown): Promise<SnapConfig> {
-  const defaultConfig = getDefaultConfiguration(networkName) as SnapConfig;
+  const defaultConfig = getDefaultConfiguration(networkName);
   const configuration = deepmerge(defaultConfig, overrides) as SnapConfig;
 
   const state = await getMetamaskState();

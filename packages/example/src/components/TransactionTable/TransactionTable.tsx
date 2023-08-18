@@ -8,15 +8,15 @@ import {
   TableHead,
   TableRow
 } from '@material-ui/core';
-import { shortAddress } from '../../services/format';
 import { formatBalance } from '@polkadot/util';
-import { Transaction } from '@chainsafe/metamask-polkadot-types';
+import type { Transaction } from '@chainsafe/metamask-polkadot-types';
+import { shortAddress } from '../../services/format';
 
 export interface TransactionTableProps {
   txs: Transaction[];
 }
 
-export const TransactionTable = (props: TransactionTableProps) => {
+export const TransactionTable = (props: TransactionTableProps): React.JSX.Element => {
   return (
     <TableContainer className="transtaction-table" component={Paper}>
       <Table aria-label="simple table">

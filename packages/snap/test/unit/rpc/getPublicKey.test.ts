@@ -1,9 +1,9 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import { getPublicKey } from '../../../src/rpc/getPublicKey';
-import { testAppKey, testPublicKey } from './keyPairTestConstants';
 import { EmptyMetamaskState } from '../../../src/interfaces';
 import { getWalletMock } from '../wallet.mock';
+import { testAppKey, testPublicKey } from './keyPairTestConstants';
 
 chai.use(sinonChai);
 

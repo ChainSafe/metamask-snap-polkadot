@@ -1,5 +1,5 @@
-import { getConfiguration } from '../configuration';
 import { ApiPromise, HttpProvider } from '@polkadot/api';
+import { getConfiguration } from '../configuration';
 
 let api: ApiPromise;
 let provider: HttpProvider;
@@ -22,10 +22,10 @@ async function initApi(rpcUrl: string): Promise<ApiPromise> {
   return api;
 }
 
-export const resetApi = (): void => {
+export const resetApi = async (): Promise<void> => {
   if (api && provider) {
     try {
-      api.disconnect();
+      await api.disconnect();
     } catch (e) {
       console.error('Error on api disconnect.');
     }

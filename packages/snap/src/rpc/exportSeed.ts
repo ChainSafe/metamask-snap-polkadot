@@ -1,4 +1,4 @@
-import { JsonBIP44CoinTypeNode } from '@metamask/key-tree';
+import type { JsonBIP44CoinTypeNode } from '@metamask/key-tree';
 import { showConfirmationDialog } from '../util/confirmation';
 
 const kusamaCoinType = 434;

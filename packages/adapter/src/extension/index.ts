@@ -1,8 +1,8 @@
-import { Injected, InjectedAccount, InjectedWindow } from '@polkadot/extension-inject/types';
+import type { Injected, InjectedAccount, InjectedWindow } from '@polkadot/extension-inject/types';
+import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SignerPayloadJSON, SignerPayloadRaw, SignerResult } from '@polkadot/types/types';
+import type { HexString } from '@polkadot/util/types';
 import { enablePolkadotSnap } from '../index';
-import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
-import { SignerPayloadJSON, SignerPayloadRaw, SignerResult } from '@polkadot/types/types';
-import { HexString } from '@polkadot/util/types';
 import { hasMetaMask, isMetamaskSnapsSupported } from '../utils';
 
 interface Web3Window extends InjectedWindow {
@@ -24,7 +24,7 @@ function transformAccounts(accounts: string[]): InjectedAccount[] {
 function injectPolkadotSnap(win: Web3Window): void {
   win.injectedWeb3.Snap = {
     enable: async (): Promise<Injected> => {
-      const snap = await (await enablePolkadotSnap(config)).getMetamaskSnapApi();
+      const snap = (await enablePolkadotSnap(config)).getMetamaskSnapApi();
 
       return {
         accounts: {
@@ -35,7 +35,6 @@ function injectPolkadotSnap(win: Web3Window): void {
           // Currently there is only available only one account, in that case this method will never return anything
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           subscribe: (_cb: (accounts: InjectedAccount[]) => void): (() => void) => {
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             return (): void => {};
           }
         },
@@ -61,7 +60,7 @@ export function initPolkadotSnap(): Promise<boolean> {
     win.injectedWeb3 = win.injectedWeb3 || {};
 
     if (hasMetaMask())
-      isMetamaskSnapsSupported().then((result) => {
+      void isMetamaskSnapsSupported().then((result) => {
         if (result) {
           injectPolkadotSnap(win);
           resolve(true);

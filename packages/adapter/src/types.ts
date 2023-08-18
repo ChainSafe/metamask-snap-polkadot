@@ -1,13 +1,13 @@
-import {
+import type {
   BlockInfo,
   SnapConfig,
   SnapRpcMethodRequest,
   Transaction,
   TxPayload
 } from '@chainsafe/metamask-polkadot-types';
-import { InjectedExtension } from '@polkadot/extension-inject/types';
-import { SignerPayloadRaw } from '@polkadot/types/types/extrinsic';
-import { SignerPayloadJSON } from '@polkadot/types/types';
+import type { InjectedExtension } from '@polkadot/extension-inject/types';
+import type { SignerPayloadRaw } from '@polkadot/types/types/extrinsic';
+import type { SignerPayloadJSON } from '@polkadot/types/types';
 
 export interface MetamaskSnapApi {
   getAddress(): Promise<string>;
@@ -41,7 +41,7 @@ declare global {
   interface Window {
     ethereum: {
       isMetaMask: boolean;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       send: (
         request: SnapRpcMethodRequest | { method: string; params?: never[] }
       ) => Promise<unknown>;

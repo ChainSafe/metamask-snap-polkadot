@@ -13,5 +13,6 @@ global.snap = new WalletMock();
 afterEach(function () {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   global.snap.reset();
 });

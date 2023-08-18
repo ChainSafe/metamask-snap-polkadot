@@ -1,6 +1,6 @@
-import { ApiPromise } from '@polkadot/api';
+import type { ApiPromise } from '@polkadot/api';
+import type { AccountData } from '@polkadot/types/interfaces/balances/types';
 import { getKeyPair } from '../../polkadot/account';
-import { AccountData } from '@polkadot/types/interfaces/balances/types';
 
 /**
  * Returns balance as BN
