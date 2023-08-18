@@ -10,6 +10,7 @@ declare global {
 // @ts-ignore
 global.snap = new WalletMock();
 
+// eslint-disable-next-line mocha/no-top-level-hooks
 afterEach(function () {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore

@@ -8,6 +8,7 @@ import {
   westendConfiguration
 } from '../../../src/configuration/predefined';
 import { EmptyMetamaskState } from '../../../src/interfaces';
+import type { WalletMock } from '../wallet.mock';
 import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
@@ -36,7 +37,11 @@ describe('Test configuration functions', function () {
   });
 
   describe('getConfiguration', function () {
-    const walletStub = getWalletMock();
+    let walletStub: WalletMock;
+
+    before(function () {
+      walletStub = getWalletMock();
+    });
 
     afterEach(function () {
       walletStub.reset();
