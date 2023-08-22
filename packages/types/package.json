@@ -8,6 +8,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@polkadot/api": "^8.7.1"
+    "@polkadot/api": "^10.9.1"
   }
 }

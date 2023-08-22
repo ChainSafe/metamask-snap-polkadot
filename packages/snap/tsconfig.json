@@ -1,17 +1,40 @@
 {
-  "extends": "../../tsconfig.json",
+  "ts-node": {
+    "files": true,
+  },
   "compilerOptions": {
+    "module": "commonjs",
+    "lib": [
+      "DOM",
+      "ES2015"
+    ],
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "target": "ES2020",
     "baseUrl": ".",
+    "strictNullChecks": false,
     "paths": {
       "*": [
         "../../node_modules"
       ]
     },
     "outDir": "./build",
+    "typeRoots": [
+      "../../node_modules/@types"
+    ]
   },
   "include": [
     "src/**/*",
     "test/**/*"
   ],
-  "files": ["../../node_modules/@metamask/snaps-types/global.d.ts"]
+
+  "files": ["../../node_modules/@metamask/snaps-types/dist/global.d.ts"]
 }

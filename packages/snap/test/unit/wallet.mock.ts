@@ -1,5 +1,5 @@
-import {Wallet} from "../../src/interfaces";
-import sinon from "sinon";
+import sinon from 'sinon';
+import type { Wallet } from '../../src/interfaces';
 
 export class WalletMock implements Wallet {
   public registerRpcMessageHandler = sinon.stub();
@@ -12,3 +12,9 @@ export class WalletMock implements Wallet {
     this.request.reset();
   }
 }
+
+export const getWalletMock = (): WalletMock => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return global.snap as WalletMock;
+};

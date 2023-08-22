@@ -7,7 +7,7 @@
     "url": "git+https://github.com/chainsafe/metamask-snap-polkadot.git"
   },
   "source": {
-    "shasum": "/SMUQreyofVCgsozr0SlaSj+oMATvlLhbEZ4qn36kV4=",
+    "shasum": "MRjDtG/in/3/s3f8BJAY56Oq0jfSsZRmWIDDEB03+f8=",
     "location": {
       "npm": {
         "filePath": "./dist/bundle.js",
@@ -22,7 +22,8 @@
       "snaps": true
     },
     "endowment:network-access": {},
-    "snap_confirm": {},
+    "endowment:webassembly": {},
+    "snap_dialog": {},
     "snap_getBip44Entropy": [
       {
         "coinType": 354

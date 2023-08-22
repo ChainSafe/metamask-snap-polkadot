@@ -1,22 +1,8 @@
-import { web3EnablePromise } from "@polkadot/extension-dapp";
-import { InjectedMetamaskExtension } from "@chainsafe/metamask-polkadot-adapter/src/types";
-import { SnapRpcMethodRequest } from "@chainsafe/metamask-polkadot-types";
-import { InjectedExtension } from "@polkadot/extension-inject/types";
-import { enablePolkadotSnap } from "@chainsafe/metamask-polkadot-adapter";
-import { MetamaskPolkadotSnap } from "@chainsafe/metamask-polkadot-adapter/build/snap";
-
-declare global {
-  interface Window {
-    ethereum: {
-      isMetaMask: boolean;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      send: (request: SnapRpcMethodRequest | { method: string; params?: any[] }) => Promise<unknown>;
-      on: (eventName: unknown, callback: unknown) => unknown;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      request: <T>(request: SnapRpcMethodRequest | { method: string; params?: any }) => Promise<T>;
-    };
-  }
-}
+import { web3EnablePromise } from '@polkadot/extension-dapp';
+import type { InjectedMetamaskExtension } from '@chainsafe/metamask-polkadot-adapter/src/types';
+import type { InjectedExtension } from '@polkadot/extension-inject/types';
+import { enablePolkadotSnap } from '@chainsafe/metamask-polkadot-adapter';
+import type { MetamaskPolkadotSnap } from '@chainsafe/metamask-polkadot-adapter/build/snap';
 
 export function hasMetaMask(): boolean {
   if (!window.ethereum) {
@@ -30,20 +16,17 @@ export const defaultSnapId = 'local:http://localhost:8081';
 export async function installPolkadotSnap(): Promise<boolean> {
   const snapId = process.env.REACT_APP_SNAP_ID ? process.env.REACT_APP_SNAP_ID : defaultSnapId;
   try {
-    console.log("installing snap");
-
-    await enablePolkadotSnap({ networkName: "westend" }, snapId, { version: "latest" });
-
-    console.log("Snap installed!!");
+    await enablePolkadotSnap({ networkName: 'westend' }, snapId);
+    console.info('Snap installed!!');
     return true;
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.error(err);
     return false;
   }
 }
 
 export async function isPolkadotSnapInstalled(): Promise<boolean> {
-  return !! await getInjectedMetamaskExtension();
+  return !!(await getInjectedMetamaskExtension());
 }
 
 export async function getInjectedMetamaskExtension(): Promise<InjectedMetamaskExtension | null> {
@@ -51,9 +34,12 @@ export async function getInjectedMetamaskExtension(): Promise<InjectedMetamaskEx
   return getMetamaskExtension(extensions || []) || null;
 }
 
-function getMetamaskExtension(extensions: InjectedExtension[]): InjectedMetamaskExtension | undefined {
-  // eslint-disable-next-line max-len
-  return extensions.find(item => item.name === "metamask-polkadot-snap") as unknown as InjectedMetamaskExtension | undefined;
+function getMetamaskExtension(
+  extensions: InjectedExtension[]
+): InjectedMetamaskExtension | undefined {
+  return extensions.find((item) => item.name === 'metamask-polkadot-snap') as unknown as
+    | InjectedMetamaskExtension
+    | undefined;
 }
 
 export interface SnapInitializationResponse {
@@ -61,13 +47,14 @@ export interface SnapInitializationResponse {
   snap?: MetamaskPolkadotSnap;
 }
 
-export async function initiateFilecoinSnap(): Promise<SnapInitializationResponse> {
+export async function initiatePolkdatodSnap(): Promise<SnapInitializationResponse> {
   const snapId = process.env.REACT_APP_SNAP_ID ? process.env.REACT_APP_SNAP_ID : defaultSnapId;
+
   try {
-    console.log('Attempting to connect to snap...');
-    const metamaskFilecoinSnap = await enablePolkadotSnap({ networkName: "westend" }, snapId, { version: "latest" });
-    console.log('Snap installed!');
-    return { isSnapInstalled: true, snap: metamaskFilecoinSnap };
+    console.info('Attempting to connect to snap...');
+    const metamaskPolkadotSnap = await enablePolkadotSnap({ networkName: 'westend' }, snapId);
+    console.info('Snap installed!');
+    return { isSnapInstalled: true, snap: metamaskPolkadotSnap };
   } catch (e) {
     console.error(e);
     return { isSnapInstalled: false };

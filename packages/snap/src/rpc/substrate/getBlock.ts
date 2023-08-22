@@ -1,8 +1,8 @@
-import {ApiPromise} from "@polkadot/api";
-import {BlockId, BlockInfo} from "@chainsafe/metamask-polkadot-types";
-import { BlockHash } from "@polkadot/types/interfaces";
+import type { ApiPromise } from '@polkadot/api';
+import type { BlockId, BlockInfo } from '@chainsafe/metamask-polkadot-types';
+import type { BlockHash } from '@polkadot/types/interfaces';
 
-async function _getBlock(blockHash: BlockHash|string, api: ApiPromise): Promise<BlockInfo> {
+async function _getBlock(blockHash: BlockHash | string, api: ApiPromise): Promise<BlockInfo> {
   const signedBlock = await api.rpc.chain.getBlock(blockHash);
   return {
     hash: signedBlock.block.hash.toHex(),
@@ -31,26 +31,23 @@ async function _getBlockById(blockId: number, api: ApiPromise): Promise<BlockInf
  */
 export async function getBlock(blockTag: BlockId, api: ApiPromise): Promise<BlockInfo | null> {
   switch (typeof blockTag) {
-    case "number":
+    case 'number':
       // get block by id sent as number
       return await _getBlockById(blockTag, api);
-    case "string":
-      if (blockTag === "latest") {
+    case 'string':
+      if (blockTag === 'latest') {
         // get latest block
         const { hash } = await api.rpc.chain.getHeader();
         return await _getBlock(hash, api);
       }
-      if (blockTag.startsWith("0x")) {
+      if (blockTag.startsWith('0x')) {
         // get block by hash
         return await _getBlock(blockTag, api);
       }
       // get block by id sent as string
-      const blockId = parseInt(blockTag);
-      if (blockId) {
-        return await _getBlockById(blockId, api);
+      if (parseInt(blockTag)) {
+        return await _getBlockById(parseInt(blockTag), api);
       }
   }
   return null;
 }
-
-

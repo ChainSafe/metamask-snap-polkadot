@@ -1,18 +1,19 @@
-import { EmptyMetamaskState, MetamaskState } from "./interfaces";
-import { getPublicKey } from "./rpc/getPublicKey";
-import { exportSeed } from "./rpc/exportSeed";
-import { getBalance } from "./rpc/substrate/getBalance";
-import { getAddress } from "./rpc/getAddress";
-import { ApiPromise } from "@polkadot/api/promise";
-import { getTransactions } from "./rpc/substrate/getTransactions";
-import { getBlock } from "./rpc/substrate/getBlock";
-import { getApi, resetApi } from "./polkadot/api";
-import { configure } from "./rpc/configure";
-import { signPayloadJSON, signPayloadRaw } from "./rpc/substrate/sign";
-import { generateTransactionPayload } from "./rpc/generateTransactionPayload";
-import { send } from "./rpc/send";
-import { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { assert } from "superstruct";
+import type { ApiPromise } from '@polkadot/api/promise';
+import type { OnRpcRequestHandler } from '@metamask/snaps-types';
+import { assert } from 'superstruct';
+import type { MetamaskState } from './interfaces';
+import { EmptyMetamaskState } from './interfaces';
+import { getPublicKey } from './rpc/getPublicKey';
+import { exportSeed } from './rpc/exportSeed';
+import { getBalance } from './rpc/substrate/getBalance';
+import { getAddress } from './rpc/getAddress';
+import { getTransactions } from './rpc/substrate/getTransactions';
+import { getBlock } from './rpc/substrate/getBlock';
+import { getApi, resetApi } from './polkadot/api';
+import { configure } from './rpc/configure';
+import { signPayloadJSON, signPayloadRaw } from './rpc/substrate/sign';
+import { generateTransactionPayload } from './rpc/generateTransactionPayload';
+import { send } from './rpc/send';
 import {
   validConfigureSchema,
   validGenerateTransactionPayloadSchema,
@@ -20,85 +21,96 @@ import {
   validSendSchema,
   validSignPayloadJSONSchema,
   validSignPayloadRawSchema
-} from "./util/validation";
+} from './util/validation';
 
 const apiDependentMethods = [
-  "getBlock", "getBalance", "getChainHead", "signPayloadJSON", "signPayloadRaw", "generateTransactionPayload", "send"
+  'getBlock',
+  'getBalance',
+  'getChainHead',
+  'signPayloadJSON',
+  'signPayloadRaw',
+  'generateTransactionPayload',
+  'send'
 ];
-// eslint-disable-next-line
-export const onRpcRequest: OnRpcRequestHandler = (async ({ request }) => {
+
+export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
   const state = await snap.request({
     method: 'snap_manageState',
-    params: { operation: 'get' },
+    params: { operation: 'get' }
   });
 
   if (!state) {
     // initialize state if empty and set default config
     await snap.request({
       method: 'snap_manageState',
-      params: { newState: EmptyMetamaskState(), operation: 'update' },
+      params: { newState: EmptyMetamaskState(), operation: 'update' }
     });
   }
   // fetch api promise
   let api: ApiPromise = null;
   if (apiDependentMethods.includes(request.method)) {
-    api = await getApi(snap);
+    api = await getApi();
   }
 
   switch (request.method) {
-    case "signPayloadJSON":
+    case 'signPayloadJSON':
       assert(request.params, validSignPayloadJSONSchema);
-      return await signPayloadJSON(snap, api, request.params.payload);
-    case "signPayloadRaw":
+      return await signPayloadJSON(api, request.params.payload);
+    case 'signPayloadRaw':
       assert(request.params, validSignPayloadRawSchema);
-      return await signPayloadRaw(snap, api, request.params.payload);
+      return await signPayloadRaw(api, request.params.payload);
     case 'getPublicKey':
-      return await getPublicKey(snap);
+      return await getPublicKey();
     case 'getAddress':
-      return await getAddress(snap);
+      return await getAddress();
     case 'exportSeed':
-      return await exportSeed(snap);
+      return await exportSeed();
     case 'getAllTransactions':
-      return await getTransactions(snap);
+      return await getTransactions();
     case 'getBlock':
       assert(request.params, validGetBlockSchema);
       return await getBlock(request.params.blockTag, api);
     case 'getBalance': {
-      return await getBalance(snap, api);
+      return await getBalance(api);
     }
     case 'configure': {
-      const state = await snap.request({
+      const state = (await snap.request({
         method: 'snap_manageState',
-        params: { operation: 'get' },
-      }) as MetamaskState;
-      const isInitialConfiguration = state.polkadot.config === null;
+        params: { operation: 'get' }
+      })) as MetamaskState;
+
+      const isInitialConfiguration = state.config === null;
       // reset api and remove asset only if already configured
       if (!isInitialConfiguration) {
-        resetApi();
+        await resetApi();
       }
       // set new configuration
-      assert(request.params, validConfigureSchema);
+      assert(
+        request.params,
+        validConfigureSchema,
+        'Invalid configuration schema - Network name should be provided'
+      );
+      console.info('Configuring snap with', request.params.configuration);
       return await configure(
-        snap, request.params.configuration.networkName, request.params.configuration
+        request.params.configuration.networkName,
+        request.params.configuration
       );
     }
-    case "generateTransactionPayload":
+    case 'generateTransactionPayload':
       assert(request.params, validGenerateTransactionPayloadSchema);
-      return await generateTransactionPayload(snap, api, request.params.to, request.params.amount);
+      return await generateTransactionPayload(api, request.params.to, request.params.amount);
 
-    case "send":
+    case 'send':
       assert(request.params, validSendSchema);
       return await send(
-        snap,
         api,
-        (request.params.signature) as (Uint8Array | `0x${string}`),
-        request.params.txPayload);
-
+        request.params.signature as Uint8Array | `0x${string}`,
+        request.params.txPayload
+      );
     case 'getChainHead':
-      const head = await api.rpc.chain.getFinalizedHead();
-      return head.hash;
+      return api && (await api.rpc.chain.getFinalizedHead()).hash;
 
     default:
       throw new Error('Method not found.');
   }
-});
+};

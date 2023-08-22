@@ -1,6 +1,7 @@
-import { BlockId, TxPayload } from "@chainsafe/metamask-polkadot-types";
-import { SignerPayloadJSON, SignerPayloadRaw } from "@polkadot/types/types";
-import { Describe, object, string, array, number, enums, union, type } from "superstruct";
+import type { BlockId, TxPayload } from '@chainsafe/metamask-polkadot-types';
+import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import type { Describe } from 'superstruct';
+import { array, enums, number, object, optional, string, type, union } from 'superstruct';
 
 const SignaturePayloadJSONSchema = type({
   address: string(),
@@ -14,20 +15,21 @@ const SignaturePayloadJSONSchema = type({
   specVersion: string(),
   tip: string(),
   transactionVersion: string(),
-  version: number(),
+  version: number()
 });
 
-export const validSignPayloadJSONSchema: Describe<{ payload: SignerPayloadJSON }> = object({
+export const validSignPayloadJSONSchema: Describe<{
+  payload: SignerPayloadJSON;
+}> = object({
   payload: SignaturePayloadJSONSchema
 });
 
 export type SignPayloadRawTypes = 'bytes' | 'payload';
-export const SignPayloadRawTypesSchema: Describe<SignPayloadRawTypes> = enums([
-  "bytes",
-  "payload",
-]);
+export const SignPayloadRawTypesSchema: Describe<SignPayloadRawTypes> = enums(['bytes', 'payload']);
 
-export const validSignPayloadRawSchema: Describe<{ payload: SignerPayloadRaw }> = object({
+export const validSignPayloadRawSchema: Describe<{
+  payload: SignerPayloadRaw;
+}> = object({
   payload: object({
     address: string(),
     data: string(),
@@ -39,16 +41,34 @@ export const validGetBlockSchema: Describe<{ blockTag: BlockId }> = object({
   blockTag: union([string(), number()])
 });
 
-export const validConfigureSchema: Describe<{ configuration: { networkName: string } }> = object({
-  configuration: object({ networkName: string() })
+export const validConfigureSchema: Describe<{
+  configuration: {
+    addressPrefix: number;
+    networkName: string;
+    unit: { image: string; symbol: string };
+    wsRpcUrl: string;
+  };
+}> = object({
+  configuration: object({
+    addressPrefix: optional(number()),
+    networkName: string(),
+    unit: optional(object({ image: string(), symbol: string() })),
+    wsRpcUrl: optional(string())
+  })
 });
 
-export const validGenerateTransactionPayloadSchema: Describe<{ to: string, amount: string | number}> = object({
+export const validGenerateTransactionPayloadSchema: Describe<{
+  to: string;
+  amount: string | number;
+}> = object({
   amount: union([string(), number()]),
   to: string()
 });
 
-export const validSendSchema: Describe<{ signature: string, txPayload: TxPayload}> = object({
+export const validSendSchema: Describe<{
+  signature: string;
+  txPayload: TxPayload;
+}> = object({
   signature: string(),
   txPayload: object({
     payload: SignaturePayloadJSONSchema,

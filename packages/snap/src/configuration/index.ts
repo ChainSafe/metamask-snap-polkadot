@@ -1,36 +1,33 @@
-import { SnapsGlobalObject } from "@metamask/snaps-types";
-import {MetamaskState} from "../interfaces";
+import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import { getMetamaskState } from '../rpc/getMetamaskState';
 import {
   defaultConfiguration,
   kusamaConfiguration,
   polkadotConfiguration,
-  westendConfiguration,
-} from "./predefined";
-import {SnapConfig} from "@chainsafe/metamask-polkadot-types";
+  westendConfiguration
+} from './predefined';
 
 export function getDefaultConfiguration(networkName: string): SnapConfig {
   switch (networkName) {
-    case "polkadot":
-      console.log("Polkadot configuration selected");
+    case 'polkadot':
+      console.log('Polkadot configuration selected');
       return polkadotConfiguration;
-    case "kusama":
-      console.log("Kusama configuration selected");
+    case 'kusama':
+      console.log('Kusama configuration selected');
       return kusamaConfiguration;
-    case "westend":
-      console.log("Westend configuration selected");
+    case 'westend':
+      console.log('Westend configuration selected');
       return westendConfiguration;
     default:
       return defaultConfiguration;
   }
 }
 
-export async function getConfiguration(snap: SnapsGlobalObject): Promise<SnapConfig> {
-  const state = await snap.request({
-    method: 'snap_manageState',
-    params: { operation: 'get' },
-  }) as MetamaskState;
-  if (!state || !state.polkadot.config) {
+export async function getConfiguration(): Promise<SnapConfig> {
+  const state = await getMetamaskState();
+
+  if (!state || !state.config) {
     return defaultConfiguration;
   }
-  return state.polkadot.config;
+  return JSON.parse(<string>state.config) as SnapConfig;
 }
