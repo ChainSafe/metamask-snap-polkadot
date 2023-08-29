@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-adapter-v0.4.1...metamask-polkadot-adapter-v0.5.0) (2023-08-22)
+
+
+### Features
+
+* Update metamask api to the latest version; Polkadot Api update ([#164](https://github.com/ChainSafe/metamask-snap-polkadot/issues/164)) ([61787c6](https://github.com/ChainSafe/metamask-snap-polkadot/commit/61787c6d2193e7ec6dee6cf3ecfae4b855717092))
+
 ## [0.4.1](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-adapter-v0.4.0...metamask-polkadot-adapter-v0.4.1) (2022-08-30)
 
 
