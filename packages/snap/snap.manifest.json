@@ -1,7 +1,7 @@
 {
   "version": "0.6.0",
   "description": "The Polkadot snap.",
-  "proposedName": "Polkadot snap",
+  "proposedName": "Polkadot Wallet",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chainsafe/metamask-snap-polkadot.git"
