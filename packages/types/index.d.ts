@@ -127,7 +127,7 @@ export interface UnitConfiguration {
 export type SnapNetworks = 'polkadot' | 'kusama' | 'westend';
 
 export interface SnapConfig {
-  networkName: SnapNetworks;
+  networkName?: SnapNetworks;
   wsRpcUrl?: string;
   addressPrefix?: number;
   unit?: UnitConfiguration;
