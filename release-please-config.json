@@ -19,6 +19,15 @@
       "changelogPath": "CHANGELOG.md",
       "versioning": "default"
     },
+    "packages/config": {
+      "releaseType": "node",
+      "draft": false,
+      "prerelease": false,
+      "bumpMinorPreMajor": false,
+      "bumpPatchForMinorPreMajor": false,
+      "changelogPath": "CHANGELOG.md",
+      "versioning": "default"
+    },
     "packages/snap": {
       "releaseType": "node",
       "draft": false,

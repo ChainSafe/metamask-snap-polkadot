@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
+import { westendConfiguration } from '@chainsafe/metamask-polkadot-config';
 import { getAddress } from '../../../src/rpc/getAddress';
-import { westendConfiguration } from '../../../src/configuration/predefined';
 import { getWalletMock } from '../wallet.mock';
 import { testAppKey } from './keyPairTestConstants';
 

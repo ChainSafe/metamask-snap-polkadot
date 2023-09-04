@@ -1,5 +1,5 @@
 import { ApiPromise, HttpProvider } from '@polkadot/api';
-import { getConfiguration } from '../configuration';
+import { getConfiguration } from '../util/getConfiguration';
 
 let api: ApiPromise;
 let provider: HttpProvider;

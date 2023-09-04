@@ -1,0 +1,16 @@
+{
+  "name": "@chainsafe/metamask-polkadot-config",
+  "version": "0.1.0",
+  "author": "ChainSafe <info@chainsafe.io>",
+  "license": "Apache-2.0",
+  "main": "build/index.js",
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "scripts": {
+    "build": "tsc --pretty --project tsconfig.json"
+  },
+  "dependencies": {
+    "@chainsafe/metamask-polkadot-types": "workspace:^"
+  }
+}

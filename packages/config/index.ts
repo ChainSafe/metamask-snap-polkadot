@@ -1,5 +1,21 @@
 import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
 
+export function getDefaultConfiguration(networkName?: string): SnapConfig {
+  switch (networkName) {
+    case 'polkadot':
+      console.log('Polkadot configuration selected');
+      return polkadotConfiguration;
+    case 'kusama':
+      console.log('Kusama configuration selected');
+      return kusamaConfiguration;
+    case 'westend':
+      console.log('Westend configuration selected');
+      return westendConfiguration;
+    default:
+      return defaultConfiguration;
+  }
+}
+
 export const kusamaConfiguration: SnapConfig = {
   addressPrefix: 2,
   networkName: 'kusama',

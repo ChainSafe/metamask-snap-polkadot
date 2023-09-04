@@ -1,9 +1,9 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { kusamaConfiguration, westendConfiguration } from '../../../src/configuration/predefined';
+import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import { kusamaConfiguration, westendConfiguration } from '@chainsafe/metamask-polkadot-config';
 import { configure } from '../../../src/rpc/configure';
 import { EmptyMetamaskState } from '../../../src/interfaces';
-import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
 import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);

@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { showConfirmationDialog } from '../../../src/util/confirmation';
 import { panel, text } from '@metamask/snaps-ui';
+import { showConfirmationDialog } from '../../../src/util/confirmation';
 import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
@@ -9,7 +9,7 @@ chai.use(sinonChai);
 describe('Test showConfirmationDialog', function () {
   const walletStub = getWalletMock();
 
-  afterEach(() => {
+  afterEach(function () {
     walletStub.reset();
   });
 

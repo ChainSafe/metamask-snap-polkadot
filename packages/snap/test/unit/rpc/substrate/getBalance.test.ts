@@ -1,12 +1,12 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { getBalance } from '../../../../src/rpc/substrate/getBalance';
-import { ApiPromise } from '@polkadot/api/';
-import { AccountInfo } from '@polkadot/types/interfaces/system';
+import type { ApiPromise } from '@polkadot/api/';
+import type { AccountInfo } from '@polkadot/types/interfaces/system';
 import sinon from 'sinon';
+import { getBalance } from '../../../../src/rpc/substrate/getBalance';
 import { testAddress, testAppKey } from '../keyPairTestConstants';
-import { EmptyMetamaskState } from '../../../../src/interfaces';
 import { getWalletMock } from '../../wallet.mock';
+import { EmptyMetamaskState } from '../../../../src/interfaces';
 
 chai.use(sinonChai);
 

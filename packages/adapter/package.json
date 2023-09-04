@@ -33,6 +33,7 @@
     "test": "exit 0"
   },
   "devDependencies": {
+    "@chainsafe/metamask-polkadot-config": "workspace:^",
     "@types/node": "^17.0.36",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",

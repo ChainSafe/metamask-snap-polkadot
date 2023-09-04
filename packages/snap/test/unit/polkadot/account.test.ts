@@ -1,9 +1,9 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import { hexToU8a } from '@polkadot/util';
+import { westendConfiguration } from '@chainsafe/metamask-polkadot-config';
 import { getKeyPair } from '../../../src/polkadot/account';
 import { testAddress, testAppKey, testPublicKey } from '../rpc/keyPairTestConstants';
-import { westendConfiguration } from '../../../src/configuration/predefined';
 import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);

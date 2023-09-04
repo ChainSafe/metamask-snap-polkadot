@@ -3,7 +3,7 @@ import { Keyring } from '@polkadot/keyring';
 import { stringToU8a } from '@polkadot/util';
 import type { JsonBIP44CoinTypeNode } from '@metamask/key-tree';
 import type { SnapNetworks } from '@chainsafe/metamask-polkadot-types';
-import { getConfiguration } from '../configuration';
+import { getConfiguration } from '../util/getConfiguration';
 
 /**
  * Returns KeyringPair if one is saved in wallet state, creates new one otherwise

@@ -1,15 +1,16 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
-import { getConfiguration, getDefaultConfiguration } from '../../../src/configuration';
 import {
   defaultConfiguration,
+  getDefaultConfiguration,
   kusamaConfiguration,
   westendConfiguration
-} from '../../../src/configuration/predefined';
+} from '@chainsafe/metamask-polkadot-config';
 import { EmptyMetamaskState } from '../../../src/interfaces';
 import type { WalletMock } from '../wallet.mock';
 import { getWalletMock } from '../wallet.mock';
+import { getConfiguration } from '../../../src/util/getConfiguration';
 
 chai.use(sinonChai);
 
