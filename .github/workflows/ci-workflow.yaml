@@ -61,6 +61,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 2238a825c5aca59233eab1f221f7aefb
           projectName: metamask-snap-polkadot
-          directory: ./packages/example/dist
+          directory: ./packages/example/build
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref || github.ref_name }}
