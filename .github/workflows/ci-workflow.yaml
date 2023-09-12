@@ -28,6 +28,7 @@ jobs:
         run: yarn run lint
       - uses: tj-actions/verify-changed-files@v9
         id: verify-changed-files
+        if: github.head_ref != 'master'
         with:
           files: |
             packages/snap/snap.manifest.json
