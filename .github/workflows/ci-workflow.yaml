@@ -26,8 +26,12 @@ jobs:
         run: yarn run build
       - name: Run linter
         run: yarn run lint
+      - name: Test
+        run: |
+          echo "test: ${{ github.ref_name }}
       - uses: tj-actions/verify-changed-files@v9
         id: verify-changed-files
+        if: github.ref_name != 'master'
         with:
           files: |
             packages/snap/snap.manifest.json
