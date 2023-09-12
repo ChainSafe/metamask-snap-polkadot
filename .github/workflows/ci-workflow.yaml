@@ -20,15 +20,15 @@ jobs:
         with:
           cache: yarn
           node-version: '16.x'
+      - name: Test
+        run: |
+          echo "test: ${{ github.head_ref }}"
       - run: corepack enable
       - run: yarn install --immutable
       - name: Build
         run: yarn run build
       - name: Run linter
         run: yarn run lint
-      - name: Test
-        run: |
-          echo "test: ${{ github.ref_name }}
       - uses: tj-actions/verify-changed-files@v9
         id: verify-changed-files
         if: github.ref_name != 'master'
