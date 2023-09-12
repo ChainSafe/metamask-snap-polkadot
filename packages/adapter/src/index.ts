@@ -10,7 +10,7 @@ export type SnapInstallationParamNames = string;
 export * from './extension';
 
 export async function enablePolkadotSnap(
-  config: SnapConfig,
+  config: SnapConfig = { networkName: 'westend' },
   snapOrigin?: string,
   snapInstallationParams: Record<SnapInstallationParamNames, unknown> = {}
 ): Promise<MetamaskPolkadotSnap> {
@@ -24,7 +24,7 @@ export async function enablePolkadotSnap(
     throw new Error("Current Metamask version doesn't support snaps");
   }
   if (!config.networkName) {
-    throw new Error('Configuration must at least define network type');
+    config.networkName = 'westend';
   }
 
   const isInstalled = await isPolkadotSnapInstalled(snapId);
