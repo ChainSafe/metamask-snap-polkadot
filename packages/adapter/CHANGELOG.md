@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-adapter-v0.5.0...metamask-polkadot-adapter-v0.5.1) (2023-09-12)
+
+
+### Bug Fixes
+
+* set `westend` as default network ([#174](https://github.com/ChainSafe/metamask-snap-polkadot/issues/174)) ([6e580bc](https://github.com/ChainSafe/metamask-snap-polkadot/commit/6e580bc17a8991c7bf455c0828918c7f8f1df7de)), closes [#170](https://github.com/ChainSafe/metamask-snap-polkadot/issues/170)
+
 ## [0.5.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-adapter-v0.4.1...metamask-polkadot-adapter-v0.5.0) (2023-08-22)
 
 
