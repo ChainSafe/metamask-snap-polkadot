@@ -1,6 +1,6 @@
 {
   "name": "@chainsafe/polkadot-snap",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Metamask snap to interact with Polkadot dapps.",
   "main": "build/index.js",
   "scripts": {
