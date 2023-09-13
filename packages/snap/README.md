@@ -8,7 +8,7 @@ This project extends Metamask capabilities to include support for Polkadot,
 Kusama, and other Substrate- and FRAME-based blockchains in the Polkadot
 ecosystem.
 
-## What Are Snaps?
+## What are Snaps?
 
 > Snaps is a system that allows anyone to safely extend the capabilities of
 > MetaMask. A snap is a program that [Metamask runs] in an isolated environment
