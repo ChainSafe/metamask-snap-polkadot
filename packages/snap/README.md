@@ -5,7 +5,7 @@
 ![](https://img.shields.io/github/license/chainsafe/metamask-snap-polkadot)
 
 This project extends Metamask capabilities to include support for Polkadot,
-Kusama, and other Substrate and FRAME-based blockchains in the Polkadot
+Kusama, and other Substrate- and FRAME-based blockchains in the Polkadot
 ecosystem.
 
 ## What Are Snaps?
