@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.4](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.7.3...polkadot-snap-v0.7.4) (2023-09-13)
+
+
+### Bug Fixes
+
+* manifest ([#186](https://github.com/ChainSafe/metamask-snap-polkadot/issues/186)) ([0f39610](https://github.com/ChainSafe/metamask-snap-polkadot/commit/0f39610bd3c3254d445255ee92f8ca23641aa38a))
+
 ## [0.7.3](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.7.2...polkadot-snap-v0.7.3) (2023-09-13)
 
 
