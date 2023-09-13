@@ -16,6 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: TST
+        run: |
+          echo "${{ github.event.pull_request.merged }}"
+          echo "${{ github.event_name }}"
+          echo "${{ github.event.action }}"
+          echo "${{ steps.verify-changed-files.outputs.files_changed }}"
       - uses: actions/setup-node@v3
         with:
           cache: yarn
