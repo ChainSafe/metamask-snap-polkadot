@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.5](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.7.4...polkadot-snap-v0.7.5) (2023-09-13)
+
+
+### Bug Fixes
+
+* ci missing corepack ([#188](https://github.com/ChainSafe/metamask-snap-polkadot/issues/188)) ([f89c7ae](https://github.com/ChainSafe/metamask-snap-polkadot/commit/f89c7ae1e947ced093e7923e209cf4784517243c))
+
 ## [0.7.4](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.7.3...polkadot-snap-v0.7.4) (2023-09-13)
 
 
