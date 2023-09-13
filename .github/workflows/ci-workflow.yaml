@@ -28,12 +28,13 @@ jobs:
         run: yarn run lint
       - uses: tj-actions/verify-changed-files@v9
         id: verify-changed-files
-        if: github.head_ref != 'master'
         with:
           files: |
             packages/snap/snap.manifest.json
       - name: Check if snap manifest updated
-        if: steps.verify-changed-files.outputs.files_changed == 'true'
+        if: |
+          steps.verify-changed-files.outputs.files_changed == 'true'
+          && github.event.action != 'closed'
         run: |
           echo "Snap manifest not updated: ${{ steps.verify-changed-files.outputs.changed_files }} 
           or @metamask/snaps-cli version is different from local version"
@@ -56,6 +57,8 @@ jobs:
         run: yarn install --immutable
       - name: Build
         run: yarn build
+        env:
+          REACT_APP_SNAP_ID: 'npm:@chainsafe/polkadot-snap'
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
