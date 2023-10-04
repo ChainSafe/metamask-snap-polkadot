@@ -1,6 +1,6 @@
 {
-  "version": "0.7.5",
-  "description": "The Polkadot snap.",
+  "version": "0.7.6",
+  "description": "MetaMask snap for interacting with Polkadot dApps",
   "proposedName": "Polkadot Wallet",
   "repository": {
     "type": "git",
@@ -11,6 +11,7 @@
     "location": {
       "npm": {
         "filePath": "./dist/bundle.js",
+        "iconPath": "./images/logo.svg",
         "packageName": "@chainsafe/polkadot-snap",
         "registry": "https://registry.npmjs.org/"
       }
