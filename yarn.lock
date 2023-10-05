@@ -2307,7 +2307,6 @@ __metadata:
   resolution: "@chainsafe/polkadot-snap@workspace:packages/snap"
   dependencies:
     "@chainsafe/metamask-polkadot-types": "workspace:^"
-    "@metamask/key-tree": ^9.0.0
     "@metamask/snaps-cli": ^2.0.2
     "@metamask/snaps-types": ^2.0.0
     "@metamask/snaps-ui": ^2.0.0
