@@ -1,5 +1,5 @@
 {
-  "version": "0.7.6",
+  "version": "0.7.5",
   "description": "MetaMask snap for interacting with Polkadot dApps",
   "proposedName": "Polkadot Wallet",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "git+https://github.com/chainsafe/metamask-snap-polkadot.git"
   },
   "source": {
-    "shasum": "Vz+dLpnwiRlDThyNAF1rPHPRpJ0EL+aj6O2kFufWWKI=",
+    "shasum": "ug0sJKI0iSxdbozeTlE27pdppYTy8BO1oIdyFQHd6SU=",
     "location": {
       "npm": {
         "filePath": "./dist/bundle.js",
