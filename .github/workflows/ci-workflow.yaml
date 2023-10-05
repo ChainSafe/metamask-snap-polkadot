@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: yarn
-          node-version: '16.x'
+          node-version: '18.x'
       - run: corepack enable
       - run: yarn install --immutable
       - name: Build
@@ -50,7 +50,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: yarn
-          node-version: '16.x'
+          node-version: '18.x'
       - run: corepack enable
       - name: Install
         run: yarn install --immutable
