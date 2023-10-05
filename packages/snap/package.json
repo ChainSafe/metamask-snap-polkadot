@@ -81,8 +81,8 @@
   },
   "dependencies": {
     "@metamask/key-tree": "^9.0.0",
-    "@metamask/snaps-types": "^1.0.2",
-    "@metamask/snaps-ui": "^1.0.2",
+    "@metamask/snaps-types": "^2.0.0",
+    "@metamask/snaps-ui": "^2.0.0",
     "@polkadot/api": "^10.9.1",
     "@polkadot/keyring": "^12.3.2",
     "@polkadot/types": "^10.9.1",
