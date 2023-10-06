@@ -2330,7 +2330,7 @@ __metadata:
     strict-event-emitter-types: ^2.0.0
     superstruct: ^1.0.3
     ts-node: ^10.9.1
-    typescript: ^5.2.2
+    typescript: 5.0.3
   languageName: unknown
   linkType: soft
 
@@ -15954,7 +15954,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.27.1
     eslint: ^8.47.0
     prettier: ^3.0.2
-    typescript: ^5.2.2
+    typescript: 5.0.3
   languageName: unknown
   linkType: soft
 
@@ -17735,6 +17735,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:5.0.3":
+  version: 5.0.3
+  resolution: "typescript@npm:5.0.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 13221c7f7dd2aa9cf8ac2fb1b5ca3825ff3d97a43b4656fd22ca36c0ec30179643b5157d620c3e4af9d3fc9234a571bd3ea175624b3d37c494d7ed159b038df2
+  languageName: node
+  linkType: hard
+
 "typescript@npm:^5.2.2":
   version: 5.2.2
   resolution: "typescript@npm:5.2.2"
@@ -17742,6 +17752,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 91ae3e6193d0ddb8656d4c418a033f0f75dec5e077ebbc2bd6d76439b93f35683936ee1bdc0e9cf94ec76863aa49f27159b5788219b50e1cd0cd6d110aa34b07
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@5.0.3#~builtin<compat/typescript>":
+  version: 5.0.3
+  resolution: "typescript@patch:typescript@npm%3A5.0.3#~builtin<compat/typescript>::version=5.0.3&hash=b5f058"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 381de1b58d2deb6443cc7d23365b4db36de8360dfc4f4d295ca2fdb0e01687711fb541478838fb9326da315baf6967d616c745d990f2c362036b337a12b18255
   languageName: node
   linkType: hard
 
