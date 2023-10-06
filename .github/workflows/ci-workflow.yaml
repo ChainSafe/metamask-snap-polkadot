@@ -10,24 +10,20 @@ on:
 
 jobs:
   build:
-    # Job name is Greeting
-    name: build
-    # This job runs on Linux
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           cache: yarn
-          node-version: '18.x'
+          node-version: '18'
       - run: corepack enable
-      - run: yarn install --immutable
+      - name: Install deps
+        run: yarn --immutable
       - name: Build
-        run: yarn run build
-      - name: Run linter
-        run: yarn run lint
+        run: yarn build
       - uses: tj-actions/verify-changed-files@v9
-        if: github.ref_name != 'master'
         id: verify-changed-files
         with:
           files: |
@@ -35,11 +31,44 @@ jobs:
       - name: Check if snap manifest updated
         if: steps.verify-changed-files.outputs.files_changed == 'true'
         run: |
-          echo "Snap manifest not updated: ${{ steps.verify-changed-files.outputs.changed_files }} 
-          or @metamask/snaps-cli version is different from local version"
+          echo "Snap manifest not updated: ${{ steps.verify-changed-files.outputs.changed_files }}"
           exit 1
-      - name: Run tests
-        run: yarn run test
+
+  lint:
+    needs: build
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: 'yarn'
+      - run: corepack enable
+      - name: Install deps
+        run: yarn --immutable
+      - name: Build
+        run: yarn build
+      - name: Lint
+        run: yarn run lint
+
+  tests:
+    needs: lint
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: 'yarn'
+      - run: corepack enable
+      - name: Install
+        run: yarn --immutable
+      - name: Build
+        run: yarn build
+      - name: "Unit Tests"
+        run: 'yarn run test:unit'
 
   page:
     needs: build
