@@ -31,6 +31,10 @@
     "type": "git",
     "url": "git+https://github.com/chainsafe/metamask-snap-polkadot.git"
   },
+  "files": [
+    "snap.manifest.json",
+    "CHANGELOG.md"
+  ],
   "keywords": [
     "polkadot",
     "metamask",
