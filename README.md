@@ -1,27 +1,13 @@
-# Metamask <> Polkadot snap
+# Polkadot Wallet Snap for MetaMask
+
 ![](https://github.com/chainsafe/metamask-snap-polkadot/workflows/ci/badge.svg)
 ![](https://img.shields.io/github/issues-raw/chainsafe/metamask-snap-polkadot)
 ![](https://img.shields.io/github/license/chainsafe/metamask-snap-polkadot)
-![](https://img.shields.io/badge/yarn-%3E%3D1.17.0-orange.svg?style=flat-square)
-![](https://img.shields.io/badge/Node.js-%3E%3D12.x-orange.svg?style=flat-square)
-![Discord](https://img.shields.io/discord/608204864593461248?color=blue&label=Discord&logo=discord)
 
-Metamask snap (plugin) to enable Metamask users interaction with Polkadot dapps.
-
-### Documentation
-
-Go to [wiki](https://github.com/chainsafe/metamask-snap-polkadot/wiki) for detailed documentation on Polkadot snap.
-
-Here you can find described [integration process](https://github.com/chainsafe/metamask-snap-polkadot/wiki#integration) and full [snap API documentation](https://github.com/chainsafe/metamask-snap-polkadot/wiki/API-Documentation).
-
-### Testing
-
-#### Metamask
-- [download latest Metamask snaps beta release](https://github.com/NodeFactoryIo/metamask-snaps-beta/releases) (chrome recommended)
-- extract downloaded archive
-- go to [chrome://extensions/](chrome://extensions/)
-- enable "Developer mode"
-- click "Load unpacked" and point to extracted archive chrome directory
+This project uses the [MetaMask Snaps](https://metamask.io/snaps/) framework to extend MetaMask
+capabilities to include support for Polkadot, Kusama, and other
+[Substrate](https://docs.substrate.io/)- and FRAME-based blockchains in the
+[Polkadot](https://www.polkadot.network/) ecosystem.
 
 #### Extension
 - `yarn install`
