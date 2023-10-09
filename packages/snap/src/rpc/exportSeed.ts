@@ -1,4 +1,3 @@
-import type { JsonBIP44CoinTypeNode } from '@metamask/key-tree';
 import { showConfirmationDialog } from '../util/confirmation';
 
 const kusamaCoinType = 434;
@@ -10,10 +9,10 @@ export async function exportSeed(): Promise<string | null> {
   });
   // return seed if user confirmed action
   if (confirmation) {
-    const bip44Node = (await snap.request({
+    const bip44Node = await snap.request({
       method: 'snap_getBip44Entropy',
       params: { coinType: kusamaCoinType }
-    })) as JsonBIP44CoinTypeNode;
+    });
     return bip44Node.privateKey.slice(0, 32);
   }
   return null;
