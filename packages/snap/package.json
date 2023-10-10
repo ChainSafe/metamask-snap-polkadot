@@ -1,7 +1,7 @@
 {
   "name": "@chainsafe/polkadot-snap",
   "version": "0.7.5",
-  "description": "Metamask snap to interact with Polkadot dapps.",
+  "description": "MetaMask snap for interacting with Polkadot dApps",
   "main": "build/index.js",
   "scripts": {
     "lint": "yarn run lint:types && yarn run lint:style",
