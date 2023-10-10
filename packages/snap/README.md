@@ -10,6 +10,11 @@ capabilities to include support for Polkadot, Kusama, and other
 [Polkadot](https://www.polkadot.network/) ecosystem.
 
 #### Extension
+
+Developers who wish to use the extension locally must use
+[MetaMask Flask](https://metamask.io/flask/); run the following commands from the project root
+to launch the [Polkadot Wallet Snap Example dApp](/packages/example).
+
 - `yarn install`
 - `yarn run demo`
 
