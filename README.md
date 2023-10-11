@@ -9,12 +9,25 @@ capabilities to include support for Polkadot, Kusama, and other
 [Substrate](https://docs.substrate.io/)- and FRAME-based blockchains in the
 [Polkadot](https://www.polkadot.network/) ecosystem.
 
-#### Extension
+## Documentation
+
+Polkadot Wallet snap architecture, integration steps and detailed API documentation for dApp
+developers is covered in the
+[project wiki](https://github.com/ChainSafe/metamask-snap-polkadot/wiki), which also includes a
+usage guide for the [example dApp](https://polkadot.snap.chainsafe.io/).
+
+## Local Development
+
+Developers who wish to use the snap locally must use [MetaMask Flask](https://metamask.io/flask/);
+run the following commands from the project root to launch the
+[Polkadot Wallet Snap Example dApp](https://github.com/ChainSafe/metamask-snap-polkadot/tree/master/packages/example).
+
 - `yarn install`
 - `yarn run demo`
 
 
-### License
+## License
+
 Copyright [2020] [ChainSafe Systems]
 
 Licensed under the Apache License, Version 2.0 (the "License");

@@ -47,7 +47,7 @@ export interface SnapInitializationResponse {
   snap?: MetamaskPolkadotSnap;
 }
 
-export async function initiatePolkdatodSnap(): Promise<SnapInitializationResponse> {
+export async function initiatePolkadotSnap(): Promise<SnapInitializationResponse> {
   const snapId = process.env.REACT_APP_SNAP_ID ? process.env.REACT_APP_SNAP_ID : defaultSnapId;
 
   try {
