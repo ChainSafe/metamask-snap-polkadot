@@ -85,7 +85,7 @@ export const Dashboard = (): React.JSX.Element => {
     <Container maxWidth="lg">
       <Grid direction="column" alignItems="center" justifyContent="center" container spacing={3}>
         <Box style={{ margin: '2rem' }}>
-          <Typography variant="h2">Polkadot snap demo</Typography>
+          <Typography variant="h2">Polkadot Wallet Snap Example dApp</Typography>
         </Box>
         {!state.polkadotSnap.isInstalled ? (
           <MetaMaskConnector />
