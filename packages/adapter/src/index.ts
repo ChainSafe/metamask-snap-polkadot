@@ -8,6 +8,7 @@ const defaultSnapOrigin = 'npm:@chainsafe/polkadot-snap';
 export type SnapInstallationParamNames = string;
 
 export * from './extension';
+export { hasMetaMask, isPolkadotSnapInstalled, isMetamaskSnapsSupported } from './utils';
 
 export async function enablePolkadotSnap(
   config: SnapConfig = { networkName: 'westend' },
