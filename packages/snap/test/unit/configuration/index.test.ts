@@ -1,11 +1,11 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@subspace/metamask-subspace-types';
 import { getConfiguration, getDefaultConfiguration } from '../../../src/configuration';
 import {
   defaultConfiguration,
-  kusamaConfiguration,
-  westendConfiguration
+  gemini3gConfiguration,
+  gemini3fConfiguration
 } from '../../../src/configuration/predefined';
 import { EmptyMetamaskState } from '../../../src/interfaces';
 import type { WalletMock } from '../wallet.mock';
@@ -15,14 +15,14 @@ chai.use(sinonChai);
 
 describe('Test configuration functions', function () {
   describe('getDefaultConfiguration', function () {
-    it('should return kusama configuration on "kusama"', function () {
-      const configuration = getDefaultConfiguration('kusama');
-      expect(configuration).to.be.deep.eq(kusamaConfiguration);
+    it('should return gemini-3g configuration on "gemini-3g"', function () {
+      const configuration = getDefaultConfiguration('gemini-3g');
+      expect(configuration).to.be.deep.eq(gemini3gConfiguration);
     });
 
-    it('should return westend configuration on "westend"', function () {
-      const configuration = getDefaultConfiguration('westend');
-      expect(configuration).to.be.deep.eq(westendConfiguration);
+    it('should return gemini-3f configuration on "gemini-3f"', function () {
+      const configuration = getDefaultConfiguration('gemini-3f');
+      expect(configuration).to.be.deep.eq(gemini3fConfiguration);
     });
 
     it('should return default configuration on empty string', function () {
@@ -50,7 +50,7 @@ describe('Test configuration functions', function () {
     it('should return configuration saved in state"', async function () {
       const customConfiguration: SnapConfig = {
         addressPrefix: 5,
-        networkName: 'westend',
+        networkName: 'gemini-3g',
         wsRpcUrl: 'url'
       };
       walletStub.request.returns({ config: JSON.stringify(customConfiguration) });

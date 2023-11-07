@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@subspace/metamask-subspace-types';
 import { getDefaultConfiguration } from '../configuration';
 import { getMetamaskState } from './getMetamaskState';
 

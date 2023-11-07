@@ -1,23 +1,23 @@
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@subspace/metamask-subspace-types';
 import { getMetamaskState } from '../rpc/getMetamaskState';
 import {
   defaultConfiguration,
-  kusamaConfiguration,
-  polkadotConfiguration,
-  westendConfiguration
+  gemini3gConfiguration,
+  gemini3fConfiguration,
+  devNetConfiguration
 } from './predefined';
 
 export function getDefaultConfiguration(networkName: string): SnapConfig {
   switch (networkName) {
-    case 'polkadot':
-      console.log('Polkadot configuration selected');
-      return polkadotConfiguration;
-    case 'kusama':
-      console.log('Kusama configuration selected');
-      return kusamaConfiguration;
-    case 'westend':
-      console.log('Westend configuration selected');
-      return westendConfiguration;
+    case 'gemini-3g':
+      console.log('Gemini-3g configuration selected');
+      return gemini3gConfiguration;
+    case 'gemini-3f':
+      console.log('Gemini-3f configuration selected');
+      return gemini3fConfiguration;
+    case 'devNet':
+      console.log('DevNet configuration selected');
+      return devNetConfiguration;
     default:
       return defaultConfiguration;
   }

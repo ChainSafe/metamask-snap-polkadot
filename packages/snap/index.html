@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Polkadot metamask snap</title>
+        <title>Subspace metamask snap</title>
     </head>
     <body>
-        <img src="https://blog.coinfabrik.com/wp-content/uploads/2019/04/polkadot-substrate.png" height="60" />
-        <h2>Polkadot metamask snap</h2>
+        <img src="https://blog.coinfabrik.com/wp-content/uploads/2019/04/subspace-substrate.png" height="60" />
+        <h2>Subspace metamask snap</h2>
         <details>
             <summary>Instructions</summary>
             <ul>
-                <li>First, click "Connect polkadot plugin". Then, try out the other buttons!</li>
+                <li>First, click "Connect subspace plugin". Then, try out the other buttons!</li>
                 <li>Please note that:</li>
                 <ul>
                     <li>The Snap <b>package.json</b> must be located in the server root directory</li>
@@ -24,7 +24,7 @@
         <div>
             <!-- Snap connect button -->
             <div style="margin-bottom: 10px">
-                <button class="connect-snap">Connect polkadot snap</button>
+                <button class="connect-snap">Connect subspace snap</button>
                 <button class="configure">Set configuration</button>
                 <button class="create-asset">Create dot asset</button>
                 <button class="remove-asset">Remove dot asset</button>
@@ -58,7 +58,7 @@
         </div>
         <br />
         <div style="background-color: floralwhite">
-            <h3 style="margin-block-end: 0">Polkadot substrate calls</h3>
+            <h3 style="margin-block-end: 0">Subspace substrate calls</h3>
             <div style="margin-top: 10px">
                 <button class="head-button">Get substrate chain head</button>
                 <span style="margin-left: 10px">Substrate chain head hash:</span>
@@ -153,13 +153,13 @@
         // SUBSTRATE CALLS
 
         // chain head
-        const polkadotHeadButton = document.querySelector('button.head-button');
+        const subspaceHeadButton = document.querySelector('button.head-button');
         const headLabel = document.querySelector('span.head');
-        polkadotHeadButton.addEventListener('click', getChainHead);
+        subspaceHeadButton.addEventListener('click', getChainHead);
         // balance
-        const polkadotBalanceButton = document.querySelector('button.balance-button');
+        const subspaceBalanceButton = document.querySelector('button.balance-button');
         const balanceLabel = document.querySelector('span.balance');
-        polkadotBalanceButton.addEventListener('click', getBalance);
+        subspaceBalanceButton.addEventListener('click', getBalance);
 
         // transactions
         const transactionsButton = document.querySelector('button.transactions-button');
@@ -179,11 +179,11 @@
                     method: 'configure',
                     params: {
                         configuration: {
-                            networkName: 'kusama',
-                            wsRpcUrl: 'https://kusama-rpc.polkadot.io/',
+                            networkName: 'gemini-3g',
+                            wsRpcUrl: 'https://rpc-0.gemini-3g.subspace.network/',
                             unit: {
                                 image: '',
-                                symbol: 'KSM'
+                                symbol: 'tSSC'
                             },
                             addressPrefix: 1
                         }
@@ -365,7 +365,7 @@
             // await fetchAddress();
         }
 
-        // polkadot/substrate functions
+        // subspace/substrate functions
 
         async function getChainHead() {
             let response = null;

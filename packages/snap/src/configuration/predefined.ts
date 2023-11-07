@@ -1,36 +1,36 @@
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@subspace/metamask-subspace-types';
 
-export const kusamaConfiguration: SnapConfig = {
+export const gemini3gConfiguration: SnapConfig = {
   addressPrefix: 2,
-  networkName: 'kusama',
+  networkName: 'gemini-3g',
   unit: {
     decimals: 12,
     image: 'https://svgshare.com/i/L3o.svg',
-    symbol: 'KSM'
+    symbol: 'tSSC'
   },
-  wsRpcUrl: 'https://kusama-rpc.polkadot.io/'
+  wsRpcUrl: 'https://rpc-0.gemini-3g.subspace.network/ws/'
 };
 
-export const westendConfiguration: SnapConfig = {
+export const gemini3fConfiguration: SnapConfig = {
   addressPrefix: 42,
-  networkName: 'westend',
+  networkName: 'gemini-3f',
   unit: {
     decimals: 12,
     image: 'https://svgshare.com/i/L2d.svg',
-    symbol: 'WND'
+    symbol: 'tSSC'
   },
-  wsRpcUrl: 'https://westend-rpc.polkadot.io/'
+  wsRpcUrl: 'https://rpc-0.gemini-3f.subspace.network/ws/'
 };
 
-export const polkadotConfiguration: SnapConfig = {
+export const devNetConfiguration: SnapConfig = {
   addressPrefix: 0,
-  networkName: 'polkadot',
+  networkName: 'devNet',
   unit: {
     decimals: 12,
     image: 'https://polkadot.js.org/apps/static/polkadot-circle.1eea41b2..svg',
-    symbol: 'DOT'
+    symbol: 'tSSC'
   },
-  wsRpcUrl: 'https://rpc.polkadot.io/'
+  wsRpcUrl: 'https://rpc-0.devnet.subspace.network/ws/'
 };
 
-export const defaultConfiguration: SnapConfig = westendConfiguration;
+export const defaultConfiguration: SnapConfig = gemini3gConfiguration;

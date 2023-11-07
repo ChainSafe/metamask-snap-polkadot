@@ -1,29 +1,24 @@
-# Polkadot Wallet Snap for MetaMask
+# Subspace Wallet Snap for MetaMask
 
-![](https://github.com/chainsafe/metamask-snap-polkadot/workflows/ci/badge.svg)
-![](https://img.shields.io/github/issues-raw/chainsafe/metamask-snap-polkadot)
-![](https://img.shields.io/github/license/chainsafe/metamask-snap-polkadot)
+![](https://github.com/subspace/metamask-snap-subspace/workflows/ci/badge.svg)
+![](https://img.shields.io/github/issues-raw/subspace/metamask-snap-subspace)
+![](https://img.shields.io/github/license/subspace/metamask-snap-subspace)
 
 This project uses the [MetaMask Snaps](https://metamask.io/snaps/) framework to extend MetaMask
-capabilities to include support for Polkadot, Kusama, and other
-[Substrate](https://docs.substrate.io/)- and FRAME-based blockchains in the
-[Polkadot](https://www.polkadot.network/) ecosystem.
+capabilities to include support for Subspace
+[Substrate](https://docs.substrate.io/).
 
 ## Documentation
 
-Polkadot Wallet snap architecture, integration steps and detailed API documentation for dApp
+Subspace Wallet snap architecture, integration steps and detailed API documentation for dApp
 developers is covered in the
-[project wiki](https://github.com/ChainSafe/metamask-snap-polkadot/wiki), which also includes a
-usage guide for the [example dApp](https://polkadot.snap.chainsafe.io/). Additional
-documentation is available on the
-[homepage](https://github.com/ChainSafe/metamask-snap-polkadot#polkadot-wallet-snap-for-metamask)
-for the project's GitHub repository.
+[project wiki](https://github.com/subspace/metamask-snap-subspace/wiki).
 
 ## Local Development
 
 Developers who wish to use the snap locally must use [MetaMask Flask](https://metamask.io/flask/);
 run the following commands from the project root to launch the
-[Polkadot Wallet Snap Example dApp](https://github.com/ChainSafe/metamask-snap-polkadot/tree/master/packages/example).
+[Subspace Wallet Snap Example dApp](https://github.com/subspace/metamask-snap-subspace/tree/master/packages/example).
 
 - `yarn install`
 - `yarn run demo`
@@ -31,7 +26,7 @@ run the following commands from the project root to launch the
 
 ## License
 
-Copyright [2020] [ChainSafe Systems]
+Copyright [2020] [Subspace Systems]
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

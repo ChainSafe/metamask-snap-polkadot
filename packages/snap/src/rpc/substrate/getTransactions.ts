@@ -1,4 +1,4 @@
-import type { Transaction } from '@chainsafe/metamask-polkadot-types';
+import type { Transaction } from '@subspace/metamask-subspace-types';
 import type { MetamaskState } from '../../interfaces';
 
 export async function getTransactions(): Promise<Transaction[]> {

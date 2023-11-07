@@ -1,9 +1,9 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { kusamaConfiguration, westendConfiguration } from '../../../src/configuration/predefined';
+import { gemini3gConfiguration, gemini3fConfiguration } from '../../../src/configuration/predefined';
 import { configure } from '../../../src/rpc/configure';
 import { EmptyMetamaskState } from '../../../src/interfaces';
-import { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import { SnapConfig } from '@subspace/metamask-subspace-types';
 import { getWalletMock } from '../wallet.mock';
 
 chai.use(sinonChai);
@@ -15,21 +15,21 @@ describe('Test rpc handler function: configure', function () {
     walletStub.reset();
   });
 
-  it('should set predefined kusama configuration', async function () {
+  it('should set predefined gemini-3g configuration', async function () {
     walletStub.request.returns(EmptyMetamaskState());
     // tested method
-    const result = await configure('kusama', {});
+    const result = await configure('gemini-3g', {});
 
     // assertions
-    expect(result).to.be.deep.eq(kusamaConfiguration);
+    expect(result).to.be.deep.eq(gemini3gConfiguration);
   });
 
-  it('should set predefined westend configuration', async function () {
+  it('should set predefined gemini-3f configuration', async function () {
     walletStub.request.returns(EmptyMetamaskState());
     // tested method
-    const result = await configure('westend', {});
+    const result = await configure('gemini-3f', {});
     // assertions
-    expect(result).to.be.deep.eq(westendConfiguration);
+    expect(result).to.be.deep.eq(gemini3fConfiguration);
   });
 
   it('should set custom configuration', async function () {
@@ -37,7 +37,7 @@ describe('Test rpc handler function: configure', function () {
     // stubs
     const customConfiguration: SnapConfig = {
       addressPrefix: 1,
-      networkName: 'westend',
+      networkName: 'gemini-3g',
       unit: { customViewUrl: 'custom-view-url', decimals: 1, image: 'image', symbol: 'TST' },
       wsRpcUrl: 'ws-rpc-url'
     };
@@ -47,12 +47,12 @@ describe('Test rpc handler function: configure', function () {
     expect(result).to.be.deep.eq(customConfiguration);
   });
 
-  it('should set predefined kusama configuration with additional property override', async function () {
+  it('should set predefined gemini-3f configuration with additional property override', async function () {
     walletStub.request.returns(EmptyMetamaskState());
     // tested method
-    const customConfiguration = kusamaConfiguration;
+    const customConfiguration = gemini3fConfiguration;
     customConfiguration.unit.symbol = 'TST_KSM';
-    const result = await configure('kusama', {
+    const result = await configure('gemini-3f', {
       unit: { symbol: 'TST_KSM' }
     } as SnapConfig);
     // assertions

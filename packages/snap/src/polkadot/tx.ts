@@ -1,4 +1,4 @@
-import type { Transaction } from '@chainsafe/metamask-polkadot-types';
+import type { Transaction } from '@subspace/metamask-subspace-types';
 import { getMetamaskState } from '../rpc/getMetamaskState';
 
 export async function saveTxToState(tx: Transaction): Promise<void> {

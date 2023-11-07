@@ -1,10 +1,10 @@
 {
-  "version": "0.7.7",
-  "description": "The Polkadot snap.",
-  "proposedName": "Polkadot Wallet",
+  "version": "0.0.1",
+  "description": "The Subspace snap.",
+  "proposedName": "Subspace Wallet",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chainsafe/metamask-snap-polkadot.git"
+    "url": "git+https://github.com/subspace/metamask-snap-subspace.git"
   },
   "source": {
     "shasum": "GwKusydp1vpDXY7B98s0zjVphX1d16ZnkGG3xfPqXHM=",
@@ -12,7 +12,7 @@
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/logo.svg",
-        "packageName": "@chainsafe/polkadot-snap",
+        "packageName": "@subspace/subspace-snap",
         "registry": "https://registry.npmjs.org/"
       }
     }

@@ -1,4 +1,4 @@
-import type { BlockId, TxPayload } from '@chainsafe/metamask-polkadot-types';
+import type { BlockId, TxPayload } from '@subspace/metamask-subspace-types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { Describe } from 'superstruct';
 import { array, enums, number, object, optional, string, type, union } from 'superstruct';

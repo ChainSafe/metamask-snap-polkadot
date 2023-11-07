@@ -1,7 +1,7 @@
 {
-  "name": "@chainsafe/polkadot-snap",
-  "version": "0.7.7",
-  "description": "MetaMask snap for interacting with Polkadot dApps",
+  "name": "@subspace/subspace-snap",
+  "version": "0.0.1",
+  "description": "MetaMask snap for interacting with Subspace dApps",
   "main": "build/index.js",
   "scripts": {
     "lint": "yarn run lint:types && yarn run lint:style",
@@ -29,24 +29,27 @@
     "test": "yarn run test:unit",
     "test:unit": "mocha --colors"
   },
+  "author": {
+    "name": "Subspace.network",
+    "url": "https://subspace.network"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chainsafe/metamask-snap-polkadot.git"
+    "url": "git+https://github.com/subspace/metamask-snap-subspace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/subspace/metamask-snap-subspace/issues"
   },
   "keywords": [
-    "polkadot",
+    "subspace",
     "metamask",
     "snap",
     "plugin",
     "dapp",
     "wallet"
   ],
-  "author": "ChainSafe <info@chainsafe.io>",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/chainsafe/metamask-snap-polkadot/issues"
-  },
-  "homepage": "https://github.com/chainsafe/metamask-snap-polkadot#readme",
+  "homepage": "https://github.com/subspace/metamask-snap-subspace#readme",
   "web3Wallet": {
     "bundle": {
       "local": "dist/bundle.js",
@@ -61,7 +64,7 @@
     }
   },
   "devDependencies": {
-    "@chainsafe/metamask-polkadot-types": "workspace:^",
+    "@subspace/metamask-subspace-types": "workspace:^",
     "@metamask/snaps-cli": "^1.0.2",
     "@types/chai": "^4.2.10",
     "@types/mocha": "^10.0.1",
