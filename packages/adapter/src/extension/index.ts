@@ -1,8 +1,8 @@
 import type { Injected, InjectedAccount, InjectedWindow } from '@polkadot/extension-inject/types';
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@subspace/metamask-subspace-types';
 import type { SignerPayloadJSON, SignerPayloadRaw, SignerResult } from '@polkadot/types/types';
 import type { HexString } from '@polkadot/util/types';
-import { enablePolkadotSnap } from '../index';
+import { enableSubspaceSnap } from '../index';
 import { hasMetaMask, isMetamaskSnapsSupported } from '../utils';
 
 interface Web3Window extends InjectedWindow {
@@ -16,15 +16,15 @@ const config: SnapConfig = {
 function transformAccounts(accounts: string[]): InjectedAccount[] {
   return accounts.map((address, i) => ({
     address,
-    name: `Polkadot Snap #${i}`,
+    name: `Subspace Snap #${i}`,
     type: 'ethereum'
   }));
 }
 
-function injectPolkadotSnap(win: Web3Window): void {
+function injectSubspaceSnap(win: Web3Window): void {
   win.injectedWeb3.Snap = {
     enable: async (): Promise<Injected> => {
-      const snap = (await enablePolkadotSnap(config)).getMetamaskSnapApi();
+      const snap = (await enableSubspaceSnap(config)).getMetamaskSnapApi();
 
       return {
         accounts: {
@@ -54,7 +54,7 @@ function injectPolkadotSnap(win: Web3Window): void {
   };
 }
 
-export function initPolkadotSnap(): Promise<boolean> {
+export function initSubspaceSnap(): Promise<boolean> {
   return new Promise((resolve): void => {
     const win = window as Window & Web3Window;
     win.injectedWeb3 = win.injectedWeb3 || {};
@@ -62,7 +62,7 @@ export function initPolkadotSnap(): Promise<boolean> {
     if (hasMetaMask())
       void isMetamaskSnapsSupported().then((result) => {
         if (result) {
-          injectPolkadotSnap(win);
+          injectSubspaceSnap(win);
           resolve(true);
         } else {
           resolve(false);

@@ -1,4 +1,4 @@
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@subspace/metamask-subspace-types';
 import {
   exportSeed,
   generateTransactionPayload,
@@ -14,7 +14,7 @@ import {
 } from './methods';
 import type { MetamaskSnapApi } from './types';
 
-export class MetamaskPolkadotSnap {
+export class MetamaskSubspaceSnap {
   protected readonly config: SnapConfig;
   //url to package.json
   protected readonly pluginOrigin: string;
@@ -24,7 +24,7 @@ export class MetamaskPolkadotSnap {
   public constructor(pluginOrigin: string, config: SnapConfig) {
     this.pluginOrigin = pluginOrigin;
     this.snapId = `${this.pluginOrigin}`;
-    this.config = config || { networkName: 'westend' };
+    this.config = config || { networkName: 'gemini-3g' };
   }
 
   public getMetamaskSnapApi = (): MetamaskSnapApi => {

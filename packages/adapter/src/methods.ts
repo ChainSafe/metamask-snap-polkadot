@@ -1,17 +1,17 @@
 import type {
   BlockInfo,
-  MetamaskPolkadotRpcRequest,
+  MetamaskSubspaceRpcRequest,
   SignPayloadJSONRequest,
   SignPayloadRawRequest,
   SnapConfig,
   Transaction,
   TxPayload
-} from '@chainsafe/metamask-polkadot-types';
+} from '@subspace/metamask-subspace-types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import type { MetamaskPolkadotSnap } from './snap';
+import type { MetamaskSubspaceSnap } from './snap';
 
 async function sendSnapMethod(
-  request: MetamaskPolkadotRpcRequest,
+  request: MetamaskSubspaceRpcRequest,
   snapId: string
 ): Promise<unknown> {
   console.info('sendSnapMethod', request, snapId);
@@ -25,7 +25,7 @@ async function sendSnapMethod(
 }
 
 async function sign(
-  this: MetamaskPolkadotSnap,
+  this: MetamaskSubspaceSnap,
   method: 'signPayloadJSON' | 'signPayloadRaw',
   payload: SignerPayloadJSON | SignerPayloadRaw
 ): Promise<{ signature: string }> {
@@ -41,43 +41,43 @@ async function sign(
 }
 
 export async function signPayloadJSON(
-  this: MetamaskPolkadotSnap,
+  this: MetamaskSubspaceSnap,
   payload: SignerPayloadJSON
 ): Promise<string> {
   return (await sign.bind(this)('signPayloadJSON', payload)).signature;
 }
 
 export async function signPayloadRaw(
-  this: MetamaskPolkadotSnap,
+  this: MetamaskSubspaceSnap,
   payload: SignerPayloadRaw
 ): Promise<string> {
   return (await sign.bind(this)('signPayloadRaw', payload)).signature;
 }
 
-export async function getBalance(this: MetamaskPolkadotSnap): Promise<string> {
+export async function getBalance(this: MetamaskSubspaceSnap): Promise<string> {
   return (await sendSnapMethod({ method: 'getBalance' }, this.snapId)) as string;
 }
 
-export async function getAddress(this: MetamaskPolkadotSnap): Promise<string> {
+export async function getAddress(this: MetamaskSubspaceSnap): Promise<string> {
   return (await sendSnapMethod({ method: 'getAddress' }, this.snapId)) as string;
 }
 
-export async function getPublicKey(this: MetamaskPolkadotSnap): Promise<string> {
+export async function getPublicKey(this: MetamaskSubspaceSnap): Promise<string> {
   return (await sendSnapMethod({ method: 'getPublicKey' }, this.snapId)) as string;
 }
 
-export async function exportSeed(this: MetamaskPolkadotSnap): Promise<string> {
+export async function exportSeed(this: MetamaskSubspaceSnap): Promise<string> {
   return (await sendSnapMethod({ method: 'exportSeed' }, this.snapId)) as string;
 }
 
 export async function setConfiguration(
-  this: MetamaskPolkadotSnap,
+  this: MetamaskSubspaceSnap,
   config: SnapConfig
 ): Promise<void> {
   await sendSnapMethod({ method: 'configure', params: { configuration: config } }, this.snapId);
 }
 
-export async function getLatestBlock(this: MetamaskPolkadotSnap): Promise<BlockInfo> {
+export async function getLatestBlock(this: MetamaskSubspaceSnap): Promise<BlockInfo> {
   try {
     return (await sendSnapMethod(
       { method: 'getBlock', params: { blockTag: 'latest' } },
@@ -89,12 +89,12 @@ export async function getLatestBlock(this: MetamaskPolkadotSnap): Promise<BlockI
   }
 }
 
-export async function getAllTransactions(this: MetamaskPolkadotSnap): Promise<Transaction[]> {
+export async function getAllTransactions(this: MetamaskSubspaceSnap): Promise<Transaction[]> {
   return (await sendSnapMethod({ method: 'getAllTransactions' }, this.snapId)) as Transaction[];
 }
 
 export async function sendSignedData(
-  this: MetamaskPolkadotSnap,
+  this: MetamaskSubspaceSnap,
   signature: string,
   txPayload: TxPayload
 ): Promise<Transaction> {
@@ -112,7 +112,7 @@ export async function sendSignedData(
 }
 
 export async function generateTransactionPayload(
-  this: MetamaskPolkadotSnap,
+  this: MetamaskSubspaceSnap,
   amount: string | number,
   to: string
 ): Promise<TxPayload> {

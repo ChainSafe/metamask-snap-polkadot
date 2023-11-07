@@ -1,19 +1,19 @@
 import '@polkadot/types-augment';
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
-import { MetamaskPolkadotSnap } from './snap';
-import { hasMetaMask, isMetamaskSnapsSupported, isPolkadotSnapInstalled } from './utils';
+import type { SnapConfig } from '@subspace/metamask-subspace-types';
+import { MetamaskSubspaceSnap } from './snap';
+import { hasMetaMask, isMetamaskSnapsSupported, isSubspaceSnapInstalled } from './utils';
 
-const defaultSnapOrigin = 'npm:@chainsafe/polkadot-snap';
+const defaultSnapOrigin = 'npm:@subspace/subspace-snap';
 
 export type SnapInstallationParamNames = string;
 
 export * from './extension';
 
-export async function enablePolkadotSnap(
-  config: SnapConfig = { networkName: 'westend' },
+export async function enableSubspaceSnap(
+  config: SnapConfig = { networkName: 'gemini-3g' },
   snapOrigin?: string,
   snapInstallationParams: Record<SnapInstallationParamNames, unknown> = {}
-): Promise<MetamaskPolkadotSnap> {
+): Promise<MetamaskSubspaceSnap> {
   const snapId = snapOrigin ?? defaultSnapOrigin;
 
   // check all conditions
@@ -24,10 +24,10 @@ export async function enablePolkadotSnap(
     throw new Error("Current Metamask version doesn't support snaps");
   }
   if (!config.networkName) {
-    config.networkName = 'westend';
+    config.networkName = 'gemini-3g';
   }
 
-  const isInstalled = await isPolkadotSnapInstalled(snapId);
+  const isInstalled = await isSubspaceSnapInstalled(snapId);
   console.info('isInstalled', isInstalled);
 
   if (!isInstalled) {
@@ -41,7 +41,7 @@ export async function enablePolkadotSnap(
   }
 
   // create snap describer
-  const snap = new MetamaskPolkadotSnap(snapOrigin || defaultSnapOrigin, config);
+  const snap = new MetamaskSubspaceSnap(snapOrigin || defaultSnapOrigin, config);
   // set initial configuration
 
   try {

@@ -5,7 +5,7 @@ export function hasMetaMask(): boolean {
   return window.ethereum.isMetaMask;
 }
 
-export async function isPolkadotSnapInstalled(
+export async function isSubspaceSnapInstalled(
   snapOrigin: string,
   version?: string
 ): Promise<boolean> {
