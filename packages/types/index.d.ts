@@ -34,8 +34,8 @@ export interface ConfigureSnapRequest {
   };
 }
 
-export interface AddPolkadotAssetRequest {
-  method: 'addPolkadotAsset';
+export interface AddSubspaceAssetRequest {
+  method: 'addSubspaceAsset';
 }
 
 export interface GetChainHeadRequest {
@@ -72,7 +72,7 @@ export interface SendUnitRequest {
   };
 }
 
-export type MetamaskPolkadotRpcRequest =
+export type MetamaskSubspaceRpcRequest =
   | GetPublicKeyRequest
   | GetAddressRequest
   | ExportSeedRequest
@@ -80,14 +80,14 @@ export type MetamaskPolkadotRpcRequest =
   | GetBlockRequest
   | GetBalanceRequest
   | ConfigureSnapRequest
-  | AddPolkadotAssetRequest
+  | AddSubspaceAssetRequest
   | GetChainHeadRequest
   | SignPayloadJSONRequest
   | SignPayloadRawRequest
   | SendUnitRequest
   | GenerateTransactionPayload;
 
-type Method = MetamaskPolkadotRpcRequest['method'];
+type Method = MetamaskSubspaceRpcRequest['method'];
 
 export interface WalletEnableRequest {
   method: 'wallet_enable';
@@ -100,7 +100,7 @@ export interface GetPluginsRequest {
 
 export interface SnapRpcMethodRequest {
   method: string;
-  params: [MetamaskPolkadotRpcRequest];
+  params: [MetamaskSubspaceRpcRequest];
 }
 
 export type MetamaskRpcRequest = WalletEnableRequest | GetPluginsRequest | SnapRpcMethodRequest;
@@ -124,7 +124,7 @@ export interface UnitConfiguration {
   customViewUrl?: string;
 }
 
-export type SnapNetworks = 'polkadot' | 'kusama' | 'westend';
+export type SnapNetworks = 'gemini-3f' | 'gemini-3g' | 'devNet';
 
 export interface SnapConfig {
   networkName: SnapNetworks;
@@ -133,12 +133,12 @@ export interface SnapConfig {
   unit?: UnitConfiguration;
 }
 
-// Polkadot types
+// Subspace types
 
 export type Callback<T> = (arg: T) => void;
 
-export type PolkadotEventArgument = Balance;
-export type PolkadotEventCallback = Callback<PolkadotEventArgument>;
+export type SubspaceEventArgument = Balance;
+export type SubspaceEventCallback = Callback<SubspaceEventArgument>;
 
 export type TxEventArgument = TxStatus;
 export type TxEventCallback = Callback<TxEventArgument>;

@@ -1,8 +1,18 @@
 {
-  "name": "@chainsafe/metamask-polkadot-types",
-  "version": "0.6.0",
+  "name": "@subspace/metamask-subspace-types",
+  "version": "0.0.1",
   "types": "./index.d.ts",
-  "author": "ChainSafe <info@chainsafe.io>",
+  "author": {
+    "name": "Subspace.network",
+    "url": "https://subspace.network"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subspace/metamask-snap-subspace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/subspace/metamask-snap-subspace/issues"
+  },
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
