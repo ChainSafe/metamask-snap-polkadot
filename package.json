@@ -1,15 +1,25 @@
 {
-  "name": "root",
+  "name": "metamask-snap-subspace",
   "private": true,
-  "author": "ChainSafe <info@chainsafe.io>",
+  "author": {
+    "name": "Subspace.network",
+    "url": "https://subspace.network"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subspace/metamask-snap-subspace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/subspace/metamask-snap-subspace/issues"
+  },
   "license": "Apache-2.0",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "build:snap": "yarn workspace @chainsafe/polkadot-snap build",
-    "build:adapter": "yarn workspace @chainsafe/metamask-polkadot-adapter build",
-    "start:snap": "yarn workspace @chainsafe/polkadot-snap serve",
+    "build:snap": "yarn workspace @subspace/polkadot-snap build",
+    "build:adapter": "yarn workspace @subspace/metamask-subspace-adapter build",
+    "start:snap": "yarn workspace @subspace/subspace-snap serve",
     "start:example": "yarn workspace example start",
     "predemo": "yarn run build:snap && yarn run build:adapter",
     "build": "yarn workspaces foreach -vpt run build",
