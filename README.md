@@ -23,6 +23,7 @@ run the following commands from the project root to launch the
 [Polkadot Wallet Snap Example dApp](https://github.com/ChainSafe/metamask-snap-polkadot/tree/master/packages/example).
 
 - `yarn install`
+- `yarn build`
 - `yarn run demo`
 
 
