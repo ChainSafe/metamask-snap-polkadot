@@ -18,6 +18,7 @@ interface IEnablePolkadotSnapParams {
 
 interface IInjectPolkadotSnap extends IEnablePolkadotSnapParams {
   win: Web3Window;
+  injectedSnapId?: string;
 }
 
 function transformAccounts(accounts: string[]): InjectedAccount[] {
@@ -30,11 +31,12 @@ function transformAccounts(accounts: string[]): InjectedAccount[] {
 
 function injectPolkadotSnap({
   win,
+  injectedSnapId = 'metamask-polkadot-snap',
   config,
   snapOrigin,
   snapInstallationParams
 }: IInjectPolkadotSnap): void {
-  win.injectedWeb3.Snap = {
+  win.injectedWeb3[injectedSnapId] = {
     enable: async (): Promise<Injected> => {
       const snap = (
         await enablePolkadotSnap(config, snapOrigin, snapInstallationParams)
@@ -67,12 +69,13 @@ function injectPolkadotSnap({
     version: '0'
   };
 }
-
-export function initPolkadotSnap({
-  config,
-  snapOrigin,
-  snapInstallationParams
-}: IEnablePolkadotSnapParams): Promise<boolean> {
+/**
+ * @param injectedSnapId - Optional ID of injected snap, default: "metamask-polkadot-snap"
+ */
+export function initPolkadotSnap(
+  { config, snapOrigin, snapInstallationParams }: IEnablePolkadotSnapParams,
+  injectedSnapId?: string
+): Promise<boolean> {
   return new Promise((resolve): void => {
     const win = window as Window & Web3Window;
     win.injectedWeb3 = win.injectedWeb3 || {};
@@ -80,7 +83,7 @@ export function initPolkadotSnap({
     if (hasMetaMask())
       void isMetamaskSnapsSupported().then((result) => {
         if (result) {
-          injectPolkadotSnap({ win, config, snapOrigin, snapInstallationParams });
+          injectPolkadotSnap({ win, injectedSnapId, config, snapOrigin, snapInstallationParams });
           resolve(true);
         } else {
           resolve(false);
