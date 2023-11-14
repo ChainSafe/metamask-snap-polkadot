@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-adapter-v0.5.1...metamask-polkadot-adapter-v0.6.0) (2023-11-14)
+
+
+### Features
+
+* extend initPolkadotSnap params ([#209](https://github.com/ChainSafe/metamask-snap-polkadot/issues/209)) ([bf7a3a3](https://github.com/ChainSafe/metamask-snap-polkadot/commit/bf7a3a3b936eb55487c8dd3472c5de1457a96987)), closes [#204](https://github.com/ChainSafe/metamask-snap-polkadot/issues/204)
+
+
+### Bug Fixes
+
+* export utils from adapter ([#208](https://github.com/ChainSafe/metamask-snap-polkadot/issues/208)) ([cc0ab1f](https://github.com/ChainSafe/metamask-snap-polkadot/commit/cc0ab1f1078b3762a94772f2a897bf65f2c94da0)), closes [#202](https://github.com/ChainSafe/metamask-snap-polkadot/issues/202)
+
 ## [0.5.1](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-adapter-v0.5.0...metamask-polkadot-adapter-v0.5.1) (2023-09-12)
 
 

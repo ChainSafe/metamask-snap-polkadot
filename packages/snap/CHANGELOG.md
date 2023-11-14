@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.7.7...polkadot-snap-v0.8.0) (2023-11-14)
+
+
+### Features
+
+* more small text changes ([#199](https://github.com/ChainSafe/metamask-snap-polkadot/issues/199)) ([e0f3d4f](https://github.com/ChainSafe/metamask-snap-polkadot/commit/e0f3d4fc0be7366c62211e29d3a276e4fab5669e))
+
 ## [0.7.7](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.7.6...polkadot-snap-v0.7.7) (2023-10-10)
 
 
