@@ -9,7 +9,7 @@ import {
   TableRow
 } from '@material-ui/core';
 import { formatBalance } from '@polkadot/util';
-import type { Transaction } from '@chainsafe/metamask-polkadot-types';
+import type { Transaction } from '@subspace/metamask-subspace-types';
 import { shortAddress } from '../../services/format';
 
 export interface TransactionTableProps {
