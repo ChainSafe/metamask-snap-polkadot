@@ -3,14 +3,14 @@ import CloseIcon from '@material-ui/icons/Close';
 import React, { Fragment, useCallback, useContext, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import { MetamaskActions, MetaMaskContext } from '../../context/metamask';
-import { initiatePolkadotSnap, isPolkadotSnapInstalled } from '../../services/metamask';
+import { initiateSubspaceSnap, isSubspaceSnapInstalled } from '../../services/metamask';
 
 export const MetaMaskConnector = (): React.JSX.Element => {
   const [state, dispatch] = useContext(MetaMaskContext);
 
   useEffect(() => {
     void (async (): Promise<void> => {
-      if (await isPolkadotSnapInstalled()) {
+      if (await isSubspaceSnapInstalled()) {
         dispatch({
           payload: { isInstalled: true },
           type: MetamaskActions.SET_INSTALLED_STATUS
@@ -20,7 +20,7 @@ export const MetaMaskConnector = (): React.JSX.Element => {
   }, [dispatch]);
 
   const installSnap = useCallback(async (): Promise<void> => {
-    const installResult = await initiatePolkadotSnap();
+    const installResult = await initiateSubspaceSnap();
     if (!installResult.isSnapInstalled) {
       dispatch({
         payload: {
@@ -44,7 +44,7 @@ export const MetaMaskConnector = (): React.JSX.Element => {
   };
 
   const shouldDisplaySnackbar = (): boolean => {
-    return !!(!state.polkadotSnap.isInstalled && state.polkadotSnap.message);
+    return !!(!state.subspaceSnap.isInstalled && state.subspaceSnap.message);
   };
 
   return (
@@ -57,7 +57,7 @@ export const MetaMaskConnector = (): React.JSX.Element => {
         open={shouldDisplaySnackbar()}
         autoHideDuration={6000}
         onClose={handleClose}
-        message={state.polkadotSnap.message}
+        message={state.subspaceSnap.message}
         action={
           <React.Fragment>
             <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>

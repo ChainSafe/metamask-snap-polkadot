@@ -54,9 +54,9 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
   };
 
   const onSubmit = useCallback(async () => {
-    if (!state.polkadotSnap.snap) return;
+    if (!state.subspaceSnap.snap) return;
     if (amount && recipient) {
-      const api = state.polkadotSnap.snap.getMetamaskSnapApi();
+      const api = state.subspaceSnap.snap.getMetamaskSnapApi();
       if (amount && recipient) {
         const convertedAmount = BigInt(amount) * BigInt('1000000000');
         const txPayload = await api.generateTransactionPayload(
@@ -97,7 +97,7 @@ export const Transfer: React.FC<ITransferProps> = ({ network, onNewTransferCallb
             <TextField
               InputProps={{
                 startAdornment: (
-                  <InputAdornment position="start">{`m${getCurrency(network)}`}</InputAdornment>
+                  <InputAdornment position="start">{`${getCurrency(network)}`}</InputAdornment>
                 )
               }}
               onChange={handleAmountChange}

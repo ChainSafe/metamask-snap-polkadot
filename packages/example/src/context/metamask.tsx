@@ -3,20 +3,20 @@ import React, { createContext, useReducer } from 'react';
 import type { MetamaskSubspaceSnap } from '@subspace/metamask-subspace-adapter/build/snap';
 import { hasMetaMask } from '../services/metamask';
 
-interface IPolkadotSnap {
+interface ISubspaceSnap {
   isInstalled: boolean;
   message: string;
   snap?: MetamaskSubspaceSnap;
 }
 
 export interface MetamaskState {
-  polkadotSnap: IPolkadotSnap;
+  subspaceSnap: ISubspaceSnap;
   hasMetaMask: boolean;
 }
 
 const initialState: MetamaskState = {
   hasMetaMask: hasMetaMask(),
-  polkadotSnap: {
+  subspaceSnap: {
     isInstalled: false,
     message: ''
   }
@@ -38,7 +38,7 @@ const reducer: Reducer<MetamaskState, MetamaskDispatch> = (state, action) => {
     case MetamaskActions.SET_INSTALLED_STATUS: {
       return {
         ...state,
-        polkadotSnap: action.payload as IPolkadotSnap
+        subspaceSnap: action.payload as ISubspaceSnap
       };
     }
     default: {

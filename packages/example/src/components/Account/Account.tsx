@@ -24,8 +24,8 @@ export const Account = (props: AccountProps): React.JSX.Element => {
   const [state] = useContext(MetaMaskContext);
 
   const handleExport = async (): Promise<void> => {
-    if (!state.polkadotSnap.snap) return;
-    const api = state.polkadotSnap.snap.getMetamaskSnapApi();
+    if (!state.subspaceSnap.snap) return;
+    const api = state.subspaceSnap.snap.getMetamaskSnapApi();
     const privateKey = await api.exportSeed();
     alert(privateKey);
   };
