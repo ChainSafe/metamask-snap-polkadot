@@ -52,7 +52,7 @@ export async function initiateSubspaceSnap(): Promise<SnapInitializationResponse
 
   try {
     console.info('Attempting to connect to snap...');
-    const metamaskSubspaceSnap = await enablePolkadotSnap({ networkName: 'gemini-3g' }, snapId);
+    const metamaskSubspaceSnap = await enableSubspaceSnap({ networkName: 'gemini-3g' }, snapId);
     console.info('Snap installed!');
     return { isSnapInstalled: true, snap: metamaskSubspaceSnap };
   } catch (e) {

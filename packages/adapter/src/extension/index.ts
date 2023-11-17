@@ -2,6 +2,7 @@ import type { Injected, InjectedAccount, InjectedWindow } from '@polkadot/extens
 import type { SnapConfig } from '@subspace/metamask-subspace-types';
 import type { SignerPayloadJSON, SignerPayloadRaw, SignerResult } from '@polkadot/types/types';
 import type { HexString } from '@polkadot/util/types';
+import type { SnapInstallationParamNames } from '../index';
 import { enableSubspaceSnap } from '../index';
 import { hasMetaMask, isMetamaskSnapsSupported } from '../utils';
 
@@ -9,9 +10,16 @@ interface Web3Window extends InjectedWindow {
   ethereum: unknown;
 }
 
-const config: SnapConfig = {
-  networkName: 'gemini-3g'
-};
+interface IEnableSubspaceSnapParams {
+  config?: SnapConfig;
+  snapOrigin?: string;
+  snapInstallationParams?: Record<SnapInstallationParamNames, unknown>;
+}
+
+interface IInjectSubspaceSnap extends IEnableSubspaceSnapParams {
+  win: Web3Window;
+  injectedSnapId?: string;
+}
 
 function transformAccounts(accounts: string[]): InjectedAccount[] {
   return accounts.map((address, i) => ({
@@ -21,10 +29,18 @@ function transformAccounts(accounts: string[]): InjectedAccount[] {
   }));
 }
 
-function injectSubspaceSnap(win: Web3Window): void {
-  win.injectedWeb3.Snap = {
+function injectSubspaceSnap({
+  win,
+  injectedSnapId = 'metamask-subspace-snap',
+  config,
+  snapOrigin,
+  snapInstallationParams
+}: IInjectSubspaceSnap): void {
+  win.injectedWeb3[injectedSnapId] = {
     enable: async (): Promise<Injected> => {
-      const snap = (await enableSubspaceSnap(config)).getMetamaskSnapApi();
+      const snap = (
+        await enableSubspaceSnap(config, snapOrigin, snapInstallationParams)
+      ).getMetamaskSnapApi();
 
       return {
         accounts: {
@@ -54,7 +70,13 @@ function injectSubspaceSnap(win: Web3Window): void {
   };
 }
 
-export function initSubspaceSnap(): Promise<boolean> {
+/**
+ * @param injectedSnapId - Optional ID of injected snap, default: "metamask-subspace-snap"
+ */
+export function initSubspaceSnap(
+  { config, snapOrigin, snapInstallationParams }: IEnableSubspaceSnapParams,
+  injectedSnapId?: string
+): Promise<boolean> {
   return new Promise((resolve): void => {
     const win = window as Window & Web3Window;
     win.injectedWeb3 = win.injectedWeb3 || {};
@@ -62,7 +84,7 @@ export function initSubspaceSnap(): Promise<boolean> {
     if (hasMetaMask())
       void isMetamaskSnapsSupported().then((result) => {
         if (result) {
-          injectSubspaceSnap(win);
+          injectSubspaceSnap({ win, injectedSnapId, config, snapOrigin, snapInstallationParams });
           resolve(true);
         } else {
           resolve(false);

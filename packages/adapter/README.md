@@ -1,4 +1,5 @@
 # Metamask <> Subspace snap adapter
+
 ![](https://github.com/subspace/metamask-snap-subspace/workflows/ci/badge.svg)
 ![](https://img.shields.io/github/license/subspace/metamask-snap-subspace)
 ![](https://img.shields.io/badge/yarn-%3E%3D1.17.0-orange.svg?style=flat-square)
@@ -6,11 +7,9 @@
 
 Metamask <> Subspace snap adapter is used to inject [subspace snap](https://github.com/subspace/metamask-snap-subspace) as web3 provider. It lists snap inside `window.injectedWeb3["metamask-subspace-snap"]` so it can be enabled using `@polkadot/extension-dapp` package.  
 
-For more details on subspace snap itself see [snap repo](https://github.com/subspace/metamask-snap-subspace) or read full [polkadot snap documentation](https://github.com/chainsafe/metamask-snap-polkadot/wiki).
+For more details on subspace snap itself see [snap repo](https://github.com/subspace/metamask-snap-subspace) or read full [subspace snap documentation](https://github.com/subspace/metamask-snap-subspace/wiki).
 
 ## Usage
-
-Adapter has only one exposed function for enabling snap as web3 provider.
 
 ```typescript
 function enableSubspaceSnap(
@@ -20,11 +19,33 @@ function enableSubspaceSnap(
 ): Promise<MetamaskSubspaceSnap>
 ```
 
+## Usage to inject snap in injectedWeb3 object
+
+```typescript
+function initSubspaceSnap(
+  {
+    config?: SnapConfig,
+    snapOrigin?: string,
+    snapInstallationParams?: Record<SnapInstallationParamNames, unknown> = {}
+  },
+  injectedSnapId?: string
+): Promise<MetamaskSubspaceSnap>
+
+```
+
 By providing `config` as argument it is possible to override default configurations.
+
+Default config:
+
+```json
+{
+  networkName: 'gemini-3g'
+}
+```
 
 Configuration structure is shown below.
 
-```
+```typescript
 SnapConfig {
   networkName: SnapNetworks;
   wsRpcUrl?: string;

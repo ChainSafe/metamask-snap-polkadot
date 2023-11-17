@@ -8,6 +8,7 @@ const defaultSnapOrigin = 'npm:@subspace/subspace-snap';
 export type SnapInstallationParamNames = string;
 
 export * from './extension';
+export { hasMetaMask, isSubspaceSnapInstalled, isMetamaskSnapsSupported } from './utils';
 
 export async function enableSubspaceSnap(
   config: SnapConfig = { networkName: 'gemini-3g' },

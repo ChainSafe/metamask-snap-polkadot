@@ -21,6 +21,7 @@ run the following commands from the project root to launch the
 [Subspace Wallet Snap Example dApp](https://github.com/subspace/metamask-snap-subspace/tree/master/packages/example).
 
 - `yarn install`
+- `yarn build`
 - `yarn run demo`
 
 
