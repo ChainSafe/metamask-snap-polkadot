@@ -17,7 +17,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build:snap": "yarn workspace @subspace/polkadot-snap build",
+    "build:snap": "yarn workspace @subspace/subspace-snap build",
     "build:adapter": "yarn workspace @subspace/metamask-subspace-adapter build",
     "start:snap": "yarn workspace @subspace/subspace-snap serve",
     "start:example": "yarn workspace example start",

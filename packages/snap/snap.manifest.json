@@ -7,7 +7,7 @@
     "url": "git+https://github.com/subspace/metamask-snap-subspace.git"
   },
   "source": {
-    "shasum": "GwKusydp1vpDXY7B98s0zjVphX1d16ZnkGG3xfPqXHM=",
+    "shasum": "XzKumxesRkp1VXzeLF0S4byHHunhM8nJIX7izM3kTq4=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

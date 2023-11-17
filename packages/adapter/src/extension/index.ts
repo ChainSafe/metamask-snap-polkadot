@@ -10,7 +10,7 @@ interface Web3Window extends InjectedWindow {
 }
 
 const config: SnapConfig = {
-  networkName: 'westend'
+  networkName: 'gemini-3g'
 };
 
 function transformAccounts(accounts: string[]): InjectedAccount[] {
