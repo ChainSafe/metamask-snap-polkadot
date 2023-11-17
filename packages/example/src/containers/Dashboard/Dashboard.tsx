@@ -31,7 +31,7 @@ export const Dashboard = (): React.JSX.Element => {
     number: ''
   });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [network, setNetwork] = useState<SnapNetworks>('westend');
+  const [network, setNetwork] = useState<SnapNetworks>('gemini-3g');
   const [api, setApi] = useState<MetamaskSnapApi | null>(null);
 
   const handleNewTransaction = useCallback(async () => {
@@ -51,12 +51,12 @@ export const Dashboard = (): React.JSX.Element => {
 
   useEffect(() => {
     void (() => {
-      if (state.polkadotSnap.isInstalled && state.polkadotSnap.snap) {
-        const polkadotApi = state.polkadotSnap.snap.getMetamaskSnapApi();
-        setApi(polkadotApi);
+      if (state.subspaceSnap.isInstalled && state.subspaceSnap.snap) {
+        const subspaceApi = state.subspaceSnap.snap.getMetamaskSnapApi();
+        setApi(subspaceApi);
       }
     })();
-  }, [state.polkadotSnap.isInstalled, state.polkadotSnap.snap]);
+  }, [state.subspaceSnap.isInstalled, state.subspaceSnap.snap]);
 
   useEffect(() => {
     void (async () => {
@@ -85,9 +85,9 @@ export const Dashboard = (): React.JSX.Element => {
     <Container maxWidth="lg">
       <Grid direction="column" alignItems="center" justifyContent="center" container spacing={3}>
         <Box style={{ margin: '2rem' }}>
-          <Typography variant="h2">Polkadot Wallet Snap Example dApp</Typography>
+          <Typography variant="h2">Subspace Wallet Snap Example dApp</Typography>
         </Box>
-        {!state.polkadotSnap.isInstalled ? (
+        {!state.subspaceSnap.isInstalled ? (
           <MetaMaskConnector />
         ) : (
           <>
@@ -98,10 +98,10 @@ export const Dashboard = (): React.JSX.Element => {
               alignContent={'flex-start'}
             >
               <InputLabel>Network</InputLabel>
-              <Select defaultValue={'westend'} onChange={handleNetworkChange}>
-                <MenuItem value={'westend'}>Westend</MenuItem>
-                <MenuItem value={'kusama'}>Kusama</MenuItem>
-                <MenuItem value={'polkadot'}>Polkadot</MenuItem>
+              <Select defaultValue={'gemini-3g'} onChange={handleNetworkChange}>
+                <MenuItem value={'gemini-3g'}>Gemini-3G</MenuItem>
+                <MenuItem value={'gemini-3f'}>Gemini-3F</MenuItem>
+                <MenuItem value={'devNet'}>DevNet</MenuItem>
               </Select>
             </Box>
             <Grid container spacing={3} alignItems={'stretch'}>

@@ -4,10 +4,10 @@ export function shortAddress(address: string): string {
 
 export function getCurrency(network: string): string {
   switch (network) {
-    case 'kusama':
-      return 'KSM';
-    case 'westend':
-      return 'WND';
+    case 'gemini-3g':
+    case 'gemini-3f':
+    case 'devNet':
+      return 'tSSC';
   }
   return '';
 }
