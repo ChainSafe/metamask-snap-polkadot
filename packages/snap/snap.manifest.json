@@ -7,7 +7,7 @@
     "url": "git+https://github.com/subspace/metamask-snap-subspace.git"
   },
   "source": {
-    "shasum": "XzKumxesRkp1VXzeLF0S4byHHunhM8nJIX7izM3kTq4=",
+    "shasum": "TTg5maGDqqOWJkWQ5ap7tqNLpDUeWkvW5GHYTQDv3U0=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -28,9 +28,6 @@
     "snap_getBip44Entropy": [
       {
         "coinType": 354
-      },
-      {
-        "coinType": 434
       }
     ],
     "snap_manageState": {}
