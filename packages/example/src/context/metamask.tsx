@@ -1,12 +1,12 @@
 import type { Dispatch, PropsWithChildren, Reducer } from 'react';
 import React, { createContext, useReducer } from 'react';
-import type { MetamaskPolkadotSnap } from '@chainsafe/metamask-polkadot-adapter/build/snap';
+import type { MetamaskSubspaceSnap } from '@subspace/metamask-subspace-adapter/build/snap';
 import { hasMetaMask } from '../services/metamask';
 
 interface IPolkadotSnap {
   isInstalled: boolean;
   message: string;
-  snap?: MetamaskPolkadotSnap;
+  snap?: MetamaskSubspaceSnap;
 }
 
 export interface MetamaskState {

@@ -1,8 +1,8 @@
-import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
+import type { SnapConfig } from '@subspace/metamask-subspace-types';
 
-declare module '@chainsafe/metamask-polkadot-adapter' {
-  export function injectMetamaskPolkadotSnapProvider(
-    network: 'westend' | 'kusama',
+declare module '@subspace/metamask-subspace-adapter' {
+  export function injectMetamaskSubspaceSnapProvider(
+    network: 'gemini-3f' | 'gemini-3g' | 'devNet',
     config?: SnapConfig,
     pluginOrigin?: string
   ): void;

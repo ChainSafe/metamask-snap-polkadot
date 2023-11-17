@@ -1,4 +1,4 @@
-### Metamask polkadot snap example 
+### Metamask subspace snap example 
 
 - `yarn install`
 - serve snap
