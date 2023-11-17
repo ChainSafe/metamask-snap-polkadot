@@ -33,6 +33,19 @@ function initSubspaceSnap(
 
 ```
 
+## Usage to inject snap in injectedWeb3 object
+
+```typescript
+function initPolkadotSnap(
+  {
+    config?: SnapConfig,
+    snapOrigin?: string,
+    snapInstallationParams?: Record<SnapInstallationParamNames, unknown> = {}
+  },
+  injectedSnapId?: string
+): Promise<MetamaskPolkadotSnap>
+```
+
 By providing `config` as argument it is possible to override default configurations.
 
 Default config:
