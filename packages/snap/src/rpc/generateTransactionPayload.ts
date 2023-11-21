@@ -22,7 +22,7 @@ export async function generateTransactionPayload(
   };
 
   // define transaction method
-  const transaction: SubmittableExtrinsic<'promise'> = api.tx.balances.transferAllowDeath(
+  const transaction: SubmittableExtrinsic<'promise'> = api.tx.balances.transferKeepAlive(
     to,
     amount
   );
