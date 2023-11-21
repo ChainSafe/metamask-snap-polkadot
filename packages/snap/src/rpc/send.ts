@@ -16,7 +16,7 @@ export async function send(
 
   const amount = extrinsic.args[1].toJSON();
   const paymentInfo = await api.tx.balances
-    .transfer(destination, String(amount))
+    .transferKeepAlive(destination, String(amount))
     .paymentInfo(sender);
 
   const txHash = await api.rpc.author.submitExtrinsic(extrinsic);

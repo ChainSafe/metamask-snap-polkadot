@@ -20,8 +20,12 @@ export async function generateTransactionPayload(
     }),
     nonce
   };
+
   // define transaction method
-  const transaction: SubmittableExtrinsic<'promise'> = api.tx.balances.transfer(to, amount);
+  const transaction: SubmittableExtrinsic<'promise'> = api.tx.balances.transferKeepAlive(
+    to,
+    amount
+  );
 
   // create SignerPayload
   const signerPayload = api.createType('SignerPayload', {
