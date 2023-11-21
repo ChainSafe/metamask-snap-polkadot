@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.1](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.8.0...polkadot-snap-v0.8.1) (2023-11-21)
+
+
+### Bug Fixes
+
+* transfer method polkadot js update ([#211](https://github.com/ChainSafe/metamask-snap-polkadot/issues/211)) ([20cb7bf](https://github.com/ChainSafe/metamask-snap-polkadot/commit/20cb7bf5e7bc41af0353c73b94e6c70269a9cc28)), closes [#206](https://github.com/ChainSafe/metamask-snap-polkadot/issues/206)
+
 ## [0.8.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.7.7...polkadot-snap-v0.8.0) (2023-11-14)
 
 
