@@ -1,0 +1,39 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": ".."
+    },
+    {
+      "name": "mm snap",
+      "path": "../packages/snap"
+    },
+    {
+      "name": "mm snap adapt",
+      "path": "../packages/adapter"
+    },
+    {
+      "name": "web-example",
+      "path": "../packages/example"
+    },
+    {
+      "name": "web-wallet",
+      "path": "../packages/wallet"
+    }
+  ],
+  "settings": {
+    "editor.codeActionsOnSave": {
+      "source.sortImports": true,
+      "source.fixAll.eslint": true,
+      "source.fixAll.tslint": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "eslint.workingDirectories": [{ "mode": "auto" }],
+    "javascript.format.enable": false,
+    "window.zoomLevel": -1,
+    "editor.tabSize": 2,
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
+    "editor.formatOnSave": true
+  }
+}
