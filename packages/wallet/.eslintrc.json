@@ -1,0 +1,6 @@
+{
+  "ignorePatterns": ["node_modules"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["import", "@typescript-eslint", "react", "react-hooks"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "next/core-web-vitals"]
+}
