@@ -1,4 +1,3 @@
-import { Card } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { Wallet } from '../components/wallet'
 import { useOnchainData } from '../hooks/useOnchainData'

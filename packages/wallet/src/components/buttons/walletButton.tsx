@@ -1,4 +1,4 @@
-import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
   AbsoluteCenter,
   Box,
@@ -18,12 +18,10 @@ import Image from 'next/image'
 import React, { useCallback } from 'react'
 import { useAccount } from 'wagmi'
 import { useConnect } from '../../hooks/useConnect'
-import { useAccountStatus, useDisconnectAll } from '../../hooks/useNetwork'
+import { useAccountStatus } from '../../hooks/useNetwork'
 import { useExtension } from '../../states/extension'
 import { formatAddress } from '../../utils'
 import { SubspaceWalletIcon } from '../icons'
-import { ConnectedModal, useConnectedModal } from '../modals/connectedModal'
-import { useWalletsConnector } from '../modals/walletsConnector'
 
 interface ExtensionIconProps {
   extension: string
@@ -54,12 +52,10 @@ const ExtensionIcon: React.FC<ExtensionIconProps> = ({ extension }) => {
 }
 
 export const WalletButton: React.FC = () => {
-  const { isConnected, address } = useAccountStatus()
+  const { address } = useAccountStatus()
   const { connector } = useAccount()
-  const { WalletsConnectorProvider, onOpen } = useWalletsConnector()
-  const { onOpen: openConnectedModal, ConnectedModalProvider } = useConnectedModal()
   const { extension, chainDetails } = useExtension()
-  const { handleSelectWallet, handleDisconnect } = useConnect()
+  const { handleSelectWallet } = useConnect()
   const { ss58Format } = chainDetails
 
   const onClose = useCallback(() => {
@@ -70,13 +66,7 @@ export const WalletButton: React.FC = () => {
     <Box position='relative' w={12} h='10vh' verticalAlign='center' m={4} p={2}>
       <AbsoluteCenter axis='vertical'>
         <Menu>
-          <MenuButton
-            as={Button}
-            variant='outline'
-            colorScheme='brand'
-            rightIcon={<ChevronDownIcon />}
-            // onClick={() => (isConnected ? openConnectedModal() : onOpen())}
-          >
+          <MenuButton as={Button} variant='outline' colorScheme='brand' rightIcon={<ChevronDownIcon />}>
             <SubspaceWalletIcon width='24px' height='24px' fill='#612893' />
           </MenuButton>
           <Portal>
@@ -85,7 +75,6 @@ export const WalletButton: React.FC = () => {
                 <MenuGroup title='Gemini 3G'>
                   <MenuItem
                     key={`${extension.data.defaultAccount.meta.source}-${extension.data.defaultAccount.address}`}
-                    // onClick={() => handleSelectWallet(extension.data.defaultAccount.address)}
                     _hover={{
                       bgGradient: 'linear(to-r, #A28CD2, #F4ABFD)'
                     }}>
@@ -94,7 +83,6 @@ export const WalletButton: React.FC = () => {
                       {`${
                         extension.data.defaultAccount.meta.name && `(${extension.data.defaultAccount.meta.name})`
                       } ${formatAddress(encodeAddress(extension.data.defaultAccount.address, ss58Format))}`}
-                      {/* {`${account.meta.name && `(${account.meta.name})`} ${formatAddress(account.address)}`} */}
                     </Text>
                   </MenuItem>
                   {extension.data.accounts
@@ -111,7 +99,6 @@ export const WalletButton: React.FC = () => {
                           {`${account.meta.name && `(${account.meta.name})`} ${formatAddress(
                             encodeAddress(account.address, ss58Format)
                           )}`}
-                          {/* {`${account.meta.name && `(${account.meta.name})`} ${formatAddress(account.address)}`} */}
                         </Text>
                       </MenuItem>
                     ))}
@@ -120,12 +107,9 @@ export const WalletButton: React.FC = () => {
               <MenuDivider />
               {address && (
                 <MenuGroup title='Nova - Gemini 3G EVM'>
-                  <MenuItem onClick={() => onOpen()}>
+                  <MenuItem>
                     {connector && <ExtensionIcon extension={connector.id} />}
-                    <Text ml='2'>
-                      {`${address && `${formatAddress(address)}`}`}
-                      {/* {`${account.meta.name && `(${account.meta.name})`} ${formatAddress(account.address)}`} */}
-                    </Text>
+                    <Text ml='2'>{`${address && `${formatAddress(address)}`}`}</Text>ª
                   </MenuItem>
                 </MenuGroup>
               )}
@@ -154,8 +138,6 @@ export const WalletButton: React.FC = () => {
           </Portal>
         </Menu>
       </AbsoluteCenter>
-      <ConnectedModalProvider />
-      <WalletsConnectorProvider />
     </Box>
   )
 }

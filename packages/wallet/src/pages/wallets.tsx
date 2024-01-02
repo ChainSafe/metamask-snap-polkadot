@@ -1,6 +1,5 @@
-import { Box } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
-import { WalletsConnectorGrid } from '../components/modals/walletsConnector'
+import { Wallet } from '../components/wallet'
 import { useOnchainData } from '../hooks/useOnchainData'
 import { useExtension } from '../states/extension'
 
@@ -12,11 +11,7 @@ const Page: React.FC = () => {
     handleOnchainData()
   }, [handleOnchainData, subspaceAccount])
 
-  return (
-    <Box>
-      <WalletsConnectorGrid />
-    </Box>
-  )
+  return <Wallet />
 }
 
 export async function getStaticProps() {

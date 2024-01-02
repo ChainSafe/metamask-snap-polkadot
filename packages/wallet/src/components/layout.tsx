@@ -1,8 +1,6 @@
-import { HamburgerIcon } from '@chakra-ui/icons'
 import {
   AbsoluteCenter,
   Box,
-  Button,
   Center,
   Grid,
   GridItem,
@@ -76,13 +74,6 @@ export const Header: React.FC = () => {
       </Box>
       <Spacer />
       <ColorModeButton />
-      <Box position='relative' w={12} h='10vh' verticalAlign='center' m={2}>
-        <AbsoluteCenter axis='vertical'>
-          <Button colorScheme='brand' variant='outline' size='md' onClick={() => router.push('/wallets')}>
-            <HamburgerIcon width='24px' height='24px' fill='#612893' />
-          </Button>
-        </AbsoluteCenter>
-      </Box>
       <WalletButton />
       <DisconnectButton />
       <Spacer />
@@ -211,7 +202,7 @@ export const Footer: React.FC = () => {
   )
 
   return (
-    <Box bg={colorMode === 'light' ? '#F0f0f0' : '#1A202C'} w='100%' h='200px'>
+    <Box bg={colorMode === 'light' ? '#F0f0f0' : '#1A202C'} w='100%' h='200px' mt={[12, 8, 4]}>
       <Box {...layoutStyles} w={['60vw', '80vw', '100vw']} p={1} pt={4} flexDir='column' m='auto'>
         <Grid templateColumns={['repeat(1, 1fr)', 'repeat(3, 1fr)', 'repeat(3, 1fr)']} gap={6}>
           {links}
