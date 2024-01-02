@@ -128,6 +128,9 @@ export const AmountActionAndTransactions: React.FC<AmountActionAndTransactionsPr
               colorScheme='brand'
               isFitted
               mt={6}
+              overflowX='scroll'
+              h={'200px'}
+              maxH='200px'
               onChange={handleTabChange}
               index={tabsIndex}>
               <TabList>
@@ -139,13 +142,15 @@ export const AmountActionAndTransactions: React.FC<AmountActionAndTransactionsPr
                 <TabPanel>
                   <TokensList />
                 </TabPanel>
-                <TabPanel>
+                <TabPanel overflowX='scroll' h={360}>
                   <TransactionsList address={address} />
                 </TabPanel>
               </TabPanels>
             </Tabs>
           ) : (
-            <TransactionsList address={address} />
+            <Box overflowX='scroll' h={360}>
+              <TransactionsList address={address} />
+            </Box>
           )}
         </Box>
       )}
