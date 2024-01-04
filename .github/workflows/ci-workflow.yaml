@@ -25,7 +25,7 @@ jobs:
         run: yarn run build
       - name: Run linter
         run: yarn run lint
-      - uses: tj-actions/verify-changed-files@v9
+      - uses: tj-actions/verify-changed-files@v17
         if: github.ref_name != 'master'
         id: verify-changed-files
         with:
