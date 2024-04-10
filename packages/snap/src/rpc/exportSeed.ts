@@ -1,10 +1,9 @@
 import type { JsonBIP44CoinTypeNode } from '@metamask/key-tree';
 import { showConfirmationDialog } from '../util/confirmation';
-import { getConfiguration } from '../configuration';
-import { getCoinTypeByNetwork } from '../polkadot/account';
+
+const kusamaCoinType = 434;
 
 export async function exportSeed(): Promise<string | null> {
-  const config = await getConfiguration();
   // ask for confirmation
   const confirmation = await showConfirmationDialog({
     prompt: 'Do you want to export your seed?'
@@ -13,7 +12,7 @@ export async function exportSeed(): Promise<string | null> {
   if (confirmation) {
     const bip44Node = (await snap.request({
       method: 'snap_getBip44Entropy',
-      params: { coinType: getCoinTypeByNetwork(config.networkName) }
+      params: { coinType: kusamaCoinType }
     })) as JsonBIP44CoinTypeNode;
     return bip44Node.privateKey.slice(0, 32);
   }
