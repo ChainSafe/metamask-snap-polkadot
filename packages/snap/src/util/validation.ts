@@ -45,14 +45,20 @@ export const validConfigureSchema: Describe<{
   configuration: {
     addressPrefix: number;
     networkName: string;
-    unit: { image: string; symbol: string };
+    unit: { image: string; symbol: string; decimals: number };
     wsRpcUrl: string;
   };
 }> = object({
   configuration: object({
     addressPrefix: optional(number()),
     networkName: string(),
-    unit: optional(object({ image: string(), symbol: string() })),
+    unit: optional(
+      object({
+        image: optional(string()),
+        symbol: optional(string()),
+        decimals: optional(number())
+      })
+    ),
     wsRpcUrl: optional(string())
   })
 });
