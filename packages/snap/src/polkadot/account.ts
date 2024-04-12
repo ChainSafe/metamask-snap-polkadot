@@ -10,6 +10,8 @@ import { getConfiguration } from '../configuration';
  */
 export async function getKeyPair(): Promise<KeyringPair> {
   const config = await getConfiguration();
+  const ss58Format = config.addressPrefix;
+  const keyring = new Keyring({ ss58Format });
 
   const bip44Node = (await snap.request({
     method: 'snap_getBip44Entropy',
@@ -20,18 +22,17 @@ export async function getKeyPair(): Promise<KeyringPair> {
 
   // generate keys
   const seed = bip44Node.privateKey.slice(0, 32);
-  const ss58Format = config.addressPrefix;
-  const keyring = new Keyring({ ss58Format });
 
   return keyring.addFromSeed(stringToU8a(seed));
 }
 
-const getCoinTypeByNetwork = (network: SnapNetworks): number => {
+export const getCoinTypeByNetwork = (network: SnapNetworks): number => {
   switch (network) {
     case 'kusama':
     case 'westend':
       return 434;
-    case 'polkadot':
+    //polkadot and other substrate chains
+    default:
       return 354;
   }
 };

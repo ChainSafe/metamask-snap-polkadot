@@ -20,6 +20,8 @@ import { Account } from '../../components/Account/Account';
 import { MetaMaskConnector } from '../MetaMaskConnector/MetaMaskConnector';
 import { MetaMaskContext } from '../../context/metamask';
 import { LatestBlock } from '../../components/LatestBlock/LatestBlock';
+import type { CustomNetworkConfigInput } from '../../components/CustomNetworkConfig/CustomNetworkConfig';
+import { CustonNetworkConfig } from '../../components/CustomNetworkConfig/CustomNetworkConfig';
 
 export const Dashboard = (): React.JSX.Element => {
   const [state] = useContext(MetaMaskContext);
@@ -33,6 +35,9 @@ export const Dashboard = (): React.JSX.Element => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [network, setNetwork] = useState<SnapNetworks>('westend');
   const [api, setApi] = useState<MetamaskSnapApi | null>(null);
+  const [customNetworkInputs, setCustomNetworkInputs] = useState(false);
+
+  const showCustomNetworkName = !['polkadot', 'westend', 'kusama', 'custom'].includes(network);
 
   const handleNewTransaction = useCallback(async () => {
     if (!api) return;
@@ -42,11 +47,43 @@ export const Dashboard = (): React.JSX.Element => {
   const handleNetworkChange = async (
     event: React.ChangeEvent<{ value: unknown }>
   ): Promise<void> => {
+    if (event.target.value === 'custom') {
+      setCustomNetworkInputs(true);
+      return;
+    } else setCustomNetworkInputs(false);
+
     const networkName = event.target.value as SnapNetworks;
     if (networkName === network) return;
     if (!api) return;
     await api.setConfiguration({ networkName: networkName });
     setNetwork(networkName);
+  };
+
+  const onCustomNetworkConnect = async (submitData: CustomNetworkConfigInput): Promise<void> => {
+    const { networkName, rpcUrl, addressPrefix } = submitData;
+
+    if (!api || !networkName || !rpcUrl || !addressPrefix) return;
+    const configuration = {
+      networkName: networkName,
+      wsRpcUrl: rpcUrl,
+      addressPrefix: addressPrefix,
+      unit: {
+        decimals: submitData.unitDecimals || 12,
+        image: submitData.unitImage || '',
+        symbol: submitData.unitSymbol || ''
+      }
+    };
+
+    try {
+      await api.setConfiguration(configuration);
+      setNetwork(networkName);
+    } catch (e) {
+      console.log(e);
+      console.log('revert to polkadot configuration');
+      await api.setConfiguration({ networkName: 'polkadot' });
+      setCustomNetworkInputs(false);
+      setNetwork('polkadot');
+    }
   };
 
   useEffect(() => {
@@ -98,11 +135,14 @@ export const Dashboard = (): React.JSX.Element => {
               alignContent={'flex-start'}
             >
               <InputLabel>Network</InputLabel>
-              <Select defaultValue={'westend'} onChange={handleNetworkChange}>
+              <Select value={network} defaultValue={'westend'} onChange={handleNetworkChange}>
                 <MenuItem value={'westend'}>Westend</MenuItem>
                 <MenuItem value={'kusama'}>Kusama</MenuItem>
                 <MenuItem value={'polkadot'}>Polkadot</MenuItem>
+                <MenuItem value={'custom'}>Custom</MenuItem>
+                {showCustomNetworkName && <MenuItem value={network}>{network}</MenuItem>}
               </Select>
+              {customNetworkInputs && <CustonNetworkConfig onSubmit={onCustomNetworkConnect} />}
             </Box>
             <Grid container spacing={3} alignItems={'stretch'}>
               <Grid item xs={12}>
