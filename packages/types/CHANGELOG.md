@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-types-v0.6.0...metamask-polkadot-types-v0.7.0) (2024-04-12)
+
+
+### Features
+
+* custom config fix, example custom config extended ([#227](https://github.com/ChainSafe/metamask-snap-polkadot/issues/227)) ([52ab53a](https://github.com/ChainSafe/metamask-snap-polkadot/commit/52ab53a93991e27b42de8a7da6542021331c419d))
+
 ## [0.6.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-types-v0.5.0...metamask-polkadot-types-v0.6.0) (2023-08-22)
 
 
