@@ -5,6 +5,7 @@ import type { MetamaskState } from './interfaces';
 import { EmptyMetamaskState } from './interfaces';
 import { getPublicKey } from './rpc/getPublicKey';
 import { exportSeed } from './rpc/exportSeed';
+import { exportAccount } from './rpc/exportAccount';
 import { getBalance } from './rpc/substrate/getBalance';
 import { getAddress } from './rpc/getAddress';
 import { getTransactions } from './rpc/substrate/getTransactions';
@@ -66,7 +67,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
     case 'exportSeed':
       return await exportSeed();
     case 'exportAccount':
-      return await exportSeed();
+      return await exportAccount();
     case 'getAllTransactions':
       return await getTransactions();
     case 'getBlock':
