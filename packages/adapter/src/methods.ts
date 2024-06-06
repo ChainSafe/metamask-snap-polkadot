@@ -70,6 +70,10 @@ export async function exportSeed(this: MetamaskPolkadotSnap): Promise<string> {
   return (await sendSnapMethod({ method: 'exportSeed' }, this.snapId)) as string;
 }
 
+export async function exportAccount(this: MetamaskPolkadotSnap): Promise<string> {
+  return (await sendSnapMethod({ method: 'exportAccount' }, this.snapId)) as string;
+}
+
 export async function setConfiguration(
   this: MetamaskPolkadotSnap,
   config: SnapConfig

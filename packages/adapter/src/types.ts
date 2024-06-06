@@ -18,6 +18,8 @@ export interface MetamaskSnapApi {
 
   exportSeed(): Promise<string>;
 
+  exportAccount(): Promise<string>;
+
   getLatestBlock(): Promise<BlockInfo>;
 
   setConfiguration(configuration: SnapConfig): Promise<void>;
