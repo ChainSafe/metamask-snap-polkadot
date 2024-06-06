@@ -23,11 +23,18 @@ export interface AccountProps {
 export const Account = (props: AccountProps): React.JSX.Element => {
   const [state] = useContext(MetaMaskContext);
 
-  const handleExport = async (): Promise<void> => {
+  const handleExportSeed = async (): Promise<void> => {
     if (!state.polkadotSnap.snap) return;
     const api = state.polkadotSnap.snap.getMetamaskSnapApi();
     const privateKey = await api.exportSeed();
     alert(privateKey);
+  };
+
+  const handleExportAccount = async (): Promise<void> => {
+    if (!state.polkadotSnap.snap) return;
+    const api = state.polkadotSnap.snap.getMetamaskSnapApi();
+    const account = await api.exportAccount();
+    alert(JSON.stringify(account));
   };
 
   return (
@@ -55,7 +62,15 @@ export const Account = (props: AccountProps): React.JSX.Element => {
           </Grid>
         </Grid>
         <Grid container item xs={12} justifyContent="flex-end">
-          <Button color="secondary" variant={'contained'} onClick={handleExport}>
+          <Button color="secondary" variant={'contained'} onClick={handleExportAccount}>
+            Export Account
+          </Button>
+          <Button
+            color="secondary"
+            variant={'contained'}
+            style={{ marginLeft: '10px' }}
+            onClick={handleExportSeed}
+          >
             Export private key
           </Button>
         </Grid>
