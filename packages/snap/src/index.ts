@@ -65,6 +65,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
       return await getAddress();
     case 'exportSeed':
       return await exportSeed();
+    case 'exportAccount':
+      return await exportSeed();
     case 'getAllTransactions':
       return await getTransactions();
     case 'getBlock':
