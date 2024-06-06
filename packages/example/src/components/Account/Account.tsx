@@ -34,7 +34,8 @@ export const Account = (props: AccountProps): React.JSX.Element => {
     if (!state.polkadotSnap.snap) return;
     const api = state.polkadotSnap.snap.getMetamaskSnapApi();
     const account = await api.exportAccount();
-    alert(JSON.stringify(account));
+    console.log(JSON.stringify(account, null, 2));
+    alert(JSON.stringify(account, null, 2));
   };
 
   return (
