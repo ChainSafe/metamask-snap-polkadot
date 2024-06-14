@@ -26,7 +26,7 @@ export async function getKeyPair(): Promise<KeyringPair> {
   return keyring.addFromSeed(stringToU8a(seed));
 }
 
-export const getCoinTypeByNetwork = (network: SnapNetworks): number => {
+export const getCoinTypeByNetwork = (network: SnapNetworks): 434 | 354 => {
   switch (network) {
     case 'kusama':
     case 'westend':
