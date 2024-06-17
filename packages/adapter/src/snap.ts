@@ -1,5 +1,6 @@
 import type { SnapConfig } from '@chainsafe/metamask-polkadot-types';
 import {
+  exportAccount,
   exportSeed,
   generateTransactionPayload,
   getAddress,
@@ -30,6 +31,7 @@ export class MetamaskPolkadotSnap {
   public getMetamaskSnapApi = (): MetamaskSnapApi => {
     return {
       exportSeed: exportSeed.bind(this),
+      exportAccount: exportAccount.bind(this),
       generateTransactionPayload: generateTransactionPayload.bind(this),
       getAddress: getAddress.bind(this),
       getAllTransactions: getAllTransactions.bind(this),

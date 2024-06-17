@@ -16,12 +16,14 @@ import { generateTransactionPayload } from './rpc/generateTransactionPayload';
 import { send } from './rpc/send';
 import {
   validConfigureSchema,
+  validExportAccountSchema,
   validGenerateTransactionPayloadSchema,
   validGetBlockSchema,
   validSendSchema,
   validSignPayloadJSONSchema,
   validSignPayloadRawSchema
 } from './util/validation';
+import { exportAccount } from './rpc/exportAccount';
 
 const apiDependentMethods = [
   'getBlock',
@@ -65,6 +67,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
       return await getAddress();
     case 'exportSeed':
       return await exportSeed();
+    case 'exportAccount':
+      assert(request.params, validExportAccountSchema);
+      return await exportAccount(request.params.jsonPassphrase);
     case 'getAllTransactions':
       return await getTransactions();
     case 'getBlock':
