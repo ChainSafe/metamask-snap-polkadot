@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-types-v0.7.0...metamask-polkadot-types-v0.8.0) (2024-06-18)
+
+
+### Features
+
+* export account json rpc ([#234](https://github.com/ChainSafe/metamask-snap-polkadot/issues/234)) ([0212428](https://github.com/ChainSafe/metamask-snap-polkadot/commit/021242814fcb82832f5fb78c0a1c3c76b9437f13))
+
 ## [0.7.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-types-v0.6.0...metamask-polkadot-types-v0.7.0) (2024-04-12)
 
 
