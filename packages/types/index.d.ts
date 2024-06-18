@@ -12,6 +12,13 @@ export interface ExportSeedRequest {
   method: 'exportSeed';
 }
 
+export interface ExportAccountRequest {
+  method: 'exportAccount';
+  params: {
+    jsonPassphrase?: string;
+  }
+}
+
 export interface GetTransactionsRequest {
   method: 'getAllTransactions';
 }
@@ -76,6 +83,7 @@ export type MetamaskPolkadotRpcRequest =
   | GetPublicKeyRequest
   | GetAddressRequest
   | ExportSeedRequest
+  | ExportAccountRequest
   | GetTransactionsRequest
   | GetBlockRequest
   | GetBalanceRequest

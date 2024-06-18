@@ -81,3 +81,9 @@ export const validSendSchema: Describe<{
     tx: string()
   })
 });
+
+export const validExportAccountSchema: Describe<{
+  jsonPassphrase: string;
+}> = object({
+  jsonPassphrase: optional(string())
+});
