@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.10.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.9.0...polkadot-snap-v0.10.0) (2024-06-18)
+
+
+### Features
+
+* export account json rpc ([#234](https://github.com/ChainSafe/metamask-snap-polkadot/issues/234)) ([0212428](https://github.com/ChainSafe/metamask-snap-polkadot/commit/021242814fcb82832f5fb78c0a1c3c76b9437f13))
+
+
+### Bug Fixes
+
+* exportSeed coin type fix ([#233](https://github.com/ChainSafe/metamask-snap-polkadot/issues/233)) ([7bef7c2](https://github.com/ChainSafe/metamask-snap-polkadot/commit/7bef7c2b3f99ad5f45a6a411c044667a773e78c8))
+
 ## [0.9.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.8.2...polkadot-snap-v0.9.0) (2024-04-12)
 
 
