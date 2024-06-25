@@ -38,6 +38,7 @@ describe('Test rpc handler function: configure', function () {
     const customConfiguration: SnapConfig = {
       addressPrefix: 1,
       networkName: 'westend',
+      genesisHash: '0xe143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e',
       unit: { customViewUrl: 'custom-view-url', decimals: 1, image: 'image', symbol: 'TST' },
       wsRpcUrl: 'ws-rpc-url'
     };

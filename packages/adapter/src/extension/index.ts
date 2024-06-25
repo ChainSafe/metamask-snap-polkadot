@@ -21,9 +21,10 @@ interface IInjectPolkadotSnap extends IEnablePolkadotSnapParams {
   injectedSnapId?: string;
 }
 
-function transformAccounts(accounts: string[]): InjectedAccount[] {
+function transformAccounts(accounts: string[], config?: SnapConfig): InjectedAccount[] {
   return accounts.map((address, i) => ({
     address,
+    genesisHash: config?.genesisHash,
     name: `Polkadot Snap #${i}`,
     type: 'ed25519'
   }));
@@ -46,7 +47,7 @@ function injectPolkadotSnap({
         accounts: {
           get: async (): Promise<InjectedAccount[]> => {
             const response = await snap.getAddress();
-            return transformAccounts([response]);
+            return transformAccounts([response], config);
           },
           // Currently there is only available only one account, in that case this method will never return anything
           // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -16,7 +16,7 @@ export interface ExportAccountRequest {
   method: 'exportAccount';
   params: {
     jsonPassphrase?: string;
-  }
+  };
 }
 
 export interface GetTransactionsRequest {
@@ -132,14 +132,18 @@ export interface UnitConfiguration {
   customViewUrl?: string;
 }
 
-export type SnapNetworks = 'polkadot' | 'kusama' | 'westend' | string;
+export type WellKnownSnapNetworks = 'polkadot' | 'kusama' | 'westend';
 
-export interface SnapConfig {
-  networkName: SnapNetworks;
+export type SnapNetworks = WellKnownSnapNetworks | string;
+
+export type SnapConfig = {
   wsRpcUrl?: string;
   addressPrefix?: number;
   unit?: UnitConfiguration;
-}
+} & (
+  | { networkName: WellKnownSnapNetworks; genesisHash?: `0x${string}` }
+  | { networkName: SnapNetworks; genesisHash: `0x${string}` }
+);
 
 // Polkadot types
 
