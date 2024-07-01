@@ -34,6 +34,10 @@ export interface GetBalanceRequest {
   method: 'getBalance';
 }
 
+export interface GetConfigurationRequest {
+  method: 'getConfiguration';
+}
+
 export interface ConfigureSnapRequest {
   method: 'configure';
   params: {
@@ -87,6 +91,7 @@ export type MetamaskPolkadotRpcRequest =
   | GetTransactionsRequest
   | GetBlockRequest
   | GetBalanceRequest
+  | GetConfigurationRequest
   | ConfigureSnapRequest
   | AddPolkadotAssetRequest
   | GetChainHeadRequest

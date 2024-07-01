@@ -6,6 +6,7 @@ import {
   getAddress,
   getAllTransactions,
   getBalance,
+  getConfiguration,
   getLatestBlock,
   getPublicKey,
   sendSignedData,
@@ -39,6 +40,7 @@ export class MetamaskPolkadotSnap {
       getLatestBlock: getLatestBlock.bind(this),
       getPublicKey: getPublicKey.bind(this),
       send: sendSignedData.bind(this),
+      getConfiguration: getConfiguration.bind(this),
       setConfiguration: setConfiguration.bind(this),
       signPayloadJSON: signPayloadJSON.bind(this),
       signPayloadRaw: signPayloadRaw.bind(this)

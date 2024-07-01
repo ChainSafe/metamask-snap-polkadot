@@ -43,11 +43,13 @@ function injectPolkadotSnap({
         await enablePolkadotSnap(config, snapOrigin, snapInstallationParams)
       ).getMetamaskSnapApi();
 
+      const snapConfiguration = await snap.getConfiguration();
+
       return {
         accounts: {
           get: async (): Promise<InjectedAccount[]> => {
             const response = await snap.getAddress();
-            return transformAccounts([response], config);
+            return transformAccounts([response], snapConfiguration);
           },
           // Currently there is only available only one account, in that case this method will never return anything
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
