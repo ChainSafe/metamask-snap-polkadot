@@ -25,7 +25,7 @@ function transformAccounts(accounts: string[]): InjectedAccount[] {
   return accounts.map((address, i) => ({
     address,
     name: `Polkadot Snap #${i}`,
-    type: 'ethereum'
+    type: 'ed25519'
   }));
 }
 
