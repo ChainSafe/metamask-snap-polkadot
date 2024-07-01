@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 export type CustomNetworkConfigInput = {
   networkName?: string;
+  genesisHash?: `0x${string}`;
   rpcUrl?: string;
   addressPrefix?: number;
   unitDecimals?: number;
@@ -52,6 +53,10 @@ export const CustonNetworkConfig: FC<ICustonNetworkConfig> = ({ onSubmit }) => {
           <FormControl required>
             <InputLabel htmlFor="networkName">Network name</InputLabel>
             <Input name="networkName" onChange={onInputChange} />
+          </FormControl>
+          <FormControl required>
+            <InputLabel htmlFor="genesisHash">Network genesis hash</InputLabel>
+            <Input name="genesisHash" onChange={onInputChange} />
           </FormControl>
           <FormControl required>
             <InputLabel htmlFor="rpcUrl">RPC url</InputLabel>
