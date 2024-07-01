@@ -15,7 +15,7 @@ import type {
   BlockInfo,
   SnapNetworks,
   Transaction,
-  WellKnownSnapNetworks
+  SupportedSnapNetworks
 } from '@chainsafe/metamask-polkadot-types';
 import type { MetamaskSnapApi } from '@chainsafe/metamask-polkadot-adapter/src/types';
 import { Transfer } from '../../components/Transfer/Transfer';
@@ -57,7 +57,7 @@ export const Dashboard = (): React.JSX.Element => {
       return;
     } else setCustomNetworkInputs(false);
 
-    const networkName = event.target.value as WellKnownSnapNetworks;
+    const networkName = event.target.value as SupportedSnapNetworks;
     if (networkName === network) return;
     if (!api) return;
     await api.setConfiguration({ networkName: networkName });
