@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-adapter-v0.7.0...metamask-polkadot-adapter-v0.7.1) (2024-07-01)
+
+
+### Bug Fixes
+
+* incorrect account type ([#237](https://github.com/ChainSafe/metamask-snap-polkadot/issues/237)) ([ae02ce9](https://github.com/ChainSafe/metamask-snap-polkadot/commit/ae02ce9cee970e26ef4c6f5b9e48de50e7766419))
+
 ## [0.7.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-adapter-v0.6.0...metamask-polkadot-adapter-v0.7.0) (2024-06-18)
 
 
