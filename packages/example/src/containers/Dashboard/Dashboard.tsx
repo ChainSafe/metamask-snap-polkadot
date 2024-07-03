@@ -11,7 +11,12 @@ import {
   Select,
   Typography
 } from '@material-ui/core';
-import type { BlockInfo, SnapNetworks, Transaction } from '@chainsafe/metamask-polkadot-types';
+import type {
+  BlockInfo,
+  SnapNetworks,
+  Transaction,
+  SupportedSnapNetworks
+} from '@chainsafe/metamask-polkadot-types';
 import type { MetamaskSnapApi } from '@chainsafe/metamask-polkadot-adapter/src/types';
 import { Transfer } from '../../components/Transfer/Transfer';
 import { SignMessage } from '../../components/SignMessage/SignMessage';
@@ -52,7 +57,7 @@ export const Dashboard = (): React.JSX.Element => {
       return;
     } else setCustomNetworkInputs(false);
 
-    const networkName = event.target.value as SnapNetworks;
+    const networkName = event.target.value as SupportedSnapNetworks;
     if (networkName === network) return;
     if (!api) return;
     await api.setConfiguration({ networkName: networkName });
@@ -60,11 +65,12 @@ export const Dashboard = (): React.JSX.Element => {
   };
 
   const onCustomNetworkConnect = async (submitData: CustomNetworkConfigInput): Promise<void> => {
-    const { networkName, rpcUrl, addressPrefix } = submitData;
+    const { networkName, genesisHash, rpcUrl, addressPrefix } = submitData;
 
-    if (!api || !networkName || !rpcUrl || !addressPrefix) return;
+    if (!api || !networkName || !genesisHash || !rpcUrl || !addressPrefix) return;
     const configuration = {
-      networkName: networkName,
+      networkName,
+      genesisHash,
       wsRpcUrl: rpcUrl,
       addressPrefix: addressPrefix,
       unit: {

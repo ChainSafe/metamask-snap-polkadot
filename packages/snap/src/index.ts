@@ -24,6 +24,7 @@ import {
   validSignPayloadRawSchema
 } from './util/validation';
 import { exportAccount } from './rpc/exportAccount';
+import { getConfiguration } from './configuration';
 
 const apiDependentMethods = [
   'getBlock',
@@ -78,6 +79,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
     case 'getBalance': {
       return await getBalance(api);
     }
+    case 'getConfiguration':
+      return await getConfiguration();
     case 'configure': {
       const state = (await snap.request({
         method: 'snap_manageState',

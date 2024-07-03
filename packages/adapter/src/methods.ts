@@ -80,6 +80,10 @@ export async function exportAccount(
   )) as string;
 }
 
+export async function getConfiguration(this: MetamaskPolkadotSnap): Promise<SnapConfig> {
+  return (await sendSnapMethod({ method: 'getConfiguration' }, this.snapId)) as SnapConfig;
+}
+
 export async function setConfiguration(
   this: MetamaskPolkadotSnap,
   config: SnapConfig

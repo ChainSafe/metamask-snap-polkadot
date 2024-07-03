@@ -16,7 +16,7 @@ export interface ExportAccountRequest {
   method: 'exportAccount';
   params: {
     jsonPassphrase?: string;
-  }
+  };
 }
 
 export interface GetTransactionsRequest {
@@ -32,6 +32,10 @@ export interface GetBlockRequest {
 
 export interface GetBalanceRequest {
   method: 'getBalance';
+}
+
+export interface GetConfigurationRequest {
+  method: 'getConfiguration';
 }
 
 export interface ConfigureSnapRequest {
@@ -87,6 +91,7 @@ export type MetamaskPolkadotRpcRequest =
   | GetTransactionsRequest
   | GetBlockRequest
   | GetBalanceRequest
+  | GetConfigurationRequest
   | ConfigureSnapRequest
   | AddPolkadotAssetRequest
   | GetChainHeadRequest
@@ -132,14 +137,18 @@ export interface UnitConfiguration {
   customViewUrl?: string;
 }
 
-export type SnapNetworks = 'polkadot' | 'kusama' | 'westend' | string;
+export type SupportedSnapNetworks = 'polkadot' | 'kusama' | 'westend';
 
-export interface SnapConfig {
-  networkName: SnapNetworks;
+export type SnapNetworks = SupportedSnapNetworks | string;
+
+export type SnapConfig = {
   wsRpcUrl?: string;
   addressPrefix?: number;
   unit?: UnitConfiguration;
-}
+} & (
+  | { networkName: SupportedSnapNetworks; genesisHash?: `0x${string}` }
+  | { networkName: SnapNetworks; genesisHash: `0x${string}` }
+);
 
 // Polkadot types
 

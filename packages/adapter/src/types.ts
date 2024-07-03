@@ -22,6 +22,8 @@ export interface MetamaskSnapApi {
 
   getLatestBlock(): Promise<BlockInfo>;
 
+  getConfiguration(): Promise<SnapConfig>;
+
   setConfiguration(configuration: SnapConfig): Promise<void>;
 
   getAllTransactions(): Promise<Transaction[]>;
