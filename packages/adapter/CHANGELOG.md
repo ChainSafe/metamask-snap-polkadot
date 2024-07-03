@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.8.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-adapter-v0.7.0...metamask-polkadot-adapter-v0.8.0) (2024-07-03)
+
+
+### Features
+
+* add genesis hash to injected accounts ([#236](https://github.com/ChainSafe/metamask-snap-polkadot/issues/236)) ([bc73e6c](https://github.com/ChainSafe/metamask-snap-polkadot/commit/bc73e6ca7c229945dc513195f8b58377a0f99505))
+
+
+### Bug Fixes
+
+* incorrect account type ([#237](https://github.com/ChainSafe/metamask-snap-polkadot/issues/237)) ([ae02ce9](https://github.com/ChainSafe/metamask-snap-polkadot/commit/ae02ce9cee970e26ef4c6f5b9e48de50e7766419))
+
 ## [0.7.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/metamask-polkadot-adapter-v0.6.0...metamask-polkadot-adapter-v0.7.0) (2024-06-18)
 
 
