@@ -89,6 +89,6 @@
     "@polkadot/types": "^12.3.1",
     "@polkadot/util": "^13.0.2",
     "deepmerge": "^4.3.1",
-    "superstruct": "^1.0.3"
+    "superstruct": "^2.0.2"
   }
 }
