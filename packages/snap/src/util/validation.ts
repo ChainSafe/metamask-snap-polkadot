@@ -18,6 +18,8 @@ const SignaturePayloadJSONSchema = type({
   version: number()
 });
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 export const validSignPayloadJSONSchema: Describe<{
   payload: SignerPayloadJSON;
 }> = object({
