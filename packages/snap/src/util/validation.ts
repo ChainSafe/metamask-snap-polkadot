@@ -1,21 +1,40 @@
 import type { BlockId, TxPayload } from '@chainsafe/metamask-polkadot-types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import {
+  array,
+  boolean,
+  define,
+  enums,
+  number,
+  object,
+  optional,
+  string,
+  union
+} from 'superstruct';
 import type { Describe } from 'superstruct';
-import { array, enums, number, object, optional, string, type, union } from 'superstruct';
 
-const SignaturePayloadJSONSchema = type({
+const HexStringStruct = define<`0x${string}`>('HexString', (value) => {
+  return typeof value === 'string' && /^0x[0-9a-fA-F]+$/.test(value)
+    ? true
+    : 'Expected a valid hex string';
+});
+
+const SignaturePayloadJSONSchema = object({
   address: string(),
-  blockHash: string(),
-  blockNumber: string(),
-  era: string(),
-  genesisHash: string(),
+  blockHash: HexStringStruct, // HexString
+  blockNumber: HexStringStruct, // HexString
+  era: HexStringStruct, // HexString
+  genesisHash: HexStringStruct, // HexString
+  metadataHash: optional(HexStringStruct), // Optional HexString
   method: string(),
-  nonce: string(),
+  mode: optional(number()), // mode is optional and can be a number
+  nonce: HexStringStruct, // HexString
+  specVersion: HexStringStruct, // HexString
+  tip: HexStringStruct, // HexString
+  transactionVersion: HexStringStruct, // HexString
   signedExtensions: array(string()),
-  specVersion: string(),
-  tip: string(),
-  transactionVersion: string(),
-  version: number()
+  version: number(),
+  withSignedTransaction: optional(boolean()) // Optional boolean
 });
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
