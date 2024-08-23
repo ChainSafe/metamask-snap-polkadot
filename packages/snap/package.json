@@ -25,7 +25,7 @@
     "prepublish": "yarn run build && mkdir ipfs && cp package.json ipfs/package.json",
     "publish": "export BUNDLE_URL=`ipd --no-clipboard -O -p infura dist/bundle.js` && sed -i 's/http:\\/\\/localhost:8081\\/dist\\/bundle.js/https:\\/\\/ipfs.infura.io\\/ipfs\\/'\"$BUNDLE_URL\"'/g' ipfs/package.json && ipd --no-clipboard -O -p infura ipfs/package.json",
     "postpublish": "rm -rf ipfs",
-    "serve": "mm-snap serve",
+    "serve": "mm-snap serve & http-server",
     "test": "yarn run test:unit",
     "test:unit": "mocha --colors"
   },
@@ -72,6 +72,7 @@
     "chai": "^4.2.0",
     "concurrently": "^5.1.0",
     "eslint": "^8.17.0",
+    "http-server": "^14.1.1",
     "mocha": "10.1.0",
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
