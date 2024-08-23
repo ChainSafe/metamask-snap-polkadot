@@ -1,5 +1,6 @@
-import type { BlockId, TxPayload } from '@chainsafe/metamask-polkadot-types';
-import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import type { BlockId } from '@chainsafe/metamask-polkadot-types';
+import type { SignerPayloadRaw } from '@polkadot/types/types';
+import type { Describe, Infer } from 'superstruct';
 import {
   array,
   boolean,
@@ -11,7 +12,6 @@ import {
   string,
   union
 } from 'superstruct';
-import type { Describe } from 'superstruct';
 
 const HexStringStruct = define<`0x${string}`>('HexString', (value) => {
   return typeof value === 'string' && /^0x[0-9a-fA-F]+$/.test(value)
@@ -19,28 +19,30 @@ const HexStringStruct = define<`0x${string}`>('HexString', (value) => {
     : 'Expected a valid hex string';
 });
 
+// SignerPayloadJSON from '@polkadot/types/types';
 const SignaturePayloadJSONSchema = object({
   address: string(),
-  blockHash: HexStringStruct, // HexString
-  blockNumber: HexStringStruct, // HexString
-  era: HexStringStruct, // HexString
-  genesisHash: HexStringStruct, // HexString
-  metadataHash: optional(HexStringStruct), // Optional HexString
+  assetId: optional(union([number(), object()])),
+  blockHash: HexStringStruct,
+  blockNumber: HexStringStruct,
+  era: HexStringStruct,
+  genesisHash: HexStringStruct,
+  metadataHash: optional(HexStringStruct),
   method: string(),
-  mode: optional(number()), // mode is optional and can be a number
-  nonce: HexStringStruct, // HexString
-  specVersion: HexStringStruct, // HexString
-  tip: HexStringStruct, // HexString
-  transactionVersion: HexStringStruct, // HexString
+  mode: optional(number()),
+  nonce: HexStringStruct,
+  specVersion: HexStringStruct,
+  tip: HexStringStruct,
+  transactionVersion: HexStringStruct,
   signedExtensions: array(string()),
   version: number(),
-  withSignedTransaction: optional(boolean()) // Optional boolean
+  withSignedTransaction: optional(boolean())
 });
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+type SignaturePayloadJSONType = Infer<typeof SignaturePayloadJSONSchema>;
+
 export const validSignPayloadJSONSchema: Describe<{
-  payload: SignerPayloadJSON;
+  payload: SignaturePayloadJSONType;
 }> = object({
   payload: SignaturePayloadJSONSchema
 });
@@ -92,11 +94,12 @@ export const validGenerateTransactionPayloadSchema: Describe<{
   to: string()
 });
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 export const validSendSchema: Describe<{
   signature: string;
-  txPayload: TxPayload;
+  txPayload: {
+    tx: string;
+    payload: SignaturePayloadJSONType;
+  };
 }> = object({
   signature: string(),
   txPayload: object({
