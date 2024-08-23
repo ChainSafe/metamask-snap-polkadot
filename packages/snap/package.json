@@ -72,7 +72,7 @@
     "chai": "^4.2.0",
     "concurrently": "^5.1.0",
     "eslint": "^8.17.0",
-    "mocha": "^7.1.1",
+    "mocha": "10.1.0",
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
     "strict-event-emitter-types": "^2.0.0",
