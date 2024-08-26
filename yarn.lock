@@ -2838,7 +2838,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@chainsafe/metamask-polkadot-types@workspace:packages/types"
   dependencies:
-    "@polkadot/api": ^10.9.1
+    "@polkadot/api": ^12.4.2
   languageName: unknown
   linkType: soft
 
