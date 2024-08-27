@@ -1,6 +1,6 @@
 {
   "name": "@chainsafe/polkadot-snap",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "description": "MetaMask snap for interacting with Polkadot dApps",
   "main": "build/index.js",
   "scripts": {

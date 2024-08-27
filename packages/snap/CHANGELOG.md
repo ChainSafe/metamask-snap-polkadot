@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.2](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.11.1...polkadot-snap-v0.11.2) (2024-08-27)
+
+
+### Bug Fixes
+
+* add nullable type for transaction ([#248](https://github.com/ChainSafe/metamask-snap-polkadot/issues/248)) ([d232283](https://github.com/ChainSafe/metamask-snap-polkadot/commit/d2322838cb2383edf25e2edaad6aebf71c3539a0))
+
 ## [0.11.1](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.11.0...polkadot-snap-v0.11.1) (2024-08-27)
 
 
