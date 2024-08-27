@@ -2,6 +2,7 @@ import type { BlockId } from '@chainsafe/metamask-polkadot-types';
 import type { SignerPayloadRaw } from '@polkadot/types/types';
 import type { Describe, Infer } from 'superstruct';
 import {
+  nullable,
   array,
   boolean,
   define,
@@ -22,21 +23,21 @@ const HexStringStruct = define<`0x${string}`>('HexString', (value) => {
 // SignerPayloadJSON from '@polkadot/types/types';
 const SignaturePayloadJSONSchema = object({
   address: string(),
-  assetId: optional(union([number(), object()])),
+  assetId: nullable(optional(union([number(), object()]))),
   blockHash: HexStringStruct,
   blockNumber: HexStringStruct,
   era: HexStringStruct,
   genesisHash: HexStringStruct,
-  metadataHash: optional(HexStringStruct),
+  metadataHash: nullable(optional(HexStringStruct)),
   method: string(),
-  mode: optional(number()),
+  mode: nullable(optional(number())),
   nonce: HexStringStruct,
   specVersion: HexStringStruct,
   tip: HexStringStruct,
   transactionVersion: HexStringStruct,
   signedExtensions: array(string()),
   version: number(),
-  withSignedTransaction: optional(boolean())
+  withSignedTransaction: nullable(optional(boolean()))
 });
 
 type SignaturePayloadJSONType = Infer<typeof SignaturePayloadJSONSchema>;
