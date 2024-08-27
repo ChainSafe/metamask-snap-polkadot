@@ -1,25 +1,48 @@
-import type { BlockId, TxPayload } from '@chainsafe/metamask-polkadot-types';
-import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import type { Describe } from 'superstruct';
-import { array, enums, number, object, optional, string, type, union } from 'superstruct';
+import type { BlockId } from '@chainsafe/metamask-polkadot-types';
+import type { SignerPayloadRaw } from '@polkadot/types/types';
+import type { Describe, Infer } from 'superstruct';
+import {
+  array,
+  boolean,
+  define,
+  enums,
+  number,
+  object,
+  optional,
+  string,
+  union
+} from 'superstruct';
 
-const SignaturePayloadJSONSchema = type({
-  address: string(),
-  blockHash: string(),
-  blockNumber: string(),
-  era: string(),
-  genesisHash: string(),
-  method: string(),
-  nonce: string(),
-  signedExtensions: array(string()),
-  specVersion: string(),
-  tip: string(),
-  transactionVersion: string(),
-  version: number()
+const HexStringStruct = define<`0x${string}`>('HexString', (value) => {
+  return typeof value === 'string' && /^0x[0-9a-fA-F]+$/.test(value)
+    ? true
+    : 'Expected a valid hex string';
 });
 
+// SignerPayloadJSON from '@polkadot/types/types';
+const SignaturePayloadJSONSchema = object({
+  address: string(),
+  assetId: optional(union([number(), object()])),
+  blockHash: HexStringStruct,
+  blockNumber: HexStringStruct,
+  era: HexStringStruct,
+  genesisHash: HexStringStruct,
+  metadataHash: optional(HexStringStruct),
+  method: string(),
+  mode: optional(number()),
+  nonce: HexStringStruct,
+  specVersion: HexStringStruct,
+  tip: HexStringStruct,
+  transactionVersion: HexStringStruct,
+  signedExtensions: array(string()),
+  version: number(),
+  withSignedTransaction: optional(boolean())
+});
+
+type SignaturePayloadJSONType = Infer<typeof SignaturePayloadJSONSchema>;
+
 export const validSignPayloadJSONSchema: Describe<{
-  payload: SignerPayloadJSON;
+  payload: SignaturePayloadJSONType;
 }> = object({
   payload: SignaturePayloadJSONSchema
 });
@@ -73,7 +96,10 @@ export const validGenerateTransactionPayloadSchema: Describe<{
 
 export const validSendSchema: Describe<{
   signature: string;
-  txPayload: TxPayload;
+  txPayload: {
+    tx: string;
+    payload: SignaturePayloadJSONType;
+  };
 }> = object({
   signature: string(),
   txPayload: object({

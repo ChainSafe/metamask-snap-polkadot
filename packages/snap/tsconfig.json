@@ -1,26 +1,33 @@
 {
   "ts-node": {
-    "files": true,
+    "files": true
   },
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "CommonJS",
     "lib": [
       "DOM",
-      "ES2015"
+      "ES2020"
     ],
     "esModuleInterop": true,
     "noImplicitAny": true,
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
     "noImplicitThis": true,
+    "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
+    "strict": true,
     "target": "ES2020",
     "baseUrl": ".",
     "strictNullChecks": false,
+    "noErrorTruncation": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "@metamask/snaps-sdk",
     "paths": {
       "*": [
         "../../node_modules"
@@ -33,8 +40,11 @@
   },
   "include": [
     "src/**/*",
-    "test/**/*"
+    "test/**/*",
+    "**/*.ts",
+    "**/*.tsx"
   ],
-
-  "files": ["../../node_modules/@metamask/snaps-types/dist/global.d.ts"]
+  "files": [
+    "../../node_modules/@metamask/snaps-types/dist/types/global.d.ts"
+  ]
 }
