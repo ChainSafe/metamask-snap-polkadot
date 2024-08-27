@@ -1,6 +1,6 @@
 {
   "name": "@chainsafe/metamask-polkadot-adapter",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "main": "./build/index.js",
   "module": "./build/index.js",
   "types": "./build/index.d.ts",
