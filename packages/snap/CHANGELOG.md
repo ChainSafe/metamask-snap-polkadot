@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.1](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.11.0...polkadot-snap-v0.11.1) (2024-08-27)
+
+
+### Bug Fixes
+
+* wasm error during transaction ([#244](https://github.com/ChainSafe/metamask-snap-polkadot/issues/244)) ([c2f51e5](https://github.com/ChainSafe/metamask-snap-polkadot/commit/c2f51e5322fa7cb6705e95e285a7fb377f5663ba))
+
 ## [0.11.0](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.10.0...polkadot-snap-v0.11.0) (2024-07-03)
 
 
