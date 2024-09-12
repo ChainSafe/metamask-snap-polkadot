@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.3](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.11.2...polkadot-snap-v0.11.3) (2024-09-12)
+
+
+### Bug Fixes
+
+* Update Logo from Brand Kit ([#251](https://github.com/ChainSafe/metamask-snap-polkadot/issues/251)) ([7405bc1](https://github.com/ChainSafe/metamask-snap-polkadot/commit/7405bc13cfd69af4a274a3fe90799ab92d4786f2))
+
 ## [0.11.2](https://github.com/ChainSafe/metamask-snap-polkadot/compare/polkadot-snap-v0.11.1...polkadot-snap-v0.11.2) (2024-08-27)
 
 
